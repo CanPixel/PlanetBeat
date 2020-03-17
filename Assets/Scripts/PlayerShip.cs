@@ -46,7 +46,7 @@ public class PlayerShip : MonoBehaviour {
         }
 
         if(IsTurningLeft()) turn += turningSpeed;
-        else if(IsTurningRight()) turn -= turningSpeed;
+        if(IsTurningRight()) turn -= turningSpeed;
 
         rb.AddForce(transform.up * velocity);
         rb.rotation = turn;
