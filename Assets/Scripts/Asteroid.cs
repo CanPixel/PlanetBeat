@@ -22,7 +22,9 @@ public class Asteroid : MonoBehaviour
 
     public float orbitDuration;
 
-    [HideInInspector] public float orbitTimer;
+     public float orbitTimer;
+
+    public float forceApplied;
 
     
 
@@ -35,8 +37,6 @@ public class Asteroid : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-
-
     }
 
     void Update()
@@ -68,11 +68,15 @@ public class Asteroid : MonoBehaviour
     {
         //if the player throws the rock to his planet instead of flying there let it orbit for a bit          
             if (col.gameObject.tag == "PLAYERPLANET")          
-                _playerscore = col.gameObject.GetComponent<PlayerScore>();    
+                _playerscore = col.gameObject.GetComponent<PlayerScore>();
+                tempPlanet = col.gameObject; 
     }
 
     void OrbitAroundPlanet()
     {
+        if (!inOrbit)
+            orbitTimer = 0;      
+
         if (!held)
         {
             if (inOrbit)
@@ -86,21 +90,25 @@ public class Asteroid : MonoBehaviour
                     gameObject.SetActive(false);
                     inOrbit = false;
                     held = false; 
-                    orbitTimer = 0;
+                    //orbitTimer = 0;
                 }
                 //lerp resource to the planet 
                 Debug.Log("rotate around planet");
-            }
+            }                      
         }
     }
 
-    void AsteroidIsThrown()
+    void AsteroidIsThrown() 
     {
         if (held)
             if (Input.GetKeyDown(KeyCode.F))
             {
+                //var normilazedVelocity = rb.velocity.normalized;
+                //rb.AddForce(normilazedVelocity * 20f);
+                //rb.AddForce(transform.right * 60);
+
+                rb.AddForce(rb.velocity.normalized * Time.deltaTime * forceApplied);
                 held = false;
-                rb.AddForce(transform.up * 60);
             }
     }
 }
