@@ -46,7 +46,9 @@ public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
     //Lijn aan asteroids/objecten achter de speler
     [HideInInspector] public List<GameObject> trailingObjects = new List<GameObject>();
 
-    private ParticleSystem exhaust; 
+    private ParticleSystem exhaust;
+
+    Asteroid _asteroid; 
 
     #region Network player spawning
     void OnSceneLoaded(UnityEngine.SceneManagement.Scene scene, UnityEngine.SceneManagement.LoadSceneMode loadingMode) {
@@ -91,9 +93,15 @@ public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
         }
 
         //Trailing object positions & (stiekem) een kleinere scaling, anders waren ze wel fk bulky
-        for(int i = 0; i < trailingObjects.Count; i++) {
-            trailingObjects[i].transform.localScale = Vector3.Lerp(trailingObjects[i].transform.localScale, Vector3.one * 0.06f, Time.deltaTime * 2f);
-            trailingObjects[i].transform.position = Vector3.Lerp(trailingObjects[i].transform.position, (transform.position - (transform.up * (i + 1) * 0.5f)), Time.deltaTime * 8f);
+        for (int i = 0; i < trailingObjects.Count; i++)
+        {
+            _asteroid = trailingObjects[i].GetComponent<Asteroid>();
+
+            if (_asteroid.held) //aleen als we het steentje vast hebben
+            {
+                trailingObjects[i].transform.localScale = Vector3.Lerp(trailingObjects[i].transform.localScale, Vector3.one * 0.06f, Time.deltaTime * 2f);
+                trailingObjects[i].transform.position = Vector3.Lerp(trailingObjects[i].transform.position, (transform.position - (transform.up * (i + 1) * 0.5f)), Time.deltaTime * 8f);
+            }
         }
 
         //ignore this, this is for later

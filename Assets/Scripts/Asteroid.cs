@@ -36,6 +36,7 @@ public class Asteroid : MonoBehaviour
     void Update()
     {
         OrbitAroundPlanet(); //Function orbits an astroid around a player planet 
+        AsteroidIsThrown(); 
     }
     void OnCollisionEnter2D(Collision2D col)
     {
@@ -85,5 +86,15 @@ public class Asteroid : MonoBehaviour
                 Debug.Log("rotate around planet");
             }
         }
+    }
+
+    void AsteroidIsThrown()
+    {
+        if (held)
+            if (Input.GetKeyDown(KeyCode.F))
+            {
+                held = false;
+                rb.AddForce(transform.up * 60);
+            }
     }
 }
