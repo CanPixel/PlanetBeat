@@ -24,31 +24,24 @@ public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
     //Voor het herkennen van de local player (die jij speelt) ivm network
     public static GameObject LocalPlayerInstance;
 
-    private string PlayerName = "";
+    //private string PlayerName = "";
 
     #region IPunObservable implementation
-        //public override void OnEnable() {
-         //   base.OnEnable();
-        //    PhotonNetwork.AddCallbackTarget(this);
-        //}
-
-        //public override void OnDisable() {
-         //   base.OnDisable();
-          //  PhotonNetwork.RemoveCallbackTarget(this);
-        //}
+        public override void OnEnable() {
+            base.OnEnable();
+            PhotonNetwork.AddCallbackTarget(this);
+        }
 
         public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
-            if(stream.IsWriting) stream.SendNext(PlayerName);
-            else if(stream.IsReading) PlayerName = stream.ReceiveNext().ToString();
+            //if(stream.IsWriting) stream.SendNext(PlayerName);
+            //else if(stream.IsReading) PlayerName = stream.ReceiveNext().ToString();
         }
     #endregion
 
     //Lijn aan asteroids/objecten achter de speler
-    [HideInInspector] public List<GameObject> trailingObjects = new List<GameObject>();
+    [HideInInspector] public List<Asteroid> trailingObjects = new List<Asteroid>();
 
     private ParticleSystem exhaust;
-
-    Asteroid _asteroid; 
 
     #region Network player spawning
     void OnSceneLoaded(UnityEngine.SceneManagement.Scene scene, UnityEngine.SceneManagement.LoadSceneMode loadingMode) {
@@ -68,6 +61,7 @@ public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
     public override void OnDisable() {
         base.OnDisable();
         UnityEngine.SceneManagement.SceneManager.sceneLoaded -= OnSceneLoaded;
+        PhotonNetwork.RemoveCallbackTarget(this);
     }
     #endregion
 
@@ -75,34 +69,31 @@ public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
         rb = GetComponent<Rigidbody2D>();
         exhaust = GetComponentInChildren<ParticleSystem>();
         UnityEngine.SceneManagement.SceneManager.sceneLoaded += OnSceneLoaded;
+        transform.SetParent(GameObject.FindGameObjectWithTag("GAMEFIELD").transform, false);
     }
 
     void Awake() {
         if(photonView == null) return;
-        if(photonView.IsMine) LocalPlayerInstance = this.gameObject;
-        DontDestroyOnLoad(this.gameObject);
+        if(photonView.IsMine) PlayerShip.LocalPlayerInstance = this.gameObject;
+        //DontDestroyOnLoad(this.gameObject);
     }
 
     void Update() {
-        if(photonView != null && !photonView.IsMine && PhotonNetwork.IsConnected) return;
+        if(photonView == null) return;
+        if(!photonView.IsMine && PhotonNetwork.IsConnected) return;
 
-        if(photonView == null || photonView.IsMine) {
+        if(photonView.IsMine) {
             ProcessInputs();
             rb.AddForce(transform.up * velocity);
             rb.rotation = turn;
         }
 
         //Trailing object positions & (stiekem) een kleinere scaling, anders waren ze wel fk bulky
-        for (int i = 0; i < trailingObjects.Count; i++)
-        {
-            _asteroid = trailingObjects[i].GetComponent<Asteroid>();
-
-            if (_asteroid.held) //aleen als we het steentje vast hebben
-            {
+        for(int i = 0; i < trailingObjects.Count; i++)
+            if(trailingObjects[i].held) {
                 trailingObjects[i].transform.localScale = Vector3.Lerp(trailingObjects[i].transform.localScale, Vector3.one * 0.06f, Time.deltaTime * 2f);
                 trailingObjects[i].transform.position = Vector3.Lerp(trailingObjects[i].transform.position, (transform.position - (transform.up * (i + 1) * 0.5f)), Time.deltaTime * 8f);
             }
-        }
 
         //ignore this, this is for later
         // if(Health < 0) GameManager.instance.LeaveRoom();
@@ -134,7 +125,8 @@ public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
 
     //Voegt object toe aan trail achter player
     public void AddAsteroid(GameObject obj) {
-        trailingObjects.Add(obj);
+        var script = obj.GetComponent<Asteroid>();
+        if(script != null) trailingObjects.Add(script);
     }
 
     #region MOVEMENT_INPUTS
