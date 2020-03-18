@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6045767007485007834}
   - component: {fileID: 6045767007485007835}
   m_Layer: 0
-  m_Name: NetworkManager
+  m_Name: Launcher
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -43,7 +43,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 378b13e2d41493e458907619557ae0f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameField: {fileID: 0}
-  lobbyCamera: {fileID: 0}
-  player: {fileID: 0}
+  controlPanel: {fileID: 0}
+  progressLabel: {fileID: 0}
   maxPlayers: 4

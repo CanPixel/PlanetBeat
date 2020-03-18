@@ -6,6 +6,40 @@ using Photon.Realtime;
 using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviourPunCallbacks {
+   public static GameManager instance;
+
+   private GameObject gameField;
+
+   public GameObject playerPrefab;
+   public float playerScale = 0.02f;
+
+   void OnValidate() {
+      if(playerScale <= 0) playerScale = 0.01f;
+   }
+
+   void Start() {
+      instance = this;
+      gameField = GameObject.FindGameObjectWithTag("GAMEFIELD");
+
+      AddPlayer();
+   }
+
+   private void AddPlayer() {
+      if(playerPrefab == null) {
+         Debug.LogError("No PlayerPrefab reference!");
+         return;
+      }
+      if(PlayerShip.LocalPlayerInstance == null) {
+         Debug.LogFormat("Instantiating LocalPlayer from {0}", SceneManagerHelper.ActiveSceneName);
+         var player = PhotonNetwork.Instantiate(playerPrefab.name, new Vector3(210, 0, 0), Quaternion.identity, 0);
+         player.transform.SetParent(gameField.transform);
+         player.transform.localPosition = new Vector3(210, 0, 0);
+         player.transform.localScale = new Vector3(playerScale, playerScale, playerScale);
+      } else {
+         Debug.LogFormat("Ignoring scene load for {0}", SceneManagerHelper.ActiveSceneName);
+      }
+   }
+
    void LoadArena() {
       if(!PhotonNetwork.IsMasterClient) {
          Debug.LogError("Trying to load level but we are not the master Client!");

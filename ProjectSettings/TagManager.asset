@@ -12,6 +12,7 @@ TagManager:
   - PLAYERPLANET
   - Bullet
   - Resource
+  - GAMEFIELD
   layers:
   - Default
   - TransparentFX

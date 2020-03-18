@@ -6,10 +6,6 @@ using Photon.Realtime;
 
 public class Launcher : Photon.Pun.MonoBehaviourPunCallbacks {
     [Header("REFERENCES")]
-    public Transform gameField;
-    [SerializeField] private GameObject lobbyCamera;
-    [SerializeField] private GameObject player;
-
     [SerializeField] private GameObject controlPanel;
     [SerializeField] private GameObject progressLabel;
 
@@ -22,15 +18,15 @@ public class Launcher : Photon.Pun.MonoBehaviourPunCallbacks {
 
     void Awake() {
         PhotonNetwork.AutomaticallySyncScene = true;
-        progressLabel.SetActive(false);
-        controlPanel.SetActive(true);
+        if(progressLabel != null) progressLabel.SetActive(false);
+        if(controlPanel != null) controlPanel.SetActive(true);
     }
 
     public void Connect() {
         isConnecting = PhotonNetwork.ConnectUsingSettings();
 
-        progressLabel.SetActive(true);
-        controlPanel.SetActive(false);
+        if(progressLabel != null) progressLabel.SetActive(true);
+        if(controlPanel != null) controlPanel.SetActive(false);
         if(PhotonNetwork.IsConnected) PhotonNetwork.JoinRandomRoom();
         else {
             PhotonNetwork.ConnectUsingSettings();
