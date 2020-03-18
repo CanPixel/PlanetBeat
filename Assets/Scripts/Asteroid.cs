@@ -11,14 +11,20 @@ public class Asteroid : MonoBehaviour
     public bool inOrbit = false;
 
 
+    public float orbitSpeed;
+
+    public float value;
+
+    public float weight;
+
+    float throwAirTime; 
+
 
     public float orbitDuration;
 
     [HideInInspector] public float orbitTimer;
 
-    public float orbitSpeed;
-
-    public float value;
+    
 
     public GameObject tempPlanet;
 
