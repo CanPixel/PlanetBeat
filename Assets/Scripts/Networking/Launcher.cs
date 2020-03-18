@@ -4,7 +4,7 @@ using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
 
-public class Launcher : Photon.Pun.MonoBehaviourPunCallbacks {
+public class Launcher : MonoBehaviourPunCallbacks {
     [Header("REFERENCES")]
     [SerializeField] private GameObject controlPanel;
     [SerializeField] private GameObject progressLabel;
@@ -58,7 +58,7 @@ public class Launcher : Photon.Pun.MonoBehaviourPunCallbacks {
 
     public override void OnJoinedRoom() {
         Debug.Log("OnJoinedRoom(): Now this client is in a room.");
-        PhotonNetwork.LoadLevel("Room for 1");
+        PhotonNetwork.LoadLevel("MULTIPLAY");
     }
 
     #endregion
