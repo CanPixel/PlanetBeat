@@ -79,7 +79,9 @@ public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
     }
 
     void Update() {
-        if(photonView == null) return;
+
+       
+        if (photonView == null) return;
         if(!photonView.IsMine && PhotonNetwork.IsConnected) return;
 
         if(photonView.IsMine) {
@@ -93,7 +95,15 @@ public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
             if(trailingObjects[i].held) {
                 trailingObjects[i].transform.localScale = Vector3.Lerp(trailingObjects[i].transform.localScale, Vector3.one * 0.06f, Time.deltaTime * 2f);
                 trailingObjects[i].transform.position = Vector3.Lerp(trailingObjects[i].transform.position, (transform.position - (transform.up * (i + 1) * 0.5f)), Time.deltaTime * 8f);
+
             }
+
+        if (Input.GetKeyDown(KeyCode.F) && trailingObjects.Count > 0)
+        {
+            var asteroid = trailingObjects[0];
+            trailingObjects.RemoveAt(0);
+            asteroid.rb.AddForce(transform.forward * rb.velocity * 1000f, ForceMode2D.Force); 
+        }
 
         //ignore this, this is for later
         // if(Health < 0) GameManager.instance.LeaveRoom();
@@ -129,8 +139,10 @@ public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
         if(script != null) trailingObjects.Add(script);
     }
 
+  
+
     #region MOVEMENT_INPUTS
-        public bool IsThrust() {
+    public bool IsThrust() {
             return Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow);
         }
 

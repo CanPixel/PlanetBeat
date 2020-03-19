@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class Asteroid : MonoBehaviour
 {
-    private Rigidbody2D rb;
+    [HideInInspector]
+    public Rigidbody2D rb;
 
     public bool held = false;
 
@@ -42,7 +43,7 @@ public class Asteroid : MonoBehaviour
     void Update()
     {
         OrbitAroundPlanet(); //Function orbits an astroid around a player planet 
-        AsteroidIsThrown(); 
+       
     }
     void OnCollisionEnter2D(Collision2D col)
     {
@@ -96,19 +97,5 @@ public class Asteroid : MonoBehaviour
                 Debug.Log("rotate around planet");
             }                      
         }
-    }
-
-    void AsteroidIsThrown() 
-    {
-        if (held)
-            if (Input.GetKeyDown(KeyCode.F))
-            {
-                //var normilazedVelocity = rb.velocity.normalized;
-                //rb.AddForce(normilazedVelocity * 20f);
-                //rb.AddForce(transform.right * 60);
-
-                rb.AddForce(rb.velocity.normalized * Time.deltaTime * forceApplied);
-                held = false;
-            }
     }
 }
