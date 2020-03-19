@@ -22,6 +22,9 @@ public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
     private float velocity, turn;
 
     public float trailingSpeed = 8f;
+
+    public bool isSingePlayer = false; 
+
     [Range(0.1f,10)]
     public float throwingReduction = 1f; 
 
@@ -77,17 +80,21 @@ public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
     }
 
     void Awake() {
+
+
         if(photonView == null) return;
         if(photonView.IsMine) PlayerShip.LocalPlayerInstance = this.gameObject;       
     }
 
     void Update() {
 
-        
-        if (photonView == null) return;
-        if(!photonView.IsMine && PhotonNetwork.IsConnected) return;
+        if (!isSingePlayer)
+        {
+            if (photonView == null) return;
+            if (!photonView.IsMine && PhotonNetwork.IsConnected) return;
+        }
 
-        if(photonView.IsMine) {
+        if(( photonView != null && photonView.IsMine) || isSingePlayer) {
             ProcessInputs();
             rb.AddForce(transform.up * velocity);
             rb.rotation = turn;
