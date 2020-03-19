@@ -8,7 +8,7 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviourPunCallbacks {
    public static GameManager instance;
 
-   public GameObject playerPrefab;
+   public GameObject playerPrefab, rockA, rockB;
    public float playerScale = 0.02f;
 
    void OnValidate() {
@@ -18,6 +18,16 @@ public class GameManager : MonoBehaviourPunCallbacks {
    void Start() {
       instance = this;
       AddPlayer();
+
+      if(PhotonNetwork.IsMasterClient) for(int i = 0; i < 5; i++) AddRock();
+   }
+
+   private void AddRock() {
+      float x = Random.Range(50, 400);
+      float y = Random.Range(50, 400);
+      if(Random.Range(0, 2) == 0) x = -x;
+      if(Random.Range(0, 2) == 0) y = -y;
+      var rock = PhotonNetwork.InstantiateSceneObject(Random.Range(0, 2) == 0 ? rockA.name : rockB.name, new Vector3(x, y, 0), Quaternion.identity, 0);
    }
 
    private void AddPlayer() {
@@ -53,10 +63,10 @@ public class GameManager : MonoBehaviourPunCallbacks {
 
       base.OnPlayerEnteredRoom(other);
       AddPlayer();
-      //if(PhotonNetwork.IsMasterClient) {
-       //  Debug.LogFormat("OnPlayerEnteredRoom IsMasterClient {0}", PhotonNetwork.IsMasterClient);
-        // LoadArena();
-     // }
+    //  if(PhotonNetwork.IsMasterClient) {
+     //    Debug.LogFormat("OnPlayerEnteredRoom IsMasterClient {0}", PhotonNetwork.IsMasterClient);
+      //   LoadArena();
+      //}
    }
 
    public override void OnPlayerLeftRoom(Player other) {

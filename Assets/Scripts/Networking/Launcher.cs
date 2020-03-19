@@ -27,7 +27,7 @@ public class Launcher : MonoBehaviourPunCallbacks {
 
         if(progressLabel != null) progressLabel.SetActive(true);
         if(controlPanel != null) controlPanel.SetActive(false);
-        if(PhotonNetwork.IsConnected) PhotonNetwork.JoinRandomRoom();
+        if(!PhotonNetwork.IsConnected) PhotonNetwork.JoinRandomRoom();
         else {
             PhotonNetwork.ConnectUsingSettings();
             PhotonNetwork.GameVersion = gameVersion;
@@ -47,6 +47,10 @@ public class Launcher : MonoBehaviourPunCallbacks {
         progressLabel.SetActive(false);
         controlPanel.SetActive(true);
         Debug.LogWarningFormat("DISCONNECT was called because of {0}", cause);
+    }
+
+    public override void OnJoinedLobby() {
+        
     }
 
     public override void OnJoinRandomFailed(short returnCode, string message) {
