@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class Asteroid : MonoBehaviour
 {
-    private Rigidbody2D rb;
+    [HideInInspector]
+    public Rigidbody2D rb;
 
     public bool held = false;
 
@@ -22,7 +23,9 @@ public class Asteroid : MonoBehaviour
 
     public float orbitDuration;
 
-    [HideInInspector] public float orbitTimer;
+     public float orbitTimer;
+
+    public float forceApplied;
 
     
 
@@ -35,14 +38,12 @@ public class Asteroid : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-
-
     }
 
     void Update()
     {
         OrbitAroundPlanet(); //Function orbits an astroid around a player planet 
-        AsteroidIsThrown(); 
+       
     }
     void OnCollisionEnter2D(Collision2D col)
     {
@@ -68,11 +69,15 @@ public class Asteroid : MonoBehaviour
     {
         //if the player throws the rock to his planet instead of flying there let it orbit for a bit          
             if (col.gameObject.tag == "PLAYERPLANET")          
-                _playerscore = col.gameObject.GetComponent<PlayerScore>();    
+                _playerscore = col.gameObject.GetComponent<PlayerScore>();
+                tempPlanet = col.gameObject; 
     }
 
     void OrbitAroundPlanet()
     {
+        if (!inOrbit)
+            orbitTimer = 0;      
+
         if (!held)
         {
             if (inOrbit)
@@ -86,21 +91,11 @@ public class Asteroid : MonoBehaviour
                     gameObject.SetActive(false);
                     inOrbit = false;
                     held = false; 
-                    orbitTimer = 0;
+                    //orbitTimer = 0;
                 }
-                //lerp resource to the planet 
+                //lerp resource slowly closer to the planet?
                 Debug.Log("rotate around planet");
-            }
+            }                      
         }
-    }
-
-    void AsteroidIsThrown()
-    {
-        if (held)
-            if (Input.GetKeyDown(KeyCode.F))
-            {
-                held = false;
-                rb.AddForce(transform.up * 60);
-            }
     }
 }
