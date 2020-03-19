@@ -18,7 +18,9 @@ public class Asteroid : MonoBehaviour
 
     public float weight;
 
-    float throwAirTime; 
+    float throwAirTime;
+
+    public float grabDelay = .5f; 
 
 
     public float orbitDuration;
@@ -26,6 +28,10 @@ public class Asteroid : MonoBehaviour
      public float orbitTimer;
 
     public float forceApplied;
+
+    private float collectTimer;
+
+    private PolygonCollider2D asteroidColl; 
 
     
 
@@ -38,22 +44,30 @@ public class Asteroid : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        asteroidColl = GetComponent<PolygonCollider2D>(); 
+        
     }
 
     void Update()
     {
         OrbitAroundPlanet(); //Function orbits an astroid around a player planet 
+        if (collectTimer > 0) collectTimer -= Time.deltaTime;
+
+        asteroidColl.enabled = collectTimer <= 0f; 
+
+
        
     }
     void OnCollisionEnter2D(Collision2D col)
     {
-        if (col.gameObject.tag == "HOOKSHOT")
+        if (col.gameObject.tag == "HOOKSHOT" && !held)
         {
             transform.position = col.transform.position;
             //rb.simulated = false;
             col.gameObject.GetComponent<HookTip>().hookShot.CatchObject(gameObject);
             //Debug.Log("grabbed");
             held = true;
+            collectTimer = grabDelay; 
         }
 
         //if the player just flies the resource straight in the planet instantly give him the points 
@@ -97,5 +111,10 @@ public class Asteroid : MonoBehaviour
                 Debug.Log("rotate around planet");
             }                      
         }
+    }
+
+    public void ReleaseAsteroid()
+    {
+        held = false; 
     }
 }
