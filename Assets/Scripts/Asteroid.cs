@@ -92,7 +92,7 @@ public class Asteroid : MonoBehaviour
                     held = false; 
                     //orbitTimer = 0;
                 }
-                //lerp resource to the planet 
+                //lerp resource slowly closer to the planet?
                 Debug.Log("rotate around planet");
             }                      
         }

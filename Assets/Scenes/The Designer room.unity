@@ -3116,7 +3116,7 @@ GameObject:
   - component: {fileID: 964552071}
   m_Layer: 5
   m_Name: GAME FIELD
-  m_TagString: Untagged
+  m_TagString: GAMEFIELD
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
