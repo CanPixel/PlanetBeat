@@ -40,7 +40,7 @@ public class HookShot : MonoBehaviour {
             var hit = Physics2D.Raycast(rope.transform.position, rope.transform.TransformDirection(rope.transform.forward) * hookShotRange);
             lineAim.SetPosition(1, hit.point);
         }
-        if(Input.GetKeyUp(KeyCode.Space) && triggerHook && shootTimer <= 0) {
+        if(Input.GetKeyUp(KeyCode.Space) && triggerHook && shootTimer <= 0 && (hostPlayer.photonView != null && hostPlayer.photonView.IsMine)) {
             isShootingHook = true;
             triggerHook = false;
             shootTimer = 0.1f;
