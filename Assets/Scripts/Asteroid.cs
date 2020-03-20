@@ -1,8 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
-public class Asteroid : MonoBehaviour
+public class Asteroid : MonoBehaviourPun
 {
     [HideInInspector]
     public Rigidbody2D rb;

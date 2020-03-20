@@ -8,7 +8,10 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviourPunCallbacks {
    public static GameManager instance;
 
-   public GameObject playerPrefab, rockA, rockB;
+   public GameObject playerPrefab;
+   public GameObject[] rocks;
+   [Range(0, 10)]
+   public int startAsteroidAmount = 1;
    public float playerScale = 0.02f;
 
    void OnValidate() {
@@ -18,8 +21,10 @@ public class GameManager : MonoBehaviourPunCallbacks {
    void Start() {
       instance = this;
       AddPlayer();
+   }
 
-      if(PhotonNetwork.IsMasterClient) for(int i = 0; i < 5; i++) AddRock();
+   void Update() {
+      if(PhotonNetwork.IsMasterClient && Input.GetKeyUp(KeyCode.R)) for(int i = 0; i < startAsteroidAmount; i++) AddRock();
    }
 
    private void AddRock() {
@@ -27,7 +32,8 @@ public class GameManager : MonoBehaviourPunCallbacks {
       float y = Random.Range(50, 400);
       if(Random.Range(0, 2) == 0) x = -x;
       if(Random.Range(0, 2) == 0) y = -y;
-      var rock = PhotonNetwork.InstantiateSceneObject(Random.Range(0, 2) == 0 ? rockA.name : rockB.name, new Vector3(x, y, 0), Quaternion.identity, 0, null);
+      var randRock = rocks[Random.Range(0, rocks.Length)];
+      var rock = PhotonNetwork.InstantiateSceneObject(randRock.name, new Vector3(x, y, 0), Quaternion.identity, 0, null);
    }
 
    private void AddPlayer() {
@@ -72,9 +78,9 @@ public class GameManager : MonoBehaviourPunCallbacks {
    public override void OnPlayerLeftRoom(Player other) {
       Debug.LogFormat("Player {0} left the room!", other.NickName); // seen when other disconnects
 
-      if (PhotonNetwork.IsMasterClient) {
-         Debug.Log("You are the MasterClient now"); // called before OnPlayerLeftRoom
-         LoadArena();
-      }
+    //  if (PhotonNetwork.IsMasterClient) {
+     //    Debug.Log("You are the MasterClient now"); // called before OnPlayerLeftRoom
+      //   LoadArena();
+     // }
    }
 }

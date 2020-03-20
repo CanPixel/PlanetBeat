@@ -23,7 +23,6 @@ public class Planet : MonoBehaviour {
         orbitOBJ.Add(obj);
     }
 
-
     public bool blackHole = false;
 
     private Orbit orbitScr;
@@ -70,6 +69,9 @@ public class Planet : MonoBehaviour {
     }
 
     void OnTriggerExit2D(Collider2D col) {
-        if(col.tag == "PLAYERSHIP") col.GetComponent<PlayerShip>().NeutralizeForce();
+        if(col.tag == "PLAYERSHIP") {
+            var ship = col.GetComponent<PlayerShip>();
+            if(ship != null) ship.NeutralizeForce();
+        }
     }
 }

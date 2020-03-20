@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 2780214633789146015}
   - component: {fileID: 2780214633789146012}
   m_Layer: 8
-  m_Name: Rock_B (1)
+  m_Name: Rock
   m_TagString: Resource
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -143,6 +143,8 @@ MonoBehaviour:
   rb: {fileID: 0}
   held: 0
   inOrbit: 0
+  isOvertimeBomb: 0
+  isInstantBomb: 0
   orbitSpeed: 40
   value: 8
   weight: 2
@@ -150,4 +152,7 @@ MonoBehaviour:
   orbitDuration: 5
   orbitTimer: 0
   forceApplied: 200
+  infectedAstroid: {fileID: 4395998228405169301, guid: 40d25c53111b9f74782f08a4e4d14bfd,
+    type: 3}
+  movePoint: {fileID: 0}
   tempPlanet: {fileID: 0}

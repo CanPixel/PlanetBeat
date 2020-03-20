@@ -77,31 +77,40 @@ public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
         exhaust = GetComponentInChildren<ParticleSystem>();
         UnityEngine.SceneManagement.SceneManager.sceneLoaded += OnSceneLoaded;
         transform.SetParent(GameObject.FindGameObjectWithTag("GAMEFIELD").transform, false);
+
+        Debug.LogError(photonView.InstantiationId + " | " + photonView.IsMine);
+
+        if(!photonView.IsMine) {
+            //Destroy(photonView);
+            //Destroy(rb);
+            //Destroy(GetComponent<Collider2D>());
+        }
     }
 
     void Awake() {
-
-
         if(photonView == null) return;
         if(photonView.IsMine) PlayerShip.LocalPlayerInstance = this.gameObject;       
     }
 
     void Update() {
+        if((photonView != null && photonView.IsMine)) {
+        //Particles emitten wanneer movement
+        var emit = exhaust.emission;
+        emit.enabled = IsThrust();
+        }
 
-        if (!isSingePlayer)
-        {
+        if (!isSingePlayer) {
             if (photonView == null) return;
             if (!photonView.IsMine && PhotonNetwork.IsConnected) return;
         }
 
-        if(( photonView != null && photonView.IsMine) || isSingePlayer) {
+        if((photonView != null && photonView.IsMine) || isSingePlayer) {
             ProcessInputs();
             rb.AddForce(transform.up * velocity);
             rb.rotation = turn;
         }
 
-        if (Input.GetKeyDown(KeyCode.F) && trailingObjects.Count > 0)
-        {
+        if (Input.GetKeyDown(KeyCode.F) && trailingObjects.Count > 0) {
             var asteroid = trailingObjects[0];
             trailingObjects.RemoveAt(0);
             
@@ -115,19 +124,13 @@ public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
             if(trailingObjects[i].held) {
                 trailingObjects[i].transform.localScale = Vector3.Lerp(trailingObjects[i].transform.localScale, Vector3.one * 0.06f, Time.deltaTime * 2f);
                 trailingObjects[i].transform.position = Vector3.Lerp(trailingObjects[i].transform.position, (transform.position - (transform.up * (i + 1) * 0.5f)), Time.deltaTime * trailingSpeed);
-
             }
-
 
         //ignore this, this is for later
         // if(Health < 0) GameManager.instance.LeaveRoom();
     }
 
     void ProcessInputs() {
-        //Particles emitten wanneer movement
-        var emit = exhaust.emission;
-        emit.enabled = IsThrust();
-
         //naar voren en naar achteren (W & S)
         if(IsThrust()) velocity = Mathf.Lerp(velocity, maxVelocity, Time.deltaTime * acceleration);
         else velocity = Mathf.Lerp(velocity, 0, Time.deltaTime * acceleration * 2f);
@@ -144,7 +147,7 @@ public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
 
     //Wanneer je orbits exit, de speed dampening.
     public void NeutralizeForce() {
-        rb.velocity /= exitVelocityReduction;
+        if(rb != null) rb.velocity /= exitVelocityReduction;
     }
 
     //Voegt object toe aan trail achter player

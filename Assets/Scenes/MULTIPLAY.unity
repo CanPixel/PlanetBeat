@@ -902,7 +902,7 @@ MonoBehaviour:
   stableOrbitDistance: 400
   orbitEffectDistance: 700
   OrbitSpeed: 10
-  Mass: 0.7
+  Mass: 0.4
   blackHole: 0
 --- !u!58 &233894702
 CircleCollider2D:
@@ -3645,7 +3645,7 @@ MonoBehaviour:
   stableOrbitDistance: 340
   orbitEffectDistance: 700
   OrbitSpeed: 10
-  Mass: 0.8
+  Mass: 0.3
   blackHole: 0
 --- !u!58 &1270864889
 CircleCollider2D:
@@ -9979,7 +9979,7 @@ MonoBehaviour:
   stableOrbitDistance: 450
   orbitEffectDistance: 700
   OrbitSpeed: 10
-  Mass: 1
+  Mass: 0.5
   blackHole: 0
 --- !u!58 &1875540647
 CircleCollider2D:
@@ -10500,18 +10500,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: GameManager
       objectReference: {fileID: 0}
-    - target: {fileID: 7556721354876292497, guid: 24376a230a5c9aa46955676a103d9dee,
-        type: 3}
-      propertyPath: rockA
-      value: 
-      objectReference: {fileID: 4344604995375893222, guid: e16053a8387ab1b479afcbd335c5e3d1,
-        type: 3}
-    - target: {fileID: 7556721354876292497, guid: 24376a230a5c9aa46955676a103d9dee,
-        type: 3}
-      propertyPath: rockB
-      value: 
-      objectReference: {fileID: 5478309528517418620, guid: 4b3ca0d71eb5cf5468ceb9b3055a0174,
-        type: 3}
     - target: {fileID: 7556721354876292502, guid: 24376a230a5c9aa46955676a103d9dee,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -10567,5 +10555,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7556721354876292497, guid: 24376a230a5c9aa46955676a103d9dee,
+        type: 3}
+      propertyPath: rockA
+      value: 
+      objectReference: {fileID: 4344604995375893222, guid: e16053a8387ab1b479afcbd335c5e3d1,
+        type: 3}
+    - target: {fileID: 7556721354876292497, guid: 24376a230a5c9aa46955676a103d9dee,
+        type: 3}
+      propertyPath: rockB
+      value: 
+      objectReference: {fileID: 5478309528517418620, guid: 4b3ca0d71eb5cf5468ceb9b3055a0174,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 24376a230a5c9aa46955676a103d9dee, type: 3}

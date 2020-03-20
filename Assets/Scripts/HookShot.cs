@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
 public class HookShot : MonoBehaviour {
     public LineRenderer lineAim;
@@ -74,6 +75,7 @@ public class HookShot : MonoBehaviour {
     public void CatchObject(GameObject obj) {
         hitObject = true;
         grabbedObj = obj;
+        obj.GetComponent<PhotonView>().RequestOwnership();
     }
 
     public bool IsShooting() {
