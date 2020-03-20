@@ -14,12 +14,18 @@ public class GameManager : MonoBehaviourPunCallbacks {
    public int startAsteroidAmount = 1;
    public float playerScale = 0.02f;
 
+   private int PLAYER_COUNT = 0;
+
    void OnValidate() {
       if(playerScale <= 0) playerScale = 0.01f;
    }
 
    void Start() {
       instance = this;
+   }
+
+   public override void OnEnable() {
+      base.OnEnable();
       AddPlayer();
    }
 
@@ -42,9 +48,12 @@ public class GameManager : MonoBehaviourPunCallbacks {
          return;
       }
       if(PlayerShip.LocalPlayerInstance == null) {
-         var player = PhotonNetwork.Instantiate(playerPrefab.name, new Vector3(210, 0, 0), Quaternion.identity, 0);
+         var play = PLAYER_COUNT;
+         if(play == 0) play = -1;
+         var player = PhotonNetwork.Instantiate(playerPrefab.name, new Vector3(40 * (play), 40 * (play), 0), Quaternion.identity, 0);
          player.transform.localScale = new Vector3(playerScale, playerScale, playerScale);
          Debug.LogFormat("Instantiating "+ PhotonNetwork.NickName +" from {0}", SceneManagerHelper.ActiveSceneName);
+         PLAYER_COUNT++;
       } else Debug.LogFormat("Ignoring scene load for {0}", SceneManagerHelper.ActiveSceneName);
    }
 

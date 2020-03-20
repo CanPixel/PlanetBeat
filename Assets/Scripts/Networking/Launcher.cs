@@ -14,7 +14,7 @@ public class Launcher : MonoBehaviourPunCallbacks {
     bool isConnecting;
 
     [Range(1, 20)]
-    [SerializeField] private byte maxPlayers = 4;
+    [SerializeField] private byte maxPlayers = 5;
 
     void Awake() {
         PhotonNetwork.AutomaticallySyncScene = true;
@@ -49,14 +49,8 @@ public class Launcher : MonoBehaviourPunCallbacks {
         Debug.LogWarningFormat("DISCONNECT was called because of {0}", cause);
     }
 
-    public override void OnJoinedLobby() {
-        
-    }
-
     public override void OnJoinRandomFailed(short returnCode, string message) {
-        Debug.Log("JoinRandomFailed(): No random room available, so we create one.\nCalling: PhotonNetwork.CreateRoom");
-
-        // #Critical: we failed to join a random room, maybe none exists or they are all full. No worries, we create a new room.
+        Debug.Log("JoinRandomFailed(): No random room available, so we create one.");
         PhotonNetwork.CreateRoom(null, new RoomOptions(){MaxPlayers = maxPlayers});
     }
 
