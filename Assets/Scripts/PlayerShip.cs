@@ -78,7 +78,7 @@ public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
         UnityEngine.SceneManagement.SceneManager.sceneLoaded += OnSceneLoaded;
         transform.SetParent(GameObject.FindGameObjectWithTag("GAMEFIELD").transform, false);
 
-        Debug.LogError(photonView.InstantiationId + " | " + photonView.IsMine);
+        Debug.LogError("PLAYER [" + photonView.InstantiationId + "] JOINED");
 
         if(!photonView.IsMine) {
             //Destroy(photonView);
