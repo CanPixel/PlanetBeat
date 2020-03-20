@@ -21,6 +21,8 @@ public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
     private Rigidbody2D rb;
     private float velocity, turn;
 
+    public Component[] networkIgnore;
+
     public float trailingSpeed = 8f;
 
     public bool isSingePlayer = false; 
@@ -81,9 +83,7 @@ public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
         Debug.LogError("PLAYER [" + photonView.InstantiationId + "] JOINED");
 
         if(!photonView.IsMine) {
-            //Destroy(photonView);
-            //Destroy(rb);
-            //Destroy(GetComponent<Collider2D>());
+            foreach(var i in networkIgnore) if(i != null) DestroyImmediate(i);
         }
     }
 
