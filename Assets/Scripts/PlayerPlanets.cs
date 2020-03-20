@@ -60,4 +60,6 @@ public class PlayerPlanets : MonoBehaviour
     }
 
     //we'll make a function that checks this which gets enabled in the sun script
+
+
 }

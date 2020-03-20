@@ -933,13 +933,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentScore: 0
-  resourceValue: 0
   maxScore: 0
   minScore: 0
-  resourceAdded: 0
-  resourceInOrbit: 0
   scoreText: {fileID: 266934215}
-  playerPlanet: {fileID: 1875540640}
+  weakestPlanet: 0
 --- !u!1 &252044720
 GameObject:
   m_ObjectHideFlags: 0
@@ -2265,13 +2262,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentScore: 0
-  resourceValue: 0
   maxScore: 10
   minScore: 0
-  resourceAdded: 0
-  resourceInOrbit: 0
   scoreText: {fileID: 1102906874}
-  playerPlanet: {fileID: 683606555}
+  weakestPlanet: 0
 --- !u!58 &683606558
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -2799,6 +2793,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 964552071}
+  - component: {fileID: 964552072}
   m_Layer: 5
   m_Name: GAME FIELD
   m_TagString: GAMEFIELD
@@ -2830,6 +2825,24 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &964552072
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 964552070}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa27af3838c8ac340b14c0099c027c78, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerPlanet1: {fileID: 683606555}
+  playerPlanet2: {fileID: 233894695}
+  lowestPlayer: {fileID: 0}
+  blackHole: 0
+  playerPlanets: []
+  lowestValue: 0
 --- !u!1 &975042792
 GameObject:
   m_ObjectHideFlags: 0
@@ -3277,7 +3290,9 @@ MonoBehaviour:
   sun: {fileID: 58724069}
   blackhole: {fileID: 305894612}
   roundCountdownText: {fileID: 1738186225}
+  scoreManager: {fileID: 0}
   roundDuration: 10000
+  roundHasEnded: 0
 --- !u!1 &1202013680
 GameObject:
   m_ObjectHideFlags: 0

@@ -35,8 +35,7 @@ public class Sun : MonoBehaviour {
 
         roundHasEnded = false;
 
-        _playerPlanets = scoreManager.GetComponent<PlayerPlanets>(); 
-
+        //_playerPlanets = scoreManager.GetComponent<PlayerPlanets>(); 
     }
 
     void Update() {

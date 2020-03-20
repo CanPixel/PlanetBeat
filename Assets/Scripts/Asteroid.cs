@@ -57,7 +57,7 @@ public class Asteroid : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         asteroidColl = GetComponent<PolygonCollider2D>();
-        infectedAstroid = Instantiate(infectedAstroid, rb.transform.position, Quaternion.identity);
+        //infectedAstroid = Instantiate(infectedAstroid, rb.transform.position, Quaternion.identity);
         infectedAstroid.Stop(); 
 
     }
@@ -106,6 +106,8 @@ public class Asteroid : MonoBehaviour
 
         tempPlanet = col.gameObject;
 
+        //movePoint = col.gameObject.GetComponentInChildren<GameObject>.
+
         if (isOvertimeBomb)
         {
             infectedAstroid.Play(); 
@@ -144,8 +146,8 @@ public class Asteroid : MonoBehaviour
                 rb.velocity = new Vector2(0,0);
 
              
-                float step = .1f * Time.deltaTime;
-                transform.position = Vector3.MoveTowards(transform.position, movePoint.position, step);
+                //float step = .1f * Time.deltaTime;
+               // transform.position = Vector3.MoveTowards(transform.position, movePoint.position, step);
 
                 if (!isOvertimeBomb)
                 {

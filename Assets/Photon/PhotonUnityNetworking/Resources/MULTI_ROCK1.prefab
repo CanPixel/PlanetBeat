@@ -147,13 +147,18 @@ MonoBehaviour:
   rb: {fileID: 0}
   held: 0
   inOrbit: 0
-  orbitSpeed: 0
-  value: 0
+  isOvertimeBomb: 0
+  isInstantBomb: 0
+  orbitSpeed: 30
+  value: 4
   weight: 0
   grabDelay: 0.5
-  orbitDuration: 0
+  orbitDuration: 4
   orbitTimer: 0
-  forceApplied: 0
+  forceApplied: 200
+  infectedAstroid: {fileID: 4395998228405169301, guid: 40d25c53111b9f74782f08a4e4d14bfd,
+    type: 3}
+  movePoint: {fileID: 0}
   tempPlanet: {fileID: 0}
 --- !u!114 &4344604995375893245
 MonoBehaviour:
