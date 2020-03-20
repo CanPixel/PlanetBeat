@@ -27,7 +27,7 @@ public class GameManager : MonoBehaviourPunCallbacks {
       float y = Random.Range(50, 400);
       if(Random.Range(0, 2) == 0) x = -x;
       if(Random.Range(0, 2) == 0) y = -y;
-      var rock = PhotonNetwork.InstantiateSceneObject(Random.Range(0, 2) == 0 ? rockA.name : rockB.name, new Vector3(x, y, 0), Quaternion.identity, 0);
+      var rock = PhotonNetwork.InstantiateSceneObject(Random.Range(0, 2) == 0 ? rockA.name : rockB.name, new Vector3(x, y, 0), Quaternion.identity, 0, null);
    }
 
    private void AddPlayer() {
