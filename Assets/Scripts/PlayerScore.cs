@@ -8,26 +8,25 @@ public class PlayerScore : MonoBehaviour
 
     public float currentScore;
 
-
-    public float resourceValue; 
-
-    public float maxScore;
+    public float maxScore = 100f;
 
     public float minScore;
 
-    public bool resourceAdded;
+    public Text scoreText;
 
-    public bool resourceInOrbit; 
+    PlayerPlanets _playerPlanets;
 
-    public Text scoreText; 
+    public bool weakestPlanet; 
 
-    public GameObject playerPlanet;
+    //public GameObject playerPlanet;
 
-    Asteroid _asteroid; 
+    //Asteroid _asteroid; 
 
     void Start()
     {
-        currentScore = 0; 
+        currentScore = minScore = 0;
+        var go = GameObject.Find("GAME FIELD");
+        _playerPlanets = go.GetComponent<PlayerPlanets>(); 
     }
 
     // Update is called once per frame
@@ -35,23 +34,34 @@ public class PlayerScore : MonoBehaviour
     {
         //AddingResource(); 
         scoreText.text = currentScore.ToString("F0");
+        CheckForRank(); 
     }
 
     
     public void AddingResource(float amount)
     {
-        currentScore += amount; 
-        //playerPlanet.transform.localScale = new Vector2(2f, 2f );             
-    }
-
-    void OnTriggerEnter2D(Collider2D col)
-    {
-        //if the player throws the rock to his planet instead of flying there let it orbit for a bit
-            if (col.gameObject.tag == "Resource")
-            {
-                resourceInOrbit = true;
-                _asteroid = col.gameObject.GetComponent<Asteroid>();
-                _asteroid.inOrbit = true; 
-            }
+        if(currentScore < maxScore)
+            currentScore += amount;  
+        
+        if(currentScore <= minScore)
+        {
+            currentScore = minScore; 
         }
     }
+
+    void CheckForRank()
+    {
+        if(currentScore == _playerPlanets.lowestValue)
+        {
+            //you are the weakest planet 
+            weakestPlanet = true; 
+
+        }
+    }
+}
+
+
+//a check for all player planets 
+//Getcomponent their playerscore script
+//In this script check the score of the player
+// With this information we can select the weakest player at the end of the doomsday event 

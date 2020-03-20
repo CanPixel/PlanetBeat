@@ -11,13 +11,16 @@ public class Sun : MonoBehaviour {
     public GameObject sun;
     public Planet blackhole;
     private UIFloat sunFloatAnim;
-    public Text roundCountdownText; 
+    public Text roundCountdownText;
+
+    public GameObject scoreManager;
+    PlayerPlanets _playerPlanets; 
     
     private float timer = 0;
 
     public float roundDuration = 30f; 
 
-    private bool roundHasEnded;
+    public bool roundHasEnded;
 
     private bool blackHole = false;
     private float transition = 0;
@@ -30,45 +33,26 @@ public class Sun : MonoBehaviour {
 
         timer = roundDuration; 
 
-        roundHasEnded = false; 
+        roundHasEnded = false;
+
+        _playerPlanets = scoreManager.GetComponent<PlayerPlanets>(); 
+
     }
 
     void Update() {
 
-        DoomsdayEvent();
-
-       /* if (timer > interval) SwitchStarState();
-    
-        sun.SetActive(!blackHole);
-        blackhole.gameObject.SetActive(blackHole);
-
-        transform.localScale = Vector2.Lerp(transform.localScale, baseScale * (1 - transition), Time.deltaTime * 7f);
-        if(transition > 0) transition -= Time.deltaTime * 2f;
-
-        sunFloatAnim.enabled = !blackHole;
-        blackhole.enabled = blackHole;
-
-
-
-    */
-
-      
+        DoomsdayEvent();   
     }
 
     protected void SwitchStarState() {
-        timer = 0;
+        timer = roundDuration;
         blackHole = !blackHole;
         transition = 1;
     }
 
     void DoomsdayEvent()
     {
-        roundCountdownText.text = "Doomsday In:" + timer.ToString("F0"); 
-
-        if(timer <= 10f)
-            roundCountdownText.color = Color.red;         
-        else      
-            roundCountdownText.color = Color.green; 
+     
         
         if (!roundHasEnded)  
             timer -= Time.deltaTime;
@@ -76,9 +60,21 @@ public class Sun : MonoBehaviour {
         if(timer <= 0f && roundHasEnded == false)
         {
             SwitchStarState();
-            roundHasEnded = true;
+            //roundHasEnded = true;
             CheckScores();
         }
+
+        roundCountdownText.text = "Doomsday In:" + timer.ToString("F0");
+
+        if (timer <= 10f)
+            roundCountdownText.color = Color.red;
+        else
+            roundCountdownText.color = Color.green;
+
+
+
+
+
 
         sun.SetActive(!blackHole);
         blackhole.gameObject.SetActive(blackHole);
@@ -93,6 +89,9 @@ public class Sun : MonoBehaviour {
 
     void CheckScores()
     {
-        //Check plyer Scores script for the highest and lowest score
+        _playerPlanets.blackHole = true;
+        Debug.Log(_playerPlanets.lowestValue); 
+    
+     
     }
 }
