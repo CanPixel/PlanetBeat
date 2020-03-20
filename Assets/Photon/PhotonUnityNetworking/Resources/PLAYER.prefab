@@ -5275,8 +5275,7 @@ GameObject:
   - component: {fileID: 1662954744308020737}
   - component: {fileID: 8292648904483343033}
   - component: {fileID: 7325083743037304914}
-  - component: {fileID: 4467419271159459263}
-  m_Layer: 5
+  m_Layer: 10
   m_Name: PLAYER
   m_TagString: PLAYERSHIP
   m_Icon: {fileID: 0}
@@ -5323,12 +5322,9 @@ MonoBehaviour:
   exitVelocityReduction: 2.5
   brakingSpeed: 2
   networkIgnore:
-  - {fileID: 4467419271159459263}
+  - {fileID: 1662954744308020766}
   - {fileID: 7716859393941716483}
   - {fileID: 1662954744308020737}
-  - {fileID: 7325083743037304914}
-  - {fileID: 1662954744308020766}
-  - {fileID: 8292648904483343033}
   trailingSpeed: 8
   isSingePlayer: 0
   throwingReduction: 1
@@ -5405,8 +5401,6 @@ MonoBehaviour:
   OwnershipTransfer: 0
   ObservedComponents:
   - {fileID: 7325083743037304914}
-  - {fileID: 3506364950220654683}
-  - {fileID: 4467419271159459263}
   viewIdField: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -5425,22 +5419,6 @@ MonoBehaviour:
   m_SynchronizePosition: 1
   m_SynchronizeRotation: 1
   m_SynchronizeScale: 0
---- !u!114 &4467419271159459263
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3506364950220654661}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0e7cb724808c322458aa4d15f5035fa9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SynchronizeVelocity: 1
-  m_SynchronizeAngularVelocity: 1
-  m_TeleportEnabled: 0
-  m_TeleportIfDistanceGreaterThan: 3
 --- !u!1 &6316525344645099024
 GameObject:
   m_ObjectHideFlags: 0

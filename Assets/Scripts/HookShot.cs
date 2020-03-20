@@ -26,7 +26,7 @@ public class HookShot : MonoBehaviour {
     void Start() {
         rope = transform.GetChild(0).GetComponent<RectTransform>();
         tip = rope.transform.GetChild(0).GetComponent<CircleCollider2D>();
-        foreach(var i in playerColliders) Physics2D.IgnoreCollision(tip, i, true);
+        foreach(var i in playerColliders) if(i != null) Physics2D.IgnoreCollision(tip, i, true);
     }
 
     void Update() {
