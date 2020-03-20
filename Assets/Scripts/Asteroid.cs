@@ -11,6 +11,12 @@ public class Asteroid : MonoBehaviour
 
     public bool inOrbit = false;
 
+    public bool isOvertimeBomb = false;
+
+    public bool isInstantBomb = false; 
+
+
+
 
     public float orbitSpeed;
 
@@ -31,7 +37,13 @@ public class Asteroid : MonoBehaviour
 
     private float collectTimer;
 
-    private PolygonCollider2D asteroidColl; 
+    private PolygonCollider2D asteroidColl;
+
+    public ParticleSystem infectedAstroid;
+
+    GameObject infection;
+
+    public Transform movePoint; 
 
     
 
@@ -44,8 +56,10 @@ public class Asteroid : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        asteroidColl = GetComponent<PolygonCollider2D>(); 
-        
+        asteroidColl = GetComponent<PolygonCollider2D>();
+        infectedAstroid = Instantiate(infectedAstroid, rb.transform.position, Quaternion.identity);
+        infectedAstroid.Stop(); 
+
     }
 
     void Update()
@@ -54,12 +68,11 @@ public class Asteroid : MonoBehaviour
         if (collectTimer > 0) collectTimer -= Time.deltaTime;
 
         asteroidColl.enabled = collectTimer <= 0f; 
-
-
        
     }
     void OnCollisionEnter2D(Collision2D col)
     {
+        //Hook touches a object
         if (col.gameObject.tag == "HOOKSHOT" && !held)
         {
             transform.position = col.transform.position;
@@ -70,21 +83,51 @@ public class Asteroid : MonoBehaviour
             collectTimer = grabDelay; 
         }
 
-        //if the player just flies the resource straight in the planet instantly give him the points 
-        if (col.gameObject.tag == "PLAYERPLANET" && col.gameObject != null)
+        //Grabbed object touches the home planet 
+        if (!isInstantBomb || !isOvertimeBomb)
         {
-            _playerscore = col.gameObject.GetComponent<PlayerScore>();
-            _playerscore.AddingResource(value);
-            gameObject.SetActive(false);
-            held = false;
+            if (col.gameObject.tag == "PLAYERPLANET" && col.gameObject != null && held)
+            {
+                _playerscore = col.gameObject.GetComponent<PlayerScore>();
+                _playerscore.AddingResource(value);
+                gameObject.SetActive(false);
+                held = false;
+            }
         }
     }
+
+
     void OnTriggerEnter2D(Collider2D col)
     {
-        //if the player throws the rock to his planet instead of flying there let it orbit for a bit          
-            if (col.gameObject.tag == "PLAYERPLANET")          
-                _playerscore = col.gameObject.GetComponent<PlayerScore>();
-                tempPlanet = col.gameObject; 
+        //Thrown object enters the orbit of a player planet        
+        if (col.gameObject.tag == "PLAYERPLANET")
+            inOrbit = true; 
+            _playerscore = col.gameObject.GetComponent<PlayerScore>();
+
+        tempPlanet = col.gameObject;
+
+        if (isOvertimeBomb)
+        {
+            infectedAstroid.Play(); 
+           //infectedAstroid = Instantiate(infectedAstroid, rb.transform.position, Quaternion.identity); 
+           
+        }
+    }
+
+    void OnTriggerExit2D(Collider2D col)
+    {
+        //
+        if (col.gameObject.tag == "PLAYERPLANET")
+        {
+            inOrbit = false;
+
+            if (isOvertimeBomb)
+            {
+                infectedAstroid.Stop(); 
+            }
+        }     
+        
+
     }
 
     void OrbitAroundPlanet()
@@ -98,17 +141,36 @@ public class Asteroid : MonoBehaviour
             {
                 transform.RotateAround(tempPlanet.transform.position, Vector3.forward, orbitSpeed * Time.deltaTime);  //How to find the planet has to be reworked! but it rotates the astroid around the players planet                                                                                                                       //start a timer 
                 orbitTimer += Time.deltaTime;
+                rb.velocity = new Vector2(0,0);
 
-                if (orbitTimer >= orbitDuration)  //if the astroid has finished his time in the orbit collect the points 
+             
+                float step = .1f * Time.deltaTime;
+                transform.position = Vector3.MoveTowards(transform.position, movePoint.position, step);
+
+                if (!isOvertimeBomb)
                 {
-                    _playerscore.AddingResource(value);
-                    gameObject.SetActive(false);
-                    inOrbit = false;
-                    held = false; 
-                    //orbitTimer = 0;
+                    if (orbitTimer >= orbitDuration)  //if the astroid has finished his time in the orbit collect the points 
+                    {
+                        _playerscore.AddingResource(value);
+                        gameObject.SetActive(false);
+                        inOrbit = false;
+                        held = false;
+                        //orbitTimer = 0;
+                    }
                 }
-                //lerp resource slowly closer to the planet?
-                Debug.Log("rotate around planet");
+
+                if (isOvertimeBomb)
+                {
+                    infectedAstroid.transform.position = rb.transform.position; 
+
+                    if (orbitTimer >= orbitDuration)
+                    {
+                        _playerscore.AddingResource(value);
+                        orbitTimer = 0;
+                    }
+                }
+                    //lerp resource slowly closer to the planet?
+                    Debug.Log("rotate around planet");                           
             }                      
         }
     }
