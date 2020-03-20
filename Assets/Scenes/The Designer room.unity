@@ -184,7 +184,9 @@ MonoBehaviour:
   orbitDuration: 3
   orbitTimer: 0
   forceApplied: 0
-  infectedAstroid: {fileID: 0}
+  infectedAstroid: {fileID: 4395998228405169301, guid: 40d25c53111b9f74782f08a4e4d14bfd,
+    type: 3}
+  movePoint: {fileID: 383885190}
   tempPlanet: {fileID: 383885189}
 --- !u!50 &49713958
 Rigidbody2D:
@@ -553,6 +555,7 @@ MonoBehaviour:
   forceApplied: 0
   infectedAstroid: {fileID: 4395998228405169301, guid: 40d25c53111b9f74782f08a4e4d14bfd,
     type: 3}
+  movePoint: {fileID: 383885190}
   tempPlanet: {fileID: 383885189}
 --- !u!50 &62298800
 Rigidbody2D:
@@ -873,7 +876,9 @@ MonoBehaviour:
   orbitDuration: 10
   orbitTimer: 0
   forceApplied: 0
-  infectedAstroid: {fileID: 0}
+  infectedAstroid: {fileID: 4395998228405169301, guid: 40d25c53111b9f74782f08a4e4d14bfd,
+    type: 3}
+  movePoint: {fileID: 383885190}
   tempPlanet: {fileID: 383885189}
 --- !u!1 &108656110
 GameObject:
@@ -4338,7 +4343,9 @@ MonoBehaviour:
   orbitDuration: 3
   orbitTimer: 0
   forceApplied: 0
-  infectedAstroid: {fileID: 0}
+  infectedAstroid: {fileID: 4395998228405169301, guid: 40d25c53111b9f74782f08a4e4d14bfd,
+    type: 3}
+  movePoint: {fileID: 383885190}
   tempPlanet: {fileID: 383885189}
 --- !u!50 &1412924622
 Rigidbody2D:
@@ -10437,7 +10444,9 @@ MonoBehaviour:
   orbitDuration: 3
   orbitTimer: 0
   forceApplied: 600
-  infectedAstroid: {fileID: 0}
+  infectedAstroid: {fileID: 4395998228405169301, guid: 40d25c53111b9f74782f08a4e4d14bfd,
+    type: 3}
+  movePoint: {fileID: 383885190}
   tempPlanet: {fileID: 383885189}
 --- !u!50 &2027229584
 Rigidbody2D:
