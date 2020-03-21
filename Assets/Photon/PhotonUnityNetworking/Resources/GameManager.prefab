@@ -45,6 +45,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerPrefab: {fileID: 3506364950220654661, guid: 0d28bdd659df51e43a630a02f1a77fab,
     type: 3}
+  PlayerName: {fileID: 4745404921079221811, guid: baff3361381de104ea6af44b7fe04136,
+    type: 3}
   rocks:
   - {fileID: 4344604995375893222, guid: e16053a8387ab1b479afcbd335c5e3d1, type: 3}
+  startAsteroidAmount: 1
   playerScale: 0.02

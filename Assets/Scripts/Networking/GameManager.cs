@@ -8,13 +8,15 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviourPunCallbacks {
    public static GameManager instance;
 
-   public GameObject playerPrefab;
+   public GameObject playerPrefab, PlayerName;
    public GameObject[] rocks;
    [Range(0, 10)]
    public int startAsteroidAmount = 1;
    public float playerScale = 0.02f;
 
    private int PLAYER_COUNT = 0;
+
+   public static Dictionary<string, GameObject> playerLabels = new Dictionary<string, GameObject>();
 
    void OnValidate() {
       if(playerScale <= 0) playerScale = 0.01f;
@@ -26,7 +28,7 @@ public class GameManager : MonoBehaviourPunCallbacks {
 
    public override void OnEnable() {
       base.OnEnable();
-      AddPlayer();
+      AddPlayer(PlayerShip.PLAYERNAME);
    }
 
    void Update() {
@@ -42,7 +44,7 @@ public class GameManager : MonoBehaviourPunCallbacks {
       var rock = PhotonNetwork.InstantiateSceneObject(randRock.name, new Vector3(x, y, 0), Quaternion.identity, 0, null);
    }
 
-   private void AddPlayer() {
+   private void AddPlayer(string name) {
       if(playerPrefab == null) {
          Debug.LogError("No PlayerPrefab reference!");
          return;
@@ -52,9 +54,12 @@ public class GameManager : MonoBehaviourPunCallbacks {
          if(play == 0) play = -1;
          var player = PhotonNetwork.Instantiate(playerPrefab.name, new Vector3(40 * (play), 40 * (play), 0), Quaternion.identity, 0);
          player.transform.localScale = new Vector3(playerScale, playerScale, playerScale);
-         Debug.LogFormat("Instantiating "+ PhotonNetwork.NickName +" from {0}", SceneManagerHelper.ActiveSceneName);
          PLAYER_COUNT++;
-      } else Debug.LogFormat("Ignoring scene load for {0}", SceneManagerHelper.ActiveSceneName);
+
+         var playerName = Instantiate(PlayerName, player.transform.position, Quaternion.identity);
+         var pN = playerName.GetComponent<PlayerName>();
+         pN.SetHost(player, name);
+      } 
    }
 
    void LoadArena() {
@@ -66,30 +71,29 @@ public class GameManager : MonoBehaviourPunCallbacks {
    }
 
    public override void OnLeftRoom() {
+      PhotonNetwork.LeaveLobby();
+      PhotonNetwork.Disconnect();
       SceneManager.LoadScene(0);
    }
 
    public void LeaveRoom() {
+      playerLabels.Clear();
       PhotonNetwork.LeaveRoom();
+      PhotonNetwork.Disconnect();
    }
 
    public override void OnPlayerEnteredRoom(Player other) {
-      Debug.LogFormat("Player {0} entered the room!", other.NickName);
-
+      //Debug.LogFormat("Player {0} entered the room!", other.NickName);
       base.OnPlayerEnteredRoom(other);
-      AddPlayer();
-    //  if(PhotonNetwork.IsMasterClient) {
-     //    Debug.LogFormat("OnPlayerEnteredRoom IsMasterClient {0}", PhotonNetwork.IsMasterClient);
-      //   LoadArena();
-      //}
+      Debug.LogError(other.NickName + " JOINED");
    }
 
    public override void OnPlayerLeftRoom(Player other) {
-      Debug.LogFormat("Player {0} left the room!", other.NickName); // seen when other disconnects
-
-    //  if (PhotonNetwork.IsMasterClient) {
-     //    Debug.Log("You are the MasterClient now"); // called before OnPlayerLeftRoom
-      //   LoadArena();
-     // }
+      PhotonNetwork.DestroyPlayerObjects(other); 
+      Debug.LogErrorFormat("{0} LEFT", other.NickName);
+      if(playerLabels.ContainsKey(other.NickName)) {
+         DestroyImmediate(playerLabels[other.NickName]);
+         playerLabels.Remove(other.NickName);
+      }
    }
 }

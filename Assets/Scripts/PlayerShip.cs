@@ -32,14 +32,23 @@ public class PlayerShip : MonoBehaviourPunCallbacks {//, IPunObservable {
 
     //Voor het herkennen van de local player (die jij speelt) ivm network
     public static GameObject LocalPlayerInstance;
-
-    //private string PlayerName = "";
+    public static string PLAYERNAME;
 
     #region IPunObservable implementation
         public override void OnEnable() {
             base.OnEnable();
             PhotonNetwork.AddCallbackTarget(this);
             transform.SetParent(GameObject.FindGameObjectWithTag("GAMEFIELD").transform, false);
+
+            //Debug.LogError(photonView.Owner.NickName + " [" + photonView.InstantiationId + "] JOINED");
+            if(!photonView.IsMine) {
+                var playerNameTag = Instantiate(Resources.Load("PlayerName"), transform.position, Quaternion.identity) as GameObject;
+                var pN = playerNameTag.GetComponent<PlayerName>();
+                pN.SetHost(gameObject, photonView.Owner.NickName);
+                PLAYERNAME = photonView.Owner.NickName;
+                GameManager.playerLabels.Add(PLAYERNAME, playerNameTag);
+                foreach(var i in networkIgnore) if(i != null) DestroyImmediate(i);
+            } 
         }
 
         //public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
@@ -75,14 +84,14 @@ public class PlayerShip : MonoBehaviourPunCallbacks {//, IPunObservable {
     }
    // #endregion
 
+   public static void SetName(string name) {
+       PLAYERNAME = name;
+   }
+
     void Start() {
         rb = GetComponent<Rigidbody2D>();
         exhaust = GetComponentInChildren<ParticleSystem>();
      //   UnityEngine.SceneManagement.SceneManager.sceneLoaded += OnSceneLoaded;
-        Debug.LogError("PLAYER [" + photonView.InstantiationId + "] JOINED");
-        if(!photonView.IsMine) {
-            foreach(var i in networkIgnore) if(i != null) DestroyImmediate(i);
-        }
     }
 
     void Awake() {
@@ -92,9 +101,9 @@ public class PlayerShip : MonoBehaviourPunCallbacks {//, IPunObservable {
 
     void Update() {
         if((photonView != null && photonView.IsMine)) {
-        //Particles emitten wanneer movement
-        var emit = exhaust.emission;
-        emit.enabled = IsThrust();
+            //Particles emitten wanneer movement
+            var emit = exhaust.emission;
+            emit.enabled = IsThrust();
         }
 
         if (!isSingePlayer) {
@@ -104,8 +113,10 @@ public class PlayerShip : MonoBehaviourPunCallbacks {//, IPunObservable {
 
         if((photonView != null && photonView.IsMine) || isSingePlayer) {
             ProcessInputs();
-            rb.AddForce(transform.up * velocity);
-            rb.rotation = turn;
+            if(rb != null) {
+                rb.AddForce(transform.up * velocity);
+                rb.rotation = turn;
+            }
         }
 
         if (Input.GetKeyDown(KeyCode.F) && trailingObjects.Count > 0) {
@@ -153,8 +164,6 @@ public class PlayerShip : MonoBehaviourPunCallbacks {//, IPunObservable {
         var script = obj.GetComponent<Asteroid>();
         if(script != null) trailingObjects.Add(script);
     }
-
-  
 
     #region MOVEMENT_INPUTS
     public bool IsThrust() {

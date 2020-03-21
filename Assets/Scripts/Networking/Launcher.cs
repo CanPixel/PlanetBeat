@@ -23,10 +23,13 @@ public class Launcher : MonoBehaviourPunCallbacks {
     }
 
     public void Connect() {
+        PhotonNetwork.Disconnect();
+
         isConnecting = PhotonNetwork.ConnectUsingSettings();
 
         if(progressLabel != null) progressLabel.SetActive(true);
         if(controlPanel != null) controlPanel.SetActive(false);
+        
         if(!PhotonNetwork.IsConnected) PhotonNetwork.JoinRandomRoom();
         else {
             PhotonNetwork.ConnectUsingSettings();
@@ -44,9 +47,9 @@ public class Launcher : MonoBehaviourPunCallbacks {
     }
 
     public override void OnDisconnected(DisconnectCause cause) {
-        progressLabel.SetActive(false);
-        controlPanel.SetActive(true);
-        Debug.LogWarningFormat("DISCONNECT was called because of {0}", cause);
+        if(progressLabel != null) progressLabel.SetActive(false);
+        if(controlPanel != null) controlPanel.SetActive(true);
+        //Debug.LogWarningFormat("DISCONNECT was called because of {0}", cause);
     }
 
     public override void OnJoinRandomFailed(short returnCode, string message) {

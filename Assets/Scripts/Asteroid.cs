@@ -73,6 +73,15 @@ public class Asteroid : MonoBehaviourPun
     }
     void OnCollisionEnter2D(Collision2D col)
     {
+        ///CAN CODE
+
+        if(col.gameObject.tag == "PLAYERSHIP") {
+            photonView.TransferOwnership(col.gameObject.GetPhotonView().ViewID);
+        }
+
+        ///
+        
+
         //Hook touches a object
         if (col.gameObject.tag == "HOOKSHOT" && !held)
         {
@@ -173,7 +182,7 @@ public class Asteroid : MonoBehaviourPun
                     }
                 }
                     //lerp resource slowly closer to the planet?
-                    Debug.Log("rotate around planet");                           
+                 //   Debug.Log("rotate around planet");                           
             }                      
         }
     }

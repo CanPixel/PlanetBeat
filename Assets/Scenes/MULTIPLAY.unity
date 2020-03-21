@@ -4511,6 +4511,17 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 0}
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &1823791649
@@ -9979,7 +9990,7 @@ MonoBehaviour:
   stableOrbitDistance: 450
   orbitEffectDistance: 700
   OrbitSpeed: 10
-  Mass: 0.5
+  Mass: 0.35
   blackHole: 0
 --- !u!58 &1875540647
 CircleCollider2D:
@@ -10500,6 +10511,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: GameManager
       objectReference: {fileID: 0}
+    - target: {fileID: 7556721354876292497, guid: 24376a230a5c9aa46955676a103d9dee,
+        type: 3}
+      propertyPath: rockA
+      value: 
+      objectReference: {fileID: 4344604995375893222, guid: e16053a8387ab1b479afcbd335c5e3d1,
+        type: 3}
+    - target: {fileID: 7556721354876292497, guid: 24376a230a5c9aa46955676a103d9dee,
+        type: 3}
+      propertyPath: rockB
+      value: 
+      objectReference: {fileID: 5478309528517418620, guid: 4b3ca0d71eb5cf5468ceb9b3055a0174,
+        type: 3}
     - target: {fileID: 7556721354876292502, guid: 24376a230a5c9aa46955676a103d9dee,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -10555,17 +10578,5 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7556721354876292497, guid: 24376a230a5c9aa46955676a103d9dee,
-        type: 3}
-      propertyPath: rockA
-      value: 
-      objectReference: {fileID: 4344604995375893222, guid: e16053a8387ab1b479afcbd335c5e3d1,
-        type: 3}
-    - target: {fileID: 7556721354876292497, guid: 24376a230a5c9aa46955676a103d9dee,
-        type: 3}
-      propertyPath: rockB
-      value: 
-      objectReference: {fileID: 5478309528517418620, guid: 4b3ca0d71eb5cf5468ceb9b3055a0174,
-        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 24376a230a5c9aa46955676a103d9dee, type: 3}
