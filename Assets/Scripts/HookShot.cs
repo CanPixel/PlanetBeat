@@ -75,7 +75,7 @@ public class HookShot : MonoBehaviour {
     public void CatchObject(GameObject obj) {
         hitObject = true;
         grabbedObj = obj;
-        obj.GetComponent<PhotonView>().RequestOwnership();
+        obj.GetComponent<PhotonView>().TransferOwnership(hostPlayer.photonView.Controller.ActorNumber);
     }
 
     public bool IsShooting() {

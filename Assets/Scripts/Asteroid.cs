@@ -17,42 +17,24 @@ public class Asteroid : MonoBehaviourPun
     public bool isInstantBomb = false; 
 
 
-
-
     public float orbitSpeed;
-
     public float value;
-
     public float weight;
-
     float throwAirTime;
-
     public float grabDelay = .5f; 
 
 
     public float orbitDuration;
-
      public float orbitTimer;
-
     public float forceApplied;
-
     private float collectTimer;
-
     private PolygonCollider2D asteroidColl;
-
     public ParticleSystem infectedAstroid;
-
     GameObject infection;
-
     public Transform movePoint; 
 
-    
-
     public GameObject tempPlanet;
-
     PlayerScore _playerscore;
-
-
 
     void Start()
     {
@@ -76,7 +58,9 @@ public class Asteroid : MonoBehaviourPun
         ///CAN CODE
 
         if(col.gameObject.tag == "PLAYERSHIP") {
-            photonView.TransferOwnership(col.gameObject.GetPhotonView().ViewID);
+            if(photonView != null) {
+                photonView.TransferOwnership(PhotonNetwork.LocalPlayer.ActorNumber);//col.gameObject.GetPhotonView().ViewID);
+            }
         }
 
         ///

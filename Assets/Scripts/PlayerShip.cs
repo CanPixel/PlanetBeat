@@ -43,7 +43,6 @@ public class PlayerShip : MonoBehaviourPunCallbacks {//, IPunObservable {
             PhotonNetwork.AddCallbackTarget(this);
             transform.SetParent(GameObject.FindGameObjectWithTag("GAMEFIELD").transform, false);
 
-            //Debug.LogError(photonView.Owner.NickName + " [" + photonView.InstantiationId + "] JOINED");
             if(photonView != null && !photonView.IsMine) {
                 exLastPos = transform.position;
                 var playerNameTag = Instantiate(Resources.Load("PlayerName"), transform.position, Quaternion.identity) as GameObject;
@@ -99,8 +98,7 @@ public class PlayerShip : MonoBehaviourPunCallbacks {//, IPunObservable {
     }
 
     void Awake() {
-        if(photonView == null) return;
-        if(photonView.IsMine) PlayerShip.LocalPlayerInstance = this.gameObject;       
+        if(photonView != null && photonView.IsMine) PlayerShip.LocalPlayerInstance = this.gameObject;       
     }
 
     void Update() {
