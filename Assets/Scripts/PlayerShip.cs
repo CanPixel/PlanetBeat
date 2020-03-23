@@ -44,7 +44,7 @@ public class PlayerShip : MonoBehaviourPunCallbacks {//, IPunObservable {
             transform.SetParent(GameObject.FindGameObjectWithTag("GAMEFIELD").transform, false);
 
             //Debug.LogError(photonView.Owner.NickName + " [" + photonView.InstantiationId + "] JOINED");
-            if(!photonView.IsMine) {
+            if(photonView != null && !photonView.IsMine) {
                 exLastPos = transform.position;
                 var playerNameTag = Instantiate(Resources.Load("PlayerName"), transform.position, Quaternion.identity) as GameObject;
                 var pN = playerNameTag.GetComponent<PlayerName>();
@@ -105,18 +105,19 @@ public class PlayerShip : MonoBehaviourPunCallbacks {//, IPunObservable {
 
     void Update() {
         //Particles emitten wanneer movement
-        if((photonView != null && photonView.IsMine)) {
-            var emit = exhaust.emission;
-            emit.enabled = IsThrust();
-        }
-        if(photonView != null && !photonView.IsMine) {
-            if(exLastTime > 0) exLastTime -= Time.deltaTime;
-            else {
-                exLastPos = transform.position;
-                exLastTime = 0.25f;
+        if(photonView != null) {
+            if(photonView.IsMine) {
+                var emit = exhaust.emission;
+                emit.enabled = IsThrust();
+            } else {
+                if(exLastTime > 0) exLastTime -= Time.deltaTime;
+                else {
+                    exLastPos = transform.position;
+                    exLastTime = 0.25f;
+                }
+                var emit = exhaust.emission;
+                emit.enabled = Mathf.Abs(Vector3.Distance(exLastPos, transform.position)) > 0.05f;
             }
-            var emit = exhaust.emission;
-            emit.enabled = Mathf.Abs(Vector3.Distance(exLastPos, transform.position)) > 0.05f;
         }
 
         if (!isSingePlayer) {
