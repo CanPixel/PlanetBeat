@@ -37,10 +37,12 @@ public class PlayerShip : MonoBehaviourPunCallbacks {//, IPunObservable {
     private Vector3 exLastPos;
     private float exLastTime;
 
+    public HookShot hookShot;
+
     #region IPunObservable implementation
         public override void OnEnable() {
             base.OnEnable();
-            PhotonNetwork.AddCallbackTarget(this);
+            //PhotonNetwork.AddCallbackTarget(this);
             transform.SetParent(GameObject.FindGameObjectWithTag("GAMEFIELD").transform, false);
 
             if(photonView != null && !photonView.IsMine) {
@@ -62,7 +64,6 @@ public class PlayerShip : MonoBehaviourPunCallbacks {//, IPunObservable {
 
     //Lijn aan asteroids/objecten achter de speler
     [HideInInspector] public List<Asteroid> trailingObjects = new List<Asteroid>();
-
     private ParticleSystem exhaust;
 
  /*    #region Network player spawning
@@ -83,7 +84,7 @@ public class PlayerShip : MonoBehaviourPunCallbacks {//, IPunObservable {
     public override void OnDisable() {
         base.OnDisable();
        // UnityEngine.SceneManagement.SceneManager.sceneLoaded -= OnSceneLoaded;
-        PhotonNetwork.RemoveCallbackTarget(this);
+        //PhotonNetwork.RemoveCallbackTarget(this);
     }
    // #endregion
 
@@ -98,24 +99,22 @@ public class PlayerShip : MonoBehaviourPunCallbacks {//, IPunObservable {
     }
 
     void Awake() {
-        if(photonView != null && photonView.IsMine) PlayerShip.LocalPlayerInstance = this.gameObject;       
+        if(IsThisClient()) PlayerShip.LocalPlayerInstance = this.gameObject;       
     }
 
     void Update() {
         //Particles emitten wanneer movement
-        if(photonView != null) {
-            if(photonView.IsMine) {
-                var emit = exhaust.emission;
-                emit.enabled = IsThrust();
-            } else {
-                if(exLastTime > 0) exLastTime -= Time.deltaTime;
-                else {
-                    exLastPos = transform.position;
-                    exLastTime = 0.25f;
-                }
-                var emit = exhaust.emission;
-                emit.enabled = Mathf.Abs(Vector3.Distance(exLastPos, transform.position)) > 0.05f;
+        if(IsThisClient()) {
+            var emit = exhaust.emission;
+            emit.enabled = IsThrust();
+        } else {
+            if(exLastTime > 0) exLastTime -= Time.deltaTime;
+            else {
+                exLastPos = transform.position;
+                exLastTime = 0.25f;
             }
+            var emit = exhaust.emission;
+            emit.enabled = Mathf.Abs(Vector3.Distance(exLastPos, transform.position)) > 0.025f;
         }
 
         if (!isSingePlayer) {
@@ -123,7 +122,7 @@ public class PlayerShip : MonoBehaviourPunCallbacks {//, IPunObservable {
             if (!photonView.IsMine && PhotonNetwork.IsConnected) return;
         }
 
-        if((photonView != null && photonView.IsMine) || isSingePlayer) {
+        if(IsThisClient() || isSingePlayer) {
             ProcessInputs();
             if(rb != null) {
                 rb.AddForce(transform.up * velocity);
@@ -175,6 +174,15 @@ public class PlayerShip : MonoBehaviourPunCallbacks {//, IPunObservable {
     public void AddAsteroid(GameObject obj) {
         var script = obj.GetComponent<Asteroid>();
         if(script != null) trailingObjects.Add(script);
+    }
+
+    public bool IsThisClient() {
+        return photonView != null && photonView.IsMine;
+    }
+
+    [PunRPC]
+    public void CastHook(int viewID) {
+        if(photonView.ViewID == viewID) hookShot.CastHook();
     }
 
     #region MOVEMENT_INPUTS

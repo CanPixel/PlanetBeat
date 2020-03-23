@@ -40,10 +40,9 @@ public class HookShot : MonoBehaviour {
             var hit = Physics2D.Raycast(rope.transform.position, rope.transform.TransformDirection(rope.transform.forward) * hookShotRange);
             lineAim.SetPosition(1, hit.point);
         }
-        if(Input.GetKeyUp(KeyCode.Space) && triggerHook && shootTimer <= 0 && (hostPlayer.photonView != null && hostPlayer.photonView.IsMine)) {
-            isShootingHook = true;
-            triggerHook = false;
-            shootTimer = 0.1f;
+        if(Input.GetKeyUp(KeyCode.Space) && triggerHook && shootTimer <= 0) {
+            if(hostPlayer.IsThisClient()) hostPlayer.photonView.RPC("CastHook", RpcTarget.All, hostPlayer.photonView.ViewID);
+            else if(hostPlayer.isSingePlayer) CastHook();
         }
 
         if(shootTimer > 0) shootTimer += Time.deltaTime;
@@ -63,6 +62,12 @@ public class HookShot : MonoBehaviour {
         }
     }
 
+    public void CastHook() {
+        isShootingHook = true;
+        triggerHook = false;
+        shootTimer = 0.1f;
+    }
+
     protected void ResetHook() {
         triggerHook = hitObject = isShootingHook = false;
         rope.sizeDelta = new Vector2(rope.sizeDelta.x, 0);
@@ -75,7 +80,8 @@ public class HookShot : MonoBehaviour {
     public void CatchObject(GameObject obj) {
         hitObject = true;
         grabbedObj = obj;
-        obj.GetComponent<PhotonView>().TransferOwnership(hostPlayer.photonView.Controller.ActorNumber);
+        var photon = obj.GetComponent<PhotonView>();
+        if(photon != null) photon.TransferOwnership(hostPlayer.photonView.Controller.ActorNumber);
     }
 
     public bool IsShooting() {

@@ -5328,6 +5328,7 @@ MonoBehaviour:
   trailingSpeed: 8
   isSingePlayer: 0
   throwingReduction: 1
+  hookShot: {fileID: 1446986111338685776}
   trailingObjects: []
 --- !u!50 &1662954744308020766
 Rigidbody2D:
