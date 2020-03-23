@@ -2800,7 +2800,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &988410329
 Transform:
   m_ObjectHideFlags: 0
@@ -2829,7 +2829,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   serialAddress: 0
   receivedstring: 
-  rotation: 0
 --- !u!1 &994369340
 GameObject:
   m_ObjectHideFlags: 0
