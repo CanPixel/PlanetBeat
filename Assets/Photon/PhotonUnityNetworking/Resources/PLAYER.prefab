@@ -5317,17 +5317,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxVelocity: 1
-  acceleration: 25
-  turningSpeed: 4
-  exitVelocityReduction: 2.5
+  acceleration: 10
+  turningSpeed: 6.84
+  exitVelocityReduction: 1
   brakingSpeed: 2
   networkIgnore:
   - {fileID: 1662954744308020766}
   - {fileID: 7716859393941716483}
   - {fileID: 1662954744308020737}
-  trailingSpeed: 8
+  trailingSpeed: 10
   isSingePlayer: 0
-  throwingReduction: 1
+  throwingReduction: 0.7
   hookShot: {fileID: 1446986111338685776}
   trailingObjects: []
 --- !u!50 &1662954744308020766

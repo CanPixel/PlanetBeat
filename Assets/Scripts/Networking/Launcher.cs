@@ -13,6 +13,9 @@ public class Launcher : MonoBehaviourPunCallbacks {
 
     bool isConnecting;
 
+    [Space(15)]
+    public string LEVELNAME = "MULTIPLAY";
+
     [Range(1, 20)]
     [SerializeField] private byte maxPlayers = 5;
 
@@ -59,7 +62,7 @@ public class Launcher : MonoBehaviourPunCallbacks {
 
     public override void OnJoinedRoom() {
         Debug.Log("OnJoinedRoom(): Now this client is in a room.");
-        PhotonNetwork.LoadLevel("MULTIPLAY");
+        PhotonNetwork.LoadLevel(LEVELNAME);
     }
 
     #endregion
