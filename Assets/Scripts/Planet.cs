@@ -9,8 +9,8 @@ public class Planet : MonoBehaviour {
 
     private GameObject trail, orbit;
     [Header("PHYSICS")]
-    [Range(100, 800)]
-    public float stableOrbitDistance = 200;
+    //[Range(100, 800)]
+    //public float stableOrbitDistance = 200;
     [Range(200, 1000)]
     public float orbitEffectDistance = 700;
     public float OrbitSpeed = 4;
@@ -38,7 +38,7 @@ public class Planet : MonoBehaviour {
         trail = GetComponentInChildren<TrailRenderer>().gameObject;
         orbit = Util.FindChildWithTag(transform, "ORBIT");
         orbitScr = orbit.GetComponent<Orbit>();
-        orbitScr.SetStableOrbit(stableOrbitDistance);
+      //  orbitScr.SetStableOrbit(stableOrbitDistance);
     }
 
     void Update() {

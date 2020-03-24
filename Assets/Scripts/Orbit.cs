@@ -10,7 +10,7 @@ public class Orbit : MonoBehaviour {
         gravityRing.transform.localPosition = new Vector3(ringOffs, 0, 0);
     }
 
-    public void SetStableOrbit(float i) {
+    //public void SetStableOrbit(float i) {
     ///////    stableRing.transform.localPosition = new Vector3(i, 0, 0);
-    }
+    //}
 }

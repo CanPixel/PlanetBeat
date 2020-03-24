@@ -5181,7 +5181,6 @@ GameObject:
   - component: {fileID: 1446986112751458338}
   - component: {fileID: 1446986112751458337}
   - component: {fileID: 1446986112751458336}
-  - component: {fileID: 1446986112751458339}
   m_Layer: 5
   m_Name: Ship
   m_TagString: Untagged
@@ -5230,7 +5229,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -5245,21 +5244,6 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
---- !u!114 &1446986112751458339
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1446986112751458341}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -900027084, guid: f70555f144d8491a825f0804e09c671c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_EffectColor: {r: 1, g: 0, b: 0, a: 1}
-  m_EffectDistance: {x: 20, y: -20}
-  m_UseGraphicAlpha: 1
 --- !u!1 &3506364950220654661
 GameObject:
   m_ObjectHideFlags: 0
@@ -5316,6 +5300,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1556da50f9294094188d543941f9cb99, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  emit: {fileID: 21300000, guid: 575c819abd873da49b1181b2793df8d8, type: 3}
+  noEmit: {fileID: 21300000, guid: 9afb81dacc602c94087666bd60ba809b, type: 3}
+  ship: {fileID: 1446986112751458336}
   maxVelocity: 1
   acceleration: 10
   turningSpeed: 6.84
@@ -5326,7 +5313,6 @@ MonoBehaviour:
   - {fileID: 7716859393941716483}
   - {fileID: 1662954744308020737}
   trailingSpeed: 10
-  isSingePlayer: 0
   throwingReduction: 0.7
   hookShot: {fileID: 1446986111338685776}
   trailingObjects: []

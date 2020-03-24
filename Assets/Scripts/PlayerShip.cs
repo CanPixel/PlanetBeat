@@ -3,8 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
+using UnityEngine.UI;
 
 public class PlayerShip : MonoBehaviourPunCallbacks {
+    public bool isSinglePlayer {
+        get {return GameManager.instance != null && GameManager.instance.isSinglePlayer;}
+    } 
+
+    public Sprite emit, noEmit;
+    public Image ship;
+
+    [Space(10)]
     #region MOVEMENT
         public float maxVelocity = 5;
         public float acceleration = 0.1f;
@@ -25,8 +34,6 @@ public class PlayerShip : MonoBehaviourPunCallbacks {
 
     public float trailingSpeed = 8f;
 
-    public bool isSingePlayer = false; 
-
     [Range(0.1f,10)]
     public float throwingReduction = 1f; 
 
@@ -44,7 +51,7 @@ public class PlayerShip : MonoBehaviourPunCallbacks {
             base.OnEnable();
             transform.SetParent(GameObject.FindGameObjectWithTag("GAMEFIELD").transform, false);
 
-            if(photonView != null && !photonView.IsMine) {
+            if(!isSinglePlayer && photonView != null && !photonView.IsMine) {
                 exLastPos = transform.position;
                 var playerNameTag = Instantiate(Resources.Load("PlayerName"), transform.position, Quaternion.identity) as GameObject;
                 var pN = playerNameTag.GetComponent<PlayerName>();
@@ -79,25 +86,27 @@ public class PlayerShip : MonoBehaviourPunCallbacks {
 
     void Update() {
         //Particles emitten wanneer movement
-        if(IsThisClient() || isSingePlayer) {
-            var emit = exhaust.emission;
-            emit.enabled = IsThrust();
+        if(IsThisClient() || isSinglePlayer) {
+            var emitting = exhaust.emission;
+            emitting.enabled = IsThrust();
+            ship.sprite = IsThrust() ? emit : noEmit;
         } else {
             if(exLastTime > 0) exLastTime -= Time.deltaTime;
             else {
                 exLastPos = transform.position;
                 exLastTime = 0.25f;
             }
-            var emit = exhaust.emission;
-            emit.enabled = Mathf.Abs(Vector3.Distance(exLastPos, transform.position)) > 0.025f;
+            var emitting = exhaust.emission;
+            emitting.enabled = Mathf.Abs(Vector3.Distance(exLastPos, transform.position)) > 0.025f;
+            ship.sprite = IsThrust() ? emit : noEmit;
         }
 
-        if (!isSingePlayer) {
+        if (!isSinglePlayer) {
             if (photonView == null) return;
             if (!photonView.IsMine && PhotonNetwork.IsConnected) return;
         }
 
-        if(IsThisClient() || isSingePlayer) {
+        if(IsThisClient() || isSinglePlayer) {
             ProcessInputs();
             if(rb != null) {
                 rb.AddForce(transform.up * velocity);
@@ -112,6 +121,12 @@ public class PlayerShip : MonoBehaviourPunCallbacks {
             asteroid.transform.TransformDirection(new Vector2(transform.forward.x * asteroid.transform.forward.x, transform.forward.y * asteroid.transform.forward.y));
             asteroid.rb.velocity = rb.velocity / throwingReduction; 
             asteroid.ReleaseAsteroid(); 
+        }
+
+        //Removes asteroids that got destroyed / eaten by the sun
+        for(int i = 0; i < trailingObjects.Count; i++) if(trailingObjects[i] == null) {
+            trailingObjects.RemoveAt(i);
+            i--;
         }
 
         //Trailing object positions & (stiekem) een kleinere scaling, anders waren ze wel fk bulky

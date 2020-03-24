@@ -1,7 +1,7 @@
 - Asteroids can spawn in players
 - Multiple players trailinglist for the same asteroid.
-- asteroid spawning through RPC
 - player leave should de-own asteroids
+
 - asteroid belts
 
 

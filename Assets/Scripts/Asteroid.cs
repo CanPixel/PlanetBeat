@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 
-public class Asteroid : MonoBehaviourPun {
+public class Asteroid : MonoBehaviour {
     [HideInInspector]
     public Rigidbody2D rb;
 
@@ -50,13 +50,6 @@ public class Asteroid : MonoBehaviourPun {
     }
 
     void OnCollisionEnter2D(Collision2D col) {
-        ///CAN CODE
-        if(col.gameObject.tag == "PLAYERSHIP") {
-            if(photonView != null) {
-                photonView.TransferOwnership(PhotonNetwork.LocalPlayer.ActorNumber);
-            }
-        }
-
         //Hook touches a object
         if (col.gameObject.tag == "HOOKSHOT" && !held) {
             transform.position = col.transform.position;

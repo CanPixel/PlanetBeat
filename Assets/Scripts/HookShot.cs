@@ -42,7 +42,7 @@ public class HookShot : MonoBehaviour {
         }
         if(Input.GetKeyUp(KeyCode.Space) && triggerHook && shootTimer <= 0) {
             if(hostPlayer.IsThisClient()) hostPlayer.photonView.RPC("CastHook", RpcTarget.All, hostPlayer.photonView.ViewID);
-            else if(hostPlayer.isSingePlayer) CastHook();
+            else if(hostPlayer.isSinglePlayer) CastHook();
         }
 
         if(shootTimer > 0) shootTimer += Time.deltaTime;

@@ -6,9 +6,13 @@ using Photon.Realtime;
 using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviourPunCallbacks {
-   public static GameManager instance;
+   public bool isSinglePlayer = false;
 
-   public GameObject playerPrefab, PlayerName;
+   public static GameManager instance;
+   [Space(10)]
+   public GameObject singlePlayer;
+   public GameObject playerPrefab;
+   public GameObject PlayerName;
    public GameObject[] rocks;
    [Range(0, 10)]
    public int startAsteroidAmount = 1;
@@ -28,20 +32,28 @@ public class GameManager : MonoBehaviourPunCallbacks {
 
    public override void OnEnable() {
       base.OnEnable();
-      AddPlayer(PlayerShip.PLAYERNAME);
+      
+      if(!isSinglePlayer) {
+         DestroyImmediate(singlePlayer);
+         AddPlayer(PlayerShip.PLAYERNAME);
+      }
    }
 
-   void Update() {
-      if(PhotonNetwork.IsMasterClient && Input.GetKeyUp(KeyCode.R)) for(int i = 0; i < startAsteroidAmount; i++) AddRock();
+   public static GameObject SPAWN_SERVER_OBJECT(GameObject obj, Vector3 pos, Quaternion rot) {
+      if(instance == null) return null;
+      if(instance.isSinglePlayer) {
+         var objF = Instantiate(obj, pos, rot);
+         return objF;
+      } else {
+         var objF = PhotonNetwork.InstantiateSceneObject(obj.name, pos, rot, 0, null);
+         return objF;
+      }
    }
 
-   private void AddRock() {
-      float x = Random.Range(50, 400);
-      float y = Random.Range(50, 400);
-      if(Random.Range(0, 2) == 0) x = -x;
-      if(Random.Range(0, 2) == 0) y = -y;
-      var randRock = rocks[Random.Range(0, rocks.Length)];
-      var rock = PhotonNetwork.InstantiateSceneObject(randRock.name, new Vector3(x, y, 0), Quaternion.identity, 0, null);
+   public static void DESTROY_SERVER_OBJECT(GameObject obj) {
+      if(instance == null) return;
+      if(instance.isSinglePlayer) Destroy(obj);
+      else PhotonNetwork.Destroy(obj);
    }
 
    private void AddPlayer(string name) {

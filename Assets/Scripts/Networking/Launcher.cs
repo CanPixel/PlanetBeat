@@ -25,6 +25,10 @@ public class Launcher : MonoBehaviourPunCallbacks {
         if(controlPanel != null) controlPanel.SetActive(true);
     }
 
+    void Update() {
+        if(Input.GetKeyUp(KeyCode.Escape)) Screen.fullScreen = !Screen.fullScreen;
+    }
+
     public void Connect() {
         PhotonNetwork.Disconnect();
 
@@ -52,7 +56,6 @@ public class Launcher : MonoBehaviourPunCallbacks {
     public override void OnDisconnected(DisconnectCause cause) {
         if(progressLabel != null) progressLabel.SetActive(false);
         if(controlPanel != null) controlPanel.SetActive(true);
-        //Debug.LogWarningFormat("DISCONNECT was called because of {0}", cause);
     }
 
     public override void OnJoinRandomFailed(short returnCode, string message) {
