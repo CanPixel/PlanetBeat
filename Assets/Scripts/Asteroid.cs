@@ -31,6 +31,8 @@ public class Asteroid : MonoBehaviour {
     GameObject infection;
     public Transform movePoint; 
 
+    public PlayerShip owner;
+
     public GameObject tempPlanet;
     PlayerScore _playerscore;
 
@@ -54,9 +56,9 @@ public class Asteroid : MonoBehaviour {
         if (col.gameObject.tag == "HOOKSHOT" && !held) {
             transform.position = col.transform.position;
             //rb.simulated = false;
-            col.gameObject.GetComponent<HookTip>().hookShot.CatchObject(gameObject);
-            //Debug.Log("grabbed");
-            held = true;
+            var hookShot = col.gameObject.GetComponent<HookTip>().hookShot;
+            FetchAsteroid(hookShot.hostPlayer);
+            hookShot.CatchObject(gameObject);
             collectTimer = grabDelay; 
         }
 
@@ -97,8 +99,6 @@ public class Asteroid : MonoBehaviour {
                // infectedAstroid.Stop(); 
             }
         }     
-        
-
     }
 
     void OrbitAroundPlanet() {
@@ -142,7 +142,14 @@ public class Asteroid : MonoBehaviour {
         }
     }
 
+    public void FetchAsteroid(PlayerShip own) {
+        if(owner != null) owner.RemoveAsteroid(gameObject);
+        held = true;
+        owner = own;
+    }
+
     public void ReleaseAsteroid() {
         held = false; 
+        owner = null;
     }
 }

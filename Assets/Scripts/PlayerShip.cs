@@ -97,8 +97,9 @@ public class PlayerShip : MonoBehaviourPunCallbacks {
                 exLastTime = 0.25f;
             }
             var emitting = exhaust.emission;
-            emitting.enabled = Mathf.Abs(Vector3.Distance(exLastPos, transform.position)) > 0.025f;
-            ship.sprite = IsThrust() ? emit : noEmit;
+            bool shouldEmit = Mathf.Abs(Vector3.Distance(exLastPos, transform.position)) > 0.025f;
+            emitting.enabled = shouldEmit;
+            ship.sprite = shouldEmit ? emit : noEmit;
         }
 
         if (!isSinglePlayer) {
@@ -164,6 +165,15 @@ public class PlayerShip : MonoBehaviourPunCallbacks {
     public void AddAsteroid(GameObject obj) {
         var script = obj.GetComponent<Asteroid>();
         if(script != null) trailingObjects.Add(script);
+    }
+
+    public void RemoveAsteroid(GameObject obj) {
+        for(int i = 0; i < trailingObjects.Count; i++) {
+            if(trailingObjects[i] == obj) {
+                trailingObjects.RemoveAt(i);
+                return;
+            }
+        }
     }
 
     public bool IsThisClient() {

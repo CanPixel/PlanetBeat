@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 8069275902880659582}
   - component: {fileID: -6826356360367882102}
   - component: {fileID: 2888026033050081237}
+  - component: {fileID: -6427339903121868966}
   - component: {fileID: 8025779704308543158}
   - component: {fileID: 5282346903112945025}
   m_Layer: 8
@@ -260,6 +261,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de4f5f7a09c920f4ca131fcbe7fbf8c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &-6427339903121868966
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8069275902880659580}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2976ffdb207e7214ba6018ec06d31a78, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rb: {fileID: 0}
+  held: 0
+  inOrbit: 0
+  isOvertimeBomb: 0
+  isInstantBomb: 0
+  orbitSpeed: 0
+  value: 0
+  weight: 0
+  grabDelay: 0.5
+  orbitDuration: 0
+  orbitTimer: 0
+  forceApplied: 0
+  infectedAstroid: {fileID: 0}
+  movePoint: {fileID: 0}
+  owner: {fileID: 0}
+  tempPlanet: {fileID: 0}
 --- !u!114 &8025779704308543158
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -2,7 +2,9 @@
 - Multiple players trailinglist for the same asteroid.
 - player leave should de-own asteroids
 
+- Player emit texture not synched to player
+
+
+
 - asteroid belts
-
-
 - texture packs --> 1,2,3,4 keys -> in-game
