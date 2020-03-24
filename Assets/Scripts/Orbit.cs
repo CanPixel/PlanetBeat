@@ -11,6 +11,6 @@ public class Orbit : MonoBehaviour {
     }
 
     public void SetStableOrbit(float i) {
-        stableRing.transform.localPosition = new Vector3(i, 0, 0);
+    ///////    stableRing.transform.localPosition = new Vector3(i, 0, 0);
     }
 }

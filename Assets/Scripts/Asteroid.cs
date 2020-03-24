@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 
-public class Asteroid : MonoBehaviourPun
-{
+public class Asteroid : MonoBehaviourPun {
     [HideInInspector]
     public Rigidbody2D rb;
 
@@ -15,7 +14,6 @@ public class Asteroid : MonoBehaviourPun
     public bool isOvertimeBomb = false;
 
     public bool isInstantBomb = false; 
-
 
     public float orbitSpeed;
     public float value;
@@ -36,39 +34,31 @@ public class Asteroid : MonoBehaviourPun
     public GameObject tempPlanet;
     PlayerScore _playerscore;
 
-    void Start()
-    {
+    void Start() {
         rb = GetComponent<Rigidbody2D>();
         asteroidColl = GetComponent<PolygonCollider2D>();
         //infectedAstroid = Instantiate(infectedAstroid, rb.transform.position, Quaternion.identity);
         //infectedAstroid.Stop(); 
-
     }
 
-    void Update()
-    {
-        OrbitAroundPlanet(); //Function orbits an astroid around a player planet 
+    void Update() {
+        //OrbitAroundPlanet(); //Function orbits an astroid around a player planet 
+        
+        
         if (collectTimer > 0) collectTimer -= Time.deltaTime;
-
         asteroidColl.enabled = collectTimer <= 0f; 
-       
     }
-    void OnCollisionEnter2D(Collision2D col)
-    {
-        ///CAN CODE
 
+    void OnCollisionEnter2D(Collision2D col) {
+        ///CAN CODE
         if(col.gameObject.tag == "PLAYERSHIP") {
             if(photonView != null) {
-                photonView.TransferOwnership(PhotonNetwork.LocalPlayer.ActorNumber);//col.gameObject.GetPhotonView().ViewID);
+                photonView.TransferOwnership(PhotonNetwork.LocalPlayer.ActorNumber);
             }
         }
 
-        ///
-        
-
         //Hook touches a object
-        if (col.gameObject.tag == "HOOKSHOT" && !held)
-        {
+        if (col.gameObject.tag == "HOOKSHOT" && !held) {
             transform.position = col.transform.position;
             //rb.simulated = false;
             col.gameObject.GetComponent<HookTip>().hookShot.CatchObject(gameObject);
@@ -78,10 +68,8 @@ public class Asteroid : MonoBehaviourPun
         }
 
         //Grabbed object touches the home planet 
-        if (!isInstantBomb || !isOvertimeBomb)
-        {
-            if (col.gameObject.tag == "PLAYERPLANET" && col.gameObject != null && held)
-            {
+        if (!isInstantBomb || !isOvertimeBomb) {
+            if (col.gameObject.tag == "PLAYERPLANET" && col.gameObject != null && held) {
                 _playerscore = col.gameObject.GetComponent<PlayerScore>();
                 _playerscore.AddingResource(value);
                 gameObject.SetActive(false);
@@ -91,34 +79,28 @@ public class Asteroid : MonoBehaviourPun
     }
 
 
-    void OnTriggerEnter2D(Collider2D col)
-    {
+    void OnTriggerEnter2D(Collider2D col) {
         //Thrown object enters the orbit of a player planet        
-        if (col.gameObject.tag == "PLAYERPLANET")
+        if (col.gameObject.tag == "PLAYERPLANET") {
             inOrbit = true; 
             _playerscore = col.gameObject.GetComponent<PlayerScore>();
+        }
 
         tempPlanet = col.gameObject;
-
         //movePoint = col.gameObject.GetComponentInChildren<GameObject>.
 
-        if (isOvertimeBomb)
-        {
+        if (isOvertimeBomb) {
             //infectedAstroid.Play(); 
            //infectedAstroid = Instantiate(infectedAstroid, rb.transform.position, Quaternion.identity); 
            
         }
     }
 
-    void OnTriggerExit2D(Collider2D col)
-    {
-        //
-        if (col.gameObject.tag == "PLAYERPLANET")
-        {
+    void OnTriggerExit2D(Collider2D col) {
+        if (col.gameObject.tag == "PLAYERPLANET") {
             inOrbit = false;
 
-            if (isOvertimeBomb)
-            {
+            if (isOvertimeBomb) {
                // infectedAstroid.Stop(); 
             }
         }     
@@ -126,15 +108,11 @@ public class Asteroid : MonoBehaviourPun
 
     }
 
-    void OrbitAroundPlanet()
-    {
-        if (!inOrbit)
-            orbitTimer = 0;      
+    void OrbitAroundPlanet() {
+        if (!inOrbit) orbitTimer = 0;      
 
-        if (!held)
-        {
-            if (inOrbit)
-            {
+        if (!held) {
+            if (inOrbit) {
                 transform.RotateAround(tempPlanet.transform.position, Vector3.forward, orbitSpeed * Time.deltaTime);  //How to find the planet has to be reworked! but it rotates the astroid around the players planet                                                                                                                       //start a timer 
                 orbitTimer += Time.deltaTime;
                 rb.velocity = new Vector2(0,0);
@@ -171,8 +149,7 @@ public class Asteroid : MonoBehaviourPun
         }
     }
 
-    public void ReleaseAsteroid()
-    {
+    public void ReleaseAsteroid() {
         held = false; 
     }
 }

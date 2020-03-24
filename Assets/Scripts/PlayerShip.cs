@@ -4,7 +4,7 @@ using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
 
-public class PlayerShip : MonoBehaviourPunCallbacks {//, IPunObservable {
+public class PlayerShip : MonoBehaviourPunCallbacks {
     #region MOVEMENT
         public float maxVelocity = 5;
         public float acceleration = 0.1f;
@@ -42,7 +42,6 @@ public class PlayerShip : MonoBehaviourPunCallbacks {//, IPunObservable {
     #region IPunObservable implementation
         public override void OnEnable() {
             base.OnEnable();
-            //PhotonNetwork.AddCallbackTarget(this);
             transform.SetParent(GameObject.FindGameObjectWithTag("GAMEFIELD").transform, false);
 
             if(photonView != null && !photonView.IsMine) {
@@ -55,38 +54,15 @@ public class PlayerShip : MonoBehaviourPunCallbacks {//, IPunObservable {
                 foreach(var i in networkIgnore) if(i != null) DestroyImmediate(i);
             } 
         }
-
-        //public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
-            //if(stream.IsWriting) stream.SendNext(PlayerName);
-            //else if(stream.IsReading) PlayerName = stream.ReceiveNext().ToString();
-        //}
     #endregion
 
     //Lijn aan asteroids/objecten achter de speler
     [HideInInspector] public List<Asteroid> trailingObjects = new List<Asteroid>();
     private ParticleSystem exhaust;
 
- /*    #region Network player spawning
-    void OnSceneLoaded(UnityEngine.SceneManagement.Scene scene, UnityEngine.SceneManagement.LoadSceneMode loadingMode) {
-        this.CalledOnLevelWasLoaded(scene.buildIndex);
-    }
-
-    void OnLevelWasLoaded(int level) {
-        this.CalledOnLevelWasLoaded(level);
-    }
-
-    void CalledOnLevelWasLoaded(int level) {
-        //if(!Physics.Raycast(transform.position, -Vector3.up, 5f)) {
-        //    transform.position = new Vector3(0, 5, 0);
-        //}
-    } */
-
     public override void OnDisable() {
         base.OnDisable();
-       // UnityEngine.SceneManagement.SceneManager.sceneLoaded -= OnSceneLoaded;
-        //PhotonNetwork.RemoveCallbackTarget(this);
     }
-   // #endregion
 
    public static void SetName(string name) {
        PLAYERNAME = name;
@@ -95,7 +71,6 @@ public class PlayerShip : MonoBehaviourPunCallbacks {//, IPunObservable {
     void Start() {
         rb = GetComponent<Rigidbody2D>();
         exhaust = GetComponentInChildren<ParticleSystem>();
-     //   UnityEngine.SceneManagement.SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
     void Awake() {
@@ -104,7 +79,7 @@ public class PlayerShip : MonoBehaviourPunCallbacks {//, IPunObservable {
 
     void Update() {
         //Particles emitten wanneer movement
-        if(IsThisClient()) {
+        if(IsThisClient() || isSingePlayer) {
             var emit = exhaust.emission;
             emit.enabled = IsThrust();
         } else {
