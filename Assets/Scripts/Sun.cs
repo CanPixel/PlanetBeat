@@ -18,7 +18,7 @@ public class Sun : MonoBehaviour {
     
     private float timer = 0;
 
-    public float roundDuration = 30f; 
+    public float roundDuration = 9000f; 
 
     public bool roundHasEnded;
 
@@ -93,4 +93,8 @@ public class Sun : MonoBehaviour {
     
      
     }
+
+
+    // ---------------------
+
 }

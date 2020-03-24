@@ -5,12 +5,12 @@ using UnityEngine;
 public class Planet : MonoBehaviour {
     [Header("REFERENCES")]
     public CircleCollider2D influenceRing;
-    public CircleCollider2D stableOrbitRing;
+    //public CircleCollider2D stableOrbitRing;
+    //[Range(100, 800)]
+    //public float stableOrbitDistance = 200;
 
     private GameObject trail, orbit;
     [Header("PHYSICS")]
-    [Range(100, 800)]
-    public float stableOrbitDistance = 200;
     [Range(200, 1000)]
     public float orbitEffectDistance = 700;
     public float OrbitSpeed = 4;
@@ -29,8 +29,8 @@ public class Planet : MonoBehaviour {
 
     void OnValidate() {
         if(OrbitSpeed < 0) OrbitSpeed = 0;
-        if(orbitEffectDistance < stableOrbitDistance) orbitEffectDistance = stableOrbitDistance + 1;
-        UpdateOrbits();
+        //if(orbitEffectDistance < stableOrbitDistance) orbitEffectDistance = stableOrbitDistance + 1;
+        //UpdateOrbits();
     }
 
     void Start() {
@@ -38,18 +38,18 @@ public class Planet : MonoBehaviour {
         trail = GetComponentInChildren<TrailRenderer>().gameObject;
         orbit = Util.FindChildWithTag(transform, "ORBIT");
         orbitScr = orbit.GetComponent<Orbit>();
-        orbitScr.SetStableOrbit(stableOrbitDistance);
+        //orbitScr.SetStableOrbit(stableOrbitDistance);
     }
 
     void Update() {
         UpdateOrbits();
 
-        trail.transform.localPosition = new Vector3(stableOrbitDistance, 0, 0);
+        //trail.transform.localPosition = new Vector3(stableOrbitDistance, 0, 0);
         orbit.transform.localRotation = Quaternion.Euler(orbit.transform.localEulerAngles.x, orbit.transform.localEulerAngles.y, orbit.transform.localEulerAngles.z + OrbitSpeed);
     }
 
     private void UpdateOrbits() {
-        stableOrbitRing.radius = stableOrbitDistance - 50;
+        //stableOrbitRing.radius = stableOrbitDistance - 50;
         influenceRing.radius = orbitEffectDistance;
         if(orbitScr == null) {
             orbit = Util.FindChildWithTag(transform, "ORBIT");
@@ -59,9 +59,12 @@ public class Planet : MonoBehaviour {
     }
 
     void OnTriggerStay2D(Collider2D col) {
-        if(col.tag == "PLAYERSHIP") {
+        if(col.tag == "PLAYERSHIP" || col.tag == "Resource") {
             var dist = Vector3.Distance(col.transform.position, transform.position);
-            float totalForce = -(stableOrbitDistance / 100f * (Mass / 2f)) / (dist * dist); 
+            //float totalForce = -(stableOrbitDistance / 100f * (Mass / 2f)) / (dist * dist);
+
+            float PlanetForce = 50f;
+            float totalForce = -(orbitEffectDistance / PlanetForce * (Mass / 2f)); 
             var orientation = (col.transform.position - transform.position).normalized;
 
             col.GetComponent<Rigidbody2D>().AddForce(orientation * totalForce);

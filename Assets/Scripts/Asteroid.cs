@@ -51,8 +51,7 @@ public class Asteroid : MonoBehaviourPun
     public GameObject tempPlanet;
 
     PlayerScore _playerscore;
-
-
+    
 
     void Start()
     {
@@ -60,17 +59,30 @@ public class Asteroid : MonoBehaviourPun
         asteroidColl = GetComponent<PolygonCollider2D>();
         //infectedAstroid = Instantiate(infectedAstroid, rb.transform.position, Quaternion.identity);
         //infectedAstroid.Stop(); 
-
     }
 
     void Update()
     {
-        OrbitAroundPlanet(); //Function orbits an astroid around a player planet 
+
+        
+
+        //OrbitAroundPlanet(); //Function orbits an astroid around a player planet 
         if (collectTimer > 0) collectTimer -= Time.deltaTime;
 
-        asteroidColl.enabled = collectTimer <= 0f; 
-       
+        asteroidColl.enabled = collectTimer <= 0f;
+
+        /*
+        if(startPush == true)
+        {
+            rb.AddForce(transform.forward * thrust);
+            startPush = false;
+        }
+        */
     }
+    
+    
+
+
     void OnCollisionEnter2D(Collision2D col)
     {
         //Hook touches a object
@@ -173,7 +185,7 @@ public class Asteroid : MonoBehaviourPun
                     }
                 }
                     //lerp resource slowly closer to the planet?
-                    Debug.Log("rotate around planet");                           
+                    //Debug.Log("rotate around planet");                           
             }                      
         }
     }
