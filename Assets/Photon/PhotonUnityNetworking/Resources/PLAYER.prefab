@@ -4871,6 +4871,7 @@ MonoBehaviour:
   playerColliders:
   - {fileID: 7716859393941716483}
   - {fileID: 1662954744308020737}
+  customController: {fileID: 0}
   hookShotSpeed: 157
   hookShotRange: 6.6
 --- !u!96 &1446986111338685777

@@ -29,6 +29,10 @@ public class Launcher : MonoBehaviourPunCallbacks {
         if(Input.GetKeyUp(KeyCode.Escape)) Screen.fullScreen = !Screen.fullScreen;
     }
 
+    public void Quit() {
+        Application.Quit();
+    }
+
     public void Connect() {
         PhotonNetwork.Disconnect();
 

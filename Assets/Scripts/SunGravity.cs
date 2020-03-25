@@ -14,7 +14,6 @@ public class SunGravity : MonoBehaviour {
     void OnTriggerStay2D(Collider2D col) {
         if (col.tag == "PLAYERSHIP" || col.tag == "Resource") {
             var dist = Vector3.Distance(col.transform.position, transform.position);
-            //float totalForce = -(stableOrbitDistance / 100f * (Mass / 2f)) / (dist * dist);
 
             // Hoe hoger hoe slapper de force
             float PlanetForce = 2000f;
@@ -27,7 +26,6 @@ public class SunGravity : MonoBehaviour {
 
 
     void OnCollisionEnter2D(Collision2D collision) {
-        //Check to see if the Collider's name is "Chest"
-        if (collision.collider.tag == "Resource") GameManager.DESTROY_SERVER_OBJECT(collision.gameObject); //Destroy(collision.gameObject);
+      //  if (collision.collider.tag == "Resource") GameManager.DESTROY_SERVER_OBJECT(collision.gameObject); 
     }
 }

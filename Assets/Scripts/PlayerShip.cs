@@ -13,6 +13,8 @@ public class PlayerShip : MonoBehaviourPunCallbacks {
     public Sprite emit, noEmit;
     public Image ship;
 
+    private CustomController customController;
+
     [Space(10)]
     #region MOVEMENT
         public float maxVelocity = 5;
@@ -78,6 +80,9 @@ public class PlayerShip : MonoBehaviourPunCallbacks {
     void Start() {
         rb = GetComponent<Rigidbody2D>();
         exhaust = GetComponentInChildren<ParticleSystem>();
+        var cont = GameObject.FindGameObjectWithTag("CUSTOM CONTROLLER");
+        if(cont != null) customController = cont.GetComponent<CustomController>();
+        if(customController != null && customController.useCustomControls) hookShot.customController = customController;
     }
 
     void Awake() {

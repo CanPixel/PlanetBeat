@@ -30,6 +30,10 @@ public class GameManager : MonoBehaviourPunCallbacks {
       instance = this;
    }
 
+   void Update() {
+      if(Input.GetKeyUp(KeyCode.Escape)) Screen.fullScreen = !Screen.fullScreen;
+   }
+
    public override void OnEnable() {
       base.OnEnable();
       
@@ -95,7 +99,6 @@ public class GameManager : MonoBehaviourPunCallbacks {
    }
 
    public override void OnPlayerEnteredRoom(Player other) {
-      //Debug.LogFormat("Player {0} entered the room!", other.NickName);
       base.OnPlayerEnteredRoom(other);
       Debug.LogError(other.NickName + " JOINED");
    }

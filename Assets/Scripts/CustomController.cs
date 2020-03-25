@@ -3,29 +3,21 @@ using System.Collections;
 using System.IO.Ports;
 
 public class CustomController : MonoBehaviour {
-
-    public enum SerialAddressPort {
-        BARTMAC, WINDOWS
-    }
-    public SerialAddressPort serialAddress = SerialAddressPort.BARTMAC;
     public static SerialPort sp;
-    public string receivedstring;
+    private string receivedstring;
+    public string port;
+
+    public bool useCustomControls = false;
+
+    [Range(2, 100)]
+    public int sensitivity = 20;
 
     void Start() {
-        string add = "";
-        switch(serialAddress) {
-                case SerialAddressPort.BARTMAC:
-                    add = "/dev/cu.usbmodem144101";
-                    break;
-                default: case SerialAddressPort.WINDOWS:
-                    add = "COM5";
-                    break; 
-        }
-       sp = new SerialPort(add, 9600);
+       sp = new SerialPort(port, 9600);
     }
 
     void Update() {
-        if (sp.IsOpen == false) sp.Open(); //Open the Serial Stream.
+        if (sp.IsOpen == false) sp.Open();
 
         var readData = readFromArduino();
         if (readData.Length > 0) {
@@ -40,5 +32,9 @@ public class CustomController : MonoBehaviour {
         try {
             return sp.ReadLine();
         } catch (System.Exception) { return ""; } 
+    }
+
+    public int GetData() {
+        return int.Parse(receivedstring);
     }
 }

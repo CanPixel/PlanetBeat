@@ -1,10 +1,22 @@
 - Asteroids can spawn in players
+
 - Multiple players trailinglist for the same asteroid.
 - player leave should de-own asteroids
 
-- Player emit texture not synched to player
+- held check verbeteren ---> asteroids zijn niet pakkable na held == true
 
+- Failed to network-remove GameObject. Client is neither owner nor MasterClient taking over for owner who left: View 2 on ASTEROID
+
+- Master client settings
+
+
+
+- Spectator build?
 
 
 - asteroid belts
 - texture packs --> 1,2,3,4 keys -> in-game
+- Lock-on system
+
+
+SEMI-PROBLEEM: SERIAL PORTS MOETEN ALTIJD HANDMATIG GESELECTEERD WORDEN

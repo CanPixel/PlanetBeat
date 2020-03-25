@@ -15,6 +15,7 @@ TagManager:
   - GAMEFIELD
   - PLAYERNAME
   - ASTEROIDBELT
+  - CUSTOM CONTROLLER
   layers:
   - Default
   - TransparentFX
