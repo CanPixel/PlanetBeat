@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class TextureSwitcher : MonoBehaviour {
     public TexturePack[] texturePacks;
 
-    public int pack = 0;
+    [HideInInspector] public int pack = 0;
 
     [System.Serializable]
     public class TexturePack {
@@ -25,19 +25,31 @@ public class TextureSwitcher : MonoBehaviour {
     }
     [Space(20)]
     public Image sunReference, sunGlowReference;
-    public Image asteroidReference;
+    private GameObject asteroidReference;
     private Planet[] planetsReference;
     [Range(1, 10)]
     public int typeOfPlanets = 4;
 
+    private static TextureSwitcher instance;
+
+    public static TexturePack GetCurrentTexturePack() {
+        return instance.texturePacks[instance.pack];
+    }
+
     void Start() {
-        planetsReference = GameObject.FindGameObjectWithTag("PLANETS").GetComponentsInChildren<Planet>();
+        instance = this;
+    }
+
+    void OnEnable() {
         UpdateTexturePack(0);
     }
 
     public void UpdateTexturePack(int change) {
-        var textPack = texturePacks[change];
+        pack = change;
+        if(planetsReference == null) planetsReference = GameObject.FindGameObjectWithTag("PLANETS").GetComponentsInChildren<Planet>();
+        if(asteroidReference == null) asteroidReference = GameObject.FindGameObjectWithTag("ASTEROIDBELT");
 
+        var textPack = texturePacks[change];
         for(int i = 0; i < planetsReference.Length; i++) planetsReference[i].SetTexture(textPack.planets[i % typeOfPlanets]);
         if(textPack.blackHole.glow != null) {
             sunGlowReference.sprite = textPack.blackHole.glow;
@@ -45,9 +57,9 @@ public class TextureSwitcher : MonoBehaviour {
         } else sunGlowReference.enabled = false;
         sunReference.sprite = textPack.blackHole.src;
         sunReference.SetNativeSize();
-        sunGlowReference.SetNativeSize();
+        sunGlowReference.SetNativeSize();   
 
-        //sunReference.transform.localScale = Vector3.one * textPack.blackHole.scale;
-        asteroidReference.sprite = textPack.asteroid.src; ///////////////
+        var asts = asteroidReference.GetComponentsInChildren<Asteroid>();
+        foreach(var i in asts) i.SetTexture(textPack);
     }
 }

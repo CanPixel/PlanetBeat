@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class SunGravity : MonoBehaviour {
     [Header("PHYSICS")]
-    [Range(200, 1000)]
+    [Range(200, 3000)]
     public float orbitEffectDistance = 2000;
     public float OrbitSpeed = 4;
+    public float planetForce = 4000;
 
     [Range(0, 1)]
     public float Mass = 1;
@@ -42,8 +43,7 @@ public class SunGravity : MonoBehaviour {
             var dist = Vector3.Distance(col.transform.position, transform.position);
 
             // Hoe hoger hoe slapper de force
-            float PlanetForce = 2000f;
-            float totalForce = -(orbitEffectDistance / PlanetForce * (Mass / 2f));
+            float totalForce = -(orbitEffectDistance / planetForce * (Mass / 2f));
             var orientation = (col.transform.position - transform.position).normalized;
 
             col.GetComponent<Rigidbody2D>().AddForce(orientation * totalForce);

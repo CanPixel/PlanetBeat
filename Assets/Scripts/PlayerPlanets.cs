@@ -6,9 +6,9 @@ using UnityEngine.UI;
 public class PlayerPlanets : MonoBehaviour {
     public GameObject player;
     [HideInInspector] public float playerNumber;
-    public float currentScore;
+    [HideInInspector] public float currentScore;
     public float maxScore = 100f;
-    public float minScore;
+    [HideInInspector] public float minScore;
     public Text scoreText;
     private Color orbitColor;
     public TrailRenderer orbitTrail; 

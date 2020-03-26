@@ -2,9 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
+using UnityEngine.UI;
 
 public class Asteroid : MonoBehaviour {
     [HideInInspector] public Rigidbody2D rb;
+
+    public Image src, glow;
 
     [HideInInspector] public bool held = false;
     public bool inOrbit = false;
@@ -15,17 +18,10 @@ public class Asteroid : MonoBehaviour {
     private float defaultRbDrag;
     public float inPlayerOrbitRbDrag = 0.25f;
 
-//    public float orbitSpeed;
     public float value = 5;
-    //public float weight;
-    //float throwAirTime;
     public float grabDelay = .5f; 
     public float maxInOrbitTime = 5;
     public float outOrbitForce = 20;
-
-    //public float orbitDuration;
-    //public float orbitTimer;
-    //public float forceApplied;
     private float collectTimer;
     private PolygonCollider2D asteroidColl;
     [HideInInspector] public PlayerPlanets playerPlanets;
@@ -40,6 +36,7 @@ public class Asteroid : MonoBehaviour {
         asteroidColl = GetComponent<PolygonCollider2D>();
         playerTagsManager = GetComponent<PlayerTagsManager>();
         rb.drag = defaultRbDrag - .15f;
+        SetTexture(TextureSwitcher.GetCurrentTexturePack());
     }
 
     void Update() {
@@ -83,6 +80,16 @@ public class Asteroid : MonoBehaviour {
             inOrbit = false;
             OrbitAroundPlanet();
         }     
+    }
+
+    public void SetTexture(TextureSwitcher.TexturePack elm) {
+        src.sprite = elm.asteroid.src;
+        if(elm.asteroid.glow == null) {
+            glow.enabled = false;
+            return;
+        }
+        glow.enabled = true;
+        glow.sprite = elm.asteroid.glow;
     }
 
     void OrbitAroundPlanet() {

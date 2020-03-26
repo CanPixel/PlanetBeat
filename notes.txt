@@ -4,6 +4,7 @@
 - player leave should de-own asteroids
 
 - held check verbeteren ---> asteroids zijn niet pakkable na held == true
+--> if one object is captured, more objects accidentally get "held" because they still collide
 
 - Failed to network-remove GameObject. Client is neither owner nor MasterClient taking over for owner who left: View 2 on ASTEROID
 
@@ -28,7 +29,9 @@
 
 - asteroid belts
 - texture packs --> 1,2,3,4 keys -> in-game
-- Lock-on system
+- Lock-on system (alleen asteroids)
+	--> Max-range, growing speed. Border hits object == Capture
+	--> radial trigger grows, closest object gets captured
 
 
 SEMI-PROBLEEM: SERIAL PORTS MOETEN ALTIJD HANDMATIG GESELECTEERD WORDEN
