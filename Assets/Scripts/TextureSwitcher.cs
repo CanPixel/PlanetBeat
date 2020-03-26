@@ -21,6 +21,7 @@ public class TextureSwitcher : MonoBehaviour {
         public Sprite src, glow;
         [Range(0, 5)]
         public float scale = 1;
+        public Color tint;
     }
     [Space(20)]
     public Image sunReference, sunGlowReference;

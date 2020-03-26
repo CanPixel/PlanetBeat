@@ -29,13 +29,11 @@ public class Asteroid : MonoBehaviour {
     private float collectTimer;
     private PolygonCollider2D asteroidColl;
     [HideInInspector] public PlayerPlanets playerPlanets;
-//    public Transform movePoint; 
 
     [HideInInspector] public PlayerShip playerShip;
     [HideInInspector] public PlayerTagsManager playerTagsManager;
 
     [HideInInspector] public GameObject playerOrbit;
-//    [HideInInspector] PlayerScore _playerscore;
 
     void Start() {
         rb = GetComponent<Rigidbody2D>();
@@ -45,8 +43,6 @@ public class Asteroid : MonoBehaviour {
     }
 
     void Update() {
-        //OrbitAroundPlanet(); //Function orbits an astroid around a player planet 
-        
         if (collectTimer > 0) collectTimer -= Time.deltaTime;
         asteroidColl.enabled = collectTimer <= 0f; 
 
@@ -57,7 +53,6 @@ public class Asteroid : MonoBehaviour {
         //Hook touches a object
         if (col.gameObject.tag == "HOOKSHOT" && !held) {
             transform.position = col.transform.position;
-            //rb.simulated = false;
             var hookShot = col.gameObject.GetComponent<HookTip>().hookShot;
             playerShip = hookShot.hostPlayer;
             FetchAsteroid(hookShot.hostPlayer);
@@ -77,7 +72,6 @@ public class Asteroid : MonoBehaviour {
     void OnTriggerEnter2D(Collider2D col) {
         if (col.gameObject.tag == "PLAYERPLANET" && col.gameObject != null) {
             playerPlanets = col.gameObject.GetComponent<PlayerPlanets>();
-
             if(playerTagsManager.tagNum == playerPlanets.playerNumber) {
                 if(canConsume || held) ConsumeResource();
             }
@@ -132,8 +126,6 @@ public class Asteroid : MonoBehaviour {
         }
         //owner
     }
-
-
 
     public void FetchAsteroid(PlayerShip own) {
         //if(owner != null) owner.RemoveAsteroid(gameObject);
