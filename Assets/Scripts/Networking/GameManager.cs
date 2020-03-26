@@ -13,9 +13,6 @@ public class GameManager : MonoBehaviourPunCallbacks {
    public GameObject singlePlayer;
    public GameObject playerPrefab;
    public GameObject PlayerName;
-   public GameObject[] rocks;
-   [Range(0, 10)]
-   public int startAsteroidAmount = 1;
    public float playerScale = 0.02f;
 
    private int PLAYER_COUNT = 0;

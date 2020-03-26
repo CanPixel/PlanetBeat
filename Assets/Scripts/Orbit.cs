@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Orbit : MonoBehaviour {
     [SerializeField]
-    private GameObject gravityRing, stableRing;
+    private GameObject gravityRing;
 
     public void SetOrbitDistance(float ringOffs) {
         gravityRing.transform.localPosition = new Vector3(ringOffs, 0, 0);

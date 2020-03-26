@@ -9,6 +9,7 @@ public class Sun : MonoBehaviour {
 
     [Header("REFERENCES")]
     public GameObject sun;
+    public Image sunGlow;
     public Planet blackhole;
     private UIFloat sunFloatAnim;
     public Text roundCountdownText;
@@ -39,6 +40,8 @@ public class Sun : MonoBehaviour {
     }
 
     void Update() {
+        //Glow fluctuation black hole
+        if(sunGlow.enabled) sunGlow.color = new Color(1, 1, 1, Mathf.Sin(Time.time * 26f) * 0.8f + 0.2f);
 
         DoomsdayEvent();   
     }
@@ -78,7 +81,7 @@ public class Sun : MonoBehaviour {
         sun.SetActive(!blackHole);
         blackhole.gameObject.SetActive(blackHole);
 
-        transform.localScale = Vector2.Lerp(transform.localScale, baseScale * (1 - transition), Time.deltaTime * 7f);
+        //transform.localScale = Vector2.Lerp(transform.localScale, baseScale + new Vector2(0.1f, 0.1f) * (1 - transition), Time.deltaTime * 7f);
         if (transition > 0) transition -= Time.deltaTime * 2f;
 
         sunFloatAnim.enabled = !blackHole;

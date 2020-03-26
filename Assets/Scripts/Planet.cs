@@ -1,10 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Planet : MonoBehaviour {
     [Header("REFERENCES")]
     public CircleCollider2D influenceRing;
+    //Main Texture + Glow texture
+    public Image glow, src; 
 
     private GameObject trail, orbit;
     [Header("PHYSICS")]
@@ -23,12 +26,14 @@ public class Planet : MonoBehaviour {
     public bool blackHole = false;
 
     private Orbit orbitScr;
+    private float glowOffset;
 
     void OnValidate() {
         if(OrbitSpeed < 0) OrbitSpeed = 0;
     }
 
     void Start() {
+        glowOffset = 1f + Random.Range(0f, 1f);
         if(blackHole) Mass = 100;
         trail = GetComponentInChildren<TrailRenderer>().gameObject;
         orbit = Util.FindChildWithTag(transform, "ORBIT");
@@ -36,6 +41,9 @@ public class Planet : MonoBehaviour {
     }
 
     void Update() {
+        //Glow fluctuation
+        glow.color = Color.Lerp(glow.color, glow.color + new Color(0, 0, 0, Mathf.Sin(Time.time * 3f + glowOffset)), Time.deltaTime * 1f);
+
         UpdateOrbits();
         orbit.transform.localRotation = Quaternion.Euler(orbit.transform.localEulerAngles.x, orbit.transform.localEulerAngles.y, orbit.transform.localEulerAngles.z + OrbitSpeed);
     }
@@ -47,6 +55,19 @@ public class Planet : MonoBehaviour {
             orbitScr = orbit.GetComponent<Orbit>();
         }
         orbitScr.SetOrbitDistance(orbitEffectDistance);
+    }
+
+    public void SetTexture(TextureSwitcher.TextureElement element) {
+        src.sprite = element.src;
+        if(element.glow == null) {
+            glow.sprite = null;
+            glow.color = new Color(0, 0, 0, 0);
+            glow.enabled = false;
+            return;
+        }
+        glow.enabled = true;
+        glow.color = new Color(1, 1, 1, 1);
+        glow.sprite = element.glow;
     }
 
     void OnTriggerStay2D(Collider2D col) {

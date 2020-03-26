@@ -16,6 +16,7 @@ TagManager:
   - PLAYERNAME
   - ASTEROIDBELT
   - CUSTOM CONTROLLER
+  - PLANETS
   layers:
   - Default
   - TransparentFX
