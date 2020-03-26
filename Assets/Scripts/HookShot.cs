@@ -96,8 +96,6 @@ public class HookShot : MonoBehaviour {
             if (hostPlayer.IsThisClient()) hostPlayer.photonView.RPC("CastHook", RpcTarget.All, hostPlayer.photonView.ViewID);
             else if (hostPlayer.isSinglePlayer) CastHook();
         }
-
-
         hengelData = newData;
     }
 
@@ -120,7 +118,7 @@ public class HookShot : MonoBehaviour {
         hitObject = true;
         grabbedObj = obj;
         var photon = obj.GetComponent<PhotonView>();
-        if(photon != null) photon.TransferOwnership(hostPlayer.photonView.Controller.ActorNumber);
+        if(photon != null && hostPlayer.photonView != null) photon.TransferOwnership(hostPlayer.photonView.Controller.ActorNumber);
     }
 
     public bool IsShooting() {

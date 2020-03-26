@@ -13,6 +13,10 @@ public class PlayerShip : MonoBehaviourPunCallbacks {
     public Sprite emit, noEmit;
     public Image ship;
 
+    //Player Identity
+    public int playerNumber;
+    public Color playerColor;
+
     private CustomController customController;
 
     [Space(10)]
@@ -126,7 +130,7 @@ public class PlayerShip : MonoBehaviourPunCallbacks {
             
             asteroid.transform.TransformDirection(new Vector2(transform.forward.x * asteroid.transform.forward.x, transform.forward.y * asteroid.transform.forward.y));
             asteroid.rb.velocity = rb.velocity / throwingReduction; 
-            asteroid.ReleaseAsteroid(); 
+            asteroid.ReleaseAsteroid(true); 
         }
 
         //Removes asteroids that got destroyed / eaten by the sun

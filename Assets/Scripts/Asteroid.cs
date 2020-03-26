@@ -4,51 +4,53 @@ using UnityEngine;
 using Photon.Pun;
 
 public class Asteroid : MonoBehaviour {
-    [HideInInspector]
-    public Rigidbody2D rb;
+    [HideInInspector] public Rigidbody2D rb;
 
-    public bool held = false;
-
+    [HideInInspector] public bool held = false;
     public bool inOrbit = false;
+    [HideInInspector] public bool giveTag = false;
+    [HideInInspector] public float inOrbitTimer;
 
-    public bool isOvertimeBomb = false;
+    private bool canConsume = false;
+    private float defaultRbDrag;
+    public float inPlayerOrbitRbDrag = 0.25f;
 
-    public bool isInstantBomb = false; 
-
-    public float orbitSpeed;
-    public float value;
-    public float weight;
-    float throwAirTime;
+//    public float orbitSpeed;
+    public float value = 5;
+    //public float weight;
+    //float throwAirTime;
     public float grabDelay = .5f; 
+    public float maxInOrbitTime = 5;
+    public float outOrbitForce = 20;
 
-
-    public float orbitDuration;
-     public float orbitTimer;
-    public float forceApplied;
+    //public float orbitDuration;
+    //public float orbitTimer;
+    //public float forceApplied;
     private float collectTimer;
     private PolygonCollider2D asteroidColl;
-    public ParticleSystem infectedAstroid;
-    GameObject infection;
-    public Transform movePoint; 
+    [HideInInspector] public PlayerPlanets playerPlanets;
+//    public Transform movePoint; 
 
-    public PlayerShip owner;
+    [HideInInspector] public PlayerShip playerShip;
+    [HideInInspector] public PlayerTagsManager playerTagsManager;
 
-    public GameObject tempPlanet;
-    PlayerScore _playerscore;
+    [HideInInspector] public GameObject playerOrbit;
+//    [HideInInspector] PlayerScore _playerscore;
 
     void Start() {
         rb = GetComponent<Rigidbody2D>();
         asteroidColl = GetComponent<PolygonCollider2D>();
-        //infectedAstroid = Instantiate(infectedAstroid, rb.transform.position, Quaternion.identity);
-        //infectedAstroid.Stop(); 
+        playerTagsManager = GetComponent<PlayerTagsManager>();
+        rb.drag = defaultRbDrag - .15f;
     }
 
     void Update() {
         //OrbitAroundPlanet(); //Function orbits an astroid around a player planet 
         
-        
         if (collectTimer > 0) collectTimer -= Time.deltaTime;
         asteroidColl.enabled = collectTimer <= 0f; 
+
+        if(held) ReleaseAsteroid(false);
     }
 
     void OnCollisionEnter2D(Collision2D col) {
@@ -57,99 +59,85 @@ public class Asteroid : MonoBehaviour {
             transform.position = col.transform.position;
             //rb.simulated = false;
             var hookShot = col.gameObject.GetComponent<HookTip>().hookShot;
+            playerShip = hookShot.hostPlayer;
             FetchAsteroid(hookShot.hostPlayer);
             hookShot.CatchObject(gameObject);
             collectTimer = grabDelay; 
-        }
-
-        //Grabbed object touches the home planet 
-        if (!isInstantBomb || !isOvertimeBomb) {
-            if (col.gameObject.tag == "PLAYERPLANET" && col.gameObject != null && held) {
-                _playerscore = col.gameObject.GetComponent<PlayerScore>();
-                _playerscore.AddingResource(value);
-                gameObject.SetActive(false);
-                held = false;
-            }
+            playerTagsManager.GiveTag();
         }
     }
 
+    void OnTriggerStay2D(Collider2D col) {
+        if(col.gameObject.tag == "ORBIT") {
+            inOrbit = true;
+            if(!held) OrbitAroundPlanet();
+        }
+    }
 
     void OnTriggerEnter2D(Collider2D col) {
-        //Thrown object enters the orbit of a player planet        
-        if (col.gameObject.tag == "PLAYERPLANET") {
-            inOrbit = true; 
-            _playerscore = col.gameObject.GetComponent<PlayerScore>();
-        }
+        if (col.gameObject.tag == "PLAYERPLANET" && col.gameObject != null) {
+            playerPlanets = col.gameObject.GetComponent<PlayerPlanets>();
 
-        tempPlanet = col.gameObject;
-        //movePoint = col.gameObject.GetComponentInChildren<GameObject>.
-
-        if (isOvertimeBomb) {
-            //infectedAstroid.Play(); 
-           //infectedAstroid = Instantiate(infectedAstroid, rb.transform.position, Quaternion.identity); 
-           
+            if(playerTagsManager.tagNum == playerPlanets.playerNumber) {
+                if(canConsume || held) ConsumeResource();
+            }
         }
     }
 
     void OnTriggerExit2D(Collider2D col) {
-        if (col.gameObject.tag == "PLAYERPLANET") {
+        if (col.gameObject.tag == "ORBIT") {
             inOrbit = false;
-
-            if (isOvertimeBomb) {
-               // infectedAstroid.Stop(); 
-            }
+            OrbitAroundPlanet();
         }     
     }
 
     void OrbitAroundPlanet() {
-        if (!inOrbit) orbitTimer = 0;      
+        if(inOrbit) {
+            if(playerTagsManager != null && playerTagsManager.tagNum != 0) {
+                if(playerShip.playerNumber == playerTagsManager.tagNum) {
+                    inOrbitTimer += Time.deltaTime;
+                    rb.drag = inPlayerOrbitRbDrag;
 
-        if (!held) {
-            if (inOrbit) {
-                transform.RotateAround(tempPlanet.transform.position, Vector3.forward, orbitSpeed * Time.deltaTime);  //How to find the planet has to be reworked! but it rotates the astroid around the players planet                                                                                                                       //start a timer 
-                orbitTimer += Time.deltaTime;
-                rb.velocity = new Vector2(0,0);
-
-             
-                //float step = .1f * Time.deltaTime;
-               // transform.position = Vector3.MoveTowards(transform.position, movePoint.position, step);
-
-                if (!isOvertimeBomb)
-                {
-                    if (orbitTimer >= orbitDuration)  //if the astroid has finished his time in the orbit collect the points 
-                    {
-                        _playerscore.AddingResource(value);
-                        gameObject.SetActive(false);
-                        inOrbit = false;
-                        held = false;
-                        //orbitTimer = 0;
-                    }
+                    if(inOrbitTimer >= maxInOrbitTime) canConsume = true;
+                } else {
+                    inOrbitTimer = 0;
+                    rb.drag = defaultRbDrag;
                 }
+            } if(playerPlanets != null && playerTagsManager.tagNum != playerPlanets.playerNumber) {
+                //Throw the resource out of the orbit
+                inOrbitTimer += Time.deltaTime;
 
-                if (isOvertimeBomb)
-                {
-                    //infectedAstroid.transform.position = rb.transform.position; 
-
-                    if (orbitTimer >= orbitDuration)
-                    {
-                        _playerscore.AddingResource(value);
-                        orbitTimer = 0;
-                    }
+                if(inOrbitTimer >= maxInOrbitTime) {
+                    rb.AddForce(-transform.right * outOrbitForce);
+                    inOrbit = false;
+                    inOrbitTimer = 0;
                 }
-                    //lerp resource slowly closer to the planet?
-                 //   Debug.Log("rotate around planet");                           
-            }                      
-        }
+            }
+        } else inOrbitTimer = 0;
     }
+
+    public void ConsumeResource() {
+        playerPlanets.AddingResource(value);
+        gameObject.SetActive(false);
+    }
+
+    public void ReleaseAsteroid(bool released) {
+        if(released) {
+            playerTagsManager.TagOn(true);
+            playerTagsManager.runTagTimer = true;
+            held = false;
+        } else {
+            held = true;
+            playerTagsManager.runTagTimer = false;
+        }
+        //owner
+    }
+
+
 
     public void FetchAsteroid(PlayerShip own) {
-        if(owner != null) owner.RemoveAsteroid(gameObject);
+        //if(owner != null) owner.RemoveAsteroid(gameObject);
         held = true;
-        owner = own;
-    }
-
-    public void ReleaseAsteroid() {
-        held = false; 
-        owner = null;
+      //  owner = own;
     }
 }

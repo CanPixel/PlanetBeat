@@ -4,9 +4,6 @@ using UnityEngine;
 using UnityEngine.UI; 
 
 public class Sun : MonoBehaviour {
-    [Range(1, 10)]
-    public float interval = 1;
-
     [Header("REFERENCES")]
     public GameObject sun;
     public Image sunGlow;
@@ -14,13 +11,9 @@ public class Sun : MonoBehaviour {
     private UIFloat sunFloatAnim;
     public Text roundCountdownText;
 
-    public GameObject scoreManager;
-    PlayerPlanets _playerPlanets; 
-    
     private float timer = 0;
 
     public float roundDuration = 30f; 
-
     public bool roundHasEnded;
 
     private bool blackHole = false;
@@ -33,10 +26,7 @@ public class Sun : MonoBehaviour {
         sunFloatAnim = sun.GetComponent<UIFloat>();
 
         timer = roundDuration; 
-
         roundHasEnded = false;
-
-        //_playerPlanets = scoreManager.GetComponent<PlayerPlanets>(); 
     }
 
     void Update() {
@@ -52,29 +42,14 @@ public class Sun : MonoBehaviour {
         transition = 1;
     }
 
-    void DoomsdayEvent()
-    {
-        if (!roundHasEnded)  
-            timer -= Time.deltaTime;
+    void DoomsdayEvent() {
+        if (!roundHasEnded) timer -= Time.deltaTime;
 
-        if(timer <= 0f && roundHasEnded == false)
-        {
-            SwitchStarState();
-            //roundHasEnded = true;
-            CheckScores();
-        }
-
+        if(timer <= 0f && roundHasEnded == false) SwitchStarState();
         roundCountdownText.text = "Doomsday In:" + timer.ToString("F0");
 
-        if (timer <= 10f)
-            roundCountdownText.color = Color.red;
-        else
-            roundCountdownText.color = Color.green;
-
-
-
-
-
+        if (timer <= 10f) roundCountdownText.color = Color.red;
+        else roundCountdownText.color = Color.green;
 
         sun.SetActive(!blackHole);
         blackhole.gameObject.SetActive(blackHole);
@@ -84,14 +59,5 @@ public class Sun : MonoBehaviour {
 
         sunFloatAnim.enabled = !blackHole;
         blackhole.enabled = blackHole;
-    }
-
-
-    void CheckScores()
-    {
-        _playerPlanets.blackHole = true;
-        Debug.Log(_playerPlanets.lowestValue); 
-    
-     
     }
 }

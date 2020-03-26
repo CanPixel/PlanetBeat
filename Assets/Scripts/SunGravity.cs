@@ -25,6 +25,7 @@ public class SunGravity : MonoBehaviour {
     void Update() {
         for(int i = 0; i < destroyingObjects.Count; i++) {
             var obj = destroyingObjects[i].obj;
+            if(obj == null) continue;
             obj.transform.localScale = Vector3.Lerp(obj.transform.localScale, Vector3.zero, Time.deltaTime * 2f);
             destroyingObjects[i].lifetime += Time.deltaTime;
             obj.transform.localPosition = Vector3.Lerp(obj.transform.localPosition, Vector3.zero, destroyingObjects[i].lifetime);

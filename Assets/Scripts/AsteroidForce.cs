@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class AsteroidForce : MonoBehaviour {
     private Rigidbody2D rb2D;
-    private float thrust = 10.0f;
+    public float thrust = 10.0f;
     private bool startForce = true;
 
     private void Start() {

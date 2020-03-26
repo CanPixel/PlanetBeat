@@ -6,8 +6,7 @@ using UnityEngine.UI;
 public class Planet : MonoBehaviour {
     [Header("REFERENCES")]
     public CircleCollider2D influenceRing;
-    //Main Texture + Glow texture
-    public Image glow, src; 
+    public Image glow, src; //Main Texture + Glow texture
 
     private GameObject trail, orbit;
     [Header("PHYSICS")]
@@ -70,22 +69,10 @@ public class Planet : MonoBehaviour {
         glow.sprite = element.glow;
     }
 
-    void OnTriggerStay2D(Collider2D col) {
-        if(col.tag == "PLAYERSHIP" || col.tag == "Resource") {
-            var dist = Vector3.Distance(col.transform.position, transform.position);
-
-            float PlanetForce = 50f;
-            float totalForce = -(orbitEffectDistance / PlanetForce * (Mass / 2f)); 
-            var orientation = (col.transform.position - transform.position).normalized;
-
-            col.GetComponent<Rigidbody2D>().AddForce(orientation * totalForce);
-        }
-    }
-
     void OnTriggerExit2D(Collider2D col) {
         if(col.tag == "PLAYERSHIP") {
             var ship = col.GetComponent<PlayerShip>();
             if(ship != null) ship.NeutralizeForce();
         }
-    }
+    } 
 }
