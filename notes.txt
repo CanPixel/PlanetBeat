@@ -7,11 +7,20 @@
 
 - Failed to network-remove GameObject. Client is neither owner nor MasterClient taking over for owner who left: View 2 on ASTEROID
 
-- Master client settings
+- Master client settings (Welke mechanics, lock-on? free aim?)
 
 
 
-- Spectator build?
+
+- HTML5 export?
+
+
+
+- Spectator build? -----> screencap?
+- Meerdere rooms?
+- Link naar google forms
+
+- Asteroids should not rotate with the player, but with the boost
 
 
 - asteroid belts

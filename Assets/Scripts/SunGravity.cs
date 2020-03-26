@@ -11,6 +11,31 @@ public class SunGravity : MonoBehaviour {
     [Range(0, 1)]
     public float Mass = 1;
 
+    private List<DyingObject> destroyingObjects = new List<DyingObject>();
+    private class DyingObject {
+        public GameObject obj;
+        public float lifetime = 0;
+
+        public DyingObject(GameObject gameObject) {
+            obj = gameObject;
+        }
+    }
+
+    //Eating animation
+    void Update() {
+        for(int i = 0; i < destroyingObjects.Count; i++) {
+            var obj = destroyingObjects[i].obj;
+            obj.transform.localScale = Vector3.Lerp(obj.transform.localScale, Vector3.zero, Time.deltaTime * 2f);
+            destroyingObjects[i].lifetime += Time.deltaTime;
+            obj.transform.localPosition = Vector3.Lerp(obj.transform.localPosition, Vector3.zero, destroyingObjects[i].lifetime);
+
+            if(destroyingObjects[i].lifetime > 1) {
+                destroyingObjects.RemoveAt(i);
+                GameManager.DESTROY_SERVER_OBJECT(obj); 
+            }
+        }
+    }
+
     void OnTriggerStay2D(Collider2D col) {
         if (col.tag == "PLAYERSHIP" || col.tag == "Resource") {
             var dist = Vector3.Distance(col.transform.position, transform.position);
@@ -26,6 +51,9 @@ public class SunGravity : MonoBehaviour {
 
 
     void OnCollisionEnter2D(Collision2D collision) {
-      //  if (collision.collider.tag == "Resource") GameManager.DESTROY_SERVER_OBJECT(collision.gameObject); 
+        if (collision.collider.tag == "Resource") {
+            destroyingObjects.Add(new DyingObject(collision.gameObject));
+            //GameManager.DESTROY_SERVER_OBJECT(collision.gameObject); 
+        }
     }
 }
