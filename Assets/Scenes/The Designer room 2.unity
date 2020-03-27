@@ -240,12 +240,12 @@ PrefabInstance:
     - target: {fileID: 533948574299374635, guid: b8417e5f21a68ab4c9359b2202160a33,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.801154
+      value: 0.056526467
       objectReference: {fileID: 0}
     - target: {fileID: 533948574299374635, guid: b8417e5f21a68ab4c9359b2202160a33,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: -0.59845823
+      value: -0.9984011
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b8417e5f21a68ab4c9359b2202160a33, type: 3}
@@ -1244,12 +1244,12 @@ PrefabInstance:
     - target: {fileID: 533948574299374635, guid: b8417e5f21a68ab4c9359b2202160a33,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.45024738
+      value: 0.97341746
       objectReference: {fileID: 0}
     - target: {fileID: 533948574299374635, guid: b8417e5f21a68ab4c9359b2202160a33,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.89290386
+      value: 0.22903813
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b8417e5f21a68ab4c9359b2202160a33, type: 3}
@@ -2748,12 +2748,12 @@ PrefabInstance:
     - target: {fileID: 533948574299374635, guid: b8417e5f21a68ab4c9359b2202160a33,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.5481538
+      value: 0.28835598
       objectReference: {fileID: 0}
     - target: {fileID: 533948574299374635, guid: b8417e5f21a68ab4c9359b2202160a33,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: -0.83637756
+      value: 0.9575233
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b8417e5f21a68ab4c9359b2202160a33, type: 3}
@@ -3754,7 +3754,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   numObjects: 5
-  minAsteroidAmount: 2
+  minAsteroidAmount: 4
   prefab: {fileID: 8069275902880659580, guid: d0585bb223369e6458f8c3db972d5bc8, type: 3}
 --- !u!1 &817108910
 GameObject:
@@ -4854,12 +4854,12 @@ PrefabInstance:
     - target: {fileID: 533948574299374635, guid: b8417e5f21a68ab4c9359b2202160a33,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.056526467
+      value: 0.7284852
       objectReference: {fileID: 0}
     - target: {fileID: 533948574299374635, guid: b8417e5f21a68ab4c9359b2202160a33,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: -0.9984011
+      value: 0.6850615
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b8417e5f21a68ab4c9359b2202160a33, type: 3}
@@ -5378,12 +5378,12 @@ PrefabInstance:
     - target: {fileID: 533948574299374635, guid: b8417e5f21a68ab4c9359b2202160a33,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.91885704
+      value: 0.89290386
       objectReference: {fileID: 0}
     - target: {fileID: 533948574299374635, guid: b8417e5f21a68ab4c9359b2202160a33,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.39459065
+      value: -0.45024738
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b8417e5f21a68ab4c9359b2202160a33, type: 3}
@@ -12703,12 +12703,12 @@ PrefabInstance:
     - target: {fileID: 533948574299374635, guid: b8417e5f21a68ab4c9359b2202160a33,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.6850615
+      value: -0.11770303
       objectReference: {fileID: 0}
     - target: {fileID: 533948574299374635, guid: b8417e5f21a68ab4c9359b2202160a33,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: -0.7284852
+      value: -0.99304885
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b8417e5f21a68ab4c9359b2202160a33, type: 3}
@@ -17938,7 +17938,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &3506364949280788117
 MonoBehaviour:
   m_ObjectHideFlags: 0

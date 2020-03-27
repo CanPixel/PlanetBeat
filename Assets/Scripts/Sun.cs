@@ -30,7 +30,7 @@ public class Sun : MonoBehaviour {
 
     void Update() {
         //Glow fluctuation black hole
-        if(sunGlow.enabled) sunGlow.color = new Color(1, 1, 1, Mathf.Sin(Time.time * 26f) * 0.8f + 0.2f);
+        if(sunGlow.enabled) sunGlow.color = new Color(1, 1, 1, Mathf.Sin(Time.time * 7f) * 0.8f + 0.2f);
 
         DoomsdayEvent();   
     }

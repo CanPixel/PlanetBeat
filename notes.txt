@@ -1,4 +1,4 @@
-- Multiple players trailinglist for the same asteroid.
+- Multiple players trailinglist for the same asteroid. ??????????
 
 - Failed to network-remove GameObject. Client is neither owner nor MasterClient taking over for owner who left: View 2 on ASTEROID
 
@@ -7,12 +7,9 @@
 - Asteroids zijn vaak op tweede plaats
 
 
-- Sun killing asteroid doesn't refresh trailingList
-
-- Trailinglist should defy gravity
-
-
-
+- Lock-on system (alleen asteroids)
+	--> Max-range, growing speed. Border hits object == Capture
+	--> radial trigger grows, closest object gets captured
 
 
 
@@ -24,13 +21,8 @@
 
 
 - HTML5 export?
-
 - Bigger asteroid hitboxes
 
-
-
-
-- Spectator build? -----> screencap?
 - Meerdere rooms?
 - Link naar google forms
 
@@ -38,10 +30,6 @@
 
 
 - asteroid belts
-- texture packs --> 1,2,3,4 keys -> in-game
-- Lock-on system (alleen asteroids)
-	--> Max-range, growing speed. Border hits object == Capture
-	--> radial trigger grows, closest object gets captured
 
 
 SEMI-PROBLEEM: SERIAL PORTS MOETEN ALTIJD HANDMATIG GESELECTEERD WORDEN

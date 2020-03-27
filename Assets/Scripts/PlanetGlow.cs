@@ -12,7 +12,7 @@ public class PlanetGlow : MonoBehaviour {
     }
 
     void Update() {
-        glow.color = Color.Lerp(glow.color, glow.color + new Color(0, 0, 0, Mathf.Sin(Time.time * 3f + glowOffset)), Time.deltaTime * 1f);
+        glow.color = Color.Lerp(glow.color, glow.color + new Color(0, 0, 0, Mathf.Sin(Time.time * 1.5f + glowOffset * 10) - 0.1f), Time.deltaTime * 1f);
     }
 
     public void SetTexture(TextureSwitcher.TextureElement element) {

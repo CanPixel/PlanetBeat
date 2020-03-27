@@ -369,7 +369,8 @@ MonoBehaviour:
   maxInOrbitTime: 5
   outOrbitForce: 30
   playerPlanets: {fileID: 0}
-  playerShip: {fileID: 0}
+  ownerPlayer: {fileID: 0}
+  ownerID: 0
   playerTagsManager: {fileID: 0}
   playerOrbit: {fileID: 0}
 --- !u!114 &8025779704308543158

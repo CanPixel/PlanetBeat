@@ -11,4 +11,11 @@ public class HookTip : MonoBehaviour {
             Destroy(GetComponent<CircleCollider2D>());
         }
     }
+
+    void OnCollisionEnter2D(Collision2D col) {
+        if(col.gameObject.tag == "Resource") {
+            var ast = col.gameObject.GetComponent<Asteroid>();
+            ast.Capture(hookShot);
+        }
+    }
 }

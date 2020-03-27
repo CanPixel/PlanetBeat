@@ -36,5 +36,8 @@ MonoBehaviour:
   - RespawnSpaceship
   - RemoveID
   - CastHook
+  - SnatchAsteroid
+  - RemoveAsteroid
+  - SetAsteroidOwner
   DisableAutoOpenWizard: 1
   ShowSettings: 1

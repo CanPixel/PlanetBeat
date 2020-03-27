@@ -46,9 +46,10 @@ public class SunGravity : MonoBehaviour {
             col.GetComponent<Rigidbody2D>().AddForce(orientation * totalForce);
         }
         if (col.tag == "Resource") {
+            if(col.GetComponent<Asteroid>().held) return; //Influence of sun gravity bij trailingObjects 
+
             float totalForce = -(planetForceResource * (Mass / 2f));
             var orientation = (col.transform.position - transform.position).normalized;
-
             col.GetComponent<Rigidbody2D>().AddForce(orientation * totalForce);
         }
     }

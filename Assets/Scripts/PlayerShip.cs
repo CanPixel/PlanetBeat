@@ -10,7 +10,7 @@ public class PlayerShip : MonoBehaviourPunCallbacks {
         get {return GameManager.instance != null && GameManager.instance.isSinglePlayer;}
     } 
     public GameObject homePlanet;
-    public GameObject playerLabel;
+    [HideInInspector] public GameObject playerLabel;
 
     [System.Serializable]
     public enum HookMethod {
@@ -108,6 +108,8 @@ public class PlayerShip : MonoBehaviourPunCallbacks {
     }
 
     void Update() {
+        if(IsThisClient()) Debug.Log(trailingObjects.Count);
+
         //Particles emitten wanneer movement
         if(IsThisClient() || isSinglePlayer) {
             var emitting = exhaust.emission;
@@ -149,6 +151,12 @@ public class PlayerShip : MonoBehaviourPunCallbacks {
 
         //Removes asteroids that got destroyed / eaten by the sun
         for(int i = 0; i < trailingObjects.Count; i++) if(trailingObjects[i] == null) {
+            trailingObjects.RemoveAt(i);
+            i--;
+        }
+
+        //Removes asteroids owned by other players
+        for(int i = 0; i < trailingObjects.Count; i++) if(!trailingObjects[i].IsOwnedBy(this)) {
             trailingObjects.RemoveAt(i);
             i--;
         }

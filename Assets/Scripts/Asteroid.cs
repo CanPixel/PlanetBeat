@@ -4,11 +4,11 @@ using UnityEngine;
 using Photon.Pun;
 using UnityEngine.UI;
 
-public class Asteroid : MonoBehaviour {
+public class Asteroid : MonoBehaviourPun {
     [HideInInspector] public Rigidbody2D rb;
     public Image src, glow;
 
-    [HideInInspector] public bool held = false;
+    public bool held = false;
     public bool inOrbit = false;
     [HideInInspector] public bool giveTag = false;
     [HideInInspector] public float inOrbitTimer;
@@ -25,12 +25,17 @@ public class Asteroid : MonoBehaviour {
     private Collider2D asteroidColl;
     [HideInInspector] public PlayerPlanets playerPlanets;
 
-    [HideInInspector] public PlayerShip playerShip;
+    [HideInInspector] public PlayerShip ownerPlayer;
+    [HideInInspector] public int ownerID;
+
     [HideInInspector] public PlayerTagsManager playerTagsManager;
 
     [HideInInspector] public GameObject playerOrbit;
 
+    private AsteroidNetwork network;
+
     void Start() {
+        network = GetComponent<AsteroidNetwork>();
         rb = GetComponent<Rigidbody2D>();
         asteroidColl = GetComponent<Collider2D>();
         playerTagsManager = GetComponent<PlayerTagsManager>();
@@ -45,17 +50,25 @@ public class Asteroid : MonoBehaviour {
         if(held) ReleaseAsteroid(false);
     }
 
-    void OnCollisionEnter2D(Collision2D col) {
-        //Hook touches a object
-        if (col.gameObject.tag == "HOOKSHOT" && !held && col.gameObject.GetComponent<HookTip>().hookShot.canHold()) {
-            transform.position = col.transform.position;
-            var hookShot = col.gameObject.GetComponent<HookTip>().hookShot;
-            playerShip = hookShot.hostPlayer;
+    public bool IsOwnedBy(PlayerShip player) {
+        return ownerID == player.photonView.ViewID;
+    }
+
+    public void Capture(HookShot hookShot) {
+        if((!held || (held && ownerID != hookShot.hostPlayer.photonView.ViewID)) && hookShot.canHold()) {
+            transform.position = hookShot.transform.position;
+            ownerPlayer = hookShot.hostPlayer;
             FetchAsteroid(hookShot.hostPlayer);
             hookShot.CatchObject(gameObject);
             collectTimer = grabDelay; 
             playerTagsManager.GiveTag();
+            photonView.RPC("SetAsteroidOwner", RpcTarget.All, ownerPlayer.photonView.ViewID);
         }
+    }
+
+    [PunRPC]
+    public void SetAsteroidOwner(int ownerID) {
+        this.ownerID = ownerID; 
     }
 
     void OnTriggerStay2D(Collider2D col) {
@@ -91,7 +104,7 @@ public class Asteroid : MonoBehaviour {
     void OrbitAroundPlanet() {
         if(inOrbit) {
             if(playerTagsManager != null && playerTagsManager.tagNum != 0) {
-                if(playerShip.playerNumber == playerTagsManager.tagNum) {
+                if(ownerPlayer.playerNumber == playerTagsManager.tagNum) {
                     inOrbitTimer += Time.deltaTime;
                     rb.drag = inPlayerOrbitRbDrag;
 
@@ -115,7 +128,7 @@ public class Asteroid : MonoBehaviour {
 
     public void ConsumeResource() {
         playerPlanets.AddingResource(value);
-        gameObject.SetActive(false);
+        GameManager.DESTROY_SERVER_OBJECT(gameObject);
     }
 
     public void ReleaseAsteroid(bool released) {

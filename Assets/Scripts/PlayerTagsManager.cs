@@ -23,8 +23,8 @@ public class PlayerTagsManager : MonoBehaviour {
     }
 
     public void GiveTag() {
-        tagNum = _asteroid.playerShip.playerNumber;
-        asteroidTrailRenderer.material.color = _asteroid.playerShip.playerColor;
+        tagNum = _asteroid.ownerPlayer.playerNumber;
+        asteroidTrailRenderer.material.color = _asteroid.ownerPlayer.playerColor;
         TagOn(false);
     }
 
@@ -39,7 +39,7 @@ public class PlayerTagsManager : MonoBehaviour {
 
     public void StartTagTimer() {
         if (runTagTimer) {
-            if (!_asteroid.inOrbit || (_asteroid.inOrbit && _asteroid.playerShip != null && _asteroid.playerShip.playerNumber != _asteroid.playerPlanets.playerNumber)) {
+            if (!_asteroid.inOrbit || (_asteroid.inOrbit && _asteroid.ownerPlayer != null && _asteroid.ownerPlayer.playerNumber != _asteroid.playerPlanets.playerNumber)) {
                 if (tagTimer < tagDuration) tagTimer += Time.deltaTime;
 
                 if (tagTimer >= tagDuration) {
