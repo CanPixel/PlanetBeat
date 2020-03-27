@@ -39,6 +39,9 @@ public class PlayerShip : MonoBehaviourPunCallbacks {
         public float exitVelocityReduction = 2;
         [Range(1, 5)]
         public float brakingSpeed = 1;
+
+        public float defaultDrag;
+        public float stopDrag;
     #endregion
 
     //Rigidbody reference voor physics en movement hoeraaa
@@ -157,8 +160,14 @@ public class PlayerShip : MonoBehaviourPunCallbacks {
 
     void ProcessInputs() {
         //naar voren en naar achteren (W & S)
-        if(IsThrust()) velocity = Mathf.Lerp(velocity, maxVelocity, Time.deltaTime * acceleration);
-        else velocity = Mathf.Lerp(velocity, 0, Time.deltaTime * acceleration * 2f);
+        if(IsThrust()) {
+            velocity = Mathf.Lerp(velocity, maxVelocity, Time.deltaTime * acceleration);
+            rb.drag = defaultDrag;
+        }
+        else {
+            velocity = Mathf.Lerp(velocity, 0, Time.deltaTime * acceleration * 2f);
+            rb.drag = stopDrag;
+        }
 
         //Spreekt voor zich
         if(IsBrake()) {

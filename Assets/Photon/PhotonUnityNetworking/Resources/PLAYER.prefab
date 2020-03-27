@@ -5516,11 +5516,13 @@ MonoBehaviour:
   ship: {fileID: 1446986112751458336}
   playerNumber: 1
   playerColor: {r: 0.3773585, g: 0.119259514, b: 0.3137046, a: 1}
-  maxVelocity: 1
-  acceleration: 10
-  turningSpeed: 6.84
+  maxVelocity: 1.2
+  acceleration: 20000
+  turningSpeed: 5
   exitVelocityReduction: 1
   brakingSpeed: 2
+  defaultDrag: 0.2
+  stopDrag: 0.5
   networkIgnore:
   - {fileID: 1662954744308020766}
   - {fileID: 7716859393941716483}
@@ -5542,7 +5544,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 1.5
   m_LinearDrag: 0.1
   m_AngularDrag: 0.05
   m_GravityScale: 1
