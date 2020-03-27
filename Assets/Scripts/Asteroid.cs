@@ -6,7 +6,6 @@ using UnityEngine.UI;
 
 public class Asteroid : MonoBehaviour {
     [HideInInspector] public Rigidbody2D rb;
-
     public Image src, glow;
 
     [HideInInspector] public bool held = false;
@@ -23,7 +22,7 @@ public class Asteroid : MonoBehaviour {
     public float maxInOrbitTime = 5;
     public float outOrbitForce = 20;
     private float collectTimer;
-    private PolygonCollider2D asteroidColl;
+    private Collider2D asteroidColl;
     [HideInInspector] public PlayerPlanets playerPlanets;
 
     [HideInInspector] public PlayerShip playerShip;
@@ -33,7 +32,7 @@ public class Asteroid : MonoBehaviour {
 
     void Start() {
         rb = GetComponent<Rigidbody2D>();
-        asteroidColl = GetComponent<PolygonCollider2D>();
+        asteroidColl = GetComponent<Collider2D>();
         playerTagsManager = GetComponent<PlayerTagsManager>();
         rb.drag = defaultRbDrag - .15f;
         SetTexture(TextureSwitcher.GetCurrentTexturePack());
@@ -60,18 +59,15 @@ public class Asteroid : MonoBehaviour {
     }
 
     void OnTriggerStay2D(Collider2D col) {
-        if(col.gameObject.tag == "ORBIT") {
-            inOrbit = true;
-            if(!held) OrbitAroundPlanet();
-        }
-    }
-
-    void OnTriggerEnter2D(Collider2D col) {
         if (col.gameObject.tag == "PLAYERPLANET" && col.gameObject != null) {
             playerPlanets = col.gameObject.GetComponent<PlayerPlanets>();
             if(playerTagsManager.tagNum == playerPlanets.playerNumber) {
                 if(canConsume || held) ConsumeResource();
             }
+        }
+        if(col.gameObject.tag == "ORBIT") {
+            inOrbit = true;
+            if(!held) OrbitAroundPlanet();
         }
     }
 

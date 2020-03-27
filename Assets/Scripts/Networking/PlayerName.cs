@@ -10,7 +10,7 @@ public class PlayerName : MonoBehaviour {
 
     void OnEnable() {
         text = GetComponent<Text>();
-        if(text != null) text.color = host.GetComponent<PlayerShip>().playerColor;
+        if(text != null && host != null) text.color = host.GetComponent<PlayerShip>().playerColor;
         transform.SetParent(GameObject.FindGameObjectWithTag("GAMEFIELD").transform, false);
     }
 

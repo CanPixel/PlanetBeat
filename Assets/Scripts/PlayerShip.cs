@@ -37,8 +37,6 @@ public class PlayerShip : MonoBehaviourPunCallbacks {
 
         [Range(1, 20)]
         public float turningSpeed = 2.5f;
-        [Range(1, 10)]
-        public float exitVelocityReduction = 2;
         [Range(1, 5)]
         public float brakingSpeed = 1;
 
@@ -84,7 +82,7 @@ public class PlayerShip : MonoBehaviourPunCallbacks {
                 GameManager.playerLabels.Add(PLAYERNAME, playerNameTag);
                 foreach(var i in networkIgnore) if(i != null) DestroyImmediate(i);
             } 
-            playerLabel.GetComponent<Text>().color = playerColor;
+            if(playerLabel != null) playerLabel.GetComponent<Text>().color = playerColor;
             lockOnAim.selectColor = playerColor;
         }
     #endregion
@@ -188,7 +186,7 @@ public class PlayerShip : MonoBehaviourPunCallbacks {
     }
 
     //Wanneer je orbits exit, de speed dampening.
-    public void NeutralizeForce() {
+    public void NeutralizeForce(float exitVelocityReduction) {
         if(rb != null) rb.velocity /= exitVelocityReduction;
     }
 

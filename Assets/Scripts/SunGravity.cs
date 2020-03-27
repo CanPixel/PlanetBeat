@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class SunGravity : MonoBehaviour {
     [Header("PHYSICS")]
-    [Range(200, 3000)]
-    public float orbitEffectDistance = 2000;
-    public float OrbitSpeed = 4;
-    public float planetForce = 4000;
+    [Range(0, 10)]
+    public float planetForceResource = 1;
+    [Range(0, 10)]
+    public float planetForcePlayer = 1;
 
     [Range(0, 1)]
     public float Mass = 1;
@@ -39,22 +39,21 @@ public class SunGravity : MonoBehaviour {
     }
 
     void OnTriggerStay2D(Collider2D col) {
-        if (col.tag == "PLAYERSHIP" || col.tag == "Resource") {
-            var dist = Vector3.Distance(col.transform.position, transform.position);
+        if (col.tag == "PLAYERSHIP") {
+            float totalForce = -(planetForcePlayer * (Mass / 2f));
+            var orientation = (col.transform.position - transform.position).normalized;
 
-            // Hoe hoger hoe slapper de force
-            float totalForce = -(orbitEffectDistance / planetForce * (Mass / 2f));
+            col.GetComponent<Rigidbody2D>().AddForce(orientation * totalForce);
+        }
+        if (col.tag == "Resource") {
+            float totalForce = -(planetForceResource * (Mass / 2f));
             var orientation = (col.transform.position - transform.position).normalized;
 
             col.GetComponent<Rigidbody2D>().AddForce(orientation * totalForce);
         }
     }
 
-
     void OnCollisionEnter2D(Collision2D collision) {
-        if (collision.collider.tag == "Resource") {
-            destroyingObjects.Add(new DyingObject(collision.gameObject));
-            //GameManager.DESTROY_SERVER_OBJECT(collision.gameObject); 
-        }
+        if (collision.collider.tag == "Resource") destroyingObjects.Add(new DyingObject(collision.gameObject));
     }
 }

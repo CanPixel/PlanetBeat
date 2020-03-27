@@ -10,7 +10,7 @@ public class PlayerTagsManager : MonoBehaviour {
     private TrailRenderer asteroidTrailRenderer;
     public Color ogTrailColor; 
 
-    Asteroid _asteroid; 
+    private Asteroid _asteroid; 
 
     void Start() {
         _asteroid = GetComponent<Asteroid>();
@@ -34,13 +34,12 @@ public class PlayerTagsManager : MonoBehaviour {
     }
 
     public void TagOn(bool state) {
-        if(asteroidTrailRenderer != null)
-            asteroidTrailRenderer.enabled = state;
+        if(asteroidTrailRenderer != null) asteroidTrailRenderer.enabled = state;
     }
 
     public void StartTagTimer() {
         if (runTagTimer) {
-            if (!_asteroid.inOrbit) {
+            if (!_asteroid.inOrbit || (_asteroid.inOrbit && _asteroid.playerShip != null && _asteroid.playerShip.playerNumber != _asteroid.playerPlanets.playerNumber)) {
                 if (tagTimer < tagDuration) tagTimer += Time.deltaTime;
 
                 if (tagTimer >= tagDuration) {

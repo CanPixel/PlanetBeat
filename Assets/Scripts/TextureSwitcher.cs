@@ -26,7 +26,7 @@ public class TextureSwitcher : MonoBehaviour {
     [Space(20)]
     public Image sunReference, sunGlowReference;
     private GameObject asteroidReference;
-    private Planet[] planetsReference;
+    private PlanetGlow[] planetsReference;
     [Range(1, 10)]
     public int typeOfPlanets = 4;
 
@@ -36,17 +36,21 @@ public class TextureSwitcher : MonoBehaviour {
         return instance.texturePacks[instance.pack];
     }
 
+    private Dropdown dropdown;
+
     void Start() {
         instance = this;
     }
 
     void OnEnable() {
+        dropdown = GetComponent<Dropdown>();
+        dropdown.value = PlayerPrefs.GetInt("TexturePack");
         UpdateTexturePack(PlayerPrefs.GetInt("TexturePack"));
     }
 
     public void UpdateTexturePack(int change) {
         pack = change;
-        if(planetsReference == null) planetsReference = GameObject.FindGameObjectWithTag("PLANETS").GetComponentsInChildren<Planet>();
+        if(planetsReference == null) planetsReference = GameObject.FindGameObjectWithTag("PLANETS").GetComponentsInChildren<PlanetGlow>();
         if(asteroidReference == null) asteroidReference = GameObject.FindGameObjectWithTag("ASTEROIDBELT");
 
         var textPack = texturePacks[change];

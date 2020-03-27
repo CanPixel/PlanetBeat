@@ -4,13 +4,26 @@
 
 - Master client settings (Welke mechanics, lock-on? free aim?)
 
+- Asteroids zijn vaak op tweede plaats
+
+
+- Sun killing asteroid doesn't refresh trailingList
+
+- Trailinglist should defy gravity
+
+
+
+
+
+
+
+
+
+
 
 
 
 - HTML5 export?
-
-
-- Asteroids zijn vaak op tweede plaats
 
 - Bigger asteroid hitboxes
 

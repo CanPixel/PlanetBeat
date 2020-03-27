@@ -5521,7 +5521,6 @@ MonoBehaviour:
   maxVelocity: 1.2
   acceleration: 20000
   turningSpeed: 5
-  exitVelocityReduction: 1
   brakingSpeed: 2
   defaultDrag: 0.2
   stopDrag: 0.5
