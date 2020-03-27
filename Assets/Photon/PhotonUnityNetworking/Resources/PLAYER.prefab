@@ -5510,7 +5510,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   homePlanet: {fileID: 0}
-  hookMethod: 1
+  playerLabel: {fileID: 0}
+  hookMethod: 0
   lockOnAim: {fileID: 8928089638351778678}
   emit: {fileID: 21300000, guid: 575c819abd873da49b1181b2793df8d8, type: 3}
   noEmit: {fileID: 21300000, guid: 9afb81dacc602c94087666bd60ba809b, type: 3}
@@ -5914,6 +5915,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f40bc19a2c9c3d543a7b040a4155bc9e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ship: {fileID: 3506364950220654683}
   edge: {fileID: 2728062050156088235}
   pivot: {fileID: 6812465581840699203}
   line: {fileID: 4351742018777435146}

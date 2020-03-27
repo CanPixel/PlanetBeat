@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 [ExecuteInEditMode]
 public class LockOnAim : MonoBehaviour {
+    public PlayerShip ship;
+
     public EdgeCollider2D edge;
     public GameObject pivot;
     public LineRenderer line;
@@ -28,7 +30,7 @@ public class LockOnAim : MonoBehaviour {
     }
 
     void Update() {
-        if(Input.GetKey(KeyCode.Space)) if(radius < maxRadius * 10f) radius += Time.deltaTime * 1000f * expandSpeed;
+        if(Input.GetKey(KeyCode.Space) && (GameManager.instance.isSinglePlayer || ship.photonView.IsMine)) if(radius < maxRadius * 10f) radius += Time.deltaTime * 1000f * expandSpeed;
         if(Input.GetKeyUp(KeyCode.Space)) radius = minRadius;
 
         edge.edgeRadius = radius / 2350f;

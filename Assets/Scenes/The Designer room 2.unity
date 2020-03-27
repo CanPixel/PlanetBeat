@@ -7596,6 +7596,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f40bc19a2c9c3d543a7b040a4155bc9e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ship: {fileID: 0}
   edge: {fileID: 1450841928}
   pivot: {fileID: 1535069222}
   line: {fileID: 1450841927}
@@ -20536,7 +20537,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1556da50f9294094188d543941f9cb99, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  homePlanet: {fileID: 0}
+  homePlanet: {fileID: 1581069889}
   hookMethod: 1
   lockOnAim: {fileID: 1581069891}
   emit: {fileID: 21300000, guid: 575c819abd873da49b1181b2793df8d8, type: 3}
