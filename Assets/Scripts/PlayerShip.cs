@@ -10,7 +10,16 @@ public class PlayerShip : MonoBehaviourPunCallbacks {
         get {return GameManager.instance != null && GameManager.instance.isSinglePlayer;}
     } 
 
-    public Sprite emit, noEmit;
+    [System.Serializable]
+    public enum HookMethod {
+        FreeAim, LockOn
+    }
+    public HookMethod hookMethod;
+
+    [Space(20)]
+    public LockOnAim lockOnAim;
+    public Sprite emit;
+    public Sprite noEmit;
     public Image ship;
 
     //Player Identity
@@ -71,19 +80,15 @@ public class PlayerShip : MonoBehaviourPunCallbacks {
 
     //Lijn aan asteroids/objecten achter de speler
     [HideInInspector] public List<Asteroid> trailingObjects = new List<Asteroid>();
-    private ParticleSystem exhaust;
-
-    public override void OnDisable() {
-        base.OnDisable();
-    }
+    public ParticleSystem exhaust;
 
    public static void SetName(string name) {
        PLAYERNAME = name;
    }
 
     void Start() {
+        lockOnAim.gameObject.SetActive(hookMethod == HookMethod.LockOn);
         rb = GetComponent<Rigidbody2D>();
-        exhaust = GetComponentInChildren<ParticleSystem>();
         var cont = GameObject.FindGameObjectWithTag("CUSTOM CONTROLLER");
         if(cont != null) customController = cont.GetComponent<CustomController>();
         if(customController != null && customController.useCustomControls) hookShot.customController = customController;

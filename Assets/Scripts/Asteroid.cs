@@ -48,7 +48,7 @@ public class Asteroid : MonoBehaviour {
 
     void OnCollisionEnter2D(Collision2D col) {
         //Hook touches a object
-        if (col.gameObject.tag == "HOOKSHOT" && !held) {
+        if (col.gameObject.tag == "HOOKSHOT" && !held && col.gameObject.GetComponent<HookTip>().hookShot.canHold()) {
             transform.position = col.transform.position;
             var hookShot = col.gameObject.GetComponent<HookTip>().hookShot;
             playerShip = hookShot.hostPlayer;

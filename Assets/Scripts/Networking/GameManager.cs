@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviourPunCallbacks {
    public bool isSinglePlayer = false;
+   public bool spectating = false;
 
    public static GameManager instance;
    [Space(10)]
@@ -28,6 +29,7 @@ public class GameManager : MonoBehaviourPunCallbacks {
    }
 
    void Update() {
+      spectating = PlayerPrefs.GetInt("Spectate") == 0;
       if(Input.GetKeyUp(KeyCode.Escape)) Screen.fullScreen = !Screen.fullScreen;
    }
 
@@ -36,7 +38,7 @@ public class GameManager : MonoBehaviourPunCallbacks {
       
       if(!isSinglePlayer) {
          DestroyImmediate(singlePlayer);
-         AddPlayer(PlayerShip.PLAYERNAME);
+         if(PlayerPrefs.GetInt("Spectate") != 0) AddPlayer(PlayerShip.PLAYERNAME);
       }
    }
 

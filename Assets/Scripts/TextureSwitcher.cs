@@ -41,7 +41,7 @@ public class TextureSwitcher : MonoBehaviour {
     }
 
     void OnEnable() {
-        UpdateTexturePack(0);
+        UpdateTexturePack(PlayerPrefs.GetInt("TexturePack"));
     }
 
     public void UpdateTexturePack(int change) {
@@ -61,5 +61,7 @@ public class TextureSwitcher : MonoBehaviour {
 
         var asts = asteroidReference.GetComponentsInChildren<Asteroid>();
         foreach(var i in asts) i.SetTexture(textPack);
+
+        PlayerPrefs.SetInt("TexturePack", change);
     }
 }

@@ -15,12 +15,16 @@ public class PlayerPlanets : MonoBehaviour {
     PlayerPlanets _playerPlanets;
 
     void Start() {
-        if(player == null) return;
+        if(player == null) {
+            scoreText.enabled = false;
+            return;
+        }
         playerNumber = player.GetComponent<PlayerShip>().playerNumber;
         scoreText = GetComponentInChildren<Text>();
         var _player = player.GetComponent<PlayerShip>();
         orbitColor = _player.playerColor;
-        scoreText.color = _player.playerColor; 
+        var col = Color.white - _player.playerColor;
+        scoreText.color = new Color(col.r, col.g, col.b, 1); 
         orbitTrail.material.color = orbitColor; 
         currentScore = minScore = 0;
     }

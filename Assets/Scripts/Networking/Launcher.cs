@@ -3,11 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
+using UnityEngine.UI;
 
 public class Launcher : MonoBehaviourPunCallbacks {
     [Header("REFERENCES")]
     [SerializeField] private GameObject controlPanel;
     [SerializeField] private GameObject progressLabel;
+
+    public Slider SpectSlider;
+    public Text particiText;
+    private bool spectate = false;
 
     string gameVersion = "1";
 
@@ -23,10 +28,19 @@ public class Launcher : MonoBehaviourPunCallbacks {
         PhotonNetwork.AutomaticallySyncScene = true;
         if(progressLabel != null) progressLabel.SetActive(false);
         if(controlPanel != null) controlPanel.SetActive(true);
+
+        SpectSlider.value = PlayerPrefs.GetInt("Spectate");
     }
 
     void Update() {
         if(Input.GetKeyUp(KeyCode.Escape)) Screen.fullScreen = !Screen.fullScreen;
+    }
+
+    public void OnChangeSpectate(System.Single value) {
+        if(value == 0) particiText.enabled = false;
+        else particiText.enabled = true;
+        spectate = value == 0;
+        PlayerPrefs.SetInt("Spectate", (int)value);
     }
 
     public void Quit() {
