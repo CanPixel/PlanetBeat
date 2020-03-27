@@ -348,7 +348,7 @@ CircleCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 58724069}
-  m_Enabled: 0
+  m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
@@ -385,10 +385,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc1df453c6c6afa4bb09ba2121cb8fdf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  orbitEffectDistance: 1000
+  orbitEffectDistance: 452
   OrbitSpeed: 4
   planetForce: 2000
-  Mass: 0.55
+  Mass: 1
 --- !u!1 &62298797
 GameObject:
   m_ObjectHideFlags: 0
@@ -2439,7 +2439,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa27af3838c8ac340b14c0099c027c78, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 3506364949280788107}
+  player: {fileID: 0}
   playerNumber: 0
   currentScore: 0
   maxScore: 100
@@ -15352,7 +15352,7 @@ MonoBehaviour:
   - {fileID: 1662954743368839375}
   customController: {fileID: 0}
   hookShotSpeed: 157
-  hookShotRange: 6.6
+  hookShotRange: 5
 --- !u!1 &1446986111487058774
 GameObject:
   m_ObjectHideFlags: 0
@@ -20536,6 +20536,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1556da50f9294094188d543941f9cb99, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  homePlanet: {fileID: 0}
   hookMethod: 1
   lockOnAim: {fileID: 1581069891}
   emit: {fileID: 21300000, guid: 575c819abd873da49b1181b2793df8d8, type: 3}

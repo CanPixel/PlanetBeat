@@ -394,11 +394,11 @@ MonoBehaviour:
   inOrbit: 0
   giveTag: 0
   inOrbitTimer: 0
-  inPlayerOrbitRbDrag: 0.25
+  inPlayerOrbitRbDrag: 0.5
   value: 5
   grabDelay: 0.5
   maxInOrbitTime: 5
-  outOrbitForce: 20
+  outOrbitForce: 30
   playerPlanets: {fileID: 0}
   playerShip: {fileID: 0}
   playerTagsManager: {fileID: 0}

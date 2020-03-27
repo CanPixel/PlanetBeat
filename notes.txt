@@ -12,6 +12,9 @@
 
 - Asteroids zijn vaak op tweede plaats
 
+- Bigger asteroid hitboxes
+
+
 
 
 - Spectator build? -----> screencap?

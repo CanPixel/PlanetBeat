@@ -9,6 +9,7 @@ public class PlayerShip : MonoBehaviourPunCallbacks {
     public bool isSinglePlayer {
         get {return GameManager.instance != null && GameManager.instance.isSinglePlayer;}
     } 
+    public GameObject homePlanet;
 
     [System.Serializable]
     public enum HookMethod {
@@ -70,14 +71,18 @@ public class PlayerShip : MonoBehaviourPunCallbacks {
             transform.SetParent(GameObject.FindGameObjectWithTag("GAMEFIELD").transform, false);
 
             if(!isSinglePlayer && photonView != null && !photonView.IsMine) {
+                Random.InitState(photonView.ViewID);
+                playerColor = new Color(Random.Range(0f, 1f), Random.Range(0f, 1f), Random.Range(0f, 1f));
                 exLastPos = transform.position;
                 var playerNameTag = Instantiate(Resources.Load("PlayerName"), transform.position, Quaternion.identity) as GameObject;
                 var pN = playerNameTag.GetComponent<PlayerName>();
-                pN.SetHost(gameObject, photonView.Owner.NickName);
+                pN.SetColor(playerColor);
+                if(pN != null) pN.SetHost(gameObject, photonView.Owner.NickName);
                 PLAYERNAME = photonView.Owner.NickName;
                 GameManager.playerLabels.Add(PLAYERNAME, playerNameTag);
                 foreach(var i in networkIgnore) if(i != null) DestroyImmediate(i);
             } 
+            lockOnAim.selectColor = playerColor;
         }
     #endregion
 

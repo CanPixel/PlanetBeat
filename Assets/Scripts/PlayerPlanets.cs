@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class PlayerPlanets : MonoBehaviour {
-    public GameObject player;
+    public PlayerShip player;
     [HideInInspector] public float playerNumber;
     [HideInInspector] public float currentScore;
     public float maxScore = 100f;
@@ -15,21 +15,38 @@ public class PlayerPlanets : MonoBehaviour {
     PlayerPlanets _playerPlanets;
 
     void Start() {
+        currentScore = minScore = 0;
         if(player == null) {
             scoreText.enabled = false;
             return;
         }
-        playerNumber = player.GetComponent<PlayerShip>().playerNumber;
+       CheckForPlayer();
+    }
+
+    private void CheckForPlayer() {
+        if(player != null) return;
+
+        foreach(var i in GameManager.GetPlayerList()) {
+            if(i.homePlanet == null) {
+                player = i;
+                i.homePlanet = gameObject;
+                Debug.Log("Player assigned!");
+                break;
+            }
+        }
+        if(player == null) return;
+        player.homePlanet = gameObject;
+        playerNumber = player.playerNumber;
         scoreText = GetComponentInChildren<Text>();
-        var _player = player.GetComponent<PlayerShip>();
-        orbitColor = _player.playerColor;
-        var col = Color.white - _player.playerColor;
-        scoreText.color = new Color(col.r, col.g, col.b, 1); 
+        orbitColor = player.playerColor;
+        //var col = Color.white - player.playerColor;
+        scoreText.color = player.playerColor;//new Color(col.r, col.g, col.b, 1); 
+        scoreText.enabled = true;
         orbitTrail.material.color = orbitColor; 
-        currentScore = minScore = 0;
     }
 
     void Update() {
+        if(player == null) CheckForPlayer();
         if(scoreText != null) scoreText.text = currentScore.ToString("F0");
     }
 

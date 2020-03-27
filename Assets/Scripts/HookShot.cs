@@ -80,9 +80,10 @@ public class HookShot : MonoBehaviour {
     protected void LockOn() {
         if(lockOnAimTarget != null) {
             var targetDir = lockOnAimTarget.transform.position - transform.position;
-            float angle = Vector3.Angle(targetDir, transform.forward);
+            float angle = Vector3.Angle(targetDir, transform.position) + 180;
+
             transform.rotation = Quaternion.Euler(0, 0, angle);
-        }
+        } else transform.localRotation = Quaternion.identity;
 
         if(IsShooting()) {
             if(rope.sizeDelta.y + hookShotSpeed < hookShotRange * 1000f && !didntCatch) {
@@ -99,11 +100,7 @@ public class HookShot : MonoBehaviour {
     }
 
     protected void FreeAim() {
-        if(Input.GetKey(KeyCode.Space)) {
-            triggerHook = true;
-            //var hit = Physics2D.Raycast(rope.transform.position, rope.transform.TransformDirection(rope.transform.forward) * hookShotRange);
-           // lineAim.SetPosition(1, hit.point);
-        }
+        if(Input.GetKey(KeyCode.Space)) triggerHook = true;
         if(Input.GetKeyUp(KeyCode.Space) && triggerHook && shootTimer <= 0) {
             if(hostPlayer.IsThisClient()) hostPlayer.photonView.RPC("CastHook", RpcTarget.All, hostPlayer.photonView.ViewID);
             else if(hostPlayer.isSinglePlayer) CastHook();
@@ -144,6 +141,7 @@ public class HookShot : MonoBehaviour {
 
     protected void ResetHook() {
         transform.rotation = Quaternion.Euler(0, 0, 0);
+        transform.localRotation = Quaternion.identity;
         triggerHook = hitObject = isShootingHook = false;
         rope.sizeDelta = new Vector2(rope.sizeDelta.x, 0);
         shootTimer = 0;

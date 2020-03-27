@@ -20,6 +20,16 @@ public class GameManager : MonoBehaviourPunCallbacks {
 
    public static Dictionary<string, GameObject> playerLabels = new Dictionary<string, GameObject>();
 
+   private static List<PlayerShip> players = new List<PlayerShip>();
+
+   public static void AddPlayerToList(PlayerShip obj) {
+      players.Remove(obj);
+   }
+
+   public static List<PlayerShip> GetPlayerList() {
+      return players;
+   }
+
    void OnValidate() {
       if(playerScale <= 0) playerScale = 0.01f;
    }
@@ -31,6 +41,11 @@ public class GameManager : MonoBehaviourPunCallbacks {
    void Update() {
       spectating = PlayerPrefs.GetInt("Spectate") == 0;
       if(Input.GetKeyUp(KeyCode.Escape)) Screen.fullScreen = !Screen.fullScreen;
+
+      //Actual playerlist
+      var list = PhotonNetwork.FindGameObjectsWithComponent(typeof(PlayerShip));
+      players.Clear();
+      foreach(var i in list) players.Add(i.GetComponent<PlayerShip>());
    }
 
    public override void OnEnable() {
@@ -70,6 +85,8 @@ public class GameManager : MonoBehaviourPunCallbacks {
          var player = PhotonNetwork.Instantiate(playerPrefab.name, new Vector3(40 * (play), 40 * (play), 0), Quaternion.identity, 0);
          player.transform.localScale = new Vector3(playerScale, playerScale, playerScale);
          PLAYER_COUNT++;
+         var playerShip = player.GetComponent<PlayerShip>();
+         playerShip.playerColor = new Color(Random.Range(0f, 1f), Random.Range(0f, 1f), Random.Range(0f, 1f));
 
          var playerName = Instantiate(PlayerName, player.transform.position, Quaternion.identity);
          var pN = playerName.GetComponent<PlayerName>();

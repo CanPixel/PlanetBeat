@@ -22,4 +22,8 @@ public class PlayerName : MonoBehaviour {
         this.host = host;
         text.text = name;
     }
+
+    public void SetColor(Color col) {
+        text.color = col;
+    }
 }
