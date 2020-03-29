@@ -41,7 +41,7 @@ public class PlayerTagsManager : MonoBehaviour {
 
     public void StartTagTimer() {
         if (runTagTimer) {
-            if (!_asteroid.inOrbit || (_asteroid.inOrbit && _asteroid.ownerPlayer != null && _asteroid.ownerPlayer.playerNumber != _asteroid.playerPlanets.playerNumber)) {
+            if (!_asteroid.inOrbit || (_asteroid.inOrbit && _asteroid.ownerPlayer != null && _asteroid.playerPlanets != null && _asteroid.ownerPlayer.playerNumber != _asteroid.playerPlanets.playerNumber)) {
                 if (tagTimer < tagDuration) tagTimer += Time.deltaTime;
 
                 if (tagTimer >= tagDuration) {
