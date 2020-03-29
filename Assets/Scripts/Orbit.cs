@@ -43,6 +43,7 @@ public class Orbit : MonoBehaviour {
             col.GetComponent<Rigidbody2D>().AddForce(orientation * totalForce);
 
         } else if(col.tag == "Resource") {
+            if(col.GetComponent<Asteroid>().held) return; //Influence of gravity bij trailingObjects 
             var dist = Vector3.Distance(col.transform.position, transform.position);
             float totalForce = -(planetForceResource * (Mass / 2f)); 
             var orientation = (col.transform.position - transform.position).normalized;

@@ -29,4 +29,8 @@ public class UIFloat : MonoBehaviour {
 			transform.localRotation = Quaternion.Lerp(transform.localRotation, Quaternion.Euler(targetRot), Time.deltaTime * rotateSpeed);
 		}
 	}
+
+	public void SetBaseScale(Vector3 sc) {
+		baseScale = sc;
+	}
 }

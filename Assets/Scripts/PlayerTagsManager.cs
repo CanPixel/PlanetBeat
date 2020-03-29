@@ -11,8 +11,10 @@ public class PlayerTagsManager : MonoBehaviour {
     public Color ogTrailColor; 
 
     private Asteroid _asteroid; 
+    private Collider2D asteroidColl;
 
     void Start() {
+        asteroidColl = GetComponent<Collider2D>();
         _asteroid = GetComponent<Asteroid>();
         asteroidTrailRenderer = GetComponent<TrailRenderer>();
         asteroidTrailRenderer.material.color = ogTrailColor; 
@@ -49,5 +51,21 @@ public class PlayerTagsManager : MonoBehaviour {
             }
         }
         else tagTimer = 0f;
+    }
+
+    public void OnCollisionEnter2D(Collision2D col) {
+        if (col.gameObject.tag == "PLAYERSHIP") {
+            var _playerShip = col.gameObject.GetComponent<PlayerShip>();
+            //var hook = col.gameObject.GetComponentsInChildren<PlayerShip>(); 
+
+            if (_playerShip.playerNumber != tagNum) return;
+            else Physics2D.IgnoreCollision(col.collider, asteroidColl);
+        }
+        if(col.gameObject.tag == "HOOKSHOT") {
+            var _playerShip = col.gameObject.GetComponentInParent<PlayerShip>();
+
+            if (_playerShip.playerNumber != tagNum) return;
+            else Physics2D.IgnoreCollision(col.collider, asteroidColl);
+        }
     }
 }

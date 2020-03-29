@@ -30,7 +30,7 @@ public class PlayerPlanets : MonoBehaviour {
             if(i.homePlanet == null) {
                 player = i;
                 i.homePlanet = gameObject;
-                Debug.Log("Player assigned!");
+                Debug.Log("Player assigned to planet " + i.homePlanet.name);
                 break;
             }
         }
@@ -53,5 +53,8 @@ public class PlayerPlanets : MonoBehaviour {
     public void AddingResource(float amount) {
         if (currentScore < maxScore) currentScore += amount;
         if (currentScore <= minScore) currentScore = minScore;
+
+        var newScale = transform.localScale + new Vector3(amount, amount, 0) / 50f;
+        GetComponent<UIFloat>().SetBaseScale(newScale);
     }
 }

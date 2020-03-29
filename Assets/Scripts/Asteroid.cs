@@ -8,10 +8,12 @@ public class Asteroid : MonoBehaviourPun {
     [HideInInspector] public Rigidbody2D rb;
     public Image src, glow;
 
-    public bool held = false;
-    public bool inOrbit = false;
+    [HideInInspector] public bool held = false;
+    [HideInInspector] public bool inOrbit = false;
     [HideInInspector] public bool giveTag = false;
     [HideInInspector] public float inOrbitTimer;
+
+    public float thrust = 20;
 
     private bool canConsume = false;
     private float defaultRbDrag;
@@ -41,6 +43,11 @@ public class Asteroid : MonoBehaviourPun {
         playerTagsManager = GetComponent<PlayerTagsManager>();
         rb.drag = defaultRbDrag - .15f;
         SetTexture(TextureSwitcher.GetCurrentTexturePack());
+        rb.AddForce(-transform.right * thrust);
+    }
+
+    void OnEnable() {
+        transform.SetParent(GameObject.FindGameObjectWithTag("ASTEROIDBELT").transform, true);
     }
 
     void Update() {
@@ -51,18 +58,19 @@ public class Asteroid : MonoBehaviourPun {
     }
 
     public bool IsOwnedBy(PlayerShip player) {
+        if(player.photonView == null) return true;
         return ownerID == player.photonView.ViewID;
     }
 
     public void Capture(HookShot hookShot) {
-        if((!held || (held && ownerID != hookShot.hostPlayer.photonView.ViewID)) && hookShot.canHold()) {
+        if((!held || (held && hookShot.hostPlayer.photonView != null && ownerID != hookShot.hostPlayer.photonView.ViewID)) && hookShot.canHold()) {
             transform.position = hookShot.transform.position;
             ownerPlayer = hookShot.hostPlayer;
             FetchAsteroid(hookShot.hostPlayer);
             hookShot.CatchObject(gameObject);
             collectTimer = grabDelay; 
             playerTagsManager.GiveTag();
-            photonView.RPC("SetAsteroidOwner", RpcTarget.All, ownerPlayer.photonView.ViewID);
+            if(photonView != null && ownerPlayer.photonView != null) photonView.RPC("SetAsteroidOwner", RpcTarget.All, ownerPlayer.photonView.ViewID);
         }
     }
 

@@ -2,34 +2,17 @@
 
 - Failed to network-remove GameObject. Client is neither owner nor MasterClient taking over for owner who left: View 2 on ASTEROID
 
-- Master client settings (Welke mechanics, lock-on? free aim?)
-
-- Asteroids zijn vaak op tweede plaats
-
-
-- Lock-on system (alleen asteroids)
-	--> Max-range, growing speed. Border hits object == Capture
-	--> radial trigger grows, closest object gets captured
-
-
-
-
-
-
-
-
-
-
-- HTML5 export?
-- Bigger asteroid hitboxes
-
-- Meerdere rooms?
-- Link naar google forms
-
 - Asteroids should not rotate with the player, but with the boost
 
 
+
+- letting asteroids go should scale them back
+- OrbitAroundPlanet()  if(ownerPlayer.playerNumber == playerTagsManager.tagNum)
+
+
+
+- Link naar google forms
+
+- HTML5 export?
 - asteroid belts
-
-
 SEMI-PROBLEEM: SERIAL PORTS MOETEN ALTIJD HANDMATIG GESELECTEERD WORDEN

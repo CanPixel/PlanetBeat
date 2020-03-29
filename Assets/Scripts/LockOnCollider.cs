@@ -29,6 +29,9 @@ public class LockOnCollider : MonoBehaviour {
     void OnTriggerEnter2D(Collider2D col) {
         if(col.tag == "Resource") {
             if(target != col.gameObject) {
+                var ast = col.gameObject.GetComponent<Asteroid>();
+                if(ast == null || (ast != null && ast.ownerPlayer != null && host.trailingObjects.Contains(ast))) return;
+
                 reticle.transform.localScale = Vector3.one * 3.5f;
                 target = col.gameObject;
                 reticle.SetActive(true);

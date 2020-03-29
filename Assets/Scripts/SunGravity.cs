@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
 public class SunGravity : MonoBehaviour {
     [Header("PHYSICS")]
@@ -33,7 +34,8 @@ public class SunGravity : MonoBehaviour {
 
             if(destroyingObjects[i].lifetime > 1) {
                 destroyingObjects.RemoveAt(i);
-                GameManager.DESTROY_SERVER_OBJECT(obj); 
+                if(!GameManager.instance.isSinglePlayer && PlayerShip.LocalPlayerInstance.GetPhotonView() != null && PlayerShip.LocalPlayerInstance.GetPhotonView().IsMine) GameManager.DESTROY_SERVER_OBJECT(obj); 
+                else Destroy(obj);
             }
         }
     }

@@ -8,11 +8,15 @@ using UnityEngine.UI;
 public class Launcher : MonoBehaviourPunCallbacks {
     [Header("REFERENCES")]
     [SerializeField] private GameObject controlPanel;
-    [SerializeField] private GameObject progressLabel;
+    public Sprite freeAim, lockOn, looker, player;
 
-    public Slider SpectSlider;
-    public Text particiText;
-    private bool spectate = false;
+    public Button playButton;
+
+    public Slider SpectSlider, AimSlider;
+    public Text particiText, lockonText, playText, playersOnline, playersInSpace;
+    public Image reticleIcon, spectateHandle, aimSliderBackground;
+
+    private int amountPlayers;
 
     string gameVersion = "1";
 
@@ -25,22 +29,58 @@ public class Launcher : MonoBehaviourPunCallbacks {
     [SerializeField] private byte maxPlayers = 5;
 
     void Awake() {
+        playButton.interactable = false;
+        playText.text = "Connecting...";
         PhotonNetwork.AutomaticallySyncScene = true;
-        if(progressLabel != null) progressLabel.SetActive(false);
         if(controlPanel != null) controlPanel.SetActive(true);
 
-        SpectSlider.value = PlayerPrefs.GetInt("Spectate");
+        int val = (PlayerPrefs.GetInt("Spectate") == 0) ? 1 : 0;
+        SpectSlider.value = val;
+        OnChangeSpectate(SpectSlider.value);
+
+        OnChangeAim(PlayerPrefs.GetInt("AIM_MODE"));
+
+        PhotonNetwork.ConnectUsingSettings();
+        PhotonNetwork.GameVersion = gameVersion;
     }
 
     void Update() {
+        playersOnline.text = PhotonNetwork.CountOfPlayers + " player" + ((PhotonNetwork.CountOfPlayers == 1) ? "" : "s") + " online";
+        playersInSpace.text = PhotonNetwork.CountOfPlayersInRooms + " player" + ((PhotonNetwork.CountOfPlayersInRooms == 1) ? "" : "s") + " in space";
+        if(amountPlayers != PhotonNetwork.CountOfPlayers) {
+            amountPlayers = PhotonNetwork.CountOfPlayers;
+
+            var activePlay = PhotonNetwork.CountOfPlayersInRooms <= 0;
+            AimSlider.interactable = activePlay;
+            aimSliderBackground.color = new Color(aimSliderBackground.color.r, aimSliderBackground.color.g, aimSliderBackground.color.g, (activePlay) ? 1f : 0.3f);
+        }
+
         if(Input.GetKeyUp(KeyCode.Escape)) Screen.fullScreen = !Screen.fullScreen;
     }
 
     public void OnChangeSpectate(System.Single value) {
-        if(value == 0) particiText.enabled = false;
-        else particiText.enabled = true;
-        spectate = value == 0;
-        PlayerPrefs.SetInt("Spectate", (int)value);
+        if(value == 0) {
+            particiText.enabled = false;
+            spectateHandle.sprite = player;
+        }
+        else {
+            particiText.enabled = true;
+            spectateHandle.sprite = looker;
+        }
+        int spect = (value == 0) ? 1 : 0;
+        PlayerPrefs.SetInt("Spectate", spect);
+    }
+
+    public void OnChangeAim(System.Single value) {
+        if(value == 0) {
+            lockonText.enabled = false;
+            reticleIcon.sprite = freeAim;
+        }
+        else {
+            lockonText.enabled = true;
+            reticleIcon.sprite = lockOn;
+        }
+        PlayerPrefs.SetInt("AIM_MODE", (int)value);
     }
 
     public void Quit() {
@@ -52,8 +92,9 @@ public class Launcher : MonoBehaviourPunCallbacks {
 
         isConnecting = PhotonNetwork.ConnectUsingSettings();
 
-        if(progressLabel != null) progressLabel.SetActive(true);
         if(controlPanel != null) controlPanel.SetActive(false);
+        playersInSpace.gameObject.SetActive(false);
+        playersOnline.gameObject.SetActive(false);
         
         if(!PhotonNetwork.IsConnected) PhotonNetwork.JoinRandomRoom();
         else {
@@ -65,6 +106,9 @@ public class Launcher : MonoBehaviourPunCallbacks {
     #region MonoBehaviourPunCallbacks Callbacks
 
     public override void OnConnectedToMaster() {
+        playText.text = "Play";
+        playButton.interactable = true;
+
         if(isConnecting) {
             PhotonNetwork.JoinRandomRoom();
             isConnecting = false;
@@ -72,7 +116,6 @@ public class Launcher : MonoBehaviourPunCallbacks {
     }
 
     public override void OnDisconnected(DisconnectCause cause) {
-        if(progressLabel != null) progressLabel.SetActive(false);
         if(controlPanel != null) controlPanel.SetActive(true);
     }
 

@@ -4,7 +4,6 @@ using UnityEngine;
 using Photon.Pun;
 
 public class HookShot : MonoBehaviour {
-    //public LineRenderer lineAim;
     public PlayerShip hostPlayer;
     private RectTransform rope;
     private CircleCollider2D tip;
@@ -71,67 +70,70 @@ public class HookShot : MonoBehaviour {
         if(shootTimer > 1) didntCatch = true;
     }
 
-    public void FireLockOn(GameObject target) {
-        lockOnAimTarget = target;
-        if(hostPlayer.IsThisClient()) hostPlayer.photonView.RPC("CastHook", RpcTarget.All, hostPlayer.photonView.ViewID);
-        else if(hostPlayer.isSinglePlayer) CastHook();
-    }
-
-    protected void LockOn() {
-        if(lockOnAimTarget != null) {
-            var targetDir = lockOnAimTarget.transform.position - transform.position;
-            float angle = Vector3.Angle(targetDir, transform.position) + 180;
-
-            transform.rotation = Quaternion.Euler(0, 0, angle);
-        } else transform.localRotation = Quaternion.identity;
-
-        if(IsShooting()) {
-            if(rope.sizeDelta.y + hookShotSpeed < hookShotRange * 1000f && !didntCatch) {
-                if(!hitObject) rope.sizeDelta = new Vector2(rope.sizeDelta.x, rope.sizeDelta.y + hookShotSpeed);
-                else if(rope.sizeDelta.y > 0) rope.sizeDelta = new Vector2(rope.sizeDelta.x, rope.sizeDelta.y - hookShotSpeed);
-                else ResetHook();
-            }
-
-            if(didntCatch) {
-                if(rope.sizeDelta.y > 0) rope.sizeDelta = new Vector2(rope.sizeDelta.x, rope.sizeDelta.y - hookShotSpeed);
-                else ResetHook();
-            }
-        }
-    }
-
-    protected void FreeAim() {
-        if(Input.GetKey(KeyCode.Space)) triggerHook = true;
-        if(Input.GetKeyUp(KeyCode.Space) && triggerHook && shootTimer <= 0) {
+    #region AIMING_TYPES_LOGIC
+        public void FireLockOn(GameObject target) {
+            lockOnAimTarget = target;
             if(hostPlayer.IsThisClient()) hostPlayer.photonView.RPC("CastHook", RpcTarget.All, hostPlayer.photonView.ViewID);
             else if(hostPlayer.isSinglePlayer) CastHook();
         }
 
-        if(IsShooting()) {
-            if(rope.sizeDelta.y + hookShotSpeed < hookShotRange * 1000f && !didntCatch) {
-                if(!hitObject) rope.sizeDelta = new Vector2(rope.sizeDelta.x, rope.sizeDelta.y + hookShotSpeed);
-                else if(rope.sizeDelta.y > 0) rope.sizeDelta = new Vector2(rope.sizeDelta.x, rope.sizeDelta.y - hookShotSpeed);
-                else ResetHook();
+        protected void LockOn() {
+            if(lockOnAimTarget != null) {
+                var targetDir = lockOnAimTarget.transform.position - transform.position;
+                float angle = Mathf.Atan2(targetDir.x, targetDir.y) * Mathf.Rad2Deg;
+                transform.rotation = Quaternion.AngleAxis(angle, Vector3.back);
             }
 
-            if(didntCatch) {
-                if(rope.sizeDelta.y > 0) rope.sizeDelta = new Vector2(rope.sizeDelta.x, rope.sizeDelta.y - hookShotSpeed);
-                else ResetHook();
+            if(IsShooting()) {
+                if(rope.sizeDelta.y + hookShotSpeed < hookShotRange * 1000f && !didntCatch) {
+                    if(!hitObject) rope.sizeDelta = new Vector2(rope.sizeDelta.x, rope.sizeDelta.y + hookShotSpeed);
+                    else if(rope.sizeDelta.y > 0) rope.sizeDelta = new Vector2(rope.sizeDelta.x, rope.sizeDelta.y - hookShotSpeed);
+                    else ResetHook();
+                }
+
+                if(didntCatch) {
+                    if(rope.sizeDelta.y > 0) rope.sizeDelta = new Vector2(rope.sizeDelta.x, rope.sizeDelta.y - hookShotSpeed);
+                    else ResetHook();
+                }
             }
         }
-    }
 
-    protected void ReelIn(int newData) {
-        hengelData = newData;
-    }
+        protected void FreeAim() {
+            if(Input.GetKey(KeyCode.Space)) triggerHook = true;
+            if(Input.GetKeyUp(KeyCode.Space) && triggerHook && shootTimer <= 0) {
+                if(hostPlayer.IsThisClient()) hostPlayer.photonView.RPC("CastHook", RpcTarget.All, hostPlayer.photonView.ViewID);
+                else if(hostPlayer.isSinglePlayer) CastHook();
+            }
 
-    protected void ReelOut(int newData) {
-        if (Mathf.Abs(newData - hengelData) > customController.sensitivity && shootTimer <= 0) {
-            triggerHook = true;
-            if (hostPlayer.IsThisClient()) hostPlayer.photonView.RPC("CastHook", RpcTarget.All, hostPlayer.photonView.ViewID);
-            else if (hostPlayer.isSinglePlayer) CastHook();
+            if(IsShooting()) {
+                if(rope.sizeDelta.y + hookShotSpeed < hookShotRange * 1000f && !didntCatch) {
+                    if(!hitObject) rope.sizeDelta = new Vector2(rope.sizeDelta.x, rope.sizeDelta.y + hookShotSpeed);
+                    else if(rope.sizeDelta.y > 0) rope.sizeDelta = new Vector2(rope.sizeDelta.x, rope.sizeDelta.y - hookShotSpeed);
+                    else ResetHook();
+                }
+
+                if(didntCatch) {
+                    if(rope.sizeDelta.y > 0) rope.sizeDelta = new Vector2(rope.sizeDelta.x, rope.sizeDelta.y - hookShotSpeed);
+                    else ResetHook();
+                }
+            }
         }
-        hengelData = newData;
-    }
+    #endregion
+
+    #region CUSTOM_INTERACTION_CONTROLLER
+        protected void ReelIn(int newData) {
+            hengelData = newData;
+        }
+
+        protected void ReelOut(int newData) {
+            if (Mathf.Abs(newData - hengelData) > customController.sensitivity && shootTimer <= 0) {
+                triggerHook = true;
+                if (hostPlayer.IsThisClient()) hostPlayer.photonView.RPC("CastHook", RpcTarget.All, hostPlayer.photonView.ViewID);
+                else if (hostPlayer.isSinglePlayer) CastHook();
+            }
+            hengelData = newData;
+        }
+    #endregion
 
     public void CastHook() {
         isShootingHook = true;
@@ -140,8 +142,8 @@ public class HookShot : MonoBehaviour {
     }
 
     protected void ResetHook() {
-        transform.rotation = Quaternion.Euler(0, 0, 0);
-        transform.localRotation = Quaternion.identity;
+        lockOnAimTarget = null;
+        transform.localRotation = Quaternion.Euler(0, 0, 0);
         triggerHook = hitObject = isShootingHook = false;
         rope.sizeDelta = new Vector2(rope.sizeDelta.x, 0);
         shootTimer = 0;

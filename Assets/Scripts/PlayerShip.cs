@@ -64,6 +64,11 @@ public class PlayerShip : MonoBehaviourPunCallbacks {
 
     public HookShot hookShot;
 
+    [PunRPC]
+    public void SetAim(int i) {
+         hookMethod = (i == 0) ? HookMethod.FreeAim : HookMethod.LockOn;
+    }
+
     #region IPunObservable implementation
         public override void OnEnable() {
             base.OnEnable();
@@ -83,7 +88,12 @@ public class PlayerShip : MonoBehaviourPunCallbacks {
                 foreach(var i in networkIgnore) if(i != null) DestroyImmediate(i);
             } 
             if(playerLabel != null) playerLabel.GetComponent<Text>().color = playerColor;
-            lockOnAim.selectColor = playerColor;
+
+            if(PhotonNetwork.IsMasterClient && photonView != null && !isSinglePlayer) {
+            //    SetAim(PlayerPrefs.GetInt("AIM_MODE"));
+                photonView.RPC("SetAim", RpcTarget.All, PlayerPrefs.GetInt("AIM_MODE"));
+            }
+
         }
     #endregion
 
@@ -108,8 +118,7 @@ public class PlayerShip : MonoBehaviourPunCallbacks {
     }
 
     void Update() {
-        if(IsThisClient()) Debug.Log(trailingObjects.Count);
-
+        lockOnAim.selectColor = playerColor;
         //Particles emitten wanneer movement
         if(IsThisClient() || isSinglePlayer) {
             var emitting = exhaust.emission;

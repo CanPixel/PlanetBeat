@@ -104,7 +104,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 533948574110823362}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 700, y: 0, z: 0}
+  m_LocalPosition: {x: 750, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 533948574299374635}
@@ -239,7 +239,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 533948574299374632}
-  m_LocalRotation: {x: 0, y: 0, z: 0.801154, w: -0.59845823}
+  m_LocalRotation: {x: 0, y: 0, z: 0.6850615, w: -0.7284852}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -261,12 +261,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   coll: {fileID: 533948574299374637}
   gravityRing: {fileID: 533948574110823362}
-  orbitTrailOffset: 700
-  planetForcePlayer: 1
-  planetForceResource: 1
+  orbitTrailOffset: 750
+  planetForcePlayer: 1.4
+  planetForceResource: 1.3
   Mass: 1
-  PlayerExitVelocityReduction: 2
-  ResourceExitVelocityReduction: 2
+  PlayerExitVelocityReduction: 1
+  ResourceExitVelocityReduction: 1
 --- !u!58 &533948574299374637
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -282,7 +282,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 700
+  m_Radius: 750
 --- !u!1 &533948574658882017
 GameObject:
   m_ObjectHideFlags: 0

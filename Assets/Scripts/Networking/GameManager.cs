@@ -71,7 +71,9 @@ public class GameManager : MonoBehaviourPunCallbacks {
    public static void DESTROY_SERVER_OBJECT(GameObject obj) {
       if(instance == null) return;
       if(instance.isSinglePlayer) Destroy(obj);
-      else PhotonNetwork.Destroy(obj);
+      else {
+         if(PlayerShip.LocalPlayerInstance.GetPhotonView().IsMine) PhotonNetwork.Destroy(obj);
+      }
    }
 
    private void AddPlayer(string name) {

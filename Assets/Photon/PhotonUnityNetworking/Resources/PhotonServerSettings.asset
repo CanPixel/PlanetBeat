@@ -39,5 +39,7 @@ MonoBehaviour:
   - SnatchAsteroid
   - RemoveAsteroid
   - SetAsteroidOwner
+  - SetAimingMode
+  - SetAim
   DisableAutoOpenWizard: 1
   ShowSettings: 1

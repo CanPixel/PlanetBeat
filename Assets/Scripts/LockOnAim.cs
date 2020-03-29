@@ -30,6 +30,13 @@ public class LockOnAim : MonoBehaviour {
     }
 
     void Update() {
+        if(ship != null && ship.hookMethod != PlayerShip.HookMethod.LockOn) {
+            radius = 0;
+            line.startColor = line.endColor = new Color(0, 0, 0, 0);
+            return;
+        }
+        line.startColor = line.endColor = selectColor;
+
         if(Input.GetKey(KeyCode.Space) && (GameManager.instance.isSinglePlayer || ship.photonView.IsMine)) if(radius < maxRadius * 10f) radius += Time.deltaTime * 1000f * expandSpeed;
         if(Input.GetKeyUp(KeyCode.Space)) radius = minRadius;
 
