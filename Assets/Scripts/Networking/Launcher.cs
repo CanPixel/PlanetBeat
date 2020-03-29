@@ -47,13 +47,11 @@ public class Launcher : MonoBehaviourPunCallbacks {
     void Update() {
         playersOnline.text = PhotonNetwork.CountOfPlayers + " player" + ((PhotonNetwork.CountOfPlayers == 1) ? "" : "s") + " online";
         playersInSpace.text = PhotonNetwork.CountOfPlayersInRooms + " player" + ((PhotonNetwork.CountOfPlayersInRooms == 1) ? "" : "s") + " in space";
-        if(amountPlayers != PhotonNetwork.CountOfPlayers) {
-            amountPlayers = PhotonNetwork.CountOfPlayers;
+        amountPlayers = PhotonNetwork.CountOfPlayers;
 
-            var activePlay = PhotonNetwork.CountOfPlayersInRooms <= 0;
-            AimSlider.interactable = activePlay;
-            aimSliderBackground.color = new Color(aimSliderBackground.color.r, aimSliderBackground.color.g, aimSliderBackground.color.g, (activePlay) ? 1f : 0.3f);
-        }
+        var activePlay = PhotonNetwork.CountOfPlayersInRooms <= 0;
+        AimSlider.interactable = activePlay;
+        aimSliderBackground.color = new Color(aimSliderBackground.color.r, aimSliderBackground.color.g, aimSliderBackground.color.g, (activePlay) ? 1f : 0.3f);
 
         if(Input.GetKeyUp(KeyCode.Escape)) Screen.fullScreen = !Screen.fullScreen;
     }
