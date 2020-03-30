@@ -2,17 +2,16 @@
 
 - Failed to network-remove GameObject. Client is neither owner nor MasterClient taking over for owner who left: View 2 on ASTEROID
 
-- Asteroids should not rotate with the player, but with the boost
 
 
-
-- letting asteroids go should scale them back
-- OrbitAroundPlanet()  if(ownerPlayer.playerNumber == playerTagsManager.tagNum)
+- Wat voor muziek feel zoeken we? 
+Sound Design == Cartoony / Funny? 
+Muzikaal spel? Lock on mechanism is een accent op de maat?
 
 
 
 - Link naar google forms
-
 - HTML5 export?
 - asteroid belts
+
 SEMI-PROBLEEM: SERIAL PORTS MOETEN ALTIJD HANDMATIG GESELECTEERD WORDEN

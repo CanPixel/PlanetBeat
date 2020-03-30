@@ -25,6 +25,8 @@ public class HookShot : MonoBehaviour {
     private bool hitObject = false, didntCatch = false;
     private GameObject grabbedObj;
 
+    private bool reelback = false;
+
     private GameObject lockOnAimTarget;
 
     void Start() {
@@ -92,6 +94,10 @@ public class HookShot : MonoBehaviour {
                 }
 
                 if(didntCatch) {
+                    if(!reelback) {
+                        AudioManager.PLAY_SOUND("reel");
+                        reelback = true;
+                    }
                     if(rope.sizeDelta.y > 0) rope.sizeDelta = new Vector2(rope.sizeDelta.x, rope.sizeDelta.y - hookShotSpeed);
                     else ResetHook();
                 }
@@ -113,6 +119,11 @@ public class HookShot : MonoBehaviour {
                 }
 
                 if(didntCatch) {
+                    if(!reelback) {
+                        AudioManager.PLAY_SOUND("reel");
+                        reelback = true;
+                    }
+
                     if(rope.sizeDelta.y > 0) rope.sizeDelta = new Vector2(rope.sizeDelta.x, rope.sizeDelta.y - hookShotSpeed);
                     else ResetHook();
                 }
@@ -136,12 +147,14 @@ public class HookShot : MonoBehaviour {
     #endregion
 
     public void CastHook() {
+        AudioManager.PLAY_SOUND("CastHook", 0.8f, Random.Range(0.9f, 1f));
         isShootingHook = true;
         triggerHook = false;
         shootTimer = 0.1f;
     }
 
     protected void ResetHook() {
+        reelback = false;
         lockOnAimTarget = null;
         transform.localRotation = Quaternion.Euler(0, 0, 0);
         triggerHook = hitObject = isShootingHook = false;

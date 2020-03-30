@@ -13,17 +13,20 @@ public class Asteroid : MonoBehaviourPun {
     [HideInInspector] public bool giveTag = false;
     [HideInInspector] public float inOrbitTimer;
 
-    public float thrust = 20;
-
-    private bool canConsume = false;
-    private float defaultRbDrag;
-    public float inPlayerOrbitRbDrag = 0.25f;
-
     public float value = 5;
+    public float timeToScore = 0.3f;
     public float grabDelay = .5f; 
+    
+    [Header("PHYSICS")]
+    public float thrust = 20;
+    public float defaultRbDrag = 0.008f;
+    public float inPlayerOrbitRbDrag = 0.25f;
     public float maxInOrbitTime = 5;
     public float outOrbitForce = 20;
-    private float collectTimer;
+    
+    private bool canConsume = false;
+    private float collectTimer, releaseTimer = 0;
+    private bool canScore = false;
     private Collider2D asteroidColl;
     [HideInInspector] public PlayerPlanets playerPlanets;
 
@@ -55,6 +58,7 @@ public class Asteroid : MonoBehaviourPun {
         asteroidColl.enabled = collectTimer <= 0f; 
 
         if(held) ReleaseAsteroid(false);
+        else ReleasedTimer();
     }
 
     public bool IsOwnedBy(PlayerShip player) {
@@ -83,7 +87,7 @@ public class Asteroid : MonoBehaviourPun {
         if (col.gameObject.tag == "PLAYERPLANET" && col.gameObject != null) {
             playerPlanets = col.gameObject.GetComponent<PlayerPlanets>();
             if(playerTagsManager.tagNum == playerPlanets.playerNumber) {
-                if(canConsume || held) ConsumeResource();
+                if(canConsume) ConsumeResource();
             }
         }
         if(col.gameObject.tag == "ORBIT") {
@@ -144,6 +148,8 @@ public class Asteroid : MonoBehaviourPun {
             playerTagsManager.TagOn(true);
             playerTagsManager.runTagTimer = true;
             held = false;
+            canScore = true;
+            ReleasedTimer();
         } else {
             held = true;
             playerTagsManager.runTagTimer = false;
@@ -155,5 +161,17 @@ public class Asteroid : MonoBehaviourPun {
         //if(owner != null) owner.RemoveAsteroid(gameObject);
         held = true;
       //  owner = own;
+    }
+
+    public void ReleasedTimer() {//Gives a small time window in which the player can instantly score
+        if (canScore && canConsume == false) {
+            releaseTimer += Time.deltaTime;
+            canConsume = true; 
+
+            if (releaseTimer >= timeToScore) {
+                canScore = false;
+                releaseTimer = 0f;
+            }
+        } else canConsume = false; 
     }
 }

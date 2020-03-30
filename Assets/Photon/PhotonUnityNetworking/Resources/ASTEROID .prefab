@@ -349,10 +349,12 @@ MonoBehaviour:
   inOrbit: 0
   giveTag: 0
   inOrbitTimer: 0
-  thrust: 20
-  inPlayerOrbitRbDrag: 0.6
-  value: 5
+  value: 10
+  timeToScore: 0.3
   grabDelay: 0.5
+  thrust: 20
+  defaultRbDrag: 0.008
+  inPlayerOrbitRbDrag: 0.6
   maxInOrbitTime: 5
   outOrbitForce: 40
   playerPlanets: {fileID: 0}

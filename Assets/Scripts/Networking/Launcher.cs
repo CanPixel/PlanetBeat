@@ -23,12 +23,14 @@ public class Launcher : MonoBehaviourPunCallbacks {
     bool isConnecting;
 
     [Space(15)]
-    public string LEVELNAME = "MULTIPLAY";
+    public string LEVELNAME = "Space";
+    public static string levelName;
 
     [Range(1, 20)]
     [SerializeField] private byte maxPlayers = 5;
 
     void Awake() {
+        levelName = LEVELNAME;
         playButton.interactable = false;
         playText.text = "Connecting...";
         PhotonNetwork.AutomaticallySyncScene = true;
@@ -37,7 +39,7 @@ public class Launcher : MonoBehaviourPunCallbacks {
         int val = (PlayerPrefs.GetInt("Spectate") == 0) ? 1 : 0;
         SpectSlider.value = val;
         OnChangeSpectate(SpectSlider.value);
-
+        AimSlider.value = PlayerPrefs.GetInt("AIM_MODE");
         OnChangeAim(PlayerPrefs.GetInt("AIM_MODE"));
 
         PhotonNetwork.ConnectUsingSettings();
@@ -79,6 +81,10 @@ public class Launcher : MonoBehaviourPunCallbacks {
             reticleIcon.sprite = lockOn;
         }
         PlayerPrefs.SetInt("AIM_MODE", (int)value);
+    }
+
+    public void ClickSound(float pitch) {
+        AudioManager.PLAY_SOUND("click", 1, pitch);
     }
 
     public void Quit() {
@@ -124,7 +130,7 @@ public class Launcher : MonoBehaviourPunCallbacks {
 
     public override void OnJoinedRoom() {
         Debug.Log("OnJoinedRoom(): Now this client is in a room.");
-        PhotonNetwork.LoadLevel(LEVELNAME);
+        PhotonNetwork.LoadLevel(levelName);
     }
 
     #endregion

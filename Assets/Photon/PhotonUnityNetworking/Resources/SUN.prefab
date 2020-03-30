@@ -201,7 +201,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc1df453c6c6afa4bb09ba2121cb8fdf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  planetForceResource: 1
+  planetForceResource: 1.3
   planetForcePlayer: 0.66
   Mass: 0.6
 --- !u!114 &1200147042300826642

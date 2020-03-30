@@ -240,12 +240,12 @@ PrefabInstance:
     - target: {fileID: 533948574299374635, guid: b8417e5f21a68ab4c9359b2202160a33,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.801154
+      value: 0.22903821
       objectReference: {fileID: 0}
     - target: {fileID: 533948574299374635, guid: b8417e5f21a68ab4c9359b2202160a33,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: -0.59845823
+      value: -0.97341746
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b8417e5f21a68ab4c9359b2202160a33, type: 3}
@@ -314,10 +314,12 @@ MonoBehaviour:
   inOrbit: 0
   giveTag: 0
   inOrbitTimer: 0
-  thrust: 20
-  inPlayerOrbitRbDrag: 0.25
   value: 5
+  timeToScore: 0.3
   grabDelay: 0.5
+  thrust: 20
+  defaultRbDrag: 0
+  inPlayerOrbitRbDrag: 0.25
   maxInOrbitTime: 5
   outOrbitForce: 20
   playerPlanets: {fileID: 0}
@@ -484,10 +486,12 @@ MonoBehaviour:
   inOrbit: 0
   giveTag: 0
   inOrbitTimer: 0
-  thrust: 20
-  inPlayerOrbitRbDrag: 0.25
   value: -1
+  timeToScore: 0.3
   grabDelay: 0.5
+  thrust: 20
+  defaultRbDrag: 0
+  inPlayerOrbitRbDrag: 0.25
   maxInOrbitTime: 5
   outOrbitForce: 20
   playerPlanets: {fileID: 0}
@@ -1148,12 +1152,12 @@ PrefabInstance:
     - target: {fileID: 533948574299374635, guid: b8417e5f21a68ab4c9359b2202160a33,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.45024738
+      value: 0.91885704
       objectReference: {fileID: 0}
     - target: {fileID: 533948574299374635, guid: b8417e5f21a68ab4c9359b2202160a33,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.89290386
+      value: 0.39459065
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b8417e5f21a68ab4c9359b2202160a33, type: 3}
@@ -2650,12 +2654,12 @@ PrefabInstance:
     - target: {fileID: 533948574299374635, guid: b8417e5f21a68ab4c9359b2202160a33,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.5481538
+      value: -0.11770303
       objectReference: {fileID: 0}
     - target: {fileID: 533948574299374635, guid: b8417e5f21a68ab4c9359b2202160a33,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: -0.83637756
+      value: -0.99304885
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b8417e5f21a68ab4c9359b2202160a33, type: 3}
@@ -4654,12 +4658,12 @@ PrefabInstance:
     - target: {fileID: 533948574299374635, guid: b8417e5f21a68ab4c9359b2202160a33,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.056526467
+      value: 0.59845823
       objectReference: {fileID: 0}
     - target: {fileID: 533948574299374635, guid: b8417e5f21a68ab4c9359b2202160a33,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: -0.9984011
+      value: 0.801154
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b8417e5f21a68ab4c9359b2202160a33, type: 3}
@@ -5178,12 +5182,12 @@ PrefabInstance:
     - target: {fileID: 533948574299374635, guid: b8417e5f21a68ab4c9359b2202160a33,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.91885704
+      value: 0.9575233
       objectReference: {fileID: 0}
     - target: {fileID: 533948574299374635, guid: b8417e5f21a68ab4c9359b2202160a33,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.39459065
+      value: -0.28835592
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b8417e5f21a68ab4c9359b2202160a33, type: 3}
@@ -5252,10 +5256,12 @@ MonoBehaviour:
   inOrbit: 0
   giveTag: 0
   inOrbitTimer: 0
-  thrust: 20
-  inPlayerOrbitRbDrag: 0.25
   value: -5
+  timeToScore: 0.3
   grabDelay: 0.5
+  thrust: 20
+  defaultRbDrag: 0
+  inPlayerOrbitRbDrag: 0.25
   maxInOrbitTime: 5
   outOrbitForce: 20
   playerPlanets: {fileID: 0}
@@ -5897,8 +5903,8 @@ MonoBehaviour:
   line: {fileID: 1450841927}
   selectColor: {r: 0.6745283, g: 0.86537886, b: 1, a: 1}
   segments: 26
-  expandSpeed: 5
-  maxRadius: 500
+  expandSpeed: 4
+  maxRadius: 400
   minRadius: 100
 --- !u!1 &1640759965
 GameObject:
@@ -12443,12 +12449,12 @@ PrefabInstance:
     - target: {fileID: 533948574299374635, guid: b8417e5f21a68ab4c9359b2202160a33,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.6850615
+      value: 0.056526467
       objectReference: {fileID: 0}
     - target: {fileID: 533948574299374635, guid: b8417e5f21a68ab4c9359b2202160a33,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: -0.7284852
+      value: -0.9984011
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b8417e5f21a68ab4c9359b2202160a33, type: 3}
@@ -17791,6 +17797,7 @@ GameObject:
   - component: {fileID: 1662954743368839376}
   - component: {fileID: 7716859393538750669}
   - component: {fileID: 1662954743368839375}
+  - component: {fileID: 3506364949280788108}
   m_Layer: 10
   m_Name: PLAYER
   m_TagString: PLAYERSHIP
@@ -17798,6 +17805,102 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!82 &3506364949280788108
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3506364949280788107}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: 1d6d332e8c13c7a44833a01fc26ebfce, type: 3}
+  m_PlayOnAwake: 1
+  m_Volume: 0
+  m_Pitch: 1
+  Loop: 1
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!114 &3506364949280788117
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17812,19 +17915,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   homePlanet: {fileID: 1581069889}
   playerLabel: {fileID: 0}
-  hookMethod: 0
+  hookMethod: 1
   lockOnAim: {fileID: 1581069891}
   emit: {fileID: 21300000, guid: 575c819abd873da49b1181b2793df8d8, type: 3}
   noEmit: {fileID: 21300000, guid: 9afb81dacc602c94087666bd60ba809b, type: 3}
   ship: {fileID: 1446986111811460846}
   playerNumber: 1
   playerColor: {r: 1, g: 0.10849059, b: 0.1349491, a: 1}
-  maxVelocity: 1
+  maxVelocity: 1.1
   acceleration: 20000
-  turningSpeed: 5
+  turningSpeed: 6
   brakingSpeed: 2
-  defaultDrag: 0.2
-  stopDrag: 0.5
+  defaultDrag: 0.3
+  stopDrag: 0.6
   networkIgnore:
   - {fileID: 1662954743368839376}
   - {fileID: 7716859393538750669}

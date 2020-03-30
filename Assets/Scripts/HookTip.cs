@@ -16,6 +16,8 @@ public class HookTip : MonoBehaviour {
         if(col.gameObject.tag == "Resource") {
             var ast = col.gameObject.GetComponent<Asteroid>();
             ast.Capture(hookShot);
+            AudioManager.PLAY_SOUND("kickVerb", 1, Random.Range(1f, 1.1f));
+            AudioManager.PLAY_SOUND("Reel");
         }
     }
 }

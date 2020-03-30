@@ -55,6 +55,8 @@ public class PlayerPlanets : MonoBehaviour {
         if (currentScore <= minScore) currentScore = minScore;
 
         var newScale = transform.localScale + new Vector3(amount, amount, 0) / 50f;
-        GetComponent<UIFloat>().SetBaseScale(newScale);
+        //GetComponent<UIFloat>().SetBaseScale(newScale);
+
+        AudioManager.PLAY_SOUND("collect", 1, 1.2f);
     }
 }

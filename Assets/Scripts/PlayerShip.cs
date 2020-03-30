@@ -64,6 +64,8 @@ public class PlayerShip : MonoBehaviourPunCallbacks {
 
     public HookShot hookShot;
 
+    private AudioSource exhaustSound;
+
     [PunRPC]
     public void SetAim(int i) {
          hookMethod = (i == 0) ? HookMethod.FreeAim : HookMethod.LockOn;
@@ -72,6 +74,7 @@ public class PlayerShip : MonoBehaviourPunCallbacks {
     #region IPunObservable implementation
         public override void OnEnable() {
             base.OnEnable();
+            exhaustSound = GetComponent<AudioSource>();
             transform.SetParent(GameObject.FindGameObjectWithTag("GAMEFIELD").transform, false);
 
             if(!isSinglePlayer && photonView != null && !photonView.IsMine) {
@@ -117,7 +120,29 @@ public class PlayerShip : MonoBehaviourPunCallbacks {
         if(IsThisClient()) PlayerShip.LocalPlayerInstance = this.gameObject;       
     }
 
+    void FixedUpdate() {
+        if(IsThisClient() || isSinglePlayer) {
+            ProcessInputs();
+            if(rb != null) {
+                rb.AddForce(transform.up * velocity);
+                rb.rotation = turn;
+            }
+        }
+
+        if (Input.GetKeyDown(KeyCode.F) && trailingObjects.Count > 0) {
+            AudioManager.PLAY_SOUND("collect");
+            var asteroid = trailingObjects[0];
+            trailingObjects.RemoveAt(0);
+            
+            asteroid.transform.TransformDirection(new Vector2(transform.forward.x * asteroid.transform.forward.x, transform.forward.y * asteroid.transform.forward.y));
+            asteroid.rb.velocity = rb.velocity / throwingReduction; 
+            asteroid.ReleaseAsteroid(true); 
+        }
+    }
+
     void Update() {
+        exhaustSound.volume = Mathf.Lerp(exhaustSound.volume, IsThrust() ? 0.1f : 0, Time.deltaTime * 10f);
+
         lockOnAim.selectColor = playerColor;
         //Particles emitten wanneer movement
         if(IsThisClient() || isSinglePlayer) {
@@ -139,23 +164,6 @@ public class PlayerShip : MonoBehaviourPunCallbacks {
         if (!isSinglePlayer) {
             if (photonView == null) return;
             if (!photonView.IsMine && PhotonNetwork.IsConnected) return;
-        }
-
-        if(IsThisClient() || isSinglePlayer) {
-            ProcessInputs();
-            if(rb != null) {
-                rb.AddForce(transform.up * velocity);
-                rb.rotation = turn;
-            }
-        }
-
-        if (Input.GetKeyDown(KeyCode.F) && trailingObjects.Count > 0) {
-            var asteroid = trailingObjects[0];
-            trailingObjects.RemoveAt(0);
-            
-            asteroid.transform.TransformDirection(new Vector2(transform.forward.x * asteroid.transform.forward.x, transform.forward.y * asteroid.transform.forward.y));
-            asteroid.rb.velocity = rb.velocity / throwingReduction; 
-            asteroid.ReleaseAsteroid(true); 
         }
 
         //Removes asteroids that got destroyed / eaten by the sun

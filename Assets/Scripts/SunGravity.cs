@@ -57,6 +57,9 @@ public class SunGravity : MonoBehaviour {
     }
 
     void OnCollisionEnter2D(Collision2D collision) {
-        if (collision.collider.tag == "Resource") destroyingObjects.Add(new DyingObject(collision.gameObject));
+        if (collision.collider.tag == "Resource") {
+            destroyingObjects.Add(new DyingObject(collision.gameObject));
+            AudioManager.PLAY_SOUND("Burn", 0.8f, 1.3f);
+        }
     }
 }
