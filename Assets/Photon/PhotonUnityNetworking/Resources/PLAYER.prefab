@@ -5509,30 +5509,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1556da50f9294094188d543941f9cb99, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hookShot: {fileID: 1446986111338685776}
+  exhaust: {fileID: 1446986110815659415}
   homePlanet: {fileID: 0}
   playerLabel: {fileID: 0}
   hookMethod: 1
+  colliders: []
   lockOnAim: {fileID: 8928089638351778678}
   emit: {fileID: 21300000, guid: 575c819abd873da49b1181b2793df8d8, type: 3}
   noEmit: {fileID: 21300000, guid: 9afb81dacc602c94087666bd60ba809b, type: 3}
   ship: {fileID: 1446986112751458336}
   playerNumber: 1
   playerColor: {r: 0.3773585, g: 0.119259514, b: 0.3137046, a: 1}
+  networkIgnore:
+  - {fileID: 1662954744308020766}
+  - {fileID: 7716859393941716483}
+  - {fileID: 1662954744308020737}
   maxVelocity: 3.3
   acceleration: 20000
   turningSpeed: 6
   brakingSpeed: 2
   defaultDrag: 0.3
   stopDrag: 0.6
-  networkIgnore:
-  - {fileID: 1662954744308020766}
-  - {fileID: 7716859393941716483}
-  - {fileID: 1662954744308020737}
-  trailingSpeed: 10
+  trailingSpeed: 8
   throwingReduction: 0.55
-  hookShot: {fileID: 1446986111338685776}
   trailingObjects: []
-  exhaust: {fileID: 1446986110815659415}
 --- !u!50 &1662954744308020766
 Rigidbody2D:
   serializedVersion: 4

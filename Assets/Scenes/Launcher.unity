@@ -513,8 +513,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35680631adbee0645b28aca2d3d783f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SoundLevel: 0.2
-  AmbientLevel: 0.1
+  SoundLevel: 0.1
+  AmbientLevel: 0.075
   ambientDrone: {fileID: 185244985}
   sounds:
   - {fileID: 8300000, guid: 3902597f977c4ff45b1fcc1f6644dfd9, type: 3}

@@ -19,11 +19,30 @@ public class GameManager : MonoBehaviourPunCallbacks {
    private int PLAYER_COUNT = 0;
 
    public static Dictionary<string, GameObject> playerLabels = new Dictionary<string, GameObject>();
-
    private static List<PlayerShip> players = new List<PlayerShip>();
+
+   [SerializeField] private List<PlayerPlanets> planetsAvailable = new List<PlayerPlanets>(); 
+   public static Dictionary<PlayerPlanets, PlayerShip> playerPlanets = new Dictionary<PlayerPlanets, PlayerShip>();
 
    public static void AddPlayerToList(PlayerShip obj) {
       players.Remove(obj);
+   }
+
+   public static void ClaimPlanet(PlayerShip ship) {
+      instance.ClaimFreePlanet(ship);
+   }
+
+   private void ClaimFreePlanet(PlayerShip player) {
+      if(player.homePlanet != null) return;
+      foreach(var i in planetsAvailable) {
+         if(i.HasPlayer()) continue;
+         var planet = i;
+         player.homePlanet = planet.gameObject;
+         planet.AssignPlanet(player);
+         instance.planetsAvailable.Remove(i);
+         Debug.Log("Player assigned to planet " + planet.name);
+         break;
+        }
    }
 
    public static List<PlayerShip> GetPlayerList() {
@@ -32,10 +51,6 @@ public class GameManager : MonoBehaviourPunCallbacks {
 
    void OnValidate() {
       if(playerScale <= 0) playerScale = 0.01f;
-   }
-
-   void Start() {
-      instance = this;
    }
 
    void Update() {
@@ -49,12 +64,19 @@ public class GameManager : MonoBehaviourPunCallbacks {
    }
 
    public override void OnEnable() {
+      if(instance == null) instance = this;
       base.OnEnable();
       
       if(!isSinglePlayer) {
          DestroyImmediate(singlePlayer);
          if(PlayerPrefs.GetInt("Spectate") != 0) AddPlayer(PlayerShip.PLAYERNAME);
       }
+   }
+
+   void Awake() {
+      planetsAvailable.Clear();
+      var planetList = GameObject.FindGameObjectsWithTag("PLAYERPLANET");
+      foreach(var i in planetList) planetsAvailable.Add(i.GetComponent<PlayerPlanets>());
    }
 
    public static GameObject SPAWN_SERVER_OBJECT(GameObject obj, Vector3 pos, Quaternion rot) {
@@ -89,7 +111,6 @@ public class GameManager : MonoBehaviourPunCallbacks {
          PLAYER_COUNT++;
          var playerShip = player.GetComponent<PlayerShip>();
          playerShip.playerColor = new Color(Random.Range(0f, 1f), Random.Range(0f, 1f), Random.Range(0f, 1f));
-
          var playerName = Instantiate(PlayerName, player.transform.position, Quaternion.identity);
          var pN = playerName.GetComponent<PlayerName>();
          pN.SetHost(player, name);

@@ -1,5 +1,3 @@
-- Multiple players trailinglist for the same asteroid. ??????????
-
 - Failed to network-remove GameObject. Client is neither owner nor MasterClient taking over for owner who left: View 2 on ASTEROID
 
 

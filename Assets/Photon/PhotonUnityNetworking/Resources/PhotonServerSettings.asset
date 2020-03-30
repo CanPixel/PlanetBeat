@@ -41,5 +41,6 @@ MonoBehaviour:
   - SetAsteroidOwner
   - SetAimingMode
   - SetAim
+  - SetResource
   DisableAutoOpenWizard: 1
   ShowSettings: 1

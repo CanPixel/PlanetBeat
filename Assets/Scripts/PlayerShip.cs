@@ -9,6 +9,9 @@ public class PlayerShip : MonoBehaviourPunCallbacks {
     public bool isSinglePlayer {
         get {return GameManager.instance != null && GameManager.instance.isSinglePlayer;}
     } 
+    public HookShot hookShot;
+    public ParticleSystem exhaust;
+
     public GameObject homePlanet;
     [HideInInspector] public GameObject playerLabel;
 
@@ -16,24 +19,25 @@ public class PlayerShip : MonoBehaviourPunCallbacks {
     public enum HookMethod {
         FreeAim, LockOn
     }
+    [Space(5)]
     public HookMethod hookMethod;
 
     [HideInInspector] public Collider2D[] colliders;
 
-    [Space(20)]
+    [Header("PLAYER VALUES")]
     public LockOnAim lockOnAim;
     public Sprite emit;
     public Sprite noEmit;
     public Image ship;
-
     //Player Identity
     public int playerNumber;
     public Color playerColor;
-
-    private CustomController customController;
-
     [Space(10)]
+    private CustomController customController;
+    public Component[] networkIgnore;
+
     #region MOVEMENT
+    [Header("PHYSICS")]
         public float maxVelocity = 5;
         public float acceleration = 0.1f;
 
@@ -49,9 +53,7 @@ public class PlayerShip : MonoBehaviourPunCallbacks {
     //Rigidbody reference voor physics en movement hoeraaa
     private Rigidbody2D rb;
     private float velocity, turn;
-
-    public Component[] networkIgnore;
-
+    [Header("GRAPPLE")]
     public float trailingSpeed = 8f;
 
     [Range(0.1f,10)]
@@ -63,8 +65,6 @@ public class PlayerShip : MonoBehaviourPunCallbacks {
 
     private Vector3 exLastPos;
     private float exLastTime;
-
-    public HookShot hookShot;
 
     private AudioSource exhaustSound;
 
@@ -83,24 +83,23 @@ public class PlayerShip : MonoBehaviourPunCallbacks {
 
             if(!isSinglePlayer && photonView != null && !photonView.IsMine) {
                 Random.InitState(photonView.ViewID);
-                playerColor = new Color(Random.Range(0f, 1f), Random.Range(0f, 1f), Random.Range(0f, 1f));
+                playerColor = Color.HSVToRGB(Random.Range(0f, 1f), Random.Range(0f, 1f), Random.Range(0.6f, 1f));
                 exLastPos = transform.position;
                 var playerNameTag = Instantiate(Resources.Load("PlayerName"), transform.position, Quaternion.identity) as GameObject;
                 var pN = playerNameTag.GetComponent<PlayerName>();
-                pN.SetColor(playerColor);
-                if(pN != null) pN.SetHost(gameObject, photonView.Owner.NickName);
+                if(pN != null) {
+                    pN.SetColor(playerColor);
+                    pN.SetHost(gameObject, photonView.Owner.NickName);
+                }
                 PLAYERNAME = photonView.Owner.NickName;
                 playerLabel = playerNameTag;
                 GameManager.playerLabels.Add(PLAYERNAME, playerNameTag);
                 foreach(var i in networkIgnore) if(i != null) DestroyImmediate(i);
-            } 
-            if(playerLabel != null) playerLabel.GetComponent<Text>().color = playerColor;
-
-            if(PhotonNetwork.IsMasterClient && photonView != null && !isSinglePlayer) {
-            //    SetAim(PlayerPrefs.GetInt("AIM_MODE"));
-                photonView.RPC("SetAim", RpcTarget.All, PlayerPrefs.GetInt("AIM_MODE"));
             }
-
+            if(playerLabel != null) playerLabel.GetComponent<Text>().color = playerColor;
+            if(PhotonNetwork.IsMasterClient && photonView != null && !isSinglePlayer) photonView.RPC("SetAim", RpcTarget.All, PlayerPrefs.GetInt("AIM_MODE"));
+            lockOnAim.gameObject.SetActive(hookMethod == HookMethod.LockOn);
+            GameManager.ClaimPlanet(this);
         }
     #endregion
 
@@ -110,14 +109,12 @@ public class PlayerShip : MonoBehaviourPunCallbacks {
 
     //Lijn aan asteroids/objecten achter de speler
     [HideInInspector] public List<Asteroid> trailingObjects = new List<Asteroid>();
-    public ParticleSystem exhaust;
 
    public static void SetName(string name) {
        PLAYERNAME = name;
    }
 
     void Start() {
-        lockOnAim.gameObject.SetActive(hookMethod == HookMethod.LockOn);
         rb = GetComponent<Rigidbody2D>();
         var cont = GameObject.FindGameObjectWithTag("CUSTOM CONTROLLER");
         if(cont != null) customController = cont.GetComponent<CustomController>();
@@ -141,7 +138,7 @@ public class PlayerShip : MonoBehaviourPunCallbacks {
             AudioManager.PLAY_SOUND("collect");
             var asteroid = trailingObjects[0];
             trailingObjects.RemoveAt(0);
-            
+            asteroid.rb.constraints = RigidbodyConstraints2D.None;
             asteroid.transform.TransformDirection(new Vector2(transform.forward.x * asteroid.transform.forward.x, transform.forward.y * asteroid.transform.forward.y));
             asteroid.rb.velocity = rb.velocity / throwingReduction; 
             asteroid.ReleaseAsteroid(true); 
@@ -149,7 +146,7 @@ public class PlayerShip : MonoBehaviourPunCallbacks {
     }
 
     void Update() {
-        exhaustSound.volume = Mathf.Lerp(exhaustSound.volume, IsThrust() ? 0.1f : 0, Time.deltaTime * 10f);
+        exhaustSound.volume = Mathf.Lerp(exhaustSound.volume, IsThrust() ? 0.05f : 0, Time.deltaTime * 10f);
 
         lockOnAim.selectColor = playerColor;
         //Particles emitten wanneer movement
@@ -225,6 +222,7 @@ public class PlayerShip : MonoBehaviourPunCallbacks {
 
     //Voegt object toe aan trail achter player
     public void AddAsteroid(GameObject obj) {
+        obj.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
         var script = obj.GetComponent<Asteroid>();
         if(script != null) trailingObjects.Add(script);
     }

@@ -39,6 +39,9 @@ public class Asteroid : MonoBehaviourPun {
 
     private AsteroidNetwork network;
 
+    private Vector3 baseScale;
+    private bool scaleBack = false;
+
     void Start() {
         network = GetComponent<AsteroidNetwork>();
         rb = GetComponent<Rigidbody2D>();
@@ -51,9 +54,12 @@ public class Asteroid : MonoBehaviourPun {
 
     void OnEnable() {
         transform.SetParent(GameObject.FindGameObjectWithTag("ASTEROIDBELT").transform, true);
+        baseScale = transform.localScale;
     }
 
     void Update() {
+        if(scaleBack) transform.localScale = Vector3.Lerp(transform.localScale, baseScale, Time.deltaTime * 2f);
+
         if (collectTimer > 0) collectTimer -= Time.deltaTime;
         asteroidColl.enabled = collectTimer <= 0f; 
 
@@ -68,6 +74,7 @@ public class Asteroid : MonoBehaviourPun {
 
     public void Capture(HookShot hookShot) {
         if((!held || (held && hookShot.hostPlayer.photonView != null && ownerID != hookShot.hostPlayer.photonView.ViewID)) && hookShot.canHold()) {
+            scaleBack = false;
             transform.position = hookShot.transform.position;
             ownerPlayer = hookShot.hostPlayer;
             FetchAsteroid(hookShot.hostPlayer);
@@ -149,6 +156,7 @@ public class Asteroid : MonoBehaviourPun {
             playerTagsManager.runTagTimer = true;
             held = false;
             canScore = true;
+            scaleBack = true;
             ReleasedTimer();
         } else {
             held = true;
