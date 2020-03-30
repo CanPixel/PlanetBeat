@@ -5511,7 +5511,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hookShot: {fileID: 1446986111338685776}
   exhaust: {fileID: 1446986110815659415}
-  homePlanet: {fileID: 0}
   playerLabel: {fileID: 0}
   hookMethod: 1
   colliders: []

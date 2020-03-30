@@ -5,15 +5,14 @@ using UnityEngine.UI;
 using Photon.Pun;
 
 public class PlayerPlanets : MonoBehaviourPun {
-    [SerializeField] private PlayerShip player;
-    [HideInInspector] public float playerNumber;
+    private PlayerShip player;
+    public int playerNumber;
     [HideInInspector] public float currentScore;
     public float maxScore = 100f;
     [HideInInspector] public float minScore;
     public Text scoreText;
     private Color orbitColor;
     public TrailRenderer orbitTrail; 
-    PlayerPlanets _playerPlanets;
 
     public bool HasPlayer() {
         return player != null;
@@ -25,44 +24,34 @@ public class PlayerPlanets : MonoBehaviourPun {
             scoreText.enabled = false;
             return;
         }
-    //   CheckForPlayer();
     }
 
-    public void AssignPlanet(PlayerShip player) {
+    public void SetColor(Color col) {
+        orbitColor = orbitTrail.material.color = scoreText.color = col;
+    }
+
+    [PunRPC]
+    public void ClaimPlayer(int playerNumbe, float r, float g, float b) {
+        playerNumber = playerNumbe;
+        player = PhotonNetwork.GetPhotonView(playerNumber).GetComponent<PlayerShip>();
+        var col = new Color(r, g, b);
+        player.playerColor = col;
+        player.SetPlayerNameColor(col);
+        orbitColor = player.playerColor;
+        scoreText.color = player.playerColor;
+        scoreText.enabled = true;
+        orbitTrail.material.color = orbitColor; 
+    }
+
+    public void AssignPlayer(PlayerShip player) {
         this.player = player;
         playerNumber = player.playerNumber;
         scoreText = GetComponentInChildren<Text>();
-        //orbitColor = player.playerColor;
-        //var col = Color.white - player.playerColor;
-        //scoreText.color = player.playerColor;//new Color(col.r, col.g, col.b, 1); 
+        photonView.RPC("ClaimPlayer", RpcTarget.AllBuffered, playerNumber, player.playerColor.r, player.playerColor.g, player.playerColor.b);
         scoreText.enabled = true;
-        //orbitTrail.material.color = orbitColor; 
     }
 
-  /*  private void CheckForPlayer() {
-        if(player != null) return;
-
-         foreach(var i in GameManager.GetPlayerList()) {
-            if(i.homePlanet == null) {
-                player = i;
-                i.homePlanet = gameObject;
-                Debug.Log("Player assigned to planet " + i.homePlanet.name);
-                break;
-            }
-        } 
-        if(player == null) return;
-        player.homePlanet = gameObject;
-        playerNumber = player.playerNumber;
-        scoreText = GetComponentInChildren<Text>();
-        orbitColor = player.playerColor;
-        //var col = Color.white - player.playerColor;
-        scoreText.color = player.playerColor;//new Color(col.r, col.g, col.b, 1); 
-        scoreText.enabled = true;
-        orbitTrail.material.color = orbitColor; 
-    } */
-
     void Update() {
-        //if(player == null) CheckForPlayer();
         if(scoreText != null) {
             scoreText.text = currentScore.ToString("F0");
             if(player != null) {
@@ -86,7 +75,7 @@ public class PlayerPlanets : MonoBehaviourPun {
             currentScore += amount;
             var newScale = transform.localScale + new Vector3(amount, amount, 0) / 50f;
             GetComponent<UIFloat>().SetBaseScale(newScale);
-            if(photonView != null) photonView.RPC("SetResource", RpcTarget.AllViaServer);
+            if(photonView != null) photonView.RPC("SetResource", RpcTarget.AllViaServer, currentScore + amount);
         }
         if (currentScore <= minScore) currentScore = minScore;
 

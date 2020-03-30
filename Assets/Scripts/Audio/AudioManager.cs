@@ -60,7 +60,8 @@ public class AudioManager : MonoBehaviour {
 	}
 
 	public static float GetMasterAmbientVolume() {
-		return instance.GetMasterAmbientLevel;
+		if(instance == null) return 0;
+		else return instance.GetMasterAmbientLevel;
 	}
 
 	public void PlaySound(string name) {

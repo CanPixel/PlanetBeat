@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7556721354876292502}
   - component: {fileID: 7556721354876292497}
+  - component: {fileID: 2281353120668589252}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -43,11 +44,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57660f202dd0a6a43a701050d8337fe2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isSinglePlayer: 0
+  spectating: 0
+  singlePlayer: {fileID: 0}
   playerPrefab: {fileID: 3506364950220654661, guid: 0d28bdd659df51e43a630a02f1a77fab,
     type: 3}
   PlayerName: {fileID: 4745404921079221811, guid: baff3361381de104ea6af44b7fe04136,
     type: 3}
-  rocks:
-  - {fileID: 4344604995375893222, guid: e16053a8387ab1b479afcbd335c5e3d1, type: 3}
-  startAsteroidAmount: 1
   playerScale: 0.02
+  planetsAvailable: []
+--- !u!114 &2281353120668589252
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7556721354876292503}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 0
+  OwnershipTransfer: 0
+  ObservedComponents: []
+  viewIdField: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0

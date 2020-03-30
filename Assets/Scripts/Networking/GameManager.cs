@@ -19,34 +19,27 @@ public class GameManager : MonoBehaviourPunCallbacks {
    private int PLAYER_COUNT = 0;
 
    public static Dictionary<string, GameObject> playerLabels = new Dictionary<string, GameObject>();
-   private static List<PlayerShip> players = new List<PlayerShip>();
-
    [SerializeField] private List<PlayerPlanets> planetsAvailable = new List<PlayerPlanets>(); 
-   public static Dictionary<PlayerPlanets, PlayerShip> playerPlanets = new Dictionary<PlayerPlanets, PlayerShip>();
-
-   public static void AddPlayerToList(PlayerShip obj) {
-      players.Remove(obj);
-   }
 
    public static void ClaimPlanet(PlayerShip ship) {
-      instance.ClaimFreePlanet(ship);
+      if(PhotonNetwork.IsMasterClient) instance.ClaimFreePlanet(ship);
    }
 
    private void ClaimFreePlanet(PlayerShip player) {
-      if(player.homePlanet != null) return;
-      foreach(var i in planetsAvailable) {
-         if(i.HasPlayer()) continue;
-         var planet = i;
-         player.homePlanet = planet.gameObject;
-         planet.AssignPlanet(player);
-         instance.planetsAvailable.Remove(i);
-         Debug.Log("Player assigned to planet " + planet.name);
-         break;
-        }
-   }
-
-   public static List<PlayerShip> GetPlayerList() {
-      return players;
+      if(player.GetHomePlanet() != null) return;
+      int playerVal = Mathf.Clamp(player.playerNumber / 1000, 0, int.MaxValue);
+      if(playerVal > planetsAvailable.Count) {
+         Debug.LogError("Can't claim planet || SPACE IS FULL");
+         return;
+      }
+      var planet = planetsAvailable[playerVal];
+      if(planet.HasPlayer()) {
+         Debug.LogError("Can't claim planet || Planet already taken");
+         return;
+      }
+      player.SetHomePlanet(planet.gameObject);
+      planet.AssignPlayer(player);
+      Debug.Log("Player assigned to planet " + planet.name);
    }
 
    void OnValidate() {
@@ -56,11 +49,6 @@ public class GameManager : MonoBehaviourPunCallbacks {
    void Update() {
       spectating = PlayerPrefs.GetInt("Spectate") == 0;
       if(Input.GetKeyUp(KeyCode.Escape)) Screen.fullScreen = !Screen.fullScreen;
-
-      //Actual playerlist
-      var list = PhotonNetwork.FindGameObjectsWithComponent(typeof(PlayerShip));
-      players.Clear();
-      foreach(var i in list) players.Add(i.GetComponent<PlayerShip>());
    }
 
    public override void OnEnable() {
@@ -71,6 +59,17 @@ public class GameManager : MonoBehaviourPunCallbacks {
          DestroyImmediate(singlePlayer);
          if(PlayerPrefs.GetInt("Spectate") != 0) AddPlayer(PlayerShip.PLAYERNAME);
       }
+
+      if(PhotonNetwork.IsMasterClient) {
+         int masterClientID = 1001;
+         var col = PhotonNetwork.GetPhotonView(masterClientID).GetComponent<PlayerShip>().playerColor;
+         photonView.RPC("AssignMasterPlanet", RpcTarget.AllBuffered, masterClientID, col.r, col.g, col.b);
+      }
+   }
+
+   [PunRPC]
+   public void AssignMasterPlanet(int playerNum, float r, float g, float b) {
+      PhotonNetwork.GetPhotonView(playerNum).GetComponent<PlayerShip>().SetColor(r, g, b);
    }
 
    void Awake() {

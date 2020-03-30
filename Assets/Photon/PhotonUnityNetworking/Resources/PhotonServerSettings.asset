@@ -42,5 +42,7 @@ MonoBehaviour:
   - SetAimingMode
   - SetAim
   - SetResource
+  - ClaimPlayer
+  - AssignMasterPlanet
   DisableAutoOpenWizard: 1
   ShowSettings: 1

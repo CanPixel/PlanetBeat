@@ -12,7 +12,7 @@ public class PlayerShip : MonoBehaviourPunCallbacks {
     public HookShot hookShot;
     public ParticleSystem exhaust;
 
-    public GameObject homePlanet;
+    private GameObject homePlanet;
     [HideInInspector] public GameObject playerLabel;
 
     [System.Serializable]
@@ -68,6 +68,18 @@ public class PlayerShip : MonoBehaviourPunCallbacks {
 
     private AudioSource exhaustSound;
 
+    private PlayerName playerName;
+    private PlayerPlanets planet;
+
+    public GameObject GetHomePlanet() {
+        return homePlanet;
+    }
+
+    public void SetHomePlanet(GameObject planet) {
+        homePlanet = planet;
+        this.planet = homePlanet.GetComponent<PlayerPlanets>();
+    }
+
     [PunRPC]
     public void SetAim(int i) {
          hookMethod = (i == 0) ? HookMethod.FreeAim : HookMethod.LockOn;
@@ -81,15 +93,17 @@ public class PlayerShip : MonoBehaviourPunCallbacks {
             exhaustSound = GetComponent<AudioSource>();
             transform.SetParent(GameObject.FindGameObjectWithTag("GAMEFIELD").transform, false);
 
+            if(!isSinglePlayer && photonView != null) playerNumber = photonView.ViewID;
+
             if(!isSinglePlayer && photonView != null && !photonView.IsMine) {
                 Random.InitState(photonView.ViewID);
                 playerColor = Color.HSVToRGB(Random.Range(0f, 1f), Random.Range(0f, 1f), Random.Range(0.6f, 1f));
                 exLastPos = transform.position;
                 var playerNameTag = Instantiate(Resources.Load("PlayerName"), transform.position, Quaternion.identity) as GameObject;
-                var pN = playerNameTag.GetComponent<PlayerName>();
-                if(pN != null) {
-                    pN.SetColor(playerColor);
-                    pN.SetHost(gameObject, photonView.Owner.NickName);
+                playerName = playerNameTag.GetComponent<PlayerName>();
+                if(playerName != null) {
+                    playerName.SetColor(playerColor);
+                    playerName.SetHost(gameObject, photonView.Owner.NickName);
                 }
                 PLAYERNAME = photonView.Owner.NickName;
                 playerLabel = playerNameTag;
@@ -102,6 +116,18 @@ public class PlayerShip : MonoBehaviourPunCallbacks {
             GameManager.ClaimPlanet(this);
         }
     #endregion
+
+    public void SetPlayerNameColor(Color col) {
+        if(playerName == null) return;
+        playerName.SetColor(col);
+    }
+
+    public void SetColor(float r, float g, float b) {
+        var col = new Color(r, g, b);
+        SetPlayerNameColor(col);
+        playerColor = col;
+        if(planet != null) planet.AssignPlayer(this);
+    }
 
     public void SetCollision(Collider2D asteroid, bool state) {
         foreach(var i in colliders) if(!i.isTrigger) Physics2D.IgnoreCollision(i, asteroid, !state);
