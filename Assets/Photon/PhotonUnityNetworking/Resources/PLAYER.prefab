@@ -5518,7 +5518,7 @@ MonoBehaviour:
   ship: {fileID: 1446986112751458336}
   playerNumber: 1
   playerColor: {r: 0.3773585, g: 0.119259514, b: 0.3137046, a: 1}
-  maxVelocity: 1.1
+  maxVelocity: 3.3
   acceleration: 20000
   turningSpeed: 6
   brakingSpeed: 2

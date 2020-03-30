@@ -18,6 +18,8 @@ public class PlayerShip : MonoBehaviourPunCallbacks {
     }
     public HookMethod hookMethod;
 
+    [HideInInspector] public Collider2D[] colliders;
+
     [Space(20)]
     public LockOnAim lockOnAim;
     public Sprite emit;
@@ -74,6 +76,8 @@ public class PlayerShip : MonoBehaviourPunCallbacks {
     #region IPunObservable implementation
         public override void OnEnable() {
             base.OnEnable();
+
+            colliders = GetComponentsInChildren<Collider2D>();
             exhaustSound = GetComponent<AudioSource>();
             transform.SetParent(GameObject.FindGameObjectWithTag("GAMEFIELD").transform, false);
 
@@ -99,6 +103,10 @@ public class PlayerShip : MonoBehaviourPunCallbacks {
 
         }
     #endregion
+
+    public void SetCollision(Collider2D asteroid, bool state) {
+        foreach(var i in colliders) if(!i.isTrigger) Physics2D.IgnoreCollision(i, asteroid, !state);
+    }
 
     //Lijn aan asteroids/objecten achter de speler
     [HideInInspector] public List<Asteroid> trailingObjects = new List<Asteroid>();
