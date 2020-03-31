@@ -75,7 +75,7 @@ public class PlayerPlanets : MonoBehaviourPun {
             currentScore += amount;
             var newScale = transform.localScale + new Vector3(amount, amount, 0) / 50f;
             GetComponent<UIFloat>().SetBaseScale(newScale);
-            if(photonView != null) photonView.RPC("SetResource", RpcTarget.AllViaServer, currentScore + amount);
+            if(photonView != null) photonView.RPC("SetResource", RpcTarget.AllBufferedViaServer, currentScore + amount);
         }
         if (currentScore <= minScore) currentScore = minScore;
 

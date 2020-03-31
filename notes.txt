@@ -8,6 +8,20 @@ Muzikaal spel? Lock on mechanism is een accent op de maat?
 
 
 
+
+- Verander droppen naar 'E'
+- Fix press F twice to drop
+- Leaving player doesnt clear planet
+
+- Black outline scores
+- Kleuren zijn niet consistent ----> Masterclient klopt, maar de rest niet
+
+- Players joined text
+
+- Playerplanet assignment not synchronized properly
+
+
+
 - Styleswitch -----> styleswitch in main menu, not realtime ingame
 
 - Feedback button
