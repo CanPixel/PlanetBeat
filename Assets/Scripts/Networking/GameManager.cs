@@ -9,6 +9,8 @@ public class GameManager : MonoBehaviourPunCallbacks {
    public bool isSinglePlayer = false;
    public bool spectating = false;
 
+   public string feedbackURL = "";
+
    public static GameManager instance;
    [Space(10)]
    public GameObject singlePlayer;
@@ -148,5 +150,9 @@ public class GameManager : MonoBehaviourPunCallbacks {
          DestroyImmediate(playerLabels[other.NickName]);
          playerLabels.Remove(other.NickName);
       }
+   }
+
+   public void AccessFeedback() {
+      Application.OpenURL(feedbackURL);
    }
 }

@@ -103,11 +103,11 @@ public class PlayerShip : MonoBehaviourPunCallbacks {
                 playerName = playerNameTag.GetComponent<PlayerName>();
                 if(playerName != null) {
                     playerName.SetColor(playerColor);
-                    playerName.SetHost(gameObject, photonView.Owner.NickName);
+                    if(photonView.Owner != null) playerName.SetHost(gameObject, photonView.Owner.NickName);
                 }
-                PLAYERNAME = photonView.Owner.NickName;
+                if(photonView.Owner != null) PLAYERNAME = photonView.Owner.NickName;
                 playerLabel = playerNameTag;
-                GameManager.playerLabels.Add(PLAYERNAME, playerNameTag);
+                if(playerNameTag != null) GameManager.playerLabels.Add(PLAYERNAME, playerNameTag);
                 foreach(var i in networkIgnore) if(i != null) DestroyImmediate(i);
             }
             if(playerLabel != null) playerLabel.GetComponent<Text>().color = playerColor;

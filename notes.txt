@@ -8,7 +8,9 @@ Muzikaal spel? Lock on mechanism is een accent op de maat?
 
 
 
-- Link naar google forms
+- Styleswitch -----> styleswitch in main menu, not realtime ingame
+
+- Feedback button
 - HTML5 export?
 - asteroid belts
 

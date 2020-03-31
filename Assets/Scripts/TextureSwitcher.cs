@@ -8,6 +8,8 @@ public class TextureSwitcher : MonoBehaviour {
 
     [HideInInspector] public int pack = 0;
 
+    public bool implement = false;
+
     [System.Serializable]
     public class TexturePack {
         public string packName;
@@ -45,7 +47,13 @@ public class TextureSwitcher : MonoBehaviour {
     void OnEnable() {
         dropdown = GetComponent<Dropdown>();
         dropdown.value = PlayerPrefs.GetInt("TexturePack");
-        UpdateTexturePack(PlayerPrefs.GetInt("TexturePack"));
+        //UpdateTexturePack(PlayerPrefs.GetInt("TexturePack"));
+        if(implement) UpdateTexturePack(PlayerPrefs.GetInt("TexturePack"));
+    }
+
+    public void SetTexturePack(int change) {
+        pack = change;
+        PlayerPrefs.SetInt("TexturePack", change);
     }
 
     public void UpdateTexturePack(int change) {
