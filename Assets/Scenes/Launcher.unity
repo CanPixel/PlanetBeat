@@ -1161,19 +1161,19 @@ MonoBehaviour:
     - src: {fileID: 21300000, guid: 9bc31e6d19c27754e9be0634feb62da1, type: 3}
       glow: {fileID: 0}
       scale: 1
-      tint: {r: 1, g: 1, b: 1, a: 1}
+      tint: {r: 0.8301887, g: 0.37201852, b: 0.37201852, a: 1}
     - src: {fileID: 21300000, guid: 2517a66715ca4484ca854650a9ad523d, type: 3}
       glow: {fileID: 0}
       scale: 1
-      tint: {r: 1, g: 1, b: 1, a: 1}
+      tint: {r: 0.33268064, g: 0.5508503, b: 0.7924528, a: 1}
     - src: {fileID: 21300000, guid: db229448994df03428df603ae852ba09, type: 3}
       glow: {fileID: 0}
       scale: 1
-      tint: {r: 1, g: 1, b: 1, a: 1}
+      tint: {r: 0.745283, g: 0.26366144, b: 0.66191316, a: 1}
     - src: {fileID: 21300000, guid: b2c541c3dd947414e9c43fbdb95487ff, type: 3}
       glow: {fileID: 0}
       scale: 1
-      tint: {r: 1, g: 1, b: 1, a: 1}
+      tint: {r: 0.3234247, g: 0.8679245, b: 0.3286812, a: 1}
   - packName: FANCY
     planets:
     - src: {fileID: 21300000, guid: c2ecb22671b16da4da71265f7596be53, type: 3}
@@ -1226,7 +1226,6 @@ MonoBehaviour:
       tint: {r: 1, g: 1, b: 1, a: 0}
   pack: 1
   sun: {fileID: 0}
-  implement: 0
   typeOfPlanets: 4
 --- !u!1 &389684154
 GameObject:
@@ -4225,8 +4224,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 15, y: 0}
-  m_SizeDelta: {x: 40, y: 40}
+  m_AnchoredPosition: {x: 15, y: -1}
+  m_SizeDelta: {x: 60, y: 60}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1378000968
 MonoBehaviour:
@@ -4248,7 +4247,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: adbc60d45bf51024fac6c5dceb118dbe, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 8353a496b7cd0b640a5297edad9f0747, type: 3}
   m_Type: 3
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -4597,7 +4596,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 0.9056604, g: 0.9056604, b: 0.9056604, a: 1}
-  m_RaycastTarget: 0
+  m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -5426,7 +5425,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 533948573842649025}
-  m_LocalRotation: {x: 0, y: 0, z: 0.6976712, w: -0.7164182}
+  m_LocalRotation: {x: 0, y: 0, z: 0.78521395, w: -0.6192246}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -5513,7 +5512,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 533948573944061022}
-  m_LocalRotation: {x: 0, y: 0, z: 0.4887666, w: 0.8724146}
+  m_LocalRotation: {x: 0, y: 0, z: 0.3707118, w: 0.92874795}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -6441,7 +6440,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 533948575062331776}
-  m_LocalRotation: {x: 0, y: 0, z: 0.20380487, w: 0.97901154}
+  m_LocalRotation: {x: 0, y: 0, z: 0.07427422, w: 0.99723786}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -6623,7 +6622,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 533948575445420487}
-  m_LocalRotation: {x: 0, y: 0, z: 0.22053474, w: -0.9753791}
+  m_LocalRotation: {x: 0, y: 0, z: 0.3459612, w: -0.9382488}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:

@@ -17,7 +17,7 @@ public class PlayerPlanets : MonoBehaviourPun {
 
     public float maxScale = 4;
     private Vector3 baseScale;
-    public float orbitScaleReduction = 1;
+    public AnimationCurve orbitScaleReduction;
 
     public bool HasPlayer() {
         return player != null;
@@ -25,7 +25,6 @@ public class PlayerPlanets : MonoBehaviourPun {
 
     void OnValidate() {
         if(maxScale < 0) maxScale = 0;
-        if(orbitScaleReduction < 0) orbitScaleReduction = 0;
     }
 
     void Start() {
@@ -84,7 +83,7 @@ public class PlayerPlanets : MonoBehaviourPun {
     }
 
     void Update() {
-        orbit.transform.localScale = Vector3.Lerp(orbit.transform.localScale, transform.localScale / orbitScaleReduction, Time.deltaTime * 2f);
+        orbit.transform.localScale = Vector3.Lerp(orbit.transform.localScale, transform.localScale / orbitScaleReduction.Evaluate(currentScore / maxScore), Time.deltaTime * 2f);
 
         if(scoreText != null) {
             scoreText.text = currentScore.ToString("F0");

@@ -255,7 +255,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 533948574299374632}
-  m_LocalRotation: {x: 0, y: 0, z: 0.28803706, w: -0.95761925}
+  m_LocalRotation: {x: 0, y: 0, z: 0.6123488, w: 0.7905877}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -512,7 +512,30 @@ MonoBehaviour:
   orbitTrail: {fileID: 533948574110823364}
   orbit: {fileID: 533948574299374632}
   maxScale: 4
-  orbitScaleReduction: 1
+  orbitScaleReduction:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: -0
+      value: 2.0005813
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 1.5000076
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!114 &533948574818394582
 MonoBehaviour:
   m_ObjectHideFlags: 0

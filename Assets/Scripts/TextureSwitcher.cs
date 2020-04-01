@@ -10,8 +10,6 @@ public class TextureSwitcher : MonoBehaviour {
 
     [HideInInspector] public SunTextures sun;
 
-    public bool implement = false;
-
     private Color[] playerColors;
     public static Color GetPlayerTint(int i) {
         return instance.playerColors[GetPlayerTintIndex(i)];
@@ -76,7 +74,7 @@ public class TextureSwitcher : MonoBehaviour {
         playerColors = new Color[typeOfPlanets];
         if(dropdown == null) dropdown = GetComponent<Dropdown>();
         instance.pack = PlayerPrefs.GetInt("TexturePack");
-        if(!implement) dropdown.value = PlayerPrefs.GetInt("TexturePack");
+        dropdown.value = PlayerPrefs.GetInt("TexturePack");
     }
 
     public static void ForceUpdateTextures() {
