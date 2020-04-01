@@ -12,17 +12,11 @@ Muzikaal spel? Lock on mechanism is een accent op de maat?
 
 - 2 blauwe spelers
 
-
-- Styleswitch wordt altijd stijl B when playing
-
-
-- Lock-on bij space ingedrukt moet weer kleiner worden.
-- hook veranderen, player trails? asteroid trails? planet orbits?
 - Verander droppen naar 'E'
+- hook veranderen, player trails? asteroid trails? planet orbits?
 
 - Leaving player doesnt clear planet
 - Kleuren zijn niet genetworked.
-- Players joined text
 
 - Planets should scale less intensely
 
@@ -30,6 +24,9 @@ Muzikaal spel? Lock on mechanism is een accent op de maat?
 
 - Player join changes player planets
 
+
+- Players joined text
+- Lock-on bij space ingedrukt moet weer kleiner worden.
 
 
 

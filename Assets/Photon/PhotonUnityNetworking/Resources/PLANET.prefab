@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 533948573331642559}
   - component: {fileID: 1927836806147721693}
   m_Layer: 5
-  m_Name: ScoreText_1
+  m_Name: ScoreText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -255,7 +255,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 533948574299374632}
-  m_LocalRotation: {x: 0, y: 0, z: 0.9972378, w: -0.074275024}
+  m_LocalRotation: {x: 0, y: 0, z: 0.28803706, w: -0.95761925}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -510,6 +510,9 @@ MonoBehaviour:
   minScore: 0
   scoreText: {fileID: 533948573331642559}
   orbitTrail: {fileID: 533948574110823364}
+  orbit: {fileID: 533948574299374632}
+  maxScale: 4
+  orbitScaleReduction: 1
 --- !u!114 &533948574818394582
 MonoBehaviour:
   m_ObjectHideFlags: 0

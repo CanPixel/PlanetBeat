@@ -1143,8 +1143,8 @@ MonoBehaviour:
       scale: 1
       tint: {r: 0.2862745, g: 0.83137256, b: 0.3388156, a: 1}
     asteroid:
-      src: {fileID: 21300000, guid: adbc60d45bf51024fac6c5dceb118dbe, type: 3}
-      glow: {fileID: 21300000, guid: ca7180f84254e264dbd47bb754f83e61, type: 3}
+      src: {fileID: 21300000, guid: 8353a496b7cd0b640a5297edad9f0747, type: 3}
+      glow: {fileID: 21300000, guid: 3b0a8f24390a3ce49aae30b8b1c9e157, type: 3}
       scale: 1
       tint: {r: 1, g: 1, b: 1, a: 1}
     blackHole:
@@ -5426,7 +5426,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 533948573842649025}
-  m_LocalRotation: {x: 0, y: 0, z: 0.5843847, w: 0.81147677}
+  m_LocalRotation: {x: 0, y: 0, z: 0.6976712, w: -0.7164182}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -5513,7 +5513,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 533948573944061022}
-  m_LocalRotation: {x: 0, y: 0, z: 0.94403416, w: -0.3298477}
+  m_LocalRotation: {x: 0, y: 0, z: 0.4887666, w: 0.8724146}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -6441,7 +6441,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 533948575062331776}
-  m_LocalRotation: {x: 0, y: 0, z: 0.9995285, w: -0.030704722}
+  m_LocalRotation: {x: 0, y: 0, z: 0.20380487, w: 0.97901154}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -6623,7 +6623,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 533948575445420487}
-  m_LocalRotation: {x: 0, y: 0, z: 0.9222653, w: 0.38655758}
+  m_LocalRotation: {x: 0, y: 0, z: 0.22053474, w: -0.9753791}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:

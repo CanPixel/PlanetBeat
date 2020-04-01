@@ -13,11 +13,19 @@ public class PlayerPlanets : MonoBehaviourPun {
     public Text scoreText;
     private Color orbitColor;
     public TrailRenderer orbitTrail; 
+    public GameObject orbit;
 
+    public float maxScale = 4;
     private Vector3 baseScale;
+    public float orbitScaleReduction = 1;
 
     public bool HasPlayer() {
         return player != null;
+    }
+
+    void OnValidate() {
+        if(maxScale < 0) maxScale = 0;
+        if(orbitScaleReduction < 0) orbitScaleReduction = 0;
     }
 
     void Start() {
@@ -76,6 +84,8 @@ public class PlayerPlanets : MonoBehaviourPun {
     }
 
     void Update() {
+        orbit.transform.localScale = Vector3.Lerp(orbit.transform.localScale, transform.localScale / orbitScaleReduction, Time.deltaTime * 2f);
+
         if(scoreText != null) {
             scoreText.text = currentScore.ToString("F0");
             if(player != null) {
@@ -97,7 +107,9 @@ public class PlayerPlanets : MonoBehaviourPun {
     public void AddingResource(float amount) {
         if (currentScore < maxScore) {
             currentScore += amount;
-            var newScale = transform.localScale + new Vector3(amount, amount, 0) / 100f;
+            var newScale = transform.localScale + new Vector3(amount, amount, 0) / 150f;
+            newScale = new Vector3(Mathf.Clamp(newScale.x, 0, maxScale), Mathf.Clamp(newScale.y, 0, maxScale), Mathf.Clamp(newScale.z, 0, maxScale));
+
             GetComponent<UIFloat>().SetBaseScale(newScale);
             if(photonView != null) photonView.RPC("SetResource", RpcTarget.AllBufferedViaServer, currentScore + amount);
         }
