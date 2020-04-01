@@ -366,7 +366,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: 1f4998ef8496de14bb326f97c6351d21, type: 3}
+  m_Sprite: {fileID: 21300000, guid: ce462be54f64b524997f160fc84bc4f1, type: 3}
   m_Type: 3
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -434,7 +434,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parallax: 1
+  TURN: 1
   parallaxSpeed: 5
+  wiggleSpeed: 0
+  wiggleRange: 0
 --- !u!114 &105211514
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1134,10 +1137,10 @@ MonoBehaviour:
       glow: {fileID: 21300000, guid: fd3a53b65c664fd468132a1e8b782846, type: 3}
       scale: 1
       tint: {r: 0.28235295, g: 0.43602946, b: 0.6901961, a: 1}
-    - src: {fileID: 21300000, guid: cc339cca5a970fc4b9ce5b3bbe74ed0e, type: 3}
-      glow: {fileID: 21300000, guid: dcadda9352aacb445984fe548a50c86a, type: 3}
+    - src: {fileID: 21300000, guid: 5c6a1073c51038140aad16c45ce314c7, type: 3}
+      glow: {fileID: 21300000, guid: d8e2aff8ae4317840a5d07c155e25d38, type: 3}
       scale: 1
-      tint: {r: 0.5283019, g: 0.17194732, b: 0.39791787, a: 1}
+      tint: {r: 0.81960785, g: 0.654902, b: 0.21960784, a: 1}
     - src: {fileID: 21300000, guid: 4979beaa98198984fa85bd9c8ec41f76, type: 3}
       glow: {fileID: 21300000, guid: 60d1f86fb8299d94bb5c45807529ab9e, type: 3}
       scale: 1
@@ -1148,8 +1151,8 @@ MonoBehaviour:
       scale: 1
       tint: {r: 1, g: 1, b: 1, a: 1}
     blackHole:
-      src: {fileID: 21300000, guid: ce462be54f64b524997f160fc84bc4f1, type: 3}
-      glow: {fileID: 21300000, guid: 4fd7a9ff9606c80439eab00a1b274b7d, type: 3}
+      src: {fileID: 21300000, guid: b65099d8fdfde2d44baebf17156babb5, type: 3}
+      glow: {fileID: 21300000, guid: b7bafdc25e641a9489767a72927e282d, type: 3}
       scale: 1
       tint: {r: 1, g: 1, b: 1, a: 1}
     Background:
@@ -1499,7 +1502,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parallax: 1
+  TURN: 1
   parallaxSpeed: 1
+  wiggleSpeed: 0
+  wiggleRange: 0
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -1886,6 +1892,7 @@ MonoBehaviour:
   scaleAmp: 1
   rotFreq: 0
   rotAmp: 1
+  scaleOffset: {x: 0, y: 0, z: 0}
 --- !u!1 &597357790
 GameObject:
   m_ObjectHideFlags: 0
@@ -1948,6 +1955,7 @@ MonoBehaviour:
   scaleAmp: 1
   rotFreq: 0
   rotAmp: 1
+  scaleOffset: {x: 0, y: 0, z: 0}
 --- !u!114 &597357793
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3215,6 +3223,7 @@ MonoBehaviour:
   scaleAmp: 0.02
   rotFreq: 0
   rotAmp: 1
+  scaleOffset: {x: 0, y: 0, z: 0}
 --- !u!114 &1019642636
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3228,7 +3237,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_EffectColor: {r: 1, g: 1, b: 1, a: 0.5}
-  m_EffectDistance: {x: 1, y: -2}
+  m_EffectDistance: {x: 1, y: -1}
   m_UseGraphicAlpha: 1
 --- !u!1 &1027012942
 GameObject:
@@ -3482,7 +3491,7 @@ MonoBehaviour:
   scaleSpeed: 0.2
   translateSpeed: 0.6
   rotateSpeed: 0.1
-  posDir: {x: 1, y: 3, z: 0}
+  posDir: {x: 1, y: 2, z: 0}
   scaleDir: {x: 1, y: 1, z: 0}
   rotDir: {x: 0, y: 0, z: 1}
   posFreq: 3
@@ -3491,6 +3500,7 @@ MonoBehaviour:
   scaleAmp: 0.15
   rotFreq: 1
   rotAmp: 15
+  scaleOffset: {x: 0, y: 0, z: 0}
 --- !u!114 &1151881529
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3962,7 +3972,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parallax: 1
+  TURN: 1
   parallaxSpeed: 8
+  wiggleSpeed: 0
+  wiggleRange: 0
 --- !u!114 &1290435505
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4407,7 +4420,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parallax: 0
+  TURN: 1
   parallaxSpeed: 1
+  wiggleSpeed: 0
+  wiggleRange: 0
 --- !u!114 &1582620228
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4844,7 +4860,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: 1f4998ef8496de14bb326f97c6351d21, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 4fd7a9ff9606c80439eab00a1b274b7d, type: 3}
   m_Type: 3
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -5175,6 +5191,7 @@ MonoBehaviour:
   scaleAmp: 1
   rotFreq: 2
   rotAmp: 15
+  scaleOffset: {x: 0, y: 0, z: 0}
 --- !u!114 &533948573469521022
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5417,6 +5434,7 @@ MonoBehaviour:
   scaleAmp: 1
   rotFreq: 2
   rotAmp: 15
+  scaleOffset: {x: 0, y: 0, z: 0}
 --- !u!1 &533948573842649025
 GameObject:
   m_ObjectHideFlags: 0
@@ -5442,7 +5460,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 533948573842649025}
-  m_LocalRotation: {x: 0, y: 0, z: 0.8013533, w: 0.5981914}
+  m_LocalRotation: {x: 0, y: 0, z: 0.9351942, w: 0.35413533}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -5529,7 +5547,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 533948573944061022}
-  m_LocalRotation: {x: 0, y: 0, z: 0.8011542, w: -0.598458}
+  m_LocalRotation: {x: 0, y: 0, z: 0.60516137, w: -0.7961028}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -5889,6 +5907,7 @@ MonoBehaviour:
   scaleAmp: 1
   rotFreq: 2
   rotAmp: 15
+  scaleOffset: {x: 0, y: 0, z: 0}
 --- !u!114 &533948574395206207
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5943,6 +5962,7 @@ MonoBehaviour:
   scaleAmp: 1
   rotFreq: 2
   rotAmp: 15
+  scaleOffset: {x: 0, y: 0, z: 0}
 --- !u!224 &533948574498798008
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6459,7 +6479,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 533948575062331776}
-  m_LocalRotation: {x: 0, y: 0, z: 0.94403416, w: -0.3298477}
+  m_LocalRotation: {x: 0, y: 0, z: 0.81654537, w: -0.5772813}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -6641,7 +6661,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 533948575445420487}
-  m_LocalRotation: {x: 0, y: 0, z: 0.99582016, w: 0.09133606}
+  m_LocalRotation: {x: 0, y: 0, z: 0.9824193, w: -0.18668759}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:

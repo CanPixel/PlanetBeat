@@ -87,9 +87,14 @@ public class TextureSwitcher : MonoBehaviour {
         if(planetsReference == null) planetsReference = GameObject.FindGameObjectWithTag("PLANETS").GetComponentsInChildren<PlanetGlow>();
         if(asteroidReference == null) asteroidReference = GameObject.FindGameObjectWithTag("ASTEROIDBELT");
         if(sunReference == null) {
-            sun = GameObject.FindGameObjectWithTag("SUN").GetComponent<SunTextures>();
-            sunReference = sun.src;
-            sunGlowReference = sun.glow;
+            var sunObj = GameObject.FindGameObjectWithTag("SUN");
+            if(sunObj != null) {
+                sun = sunObj.GetComponent<SunTextures>();
+                if(sun != null) {
+                    sunReference = sun.src;
+                    sunGlowReference = sun.glow;
+                }
+            }
         }
         if(backgroundReference == null) backgroundReference = GameObject.FindGameObjectWithTag("BACKGROUND");
 
