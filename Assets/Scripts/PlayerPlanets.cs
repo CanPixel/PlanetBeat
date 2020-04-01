@@ -35,9 +35,9 @@ public class PlayerPlanets : MonoBehaviourPun {
 
     [PunRPC]
     public void SendResetToServer(int playerNumber) {
-        Debug.LogError(playerNumber);
+  //      Debug.LogError(playerNumber);
         if(playerNumber == this.playerNumber) {
-            Debug.LogError("CLEAR " + playerNumber);
+   //         Debug.LogError("CLEAR " + playerNumber);
             this.playerNumber = -1;
             player = null;
             currentScore = minScore;

@@ -6,6 +6,12 @@
 Sound Design == Cartoony / Funny? 
 Muzikaal spel? Lock on mechanism is een accent op de maat?
 
+- Asteroids should be slower
+
+- Alleen de scoretransition naar '100' zag Bart
+
+- 2 blauwe spelers
+
 
 - Styleswitch wordt altijd stijl B when playing
 
