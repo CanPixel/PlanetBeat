@@ -44,5 +44,7 @@ MonoBehaviour:
   - SetResource
   - ClaimPlayer
   - AssignMasterPlanet
+  - ResetPlanet
+  - SendResetToServer
   DisableAutoOpenWizard: 1
   ShowSettings: 1

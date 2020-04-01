@@ -25,6 +25,10 @@ public class PlayerName : MonoBehaviour {
         text.color = host.GetComponent<PlayerShip>().playerColor;
     }
 
+    public void Rename(string name) {
+        text.text = name;
+    }
+
     public void SetColor(Color col) {
         text.color = col;
     }

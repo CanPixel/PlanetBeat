@@ -17,6 +17,10 @@ TagManager:
   - ASTEROIDBELT
   - CUSTOM CONTROLLER
   - PLANETS
+  - SUN
+  - BACKGROUND
+  - TEXTURESWITCHER
+  - GAMEMANAGER
   layers:
   - Default
   - TransparentFX

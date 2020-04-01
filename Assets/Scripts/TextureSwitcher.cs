@@ -8,7 +8,25 @@ public class TextureSwitcher : MonoBehaviour {
 
     [HideInInspector] public int pack = 0;
 
+    [HideInInspector] public SunTextures sun;
+
     public bool implement = false;
+
+    private Color[] playerColors;
+    public static Color GetPlayerTint(int i) {
+        return instance.playerColors[GetPlayerTintIndex(i)];
+    }
+
+    public static int GetPlayerTintIndex(int viewID) {
+        if(instance == null) instance = GameObject.FindGameObjectWithTag("TEXTURESWITCHER").GetComponent<TextureSwitcher>();
+        int iF = (viewID / 1000);
+        int fin = iF % instance.typeOfPlanets;
+        return fin;
+    }
+
+    public static TextureElement GetRandomPlanet() {
+        return instance.texturePacks[instance.pack].planets[Random.Range(0, instance.typeOfPlanets)];
+    }
 
     [System.Serializable]
     public class TexturePack {
@@ -16,6 +34,8 @@ public class TextureSwitcher : MonoBehaviour {
         public TextureElement[] planets;
         public TextureElement asteroid;
         public TextureElement blackHole;
+        public TextureElement Background;
+        public TextureElement[] Ship;
     }
 
     [System.Serializable]
@@ -23,56 +43,75 @@ public class TextureSwitcher : MonoBehaviour {
         public Sprite src, glow;
         [Range(0, 5)]
         public float scale = 1;
-        public Color tint;
+        public Color tint = Color.white;
     }
     [Space(20)]
-    public Image sunReference, sunGlowReference;
+    private Image sunReference, sunGlowReference;
     private GameObject asteroidReference;
+    private GameObject backgroundReference;
     private PlanetGlow[] planetsReference;
     [Range(1, 10)]
     public int typeOfPlanets = 4;
 
     private static TextureSwitcher instance;
-
     public static TexturePack GetCurrentTexturePack() {
         return instance.texturePacks[instance.pack];
     }
 
     private Dropdown dropdown;
 
-    void Start() {
-        instance = this;
+    public static void Detach() {
+        instance.transform.SetParent(null);
+        DontDestroyOnLoad(instance.gameObject);
+        instance.planetsReference = null;
+        instance.asteroidReference = null;
+        instance.sun = null;
+        instance.backgroundReference = null;
+        instance.sunGlowReference = null;
+        instance.sunReference = null;
     }
 
     void OnEnable() {
-        dropdown = GetComponent<Dropdown>();
-        dropdown.value = PlayerPrefs.GetInt("TexturePack");
-        //UpdateTexturePack(PlayerPrefs.GetInt("TexturePack"));
-        if(implement) UpdateTexturePack(PlayerPrefs.GetInt("TexturePack"));
+        if(instance == null) instance = this;
+        playerColors = new Color[typeOfPlanets];
+        if(dropdown == null) dropdown = GetComponent<Dropdown>();
+        instance.pack = PlayerPrefs.GetInt("TexturePack");
+        if(!implement) dropdown.value = PlayerPrefs.GetInt("TexturePack");
     }
 
-    public void SetTexturePack(int change) {
-        pack = change;
-        PlayerPrefs.SetInt("TexturePack", change);
+    public static void ForceUpdateTextures() {
+        if(instance == null) instance = GameObject.FindGameObjectWithTag("TEXTURESWITCHER").GetComponent<TextureSwitcher>();
+        instance.UpdateTexturePack(PlayerPrefs.GetInt("TexturePack"));
     }
 
     public void UpdateTexturePack(int change) {
         pack = change;
         if(planetsReference == null) planetsReference = GameObject.FindGameObjectWithTag("PLANETS").GetComponentsInChildren<PlanetGlow>();
         if(asteroidReference == null) asteroidReference = GameObject.FindGameObjectWithTag("ASTEROIDBELT");
+        if(sunReference == null) {
+            sun = GameObject.FindGameObjectWithTag("SUN").GetComponent<SunTextures>();
+            sunReference = sun.src;
+            sunGlowReference = sun.glow;
+        }
+        if(backgroundReference == null) backgroundReference = GameObject.FindGameObjectWithTag("BACKGROUND");
 
         var textPack = texturePacks[change];
-        for(int i = 0; i < planetsReference.Length; i++) planetsReference[i].SetTexture(textPack.planets[i % typeOfPlanets]);
-        if(textPack.blackHole.glow != null) {
-            sunGlowReference.sprite = textPack.blackHole.glow;
-            sunGlowReference.enabled = true;
-        } else sunGlowReference.enabled = false;
+        if(planetsReference != null) for(int i = 0; i < planetsReference.Length; i++) planetsReference[i].SetTexture(textPack.planets[i % typeOfPlanets]);
+        sunGlowReference.sprite = textPack.blackHole.glow;
         sunReference.sprite = textPack.blackHole.src;
-        sunReference.SetNativeSize();
-        sunGlowReference.SetNativeSize();   
 
-        var asts = asteroidReference.GetComponentsInChildren<Asteroid>();
-        foreach(var i in asts) i.SetTexture(textPack);
+        var bgs = backgroundReference.GetComponent<Background>();
+        bgs.SetTexture(textPack);
+
+        sun.UpdateSize();
+
+        if(asteroidReference != null) {
+            var asts = asteroidReference.GetComponentsInChildren<Asteroid>();
+            foreach(var i in asts) i.SetTexture(textPack);
+        }
+
+        if(playerColors == null) playerColors = new Color[typeOfPlanets];
+        for(int i = 0; i < GetCurrentTexturePack().planets.Length; i++) playerColors[i] = GetCurrentTexturePack().planets[i].tint;
 
         PlayerPrefs.SetInt("TexturePack", change);
     }

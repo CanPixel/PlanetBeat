@@ -24,12 +24,13 @@ public class GameManager : MonoBehaviourPunCallbacks {
    [SerializeField] private List<PlayerPlanets> planetsAvailable = new List<PlayerPlanets>(); 
 
    public static void ClaimPlanet(PlayerShip ship) {
-      if(PhotonNetwork.IsMasterClient) instance.ClaimFreePlanet(ship);
+      if(instance == null) instance = GameObject.FindGameObjectWithTag("GAMEMANAGER").GetComponent<GameManager>();
+      if(ship.photonView != null && ship.photonView.IsMine) instance.ClaimFreePlanet(ship); //////////////////////
    }
 
    private void ClaimFreePlanet(PlayerShip player) {
-      if(player.GetHomePlanet() != null) return;
-      int playerVal = Mathf.Clamp(player.playerNumber / 1000, 0, int.MaxValue);
+      if(player.GetHomePlanet() != null || player.photonView == null) return;
+      int playerVal = TextureSwitcher.GetPlayerTintIndex(player.photonView.ViewID);
       if(playerVal > planetsAvailable.Count) {
          Debug.LogError("Can't claim planet || SPACE IS FULL");
          return;
@@ -56,22 +57,29 @@ public class GameManager : MonoBehaviourPunCallbacks {
    public override void OnEnable() {
       if(instance == null) instance = this;
       base.OnEnable();
+
+      TextureSwitcher.ForceUpdateTextures();
       
       if(!isSinglePlayer) {
          DestroyImmediate(singlePlayer);
          if(PlayerPrefs.GetInt("Spectate") != 0) AddPlayer(PlayerShip.PLAYERNAME);
       }
+      AssignPlayerIdentity(1001);
+   }
 
-      if(PhotonNetwork.IsMasterClient) {
-         int masterClientID = 1001;
-         var col = PhotonNetwork.GetPhotonView(masterClientID).GetComponent<PlayerShip>().playerColor;
-         photonView.RPC("AssignMasterPlanet", RpcTarget.AllBuffered, masterClientID, col.r, col.g, col.b);
-      }
+   public static void AssignPlayerIdentity(int ID) {
+      var photon = PhotonNetwork.GetPhotonView(ID);
+      if(photon == null) return;
+      var pl = photon.GetComponent<PlayerShip>();
+      if(pl == null) return;
+      pl.playerColor = TextureSwitcher.GetPlayerTint(ID);
+      var col = pl.playerColor;
+      if(instance != null) instance.photonView.RPC("AssignMasterPlanet", RpcTarget.AllViaServer, ID, col.r, col.g, col.b);
    }
 
    [PunRPC]
    public void AssignMasterPlanet(int playerNum, float r, float g, float b) {
-      PhotonNetwork.GetPhotonView(playerNum).GetComponent<PlayerShip>().SetColor(r, g, b);
+      PhotonNetwork.GetPhotonView(playerNum).GetComponent<PlayerShip>().ForceColor(r, g, b);
    }
 
    void Awake() {
@@ -90,7 +98,6 @@ public class GameManager : MonoBehaviourPunCallbacks {
          return objF;
       }
    }
-
    public static void DESTROY_SERVER_OBJECT(GameObject obj) {
       if(instance == null) return;
       if(instance.isSinglePlayer) Destroy(obj);
@@ -104,17 +111,19 @@ public class GameManager : MonoBehaviourPunCallbacks {
          Debug.LogError("No PlayerPrefab reference!");
          return;
       }
+      //Adds the local player (Client)
       if(PlayerShip.LocalPlayerInstance == null) {
+         TextureSwitcher.ForceUpdateTextures();
          var play = PLAYER_COUNT;
          if(play == 0) play = -1;
-         var player = PhotonNetwork.Instantiate(playerPrefab.name, new Vector3(40 * (play), 40 * (play), 0), Quaternion.identity, 0);
+         var player = PhotonNetwork.Instantiate(playerPrefab.name, new Vector3(40 * play, 40 * play, 0), Quaternion.identity, 0);
          player.transform.localScale = new Vector3(playerScale, playerScale, playerScale);
          PLAYER_COUNT++;
          var playerShip = player.GetComponent<PlayerShip>();
-         playerShip.playerColor = new Color(Random.Range(0f, 1f), Random.Range(0f, 1f), Random.Range(0f, 1f));
          var playerName = Instantiate(PlayerName, player.transform.position, Quaternion.identity);
          var pN = playerName.GetComponent<PlayerName>();
          pN.SetHost(player, name);
+         playerShip.playerName = pN;
       } 
    }
 
@@ -133,6 +142,14 @@ public class GameManager : MonoBehaviourPunCallbacks {
    }
 
    public void LeaveRoom() {
+      if(PlayerShip.LocalPlayerInstance != null) {
+         var play = PlayerShip.LocalPlayerInstance.GetComponent<PlayerShip>();
+         if(play != null) {
+            var planet = play.GetHomePlanet();
+            planetsAvailable.Add(planet.GetComponent<PlayerPlanets>());
+            play.ClearHomePlanet();
+         }
+      }
       playerLabels.Clear();
       PhotonNetwork.LeaveRoom();
       PhotonNetwork.Disconnect();

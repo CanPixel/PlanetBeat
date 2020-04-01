@@ -92,6 +92,7 @@ public class Launcher : MonoBehaviourPunCallbacks {
     }
 
     public void Connect() {
+        TextureSwitcher.Detach();
         PhotonNetwork.Disconnect();
 
         isConnecting = PhotonNetwork.ConnectUsingSettings();

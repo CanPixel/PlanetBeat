@@ -76,33 +76,33 @@ LineRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 1
   m_Positions:
-  - {x: 34.20201, y: 93.96926, z: 0}
-  - {x: 55.69648, y: 83.05361, z: 0}
-  - {x: 73.95407, y: 67.31119, z: 0}
-  - {x: 87.91372, y: 47.65687, z: 0}
-  - {x: 96.764145, y: 25.232924, z: 0}
-  - {x: 99.99099, y: 1.3425261, z: 0}
-  - {x: 97.40672, y: -22.625893, z: 0}
-  - {x: 89.16153, y: -45.279377, z: 0}
-  - {x: 75.73459, y: -65.3014, z: 0}
-  - {x: 57.906223, y: -81.528336, z: 0}
-  - {x: 36.712555, y: -93.01714, z: 0}
-  - {x: 13.385284, y: -99.10013, z: 0}
-  - {x: -10.719889, y: -99.42376, z: 0}
-  - {x: -34.20206, y: -93.969246, z: 0}
-  - {x: -55.69653, y: -83.05357, z: 0}
-  - {x: -73.95412, y: -67.311134, z: 0}
-  - {x: -87.91377, y: -47.65678, z: 0}
-  - {x: -96.76417, y: -25.23281, z: 0}
-  - {x: -99.99099, y: -1.3423982, z: 0}
-  - {x: -97.406685, y: 22.626028, z: 0}
-  - {x: -89.16146, y: 45.27951, z: 0}
-  - {x: -75.73448, y: 65.30151, z: 0}
-  - {x: -57.906097, y: 81.52843, z: 0}
-  - {x: -36.71241, y: 93.0172, z: 0}
-  - {x: -13.385134, y: 99.10014, z: 0}
-  - {x: 10.72004, y: 99.423744, z: 0}
-  - {x: 34.2022, y: 93.96919, z: 0}
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: -0, z: 0}
+  - {x: 0, y: -0, z: 0}
+  - {x: 0, y: -0, z: 0}
+  - {x: 0, y: -0, z: 0}
+  - {x: 0, y: -0, z: 0}
+  - {x: 0, y: -0, z: 0}
+  - {x: -0, y: -0, z: 0}
+  - {x: -0, y: -0, z: 0}
+  - {x: -0, y: -0, z: 0}
+  - {x: -0, y: -0, z: 0}
+  - {x: -0, y: -0, z: 0}
+  - {x: -0, y: -0, z: 0}
+  - {x: -0, y: -0, z: 0}
+  - {x: -0, y: 0, z: 0}
+  - {x: -0, y: 0, z: 0}
+  - {x: -0, y: 0, z: 0}
+  - {x: -0, y: 0, z: 0}
+  - {x: -0, y: 0, z: 0}
+  - {x: -0, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
   m_Parameters:
     serializedVersion: 3
     widthMultiplier: 1
@@ -172,7 +172,7 @@ EdgeCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-  m_EdgeRadius: 0.04255319
+  m_EdgeRadius: 0
   m_Points:
   - {x: 0, y: 20}
   - {x: 20, y: 0}
@@ -1238,7 +1238,7 @@ ParticleSystem:
         m_Curve:
         - serializedVersion: 3
           time: 0
-          value: 1
+          value: 0.8360653
           inSlope: -1
           outSlope: -1
           tangentMode: 0
@@ -1559,8 +1559,8 @@ ParticleSystem:
       maxColor: {r: 1, g: 1, b: 1, a: 1}
       maxGradient:
         serializedVersion: 2
-        key0: {r: 0.8, g: 0.18479605, b: 0.054901935, a: 1}
-        key1: {r: 0.7882353, g: 0.38992834, b: 0.07058822, a: 0}
+        key0: {r: 1, g: 1, b: 1, a: 1}
+        key1: {r: 1, g: 1, b: 1, a: 0}
         key2: {r: 0.9339623, g: 0.8687611, b: 0.118948035, a: 0}
         key3: {r: 0, g: 0, b: 0, a: 0}
         key4: {r: 0, g: 0, b: 0, a: 0}
@@ -1568,7 +1568,7 @@ ParticleSystem:
         key6: {r: 0, g: 0, b: 0, a: 0}
         key7: {r: 0, g: 0, b: 0, a: 0}
         ctime0: 0
-        ctime1: 11372
+        ctime1: 65535
         ctime2: 65535
         ctime3: 0
         ctime4: 0
@@ -1584,7 +1584,7 @@ ParticleSystem:
         atime6: 0
         atime7: 0
         m_Mode: 0
-        m_NumColorKeys: 3
+        m_NumColorKeys: 2
         m_NumAlphaKeys: 2
       minGradient:
         serializedVersion: 2
@@ -4984,7 +4984,7 @@ ParticleSystemRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 5
   m_RenderMode: 0
   m_SortMode: 0
   m_MinParticleSize: 0
@@ -5291,17 +5291,17 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1446986112751458341}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.9064, y: 1.9064, z: 1.9064}
   m_Children: []
   m_Father: {fileID: 3506364950220654662}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 1392, y: 2773.1675}
+  m_SizeDelta: {x: 2773.167, y: 1392}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1446986112751458337
 CanvasRenderer:
@@ -5331,7 +5331,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: 575c819abd873da49b1181b2793df8d8, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 8001bc3219f52364a872790a15725e1d, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -5515,8 +5515,6 @@ MonoBehaviour:
   hookMethod: 1
   colliders: []
   lockOnAim: {fileID: 8928089638351778678}
-  emit: {fileID: 21300000, guid: 575c819abd873da49b1181b2793df8d8, type: 3}
-  noEmit: {fileID: 21300000, guid: 9afb81dacc602c94087666bd60ba809b, type: 3}
   ship: {fileID: 1446986112751458336}
   playerNumber: 1
   playerColor: {r: 0.3773585, g: 0.119259514, b: 0.3137046, a: 1}
@@ -5532,6 +5530,7 @@ MonoBehaviour:
   stopDrag: 0.6
   trailingSpeed: 8
   throwingReduction: 0.55
+  playerName: {fileID: 0}
   trailingObjects: []
 --- !u!50 &1662954744308020766
 Rigidbody2D:
@@ -5885,6 +5884,6 @@ MonoBehaviour:
   line: {fileID: 4351742018777435146}
   selectColor: {r: 0.6745283, g: 0.86537886, b: 1, a: 1}
   segments: 26
-  expandSpeed: 4
+  expandSpeed: 6
   maxRadius: 400
-  minRadius: 100
+  minRadius: 0

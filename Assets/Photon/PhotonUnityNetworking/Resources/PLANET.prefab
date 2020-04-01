@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 533948573331642556}
   - component: {fileID: 533948573331642558}
   - component: {fileID: 533948573331642559}
+  - component: {fileID: 1927836806147721693}
   m_Layer: 5
   m_Name: ScoreText_1
   m_TagString: Untagged
@@ -58,8 +59,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0, b: 0.13477135, a: 1}
-  m_RaycastTarget: 1
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -74,11 +75,26 @@ MonoBehaviour:
     m_MaxSize: 100
     m_Alignment: 4
     m_AlignByGeometry: 0
-    m_RichText: 1
+    m_RichText: 0
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: w
+--- !u!114 &1927836806147721693
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 533948573331642557}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -900027084, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 1, g: 1, b: 1, a: 0.5}
+  m_EffectDistance: {x: 4, y: -4}
+  m_UseGraphicAlpha: 0
 --- !u!1 &533948574110823362
 GameObject:
   m_ObjectHideFlags: 0
@@ -147,8 +163,8 @@ TrailRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_Time: 3.77
+  m_SortingOrder: 10
+  m_Time: 1.25
   m_Parameters:
     serializedVersion: 3
     widthMultiplier: 1
@@ -157,7 +173,7 @@ TrailRenderer:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 0.16262817
+        value: 0.27659693
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -165,7 +181,7 @@ TrailRenderer:
         inWeight: 0.33333334
         outWeight: 0.33333334
       - serializedVersion: 3
-        time: 0.80000854
+        time: 0.41893554
         value: 0
         inSlope: 0.28585544
         outSlope: 0.28585544
@@ -178,35 +194,35 @@ TrailRenderer:
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 0.51446724, g: 0, b: 1, a: 0}
-      key1: {r: 0.8826448, g: 0.8254717, b: 1, a: 0.050440688}
-      key2: {r: 0.5176471, g: 0, b: 1, a: 0.75686276}
-      key3: {r: 0, g: 0, b: 0, a: 0}
+      key0: {r: 0.5568628, g: 0.5568628, b: 0.5568628, a: 0}
+      key1: {r: 0.5568628, g: 0.5568628, b: 0.5568628, a: 0.078431375}
+      key2: {r: 0.5568628, g: 0.5568628, b: 0.5568628, a: 0.85490197}
+      key3: {r: 0, g: 0, b: 0, a: 0.078431375}
       key4: {r: 0, g: 0, b: 0, a: 0}
       key5: {r: 0, g: 0, b: 0, a: 0}
       key6: {r: 0, g: 0, b: 0, a: 0}
       key7: {r: 0, g: 0, b: 0, a: 0}
-      ctime0: 24865
-      ctime1: 33153
-      ctime2: 41827
+      ctime0: 0
+      ctime1: 65535
+      ctime2: 65535
       ctime3: 0
       ctime4: 0
       ctime5: 0
       ctime6: 0
       ctime7: 0
       atime0: 0
-      atime1: 20624
-      atime2: 32960
-      atime3: 46067
+      atime1: 13107
+      atime2: 32768
+      atime3: 52428
       atime4: 65535
       atime5: 0
       atime6: 0
       atime7: 0
       m_Mode: 0
-      m_NumColorKeys: 3
+      m_NumColorKeys: 2
       m_NumAlphaKeys: 5
     numCornerVertices: 0
-    numCapVertices: 28
+    numCapVertices: 10
     alignment: 0
     textureMode: 0
     shadowBias: 0.5
@@ -239,7 +255,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 533948574299374632}
-  m_LocalRotation: {x: 0, y: 0, z: 0.056526467, w: -0.9984011}
+  m_LocalRotation: {x: 0, y: 0, z: 0.9972378, w: -0.074275024}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:

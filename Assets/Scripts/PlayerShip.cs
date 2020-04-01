@@ -26,10 +26,7 @@ public class PlayerShip : MonoBehaviourPunCallbacks {
 
     [Header("PLAYER VALUES")]
     public LockOnAim lockOnAim;
-    public Sprite emit;
-    public Sprite noEmit;
     public Image ship;
-    //Player Identity
     public int playerNumber;
     public Color playerColor;
     [Space(10)]
@@ -68,8 +65,10 @@ public class PlayerShip : MonoBehaviourPunCallbacks {
 
     private AudioSource exhaustSound;
 
-    private PlayerName playerName;
+    [HideInInspector] public PlayerName playerName;
     private PlayerPlanets planet;
+
+    private bool dropAsteroid = false;
 
     public GameObject GetHomePlanet() {
         return homePlanet;
@@ -78,6 +77,17 @@ public class PlayerShip : MonoBehaviourPunCallbacks {
     public void SetHomePlanet(GameObject planet) {
         homePlanet = planet;
         this.planet = homePlanet.GetComponent<PlayerPlanets>();
+        homePlanet.GetComponent<PlanetGlow>().SetTexture(TextureSwitcher.GetCurrentTexturePack().planets[TextureSwitcher.GetPlayerTintIndex(photonView.ViewID)]);
+    }
+
+    public void ClearHomePlanet() {
+        planet.ResetPlanet();
+        homePlanet = null;
+    }
+
+    public void SetTexture(TextureSwitcher.TexturePack pack) {
+        ship.sprite = pack.Ship[TextureSwitcher.GetPlayerTintIndex(photonView.ViewID)].src;
+        ship.SetNativeSize();
     }
 
     [PunRPC]
@@ -93,21 +103,29 @@ public class PlayerShip : MonoBehaviourPunCallbacks {
             exhaustSound = GetComponent<AudioSource>();
             transform.SetParent(GameObject.FindGameObjectWithTag("GAMEFIELD").transform, false);
 
-            if(!isSinglePlayer && photonView != null) playerNumber = photonView.ViewID;
-
+            if(!isSinglePlayer && photonView != null) {
+                playerNumber = photonView.ViewID;
+                playerColor = TextureSwitcher.GetPlayerTint(photonView.ViewID);
+                GameManager.AssignPlayerIdentity(photonView.ViewID);
+            }
             if(!isSinglePlayer && photonView != null && !photonView.IsMine) {
-                Random.InitState(photonView.ViewID);
-                playerColor = Color.HSVToRGB(Random.Range(0f, 1f), Random.Range(0f, 1f), Random.Range(0.6f, 1f));
                 exLastPos = transform.position;
                 var playerNameTag = Instantiate(Resources.Load("PlayerName"), transform.position, Quaternion.identity) as GameObject;
                 playerName = playerNameTag.GetComponent<PlayerName>();
                 if(playerName != null) {
-                    playerName.SetColor(playerColor);
                     if(photonView.Owner != null) playerName.SetHost(gameObject, photonView.Owner.NickName);
                 }
                 if(photonView.Owner != null) PLAYERNAME = photonView.Owner.NickName;
                 playerLabel = playerNameTag;
-                if(playerNameTag != null) GameManager.playerLabels.Add(PLAYERNAME, playerNameTag);
+                if(playerNameTag != null) {
+                    if(!GameManager.playerLabels.ContainsKey(PLAYERNAME)) GameManager.playerLabels.Add(PLAYERNAME, playerNameTag);
+                    else {
+                        string replacementName = PLAYERNAME + Random.Range(0, 1000);
+                        photonView.Owner.NickName = replacementName;
+                        playerName.Rename(replacementName);
+                        GameManager.playerLabels.Add(replacementName, playerNameTag);
+                    }
+                }
                 foreach(var i in networkIgnore) if(i != null) DestroyImmediate(i);
             }
             if(playerLabel != null) playerLabel.GetComponent<Text>().color = playerColor;
@@ -117,16 +135,15 @@ public class PlayerShip : MonoBehaviourPunCallbacks {
         }
     #endregion
 
-    public void SetPlayerNameColor(Color col) {
-        if(playerName == null) return;
-        playerName.SetColor(col);
-    }
-
-    public void SetColor(float r, float g, float b) {
+    public void ForceColor(float r, float g, float b) {
         var col = new Color(r, g, b);
-        SetPlayerNameColor(col);
         playerColor = col;
         if(planet != null) planet.AssignPlayer(this);
+        SetTexture(TextureSwitcher.GetCurrentTexturePack());
+        
+        //////////////////// PARTICLE COLORS
+        var settings = exhaust.main;
+        settings.startColor = new ParticleSystem.MinMaxGradient(col);
     }
 
     public void SetCollision(Collider2D asteroid, bool state) {
@@ -159,27 +176,30 @@ public class PlayerShip : MonoBehaviourPunCallbacks {
                 rb.rotation = turn;
             }
         }
-
-        if (Input.GetKeyDown(KeyCode.F) && trailingObjects.Count > 0) {
-            AudioManager.PLAY_SOUND("collect");
+        if(dropAsteroid) {
             var asteroid = trailingObjects[0];
             trailingObjects.RemoveAt(0);
             asteroid.rb.constraints = RigidbodyConstraints2D.None;
             asteroid.transform.TransformDirection(new Vector2(transform.forward.x * asteroid.transform.forward.x, transform.forward.y * asteroid.transform.forward.y));
             asteroid.rb.velocity = rb.velocity / throwingReduction; 
             asteroid.ReleaseAsteroid(true); 
+            dropAsteroid = false;
         }
     }
 
     void Update() {
         exhaustSound.volume = Mathf.Lerp(exhaustSound.volume, IsThrust() ? 0.05f : 0, Time.deltaTime * 10f);
 
+        if (Input.GetKeyDown(KeyCode.F) && trailingObjects.Count > 0) {
+            AudioManager.PLAY_SOUND("collect");
+            DropAsteroid();
+        }
+
         lockOnAim.selectColor = playerColor;
         //Particles emitten wanneer movement
         if(IsThisClient() || isSinglePlayer) {
             var emitting = exhaust.emission;
             emitting.enabled = IsThrust();
-            ship.sprite = IsThrust() ? emit : noEmit;
         } else {
             if(exLastTime > 0) exLastTime -= Time.deltaTime;
             else {
@@ -189,7 +209,6 @@ public class PlayerShip : MonoBehaviourPunCallbacks {
             var emitting = exhaust.emission;
             bool shouldEmit = Mathf.Abs(Vector3.Distance(exLastPos, transform.position)) > 0.025f;
             emitting.enabled = shouldEmit;
-            ship.sprite = shouldEmit ? emit : noEmit;
         }
 
         if (!isSinglePlayer) {
@@ -218,6 +237,10 @@ public class PlayerShip : MonoBehaviourPunCallbacks {
 
         //ignore this, this is for later
         // if(Health < 0) GameManager.instance.LeaveRoom();
+    }
+
+    private void DropAsteroid() {
+        dropAsteroid = true;
     }
 
     void ProcessInputs() {

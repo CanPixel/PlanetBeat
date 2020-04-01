@@ -7,24 +7,26 @@ Sound Design == Cartoony / Funny?
 Muzikaal spel? Lock on mechanism is een accent op de maat?
 
 
+- Styleswitch wordt altijd stijl B when playing
 
 
+- Lock-on bij space ingedrukt moet weer kleiner worden.
+- hook veranderen, player trails? asteroid trails? planet orbits?
 - Verander droppen naar 'E'
-- Fix press F twice to drop
+
 - Leaving player doesnt clear planet
-
-- Black outline scores
-- Kleuren zijn niet consistent ----> Masterclient klopt, maar de rest niet
-
+- Kleuren zijn niet genetworked.
 - Players joined text
 
-- Playerplanet assignment not synchronized properly
+- Planets should scale less intensely
+
+- Lock on and free aim kan samen?
+
+- Player join changes player planets
 
 
 
-- Styleswitch -----> styleswitch in main menu, not realtime ingame
 
-- Feedback button
 - HTML5 export?
 - asteroid belts
 

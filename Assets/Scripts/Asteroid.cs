@@ -118,6 +118,8 @@ public class Asteroid : MonoBehaviourPun {
         }
         glow.enabled = true;
         glow.sprite = elm.asteroid.glow;
+        src.SetNativeSize();
+        glow.SetNativeSize();
     }
 
     void OrbitAroundPlanet() {

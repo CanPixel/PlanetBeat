@@ -14,11 +14,14 @@ public class PlayerPlanets : MonoBehaviourPun {
     private Color orbitColor;
     public TrailRenderer orbitTrail; 
 
+    private Vector3 baseScale;
+
     public bool HasPlayer() {
         return player != null;
     }
 
     void Start() {
+        baseScale = transform.localScale;
         currentScore = minScore = 0;
         if(player == null) {
             scoreText.enabled = false;
@@ -31,12 +34,33 @@ public class PlayerPlanets : MonoBehaviourPun {
     }
 
     [PunRPC]
+    public void SendResetToServer(int playerNumber) {
+        Debug.LogError(playerNumber);
+        if(playerNumber == this.playerNumber) {
+            Debug.LogError("CLEAR " + playerNumber);
+            this.playerNumber = -1;
+            player = null;
+            currentScore = minScore;
+            GetComponent<UIFloat>().SetBaseScale(baseScale);
+        }
+    }
+
+    public void ResetPlanet() {
+        photonView.RPC("SendResetToServer", RpcTarget.All, playerNumber);
+        //playerNumber = -1;
+        player = null;
+        currentScore = minScore;
+        GetComponent<UIFloat>().SetBaseScale(baseScale);
+    }
+
+    [PunRPC]
     public void ClaimPlayer(int playerNumbe, float r, float g, float b) {
         playerNumber = playerNumbe;
-        player = PhotonNetwork.GetPhotonView(playerNumber).GetComponent<PlayerShip>();
+        var pl = PhotonNetwork.GetPhotonView(playerNumber);
+        if(pl != null) player = pl.GetComponent<PlayerShip>();
+        if(player == null) return;
         var col = new Color(r, g, b);
         player.playerColor = col;
-        player.SetPlayerNameColor(col);
         orbitColor = player.playerColor;
         scoreText.color = player.playerColor;
         scoreText.enabled = true;
@@ -73,7 +97,7 @@ public class PlayerPlanets : MonoBehaviourPun {
     public void AddingResource(float amount) {
         if (currentScore < maxScore) {
             currentScore += amount;
-            var newScale = transform.localScale + new Vector3(amount, amount, 0) / 50f;
+            var newScale = transform.localScale + new Vector3(amount, amount, 0) / 100f;
             GetComponent<UIFloat>().SetBaseScale(newScale);
             if(photonView != null) photonView.RPC("SetResource", RpcTarget.AllBufferedViaServer, currentScore + amount);
         }
