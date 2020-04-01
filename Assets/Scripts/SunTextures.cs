@@ -17,7 +17,7 @@ public class SunTextures : MonoBehaviour {
 			//Glow fluctuation black hole
         	if(glow.enabled) glow.color = new Color(1, 1, 1, Mathf.Sin(Time.time * 5f) * 0.9f + 0.2f);
 
-			transform.Rotate(0, 0, 10);
+			transform.Rotate(0, 0, -5);
 		}
 
 		public void UpdateSize() {
