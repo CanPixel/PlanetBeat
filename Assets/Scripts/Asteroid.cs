@@ -149,7 +149,9 @@ public class Asteroid : MonoBehaviourPun {
 
     public void ConsumeResource() {
         playerPlanets.AddingResource(value);
+        if(photonView != null && playerPlanets.photonView != null) photonView.TransferOwnership(playerPlanets.photonView.Controller.ActorNumber);
         GameManager.DESTROY_SERVER_OBJECT(gameObject);
+        canConsume = false;
     }
 
     public void ReleaseAsteroid(bool released) {

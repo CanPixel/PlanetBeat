@@ -6,7 +6,6 @@ using UnityEngine.UI;
 public class Sun : MonoBehaviour {
     [Header("REFERENCES")]
     public GameObject sun;
-    public Image sunGlow;
     private UIFloat sunFloatAnim;
     public Text roundCountdownText;
 
@@ -29,9 +28,6 @@ public class Sun : MonoBehaviour {
     }
 
     void Update() {
-        //Glow fluctuation black hole
-        if(sunGlow.enabled) sunGlow.color = new Color(1, 1, 1, Mathf.Sin(Time.time * 7f) * 0.8f + 0.2f);
-
         DoomsdayEvent();   
     }
 

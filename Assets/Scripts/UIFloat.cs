@@ -12,6 +12,8 @@ public class UIFloat : MonoBehaviour {
 	public float posAmp = 1, scaleAmp = 1;
 	public float rotFreq = 0, rotAmp = 1;
 
+	public Vector3 scaleOffset = new Vector3(0, 0, 0);
+
 	void Start () {
 		basePos = transform.localPosition;
 		baseScale = transform.localScale;
@@ -22,7 +24,7 @@ public class UIFloat : MonoBehaviour {
 		targetPos = basePos + posDir * Mathf.Sin(Time.time * posFreq) * posAmp;
 		targetScale = baseScale + scaleDir * Mathf.Cos(Time.time * scaleFreq) * scaleAmp;
 		transform.localPosition = Vector3.Lerp(transform.localPosition, targetPos, Time.deltaTime * translateSpeed);
-		transform.localScale = Vector3.Lerp(transform.localScale, targetScale, Time.deltaTime * scaleSpeed);
+		transform.localScale = Vector3.Lerp(transform.localScale, targetScale + scaleOffset, Time.deltaTime * scaleSpeed);
 
 		if(rotDir != Vector3.zero) {
 			targetRot = baseRot + rotDir * Mathf.Sin(Time.time * rotFreq) * rotAmp;

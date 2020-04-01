@@ -9,6 +9,8 @@ public class GameManager : MonoBehaviourPunCallbacks {
    public bool isSinglePlayer = false;
    public bool spectating = false;
 
+   public static Dictionary<string, GameObject> playerLabels = new Dictionary<string, GameObject>();
+
    public string feedbackURL = "";
 
    public static GameManager instance;
@@ -20,29 +22,36 @@ public class GameManager : MonoBehaviourPunCallbacks {
 
    private int PLAYER_COUNT = 0;
 
-   public static Dictionary<string, GameObject> playerLabels = new Dictionary<string, GameObject>();
-   [SerializeField] private List<PlayerPlanets> planetsAvailable = new List<PlayerPlanets>(); 
+   public static Dictionary<int, int> ActorToViewID = new Dictionary<int, int>();
+   private static List<PlayerPlanets> allPlanets = new List<PlayerPlanets>();
 
    public static void ClaimPlanet(PlayerShip ship) {
-      if(instance == null) instance = GameObject.FindGameObjectWithTag("GAMEMANAGER").GetComponent<GameManager>();
-      if(ship.photonView != null && ship.photonView.IsMine) instance.ClaimFreePlanet(ship); //////////////////////
+      if(ship.photonView != null && ship.photonView.IsMine) instance.ClaimFreePlanet(ship);
    }
 
+   //ONLY LOCAL PLAYERS
    private void ClaimFreePlanet(PlayerShip player) {
       if(player.GetHomePlanet() != null || player.photonView == null) return;
+
       int playerVal = TextureSwitcher.GetPlayerTintIndex(player.photonView.ViewID);
-      if(playerVal > planetsAvailable.Count) {
-         Debug.LogError("Can't claim planet || SPACE IS FULL");
-         return;
+      if(PhotonNetwork.IsMasterClient) ChoosePlanet(player);
+      else photonView.RPC("RequestPlanet", RpcTarget.MasterClient, playerVal, player.photonView.ViewID);
+   }
+
+   [PunRPC]
+   public void RequestPlanet(int playerVal, int viewID) {
+      var player = PhotonNetwork.GetPhotonView(viewID).GetComponent<PlayerShip>();
+      ChoosePlanet(player);
+   }
+
+   private void ChoosePlanet(PlayerShip player) {
+      for(int i = 0; i < allPlanets.Count; i++) {
+         var planet = allPlanets[i];
+         if(planet.HasPlayer()) continue;
+         player.SetHomePlanet(planet.gameObject);
+         planet.AssignPlayer(player);
+         break;
       }
-      var planet = planetsAvailable[playerVal];
-      if(planet.HasPlayer()) {
-         Debug.LogError("Can't claim planet || Planet already taken");
-         return;
-      }
-      player.SetHomePlanet(planet.gameObject);
-      planet.AssignPlayer(player);
-      Debug.Log("Player assigned to planet " + planet.name);
    }
 
    void OnValidate() {
@@ -59,6 +68,10 @@ public class GameManager : MonoBehaviourPunCallbacks {
       base.OnEnable();
 
       TextureSwitcher.ForceUpdateTextures();
+
+      allPlanets.Clear();
+      var plans = GameObject.FindGameObjectsWithTag("PLAYERPLANET");
+      foreach(var i in plans) allPlanets.Add(i.GetComponent<PlayerPlanets>());
       
       if(!isSinglePlayer) {
          DestroyImmediate(singlePlayer);
@@ -82,12 +95,6 @@ public class GameManager : MonoBehaviourPunCallbacks {
       PhotonNetwork.GetPhotonView(playerNum).GetComponent<PlayerShip>().ForceColor(r, g, b);
    }
 
-   void Awake() {
-      planetsAvailable.Clear();
-      var planetList = GameObject.FindGameObjectsWithTag("PLAYERPLANET");
-      foreach(var i in planetList) planetsAvailable.Add(i.GetComponent<PlayerPlanets>());
-   }
-
    public static GameObject SPAWN_SERVER_OBJECT(GameObject obj, Vector3 pos, Quaternion rot) {
       if(instance == null) return null;
       if(instance.isSinglePlayer) {
@@ -100,7 +107,7 @@ public class GameManager : MonoBehaviourPunCallbacks {
    }
    public static void DESTROY_SERVER_OBJECT(GameObject obj) {
       if(instance == null) return;
-      if(instance.isSinglePlayer) Destroy(obj);
+      if(instance.isSinglePlayer || !PhotonNetwork.IsMasterClient) Destroy(obj);
       else {
          if(PlayerShip.LocalPlayerInstance.GetPhotonView().IsMine) PhotonNetwork.Destroy(obj);
       }
@@ -117,6 +124,7 @@ public class GameManager : MonoBehaviourPunCallbacks {
          var play = PLAYER_COUNT;
          if(play == 0) play = -1;
          var player = PhotonNetwork.Instantiate(playerPrefab.name, new Vector3(40 * play, 40 * play, 0), Quaternion.identity, 0);
+         PlayerShip.LocalPlayerInstance = player;
          player.transform.localScale = new Vector3(playerScale, playerScale, playerScale);
          PLAYER_COUNT++;
          var playerShip = player.GetComponent<PlayerShip>();
@@ -127,14 +135,6 @@ public class GameManager : MonoBehaviourPunCallbacks {
       } 
    }
 
-   void LoadArena() {
-      if(!PhotonNetwork.IsMasterClient) {
-         Debug.LogError("Trying to load level but we are not the master Client!");
-         Debug.LogFormat("Loading Level : {0}", PhotonNetwork.CurrentRoom.PlayerCount);
-         PhotonNetwork.LoadLevel(Launcher.levelName);
-      }
-   }
-
    public override void OnLeftRoom() {
       PhotonNetwork.LeaveLobby();
       PhotonNetwork.Disconnect();
@@ -142,14 +142,6 @@ public class GameManager : MonoBehaviourPunCallbacks {
    }
 
    public void LeaveRoom() {
-      if(PlayerShip.LocalPlayerInstance != null) {
-         var play = PlayerShip.LocalPlayerInstance.GetComponent<PlayerShip>();
-         if(play != null) {
-            var planet = play.GetHomePlanet();
-            planetsAvailable.Add(planet.GetComponent<PlayerPlanets>());
-            play.ClearHomePlanet();
-         }
-      }
       playerLabels.Clear();
       PhotonNetwork.LeaveRoom();
       PhotonNetwork.Disconnect();
@@ -157,15 +149,34 @@ public class GameManager : MonoBehaviourPunCallbacks {
 
    public override void OnPlayerEnteredRoom(Player other) {
       base.OnPlayerEnteredRoom(other);
-      Debug.LogError(other.NickName + " JOINED");
+      //Debug.LogError(other.NickName + " JOINED");
    }
 
    public override void OnPlayerLeftRoom(Player other) {
-      PhotonNetwork.DestroyPlayerObjects(other); 
-      Debug.LogErrorFormat("{0} LEFT", other.NickName);
+      //Debug.LogErrorFormat("{0} LEFT", other.NickName);
+      int viewID = -1;
+      foreach(KeyValuePair<int, int> pair in ActorToViewID) if(pair.Key == other.ActorNumber) {
+         viewID = pair.Value;
+         break;
+      }
+
+      //Clear Player Name
       if(playerLabels.ContainsKey(other.NickName)) {
          DestroyImmediate(playerLabels[other.NickName]);
          playerLabels.Remove(other.NickName);
+      }
+
+      photonView.RPC("ClearPlanet", RpcTarget.All, viewID, other.ActorNumber);
+   }
+   [PunRPC]
+   public void ClearPlanet(int viewID, int ActorNumber) {
+      foreach(var i in allPlanets) {
+         if(i.playerNumber == viewID) {
+            i.ResetPlanet(viewID);
+            allPlanets.Remove(i);
+            if(ActorToViewID.ContainsKey(ActorNumber)) ActorToViewID.Remove(ActorNumber);
+            break;
+         }
       }
    }
 

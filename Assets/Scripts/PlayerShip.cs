@@ -12,7 +12,7 @@ public class PlayerShip : MonoBehaviourPunCallbacks {
     public HookShot hookShot;
     public ParticleSystem exhaust;
 
-    private GameObject homePlanet;
+    public GameObject homePlanet;
     [HideInInspector] public GameObject playerLabel;
 
     [System.Serializable]
@@ -77,12 +77,13 @@ public class PlayerShip : MonoBehaviourPunCallbacks {
     public void SetHomePlanet(GameObject planet) {
         homePlanet = planet;
         this.planet = homePlanet.GetComponent<PlayerPlanets>();
-        homePlanet.GetComponent<PlanetGlow>().SetTexture(TextureSwitcher.GetCurrentTexturePack().planets[TextureSwitcher.GetPlayerTintIndex(photonView.ViewID)]);
     }
 
+    [PunRPC]
     public void ClearHomePlanet() {
-        planet.ResetPlanet();
+        if(planet != null && photonView != null) planet.ResetPlanet(photonView.ViewID);
         homePlanet = null;
+        planet = null;
     }
 
     public void SetTexture(TextureSwitcher.TexturePack pack) {
@@ -107,6 +108,8 @@ public class PlayerShip : MonoBehaviourPunCallbacks {
                 playerNumber = photonView.ViewID;
                 playerColor = TextureSwitcher.GetPlayerTint(photonView.ViewID);
                 GameManager.AssignPlayerIdentity(photonView.ViewID);
+                if(!GameManager.ActorToViewID.ContainsKey(photonView.Owner.ActorNumber)) GameManager.ActorToViewID.Add(photonView.Owner.ActorNumber, photonView.ViewID);
+                else GameManager.ActorToViewID[photonView.Owner.ActorNumber] = photonView.ViewID;
             }
             if(!isSinglePlayer && photonView != null && !photonView.IsMine) {
                 exLastPos = transform.position;
@@ -131,6 +134,7 @@ public class PlayerShip : MonoBehaviourPunCallbacks {
             if(playerLabel != null) playerLabel.GetComponent<Text>().color = playerColor;
             if(PhotonNetwork.IsMasterClient && photonView != null && !isSinglePlayer) photonView.RPC("SetAim", RpcTarget.All, PlayerPrefs.GetInt("AIM_MODE"));
             lockOnAim.gameObject.SetActive(hookMethod == HookMethod.LockOn);
+            
             GameManager.ClaimPlanet(this);
         }
     #endregion
@@ -140,8 +144,6 @@ public class PlayerShip : MonoBehaviourPunCallbacks {
         playerColor = col;
         if(planet != null) planet.AssignPlayer(this);
         SetTexture(TextureSwitcher.GetCurrentTexturePack());
-        
-        //////////////////// PARTICLE COLORS
         var settings = exhaust.main;
         settings.startColor = new ParticleSystem.MinMaxGradient(col);
     }
@@ -162,10 +164,6 @@ public class PlayerShip : MonoBehaviourPunCallbacks {
         var cont = GameObject.FindGameObjectWithTag("CUSTOM CONTROLLER");
         if(cont != null) customController = cont.GetComponent<CustomController>();
         if(customController != null && customController.useCustomControls) hookShot.customController = customController;
-    }
-
-    void Awake() {
-        if(IsThisClient()) PlayerShip.LocalPlayerInstance = this.gameObject;       
     }
 
     void FixedUpdate() {
@@ -247,11 +245,11 @@ public class PlayerShip : MonoBehaviourPunCallbacks {
         //naar voren en naar achteren (W & S)
         if(IsThrust()) {
             velocity = Mathf.Lerp(velocity, maxVelocity, Time.deltaTime * acceleration);
-            rb.drag = defaultDrag;
+            if(rb != null) rb.drag = defaultDrag;
         }
         else {
             velocity = Mathf.Lerp(velocity, 0, Time.deltaTime * acceleration * 2f);
-            rb.drag = stopDrag;
+            if(rb != null) rb.drag = stopDrag;
         }
 
         //Spreekt voor zich

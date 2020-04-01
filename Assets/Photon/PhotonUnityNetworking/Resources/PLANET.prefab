@@ -255,7 +255,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 533948574299374632}
-  m_LocalRotation: {x: 0, y: 0, z: 0.6123488, w: 0.7905877}
+  m_LocalRotation: {x: 0, y: 0, z: 0.1436575, w: 0.9896275}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -504,20 +504,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa27af3838c8ac340b14c0099c027c78, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerNumber: 0
-  currentScore: 0
+  playerNumber: 1001
+  currentScore: 100
   maxScore: 100
   minScore: 0
   scoreText: {fileID: 533948573331642559}
   orbitTrail: {fileID: 533948574110823364}
   orbit: {fileID: 533948574299374632}
-  maxScale: 4
+  wiggleSpeed: 0
+  wiggleRange: 500
+  maxScale: 5
   orbitScaleReduction:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
-      time: -0
-      value: 2.0005813
+      time: 0
+      value: 1.9953437
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -525,8 +527,8 @@ MonoBehaviour:
       inWeight: 0.33333334
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 1
-      value: 1.5000076
+      time: 0.9976551
+      value: 3.8901649
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -550,6 +552,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   glow: {fileID: 533948574772729647}
   src: {fileID: 533948574658882019}
+  randomGen: 0
 --- !u!114 &533948574818394580
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -574,6 +577,7 @@ MonoBehaviour:
   scaleAmp: 1
   rotFreq: 2
   rotAmp: 15
+  scaleOffset: {x: 0, y: 0, z: 0}
 --- !u!58 &533948574818394576
 CircleCollider2D:
   m_ObjectHideFlags: 0

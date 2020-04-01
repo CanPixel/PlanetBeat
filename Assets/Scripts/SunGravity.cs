@@ -35,7 +35,10 @@ public class SunGravity : MonoBehaviour {
             if(destroyingObjects[i].lifetime > 1) {
                 destroyingObjects.RemoveAt(i);
                 if(obj != null) {
-                    if(PlayerShip.LocalPlayerInstance != null && !GameManager.instance.isSinglePlayer && PlayerShip.LocalPlayerInstance.GetPhotonView() != null && PlayerShip.LocalPlayerInstance.GetPhotonView().IsMine) GameManager.DESTROY_SERVER_OBJECT(obj); 
+                    if(PlayerShip.LocalPlayerInstance != null && !GameManager.instance.isSinglePlayer && PlayerShip.LocalPlayerInstance.GetPhotonView() != null && PlayerShip.LocalPlayerInstance.GetPhotonView().IsMine) {
+                        obj.GetPhotonView().TransferOwnership(0);
+                        GameManager.DESTROY_SERVER_OBJECT(obj); 
+                    }
                     else Destroy(obj);
                 }
             }

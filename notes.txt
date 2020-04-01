@@ -6,26 +6,14 @@
 Sound Design == Cartoony / Funny? 
 Muzikaal spel? Lock on mechanism is een accent op de maat?
 
-- Asteroids should be slower
-
 - Alleen de scoretransition naar '100' zag Bart
 
 - 2 blauwe spelers
 
-- Verander droppen naar 'E'
 - hook veranderen, player trails? asteroid trails? planet orbits?
-
-- Leaving player doesnt clear planet
-- Kleuren zijn niet genetworked.
-
-- Planets should scale less intensely
 
 - Lock on and free aim kan samen?
 
-- Player join changes player planets
-
-
-- Players joined text
 - Lock-on bij space ingedrukt moet weer kleiner worden.
 
 

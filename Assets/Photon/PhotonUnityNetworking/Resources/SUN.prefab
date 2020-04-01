@@ -229,6 +229,7 @@ MonoBehaviour:
   scaleAmp: 0.1
   rotFreq: 1
   rotAmp: 15
+  scaleOffsetFrom1: 1
 --- !u!58 &1200147042300826640
 CircleCollider2D:
   m_ObjectHideFlags: 0

@@ -2,11 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Photon.Pun;
 
 public class PlanetGlow : MonoBehaviour {
     public Image glow, src;
     private float glowOffset;
     private PlayerPlanets playerPlanets;
+
+    public bool randomGen = false;
 
     void Start() {
         playerPlanets = GetComponent<PlayerPlanets>();
@@ -18,7 +21,7 @@ public class PlanetGlow : MonoBehaviour {
     }
 
     void OnEnable() {
-        SetTexture(TextureSwitcher.GetRandomPlanet());
+        if(randomGen || (GameManager.instance != null && GameManager.instance.isSinglePlayer) || PhotonNetwork.IsMasterClient) SetTexture(TextureSwitcher.GetRandomPlanet());
     }
 
     public void SetTexture(TextureSwitcher.TextureElement element) {

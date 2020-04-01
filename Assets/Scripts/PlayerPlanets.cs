@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Photon.Pun;
+using Photon.Realtime;
 
 public class PlayerPlanets : MonoBehaviourPun {
     private PlayerShip player;
-    public int playerNumber;
+    [HideInInspector] public int playerNumber = 0;
     [HideInInspector] public float currentScore;
     public float maxScore = 100f;
     [HideInInspector] public float minScore;
@@ -15,16 +16,35 @@ public class PlayerPlanets : MonoBehaviourPun {
     public TrailRenderer orbitTrail; 
     public GameObject orbit;
 
+    [HideInInspector] public float wiggleSpeed = 10, wiggleRange = 100f;
+
     public float maxScale = 4;
     private Vector3 baseScale;
     public AnimationCurve orbitScaleReduction;
 
+    private PlanetGlow planetGlow;
+
+    private Vector3 basePos;
+
+    private float wiggleOffset;
+
     public bool HasPlayer() {
-        return player != null;
+        return player != null && playerNumber > 0;
     }
 
     void OnValidate() {
         if(maxScale < 0) maxScale = 0;
+    }
+
+    public void OnEnable() {
+        wiggleOffset = Random.Range(0, 10000f);
+        basePos = transform.localPosition;
+        planetGlow = GetComponent<PlanetGlow>();
+        PhotonNetwork.AddCallbackTarget(this);
+    }
+
+    public void OnDisable() {
+        PhotonNetwork.RemoveCallbackTarget(this);
     }
 
     void Start() {
@@ -41,31 +61,21 @@ public class PlayerPlanets : MonoBehaviourPun {
     }
 
     [PunRPC]
-    public void SendResetToServer(int playerNumber) {
-  //      Debug.LogError(playerNumber);
-        if(playerNumber == this.playerNumber) {
-   //         Debug.LogError("CLEAR " + playerNumber);
-            this.playerNumber = -1;
-            player = null;
-            currentScore = minScore;
-            GetComponent<UIFloat>().SetBaseScale(baseScale);
-        }
-    }
-
-    public void ResetPlanet() {
-        photonView.RPC("SendResetToServer", RpcTarget.All, playerNumber);
-        //playerNumber = -1;
+    public void ResetPlanet(int playerNum) {
+        playerNumber = -1;
         player = null;
         currentScore = minScore;
+        scoreText.enabled = false;
         GetComponent<UIFloat>().SetBaseScale(baseScale);
     }
-
+    
     [PunRPC]
     public void ClaimPlayer(int playerNumbe, float r, float g, float b) {
         playerNumber = playerNumbe;
         var pl = PhotonNetwork.GetPhotonView(playerNumber);
         if(pl != null) player = pl.GetComponent<PlayerShip>();
         if(player == null) return;
+        planetGlow.SetTexture(TextureSwitcher.GetCurrentTexturePack().planets[TextureSwitcher.GetPlayerTintIndex(playerNumbe)]);
         var col = new Color(r, g, b);
         player.playerColor = col;
         orbitColor = player.playerColor;
@@ -76,6 +86,7 @@ public class PlayerPlanets : MonoBehaviourPun {
 
     public void AssignPlayer(PlayerShip player) {
         this.player = player;
+        this.player.homePlanet = gameObject;
         playerNumber = player.playerNumber;
         scoreText = GetComponentInChildren<Text>();
         photonView.RPC("ClaimPlayer", RpcTarget.AllBuffered, playerNumber, player.playerColor.r, player.playerColor.g, player.playerColor.b);
@@ -84,6 +95,9 @@ public class PlayerPlanets : MonoBehaviourPun {
 
     void Update() {
         orbit.transform.localScale = Vector3.Lerp(orbit.transform.localScale, transform.localScale / orbitScaleReduction.Evaluate(currentScore / maxScore), Time.deltaTime * 2f);
+        transform.localScale = Vector3.Lerp(transform.localScale, new Vector3(Mathf.Clamp(transform.localScale.x, 0, maxScale), Mathf.Clamp(transform.localScale.y, 0, maxScale), Mathf.Clamp(transform.localScale.z, 0, maxScale)), Time.deltaTime * 2f);
+
+        transform.localPosition = Vector3.Lerp(transform.localPosition, new Vector3(basePos.x + Mathf.Sin(Time.time * wiggleSpeed + wiggleOffset) * wiggleRange, basePos.y + Mathf.Sin(Time.time * wiggleSpeed + wiggleOffset) * wiggleRange, basePos.z), Time.deltaTime * 2f);
 
         if(scoreText != null) {
             scoreText.text = currentScore.ToString("F0");

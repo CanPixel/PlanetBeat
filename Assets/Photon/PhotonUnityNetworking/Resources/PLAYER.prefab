@@ -5511,6 +5511,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hookShot: {fileID: 1446986111338685776}
   exhaust: {fileID: 1446986110815659415}
+  homePlanet: {fileID: 0}
   playerLabel: {fileID: 0}
   hookMethod: 1
   colliders: []
@@ -5524,9 +5525,9 @@ MonoBehaviour:
   - {fileID: 1662954744308020737}
   maxVelocity: 3.3
   acceleration: 20000
-  turningSpeed: 6
+  turningSpeed: 7
   brakingSpeed: 2
-  defaultDrag: 0.3
+  defaultDrag: 0.2
   stopDrag: 0.6
   trailingSpeed: 8
   throwingReduction: 0.55
