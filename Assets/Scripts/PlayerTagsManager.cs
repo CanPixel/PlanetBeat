@@ -46,11 +46,12 @@ public class PlayerTagsManager : MonoBehaviour {
     public void RemoveTag() {
         if(tagPlayer != null) {
             tagPlayer.SetCollision(asteroidColl, true);
-            tagPlayer = null;
-            src.color = glow.color = defaultColor * 1.7f;
+            tagPlayer = null; 
+         
         }
         tagNum = 0;
         asteroidTrailRenderer.material.color = ogTrailColor;
+        src.color = glow.color = Color.white; 
     }
 
     public void TagOn(bool state) {
