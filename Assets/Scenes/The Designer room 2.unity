@@ -988,12 +988,12 @@ PrefabInstance:
     - target: {fileID: 533948574299374635, guid: b8417e5f21a68ab4c9359b2202160a33,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.8594917
+      value: 0.81654537
       objectReference: {fileID: 0}
     - target: {fileID: 533948574299374635, guid: b8417e5f21a68ab4c9359b2202160a33,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.51114964
+      value: -0.5772813
       objectReference: {fileID: 0}
     - target: {fileID: 533948574818394580, guid: b8417e5f21a68ab4c9359b2202160a33,
         type: 3}
@@ -1023,7 +1023,7 @@ PrefabInstance:
     - target: {fileID: 533948574818394577, guid: b8417e5f21a68ab4c9359b2202160a33,
         type: 3}
       propertyPath: maxScale
-      value: 5
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 533948574818394577, guid: b8417e5f21a68ab4c9359b2202160a33,
         type: 3}
@@ -1063,12 +1063,12 @@ PrefabInstance:
     - target: {fileID: 533948574818394577, guid: b8417e5f21a68ab4c9359b2202160a33,
         type: 3}
       propertyPath: orbitScaleReduction.m_Curve.Array.data[1].time
-      value: 0.9976551
+      value: 1.0000966
       objectReference: {fileID: 0}
     - target: {fileID: 533948574818394577, guid: b8417e5f21a68ab4c9359b2202160a33,
         type: 3}
       propertyPath: orbitScaleReduction.m_Curve.Array.data[1].value
-      value: 3.8901649
+      value: 5.574949
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b8417e5f21a68ab4c9359b2202160a33, type: 3}
@@ -2252,12 +2252,12 @@ PrefabInstance:
     - target: {fileID: 533948574299374635, guid: b8417e5f21a68ab4c9359b2202160a33,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.012923509
+      value: 0.90821296
       objectReference: {fileID: 0}
     - target: {fileID: 533948574299374635, guid: b8417e5f21a68ab4c9359b2202160a33,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: -0.9999165
+      value: 0.4185083
       objectReference: {fileID: 0}
     - target: {fileID: 533948574818394580, guid: b8417e5f21a68ab4c9359b2202160a33,
         type: 3}
@@ -2287,7 +2287,7 @@ PrefabInstance:
     - target: {fileID: 533948574818394577, guid: b8417e5f21a68ab4c9359b2202160a33,
         type: 3}
       propertyPath: maxScale
-      value: 5
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 533948574818394577, guid: b8417e5f21a68ab4c9359b2202160a33,
         type: 3}
@@ -2327,12 +2327,12 @@ PrefabInstance:
     - target: {fileID: 533948574818394577, guid: b8417e5f21a68ab4c9359b2202160a33,
         type: 3}
       propertyPath: orbitScaleReduction.m_Curve.Array.data[1].time
-      value: 0.9976551
+      value: 1.0000966
       objectReference: {fileID: 0}
     - target: {fileID: 533948574818394577, guid: b8417e5f21a68ab4c9359b2202160a33,
         type: 3}
       propertyPath: orbitScaleReduction.m_Curve.Array.data[1].value
-      value: 3.8901649
+      value: 5.574949
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b8417e5f21a68ab4c9359b2202160a33, type: 3}
@@ -3741,12 +3741,12 @@ PrefabInstance:
     - target: {fileID: 533948574299374635, guid: b8417e5f21a68ab4c9359b2202160a33,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.98696953
+      value: 0.25444135
       objectReference: {fileID: 0}
     - target: {fileID: 533948574299374635, guid: b8417e5f21a68ab4c9359b2202160a33,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: -0.16090713
+      value: -0.9670882
       objectReference: {fileID: 0}
     - target: {fileID: 533948574818394580, guid: b8417e5f21a68ab4c9359b2202160a33,
         type: 3}
@@ -3776,7 +3776,7 @@ PrefabInstance:
     - target: {fileID: 533948574818394577, guid: b8417e5f21a68ab4c9359b2202160a33,
         type: 3}
       propertyPath: maxScale
-      value: 5
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 533948574818394577, guid: b8417e5f21a68ab4c9359b2202160a33,
         type: 3}
@@ -3816,12 +3816,12 @@ PrefabInstance:
     - target: {fileID: 533948574818394577, guid: b8417e5f21a68ab4c9359b2202160a33,
         type: 3}
       propertyPath: orbitScaleReduction.m_Curve.Array.data[1].time
-      value: 0.9976551
+      value: 1.0000966
       objectReference: {fileID: 0}
     - target: {fileID: 533948574818394577, guid: b8417e5f21a68ab4c9359b2202160a33,
         type: 3}
       propertyPath: orbitScaleReduction.m_Curve.Array.data[1].value
-      value: 3.8901649
+      value: 5.574949
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b8417e5f21a68ab4c9359b2202160a33, type: 3}
@@ -10764,12 +10764,12 @@ PrefabInstance:
     - target: {fileID: 533948574299374635, guid: b8417e5f21a68ab4c9359b2202160a33,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.18635964
+      value: 0.82174176
       objectReference: {fileID: 0}
     - target: {fileID: 533948574299374635, guid: b8417e5f21a68ab4c9359b2202160a33,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: -0.9824816
+      value: 0.56986016
       objectReference: {fileID: 0}
     - target: {fileID: 533948574818394580, guid: b8417e5f21a68ab4c9359b2202160a33,
         type: 3}
@@ -10799,7 +10799,7 @@ PrefabInstance:
     - target: {fileID: 533948574818394577, guid: b8417e5f21a68ab4c9359b2202160a33,
         type: 3}
       propertyPath: maxScale
-      value: 5
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 533948574818394577, guid: b8417e5f21a68ab4c9359b2202160a33,
         type: 3}
@@ -10839,12 +10839,12 @@ PrefabInstance:
     - target: {fileID: 533948574818394577, guid: b8417e5f21a68ab4c9359b2202160a33,
         type: 3}
       propertyPath: orbitScaleReduction.m_Curve.Array.data[1].time
-      value: 0.9976551
+      value: 1.0000966
       objectReference: {fileID: 0}
     - target: {fileID: 533948574818394577, guid: b8417e5f21a68ab4c9359b2202160a33,
         type: 3}
       propertyPath: orbitScaleReduction.m_Curve.Array.data[1].value
-      value: 3.8901649
+      value: 5.574949
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b8417e5f21a68ab4c9359b2202160a33, type: 3}
