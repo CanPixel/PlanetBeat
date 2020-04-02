@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerTagsManager : MonoBehaviour { 
     [HideInInspector] public float tagNum;
@@ -15,21 +16,28 @@ public class PlayerTagsManager : MonoBehaviour {
 
     private PlayerShip tagPlayer;
 
+    private Image src, glow;
+
     void Start() {
         asteroidColl = GetComponent<Collider2D>();
         _asteroid = GetComponent<Asteroid>();
+        src = _asteroid.src;
+        glow = _asteroid.glow;
         asteroidTrailRenderer = GetComponent<TrailRenderer>();
         asteroidTrailRenderer.material.color = ogTrailColor; 
     }
 
     void Update() {
         StartTagTimer(); 
+
+       if (tagTimer >= tagDuration / 2f && tagPlayer != null) tagPlayer.SetCollision(asteroidColl, true);
     }
 
     public void GiveTag() {
         tagNum = _asteroid.ownerPlayer.playerNumber;
         asteroidTrailRenderer.material.color = _asteroid.ownerPlayer.playerColor;
         TagOn(false);
+        src.color = glow.color = _asteroid.ownerPlayer.playerColor * 1.7f;
     }
 
     public void RemoveTag() {

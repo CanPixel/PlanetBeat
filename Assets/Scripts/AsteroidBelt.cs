@@ -5,21 +5,19 @@ using Photon.Pun;
 using Photon.Realtime;
 
 public class AsteroidBelt : MonoBehaviour {
-    public int numObjects = 10;
-    public int minAsteroidAmount = 4;
+    public int asteroidAmount = 4;
 
     private GameObject[] AsteroidsList;
-
     public GameObject prefab;
 
     void Start() {
-        for (int i = 0; i < numObjects; i++) SpawnAsteroid();
+        for (int i = 0; i < asteroidAmount; i++) SpawnAsteroid();
     }
 
     void Update() {
         AsteroidsList = GameObject.FindGameObjectsWithTag("Resource");
 
-        if (AsteroidsList.Length < minAsteroidAmount) SpawnAsteroid();
+        if (AsteroidsList.Length < asteroidAmount) SpawnAsteroid();
     }
 
     protected void SpawnAsteroid() {

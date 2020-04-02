@@ -14,7 +14,7 @@ public class HookShot : MonoBehaviour {
     private int hengelData;
 
     [Header("PHYSICS")]
-    [Range(20, 200)]
+    [Range(20, 400)]
     public float hookShotSpeed = 50;
     [Range(1, 10)]
     public float hookShotRange = 5;

@@ -165,7 +165,6 @@ GameObject:
   - component: {fileID: 5282346903112945025}
   - component: {fileID: 6939874188628489544}
   - component: {fileID: 6494571473289735761}
-  - component: {fileID: 2493745614136735668}
   - component: {fileID: -3807910649384768265}
   m_Layer: 8
   m_Name: 'ASTEROID '
@@ -355,7 +354,7 @@ MonoBehaviour:
   timeToScore: 0.3
   grabDelay: 0.5
   thrust: 20
-  defaultRbDrag: 0.008
+  defaultRbDrag: 0.2
   inPlayerOrbitRbDrag: 0.6
   maxInOrbitTime: 5
   outOrbitForce: 40
@@ -444,26 +443,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 419.67, y: 460.9}
   m_EdgeRadius: 0
---- !u!114 &2493745614136735668
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8069275902880659580}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5867a53c8db0e6745818285bb6b6e1b9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  WindowRect:
-    serializedVersion: 2
-    x: 0
-    y: 100
-    width: 120
-    height: 100
-  WindowId: 101
-  Visible: 1
 --- !u!114 &-3807910649384768265
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8630045887298796807}
   - component: {fileID: 8630045887298796824}
   m_Layer: 0
-  m_Name: ASTEROID BELT
+  m_Name: AST BELT
   m_TagString: ASTEROIDBELT
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -43,6 +43,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a631b72e9910f8f43b74291b7158f63b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  numObjects: 5
-  minAsteroidAmount: 4
+  asteroidAmount: 2
   prefab: {fileID: 8069275902880659580, guid: d0585bb223369e6458f8c3db972d5bc8, type: 3}

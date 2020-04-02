@@ -1,6 +1,6 @@
 - Alleen de scoretransition naar '100' zag Bart
 
-- hook veranderen, player trails? asteroid trails? planet orbits?
+- Asteroid tag should have color
 
 - Lock on and free aim kan samen?
 
@@ -9,9 +9,12 @@
 
 
 
-- Can't pickup tagged asteroids
--- TAG DURATION & COLLISION
+- Spawnpoints
 
+
+
+
+- hook veranderen, player trails? asteroid trails? planet orbits?
 
 
 

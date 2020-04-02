@@ -111,7 +111,7 @@ public class PlayerPlanets : MonoBehaviourPun {
         if(scoreText != null) {
             scoreText.transform.rotation = Quaternion.identity;
             scoreText.transform.localScale = Vector2.Lerp(scoreText.transform.localScale, scoreBaseScale, Time.deltaTime * 1f);
-            textOutline.effectDistance = Vector2.Lerp(textOutline.effectDistance, outlineBase, Time.deltaTime * 0.5f);
+            textOutline.effectDistance = Vector2.Lerp(textOutline.effectDistance, outlineBase, Time.deltaTime * 0.7f);
 
             scoreText.text = currentScore.ToString("F0");
             if(player != null) {

@@ -233,7 +233,7 @@ public class PlayerShip : MonoBehaviourPunCallbacks {
         //Trailing object positions & (stiekem) een kleinere scaling, anders waren ze wel fk bulky
         for (int i = 0; i < trailingObjects.Count; i++)
             if(trailingObjects[i].held) {
-                trailingObjects[i].transform.localScale = Vector3.Lerp(trailingObjects[i].transform.localScale, Vector3.one * 0.06f, Time.deltaTime * 2f);
+                trailingObjects[i].transform.localScale = Vector3.Lerp(trailingObjects[i].transform.localScale, Vector3.one * 0.08f, Time.deltaTime * 2f);
                 trailingObjects[i].transform.position = Vector3.Lerp(trailingObjects[i].transform.position, (transform.position - (transform.up * (i + 1) * 0.5f)), Time.deltaTime * trailingSpeed);
             }
 

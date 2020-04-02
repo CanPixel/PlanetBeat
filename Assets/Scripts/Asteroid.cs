@@ -166,13 +166,10 @@ public class Asteroid : MonoBehaviourPun {
             held = true;
             playerTagsManager.runTagTimer = false;
         }
-        //owner
     }
 
     public void FetchAsteroid(PlayerShip own) {
-        //if(owner != null) owner.RemoveAsteroid(gameObject);
         held = true;
-      //  owner = own;
     }
 
     public void ReleasedTimer() {//Gives a small time window in which the player can instantly score
