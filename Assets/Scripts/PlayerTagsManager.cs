@@ -9,7 +9,9 @@ public class PlayerTagsManager : MonoBehaviour {
     public float tagDuration;
     [HideInInspector] public bool runTagTimer = false ; 
     private TrailRenderer asteroidTrailRenderer;
-    public Color ogTrailColor; 
+    public Color ogTrailColor;
+
+    Color defaultColor; 
 
     private Asteroid _asteroid; 
     private Collider2D asteroidColl;
@@ -24,7 +26,8 @@ public class PlayerTagsManager : MonoBehaviour {
         src = _asteroid.src;
         glow = _asteroid.glow;
         asteroidTrailRenderer = GetComponent<TrailRenderer>();
-        asteroidTrailRenderer.material.color = ogTrailColor; 
+        asteroidTrailRenderer.material.color = ogTrailColor;
+        defaultColor = Color.white;
     }
 
     void Update() {
@@ -44,6 +47,7 @@ public class PlayerTagsManager : MonoBehaviour {
         if(tagPlayer != null) {
             tagPlayer.SetCollision(asteroidColl, true);
             tagPlayer = null;
+            src.color = glow.color = defaultColor * 1.7f;
         }
         tagNum = 0;
         asteroidTrailRenderer.material.color = ogTrailColor;
@@ -68,6 +72,7 @@ public class PlayerTagsManager : MonoBehaviour {
     }
 
     public void OnCollisionEnter2D(Collision2D col) {
+        /*
         if (col.gameObject.tag == "PLAYERSHIP") {
             var _playerShip = col.gameObject.GetComponent<PlayerShip>();
 
@@ -75,6 +80,6 @@ public class PlayerTagsManager : MonoBehaviour {
                 _playerShip.SetCollision(asteroidColl, false);
                 tagPlayer = _playerShip;
             } 
-        }
+        }*/
     }
 }
