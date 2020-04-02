@@ -10,7 +10,7 @@ public class HookShot : MonoBehaviour {
 
     public Collider2D[] playerColliders;
 
-    [HideInInspector] public CustomController customController;
+//    [HideInInspector] public CustomController customController;
     private int hengelData;
 
     [Header("PHYSICS")]
@@ -42,7 +42,7 @@ public class HookShot : MonoBehaviour {
         rope.transform.localScale = new Vector3(hookScale, hookScale, hookScale);
 
         //Spelen op custom controls
-        if (customController != null) {
+    /*     if (customController != null) {
             var newData = customController.GetData();
             if (hengelData < newData) ReelOut(newData);
             else if (hengelData > newData) ReelIn(newData);
@@ -51,22 +51,19 @@ public class HookShot : MonoBehaviour {
                 if(rope.sizeDelta.y + hookShotSpeed < hookShotRange * 1000f && !didntCatch) {
                     if(!hitObject) rope.sizeDelta = new Vector2(rope.sizeDelta.x, rope.sizeDelta.y + hookShotSpeed);
                     else if(rope.sizeDelta.y > 0) rope.sizeDelta = new Vector2(rope.sizeDelta.x, rope.sizeDelta.y - hookShotSpeed);
-                    //else ResetHook();
                 }
 
                 if(didntCatch) {
-                    //if(rope.sizeDelta.y > 0) rope.sizeDelta = new Vector2(rope.sizeDelta.x, rope.sizeDelta.y - hookShotSpeed);
-                    //else ResetHook();
                 }
             }
         }
-        else { //Oude input systeem
+        else { */ //Oude input systeem
            switch(hostPlayer.hookMethod) {
                default:
                case PlayerShip.HookMethod.FreeAim: FreeAim(); break;
                case PlayerShip.HookMethod.LockOn: LockOn(); break;
            }
-        }
+  //      }
 
         if(shootTimer > 0) shootTimer += Time.deltaTime;
         if(shootTimer > 1) didntCatch = true;
@@ -132,7 +129,7 @@ public class HookShot : MonoBehaviour {
     #endregion
 
     #region CUSTOM_INTERACTION_CONTROLLER
-        protected void ReelIn(int newData) {
+      /*   protected void ReelIn(int newData) {
             hengelData = newData;
         }
 
@@ -143,7 +140,7 @@ public class HookShot : MonoBehaviour {
                 else if (hostPlayer.isSinglePlayer) CastHook();
             }
             hengelData = newData;
-        }
+        } */
     #endregion
 
     public void CastHook() {

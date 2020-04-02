@@ -1,5 +1,4 @@
 - Lock on and free aim kan samen?
-
 - Lock-on bij space ingedrukt moet weer kleiner worden.
 
 
@@ -8,27 +7,21 @@
 - Spawnpoints v players bij planeten
 - 3 2 1 start --> wanneer alle 4 in server zijn
 - Player [NAAM] Wins! --> KING OF THE UNIVERSE + playercolor
+- Kick all players button
+
+
+
+
+
+
+
 
 
 
 
 - hook veranderen, player trails? asteroid trails? planet orbits?
 
-
-
-
-
-
-
-
-
 - Time hoe snel mensen winnen
-
-
-
-
-
-- HTML5 export?
 
 - asteroid belts
 

@@ -74,7 +74,7 @@ public class PlayerPlanets : MonoBehaviourPun {
         playerNumber = -1;
         player = null;
         currentScore = minScore;
-        scoreText.enabled = false;
+        if(scoreText != null) scoreText.enabled = false;
         GetComponent<UIFloat>().SetBaseScale(baseScale);
     }
     
@@ -138,7 +138,7 @@ public class PlayerPlanets : MonoBehaviourPun {
             var newScale = transform.localScale + new Vector3(amount, amount, 0) / 150f;
             newScale = new Vector3(Mathf.Clamp(newScale.x, 0, maxScale), Mathf.Clamp(newScale.y, 0, maxScale), Mathf.Clamp(newScale.z, 0, maxScale));
 
-            textOutline.effectDistance *= 4f;
+            textOutline.effectDistance *= 2.5f;
             scoreText.transform.localScale *= 1.2f;
 
             GetComponent<UIFloat>().SetBaseScale(newScale);

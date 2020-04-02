@@ -30,7 +30,7 @@ public class PlayerShip : MonoBehaviourPunCallbacks {
     public int playerNumber;
     public Color playerColor;
     [Space(10)]
-    private CustomController customController;
+//    private CustomController customController;
     public Component[] networkIgnore;
 
     #region MOVEMENT
@@ -77,6 +77,7 @@ public class PlayerShip : MonoBehaviourPunCallbacks {
     public void SetHomePlanet(GameObject planet) {
         homePlanet = planet;
         this.planet = homePlanet.GetComponent<PlayerPlanets>();
+        transform.position = homePlanet.transform.position;
     }
 
     [PunRPC]
@@ -134,7 +135,6 @@ public class PlayerShip : MonoBehaviourPunCallbacks {
             if(playerLabel != null) playerLabel.GetComponent<Text>().color = playerColor;
             if(PhotonNetwork.IsMasterClient && photonView != null && !isSinglePlayer) photonView.RPC("SetAim", RpcTarget.All, PlayerPrefs.GetInt("AIM_MODE"));
             lockOnAim.gameObject.SetActive(hookMethod == HookMethod.LockOn);
-            
             GameManager.ClaimPlanet(this);
         }
     #endregion
@@ -161,9 +161,9 @@ public class PlayerShip : MonoBehaviourPunCallbacks {
 
     void Start() {
         rb = GetComponent<Rigidbody2D>();
-        var cont = GameObject.FindGameObjectWithTag("CUSTOM CONTROLLER");
-        if(cont != null) customController = cont.GetComponent<CustomController>();
-        if(customController != null && customController.useCustomControls) hookShot.customController = customController;
+  //      var cont = GameObject.FindGameObjectWithTag("CUSTOM CONTROLLER");
+    //    if(cont != null) customController = cont.GetComponent<CustomController>();
+      //  if(customController != null && customController.useCustomControls) hookShot.customController = customController;
     }
 
     void FixedUpdate() {
@@ -275,12 +275,28 @@ public class PlayerShip : MonoBehaviourPunCallbacks {
     public void AddAsteroid(GameObject obj) {
         obj.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
         var script = obj.GetComponent<Asteroid>();
+        photonView.RPC("SetAsteroidColors", RpcTarget.All, playerColor.r, playerColor.g, playerColor.b, script.photonView.ViewID);
         if(script != null) trailingObjects.Add(script);
     }
+
+    /* 
+    [PunRPC]
+    public void SetAsteroidColors(float r, float g, float b, int viewID) {
+        foreach(var i in trailingObjects) if(i.photonView.ViewID == viewID) i.SetColor(r, g, b);
+    } */
+
+    [PunRPC]
+    public void ResetAsteroidColors(int viewID) {
+        foreach(var i in trailingObjects) if(i.photonView.ViewID == viewID) {
+            i.SetColor(1, 1, 1);
+            break;
+        }
+    } 
 
     public void RemoveAsteroid(GameObject obj) {
         for(int i = 0; i < trailingObjects.Count; i++) {
             if(trailingObjects[i] == obj) {
+                photonView.RPC("ResetAsteroidColors", RpcTarget.All, trailingObjects[i].photonView.ViewID);
                 trailingObjects.RemoveAt(i);
                 return;
             }

@@ -32,7 +32,7 @@ public class Launcher : MonoBehaviourPunCallbacks {
     void Awake() {
         levelName = LEVELNAME;
         playButton.interactable = false;
-        playText.text = "Connecting...";
+        playText.text = "CONNECTING...";
         PhotonNetwork.AutomaticallySyncScene = true;
         if(controlPanel != null) controlPanel.SetActive(true);
 
@@ -111,7 +111,7 @@ public class Launcher : MonoBehaviourPunCallbacks {
     #region MonoBehaviourPunCallbacks Callbacks
 
     public override void OnConnectedToMaster() {
-        playText.text = "Play";
+        playText.text = "PLAY";
         playButton.interactable = true;
 
         if(isConnecting) {

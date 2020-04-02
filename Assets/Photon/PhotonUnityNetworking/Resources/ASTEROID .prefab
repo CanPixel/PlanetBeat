@@ -414,7 +414,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tagNum: 0
   tagTimer: 0
-  tagDuration: 5
+  tagDuration: 3
   runTagTimer: 0
   ogTrailColor: {r: 0.8584906, g: 0.8584906, b: 0.8584906, a: 1}
 --- !u!61 &6494571473289735761

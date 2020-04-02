@@ -72,6 +72,10 @@ public class Asteroid : MonoBehaviourPun {
         return ownerID == player.photonView.ViewID;
     }
 
+    public void SetColor(float r, float g, float b) {
+        src.color = glow.color = new Color(r, g, b);
+    }
+
     public void Capture(HookShot hookShot) {
         if((!held || (held && hookShot.hostPlayer.photonView != null && ownerID != hookShot.hostPlayer.photonView.ViewID)) && hookShot.canHold()) {
             scaleBack = false;
@@ -87,6 +91,14 @@ public class Asteroid : MonoBehaviourPun {
 
     [PunRPC]
     public void SetAsteroidOwner(int ownerID) {
+        if(rb != null) {
+            if(ownerID > 0) rb.simulated = false;
+            else rb.simulated = true;
+        }
+        Color col = Color.white;
+        var owner = PhotonNetwork.GetPhotonView(ownerID);
+        if(owner != null) col = owner.GetComponent<PlayerShip>().playerColor;
+        SetColor(col.r, col.g, col.b);
         this.ownerID = ownerID; 
     }
 
@@ -162,6 +174,7 @@ public class Asteroid : MonoBehaviourPun {
             canScore = true;
             scaleBack = true;
             ReleasedTimer();
+             if(photonView != null && ownerPlayer.photonView != null) photonView.RPC("SetAsteroidOwner", RpcTarget.All, 0);
         } else {
             held = true;
             playerTagsManager.runTagTimer = false;

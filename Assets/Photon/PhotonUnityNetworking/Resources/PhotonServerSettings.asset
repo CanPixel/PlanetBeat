@@ -47,5 +47,9 @@ MonoBehaviour:
   - SendRessetToServer
   - ClearPlanet
   - RequestPlanet
+  - SetAsteroidColor
+  - SetAsteroidColors
+  - SetAssteroidOwner
+  - ResetAsteroidColors
   DisableAutoOpenWizard: 1
   ShowSettings: 1
