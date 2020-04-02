@@ -11,8 +11,6 @@ public class GameManager : MonoBehaviourPunCallbacks {
 
    public static Dictionary<string, GameObject> playerLabels = new Dictionary<string, GameObject>();
 
-   public string feedbackURL = "";
-
    public static GameManager instance;
    [Space(10)]
    public GameObject singlePlayer;
@@ -178,9 +176,5 @@ public class GameManager : MonoBehaviourPunCallbacks {
             break;
          }
       }
-   }
-
-   public void AccessFeedback() {
-      Application.OpenURL(feedbackURL);
    }
 }

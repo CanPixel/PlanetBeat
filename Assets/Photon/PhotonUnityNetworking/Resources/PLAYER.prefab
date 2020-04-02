@@ -5885,6 +5885,6 @@ MonoBehaviour:
   line: {fileID: 4351742018777435146}
   selectColor: {r: 0.6745283, g: 0.86537886, b: 1, a: 1}
   segments: 26
-  expandSpeed: 6
-  maxRadius: 400
+  expandSpeed: 7
+  maxRadius: 500
   minRadius: 0

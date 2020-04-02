@@ -1,14 +1,4 @@
-- Failed to network-remove GameObject. Client is neither owner nor MasterClient taking over for owner who left: View 2 on ASTEROID
-
-
-
-- Wat voor muziek feel zoeken we? 
-Sound Design == Cartoony / Funny? 
-Muzikaal spel? Lock on mechanism is een accent op de maat?
-
 - Alleen de scoretransition naar '100' zag Bart
-
-- 2 blauwe spelers
 
 - hook veranderen, player trails? asteroid trails? planet orbits?
 
@@ -19,10 +9,24 @@ Muzikaal spel? Lock on mechanism is een accent op de maat?
 
 
 
-- Asteroids still consume after 100
+- Can't pickup tagged asteroids
+-- TAG DURATION & COLLISION
+
+
+
+
 
 
 - HTML5 export?
+
 - asteroid belts
 
 SEMI-PROBLEEM: SERIAL PORTS MOETEN ALTIJD HANDMATIG GESELECTEERD WORDEN
+
+- Failed to network-remove GameObject. Client is neither owner nor MasterClient taking over for owner who left: View 2 on ASTEROID
+
+
+
+- Wat voor muziek feel zoeken we? 
+Sound Design == Cartoony / Funny? 
+Muzikaal spel? Lock on mechanism is een accent op de maat?

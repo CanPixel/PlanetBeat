@@ -93,7 +93,7 @@ public class Asteroid : MonoBehaviourPun {
     void OnTriggerStay2D(Collider2D col) {
         if (col.gameObject.tag == "PLAYERPLANET" && col.gameObject != null) {
             playerPlanets = col.gameObject.GetComponent<PlayerPlanets>();
-            if(playerTagsManager.tagNum == playerPlanets.playerNumber) {
+            if(playerTagsManager.tagNum == playerPlanets.playerNumber && playerPlanets.HasPlayer() && !playerPlanets.HasReachedMax()) {
                 if(canConsume) ConsumeResource();
             }
         }

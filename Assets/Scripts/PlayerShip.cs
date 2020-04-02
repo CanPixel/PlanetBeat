@@ -185,10 +185,14 @@ public class PlayerShip : MonoBehaviourPunCallbacks {
         }
     }
 
+    public bool ReleaseAsteroidKey() {
+        return Input.GetKeyDown(KeyCode.F) | Input.GetKeyDown(KeyCode.E) | Input.GetKeyDown(KeyCode.R) | Input.GetKeyDown(KeyCode.C);
+    }
+
     void Update() {
         exhaustSound.volume = Mathf.Lerp(exhaustSound.volume, IsThrust() ? 0.05f : 0, Time.deltaTime * 10f);
 
-        if (Input.GetKeyDown(KeyCode.F) && trailingObjects.Count > 0) {
+        if (ReleaseAsteroidKey() && trailingObjects.Count > 0) {
             AudioManager.PLAY_SOUND("collect");
             DropAsteroid();
         }

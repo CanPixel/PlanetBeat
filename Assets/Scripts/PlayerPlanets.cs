@@ -23,10 +23,12 @@ public class PlayerPlanets : MonoBehaviourPun {
     public AnimationCurve orbitScaleReduction;
 
     private PlanetGlow planetGlow;
-
     private Vector3 basePos;
-
     private float wiggleOffset;
+    
+    private Outline textOutline;
+    private Vector2 outlineBase;
+    private Vector2 scoreBaseScale;
 
     public bool HasPlayer() {
         return player != null && playerNumber > 0;
@@ -48,12 +50,19 @@ public class PlayerPlanets : MonoBehaviourPun {
     }
 
     void Start() {
+        scoreBaseScale = scoreText.transform.localScale;
+        textOutline = scoreText.GetComponent<Outline>();
+        outlineBase = textOutline.effectDistance;
         baseScale = transform.localScale;
         currentScore = minScore = 0;
         if(player == null) {
             scoreText.enabled = false;
             return;
         }
+    }
+
+    public bool HasReachedMax() {
+        return currentScore >= maxScore;
     }
 
     public void SetColor(Color col) {
@@ -100,11 +109,15 @@ public class PlayerPlanets : MonoBehaviourPun {
         transform.localPosition = Vector3.Lerp(transform.localPosition, new Vector3(basePos.x + Mathf.Sin(Time.time * wiggleSpeed + wiggleOffset) * wiggleRange, basePos.y + Mathf.Sin(Time.time * wiggleSpeed + wiggleOffset) * wiggleRange, basePos.z), Time.deltaTime * 2f);
 
         if(scoreText != null) {
+            scoreText.transform.rotation = Quaternion.identity;
+            scoreText.transform.localScale = Vector2.Lerp(scoreText.transform.localScale, scoreBaseScale, Time.deltaTime * 1f);
+            textOutline.effectDistance = Vector2.Lerp(textOutline.effectDistance, outlineBase, Time.deltaTime * 0.5f);
+
             scoreText.text = currentScore.ToString("F0");
             if(player != null) {
                 orbitColor = player.playerColor;
                 scoreText.color = orbitColor;
-                orbitTrail.material.color = orbitColor; 
+                orbitTrail.material.color = orbitColor * 1.5f; 
             }
         }
     }
@@ -118,10 +131,15 @@ public class PlayerPlanets : MonoBehaviourPun {
     }
 
     public void AddingResource(float amount) {
+        if(playerNumber <= 0) return;
         if (currentScore < maxScore) {
+            AudioManager.PLAY_SOUND("Musicalhit", 1.5f);
             currentScore += amount;
             var newScale = transform.localScale + new Vector3(amount, amount, 0) / 150f;
             newScale = new Vector3(Mathf.Clamp(newScale.x, 0, maxScale), Mathf.Clamp(newScale.y, 0, maxScale), Mathf.Clamp(newScale.z, 0, maxScale));
+
+            textOutline.effectDistance *= 4f;
+            scoreText.transform.localScale *= 1.2f;
 
             GetComponent<UIFloat>().SetBaseScale(newScale);
             if(photonView != null) photonView.RPC("SetResource", RpcTarget.AllBufferedViaServer, currentScore + amount);
