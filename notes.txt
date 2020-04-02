@@ -1,7 +1,3 @@
-- Alleen de scoretransition naar '100' zag Bart
-
-- Asteroid tag should have color
-
 - Lock on and free aim kan samen?
 
 - Lock-on bij space ingedrukt moet weer kleiner worden.
@@ -9,12 +5,24 @@
 
 
 
-- Spawnpoints
+- Spawnpoints v players bij planeten
+- 3 2 1 start --> wanneer alle 4 in server zijn
+- Player [NAAM] Wins! --> KING OF THE UNIVERSE + playercolor
 
 
 
 
 - hook veranderen, player trails? asteroid trails? planet orbits?
+
+
+
+
+
+
+
+
+
+- Time hoe snel mensen winnen
 
 
 
