@@ -91,6 +91,11 @@ public class Launcher : MonoBehaviourPunCallbacks {
         Application.Quit();
     }
 
+    public void KickAll() {
+        //Photon.Realtime.Player players = Photon.Realtime.
+        //foreach(var i in PhotonNetwork.PlayerList) i
+    }
+
     public void Connect() {
         TextureSwitcher.Detach();
         PhotonNetwork.Disconnect();

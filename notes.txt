@@ -3,10 +3,6 @@
 
 
 
-
-- Spawnpoints v players bij planeten
-- 3 2 1 start --> wanneer alle 4 in server zijn
-- Player [NAAM] Wins! --> KING OF THE UNIVERSE + playercolor
 - Kick all players button
 
 

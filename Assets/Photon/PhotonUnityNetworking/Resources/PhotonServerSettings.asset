@@ -51,5 +51,8 @@ MonoBehaviour:
   - SetAsteroidColors
   - SetAssteroidOwner
   - ResetAsteroidColors
+  - PositionToPlanet
+  - EnableCountdown
+  - SynchWin
   DisableAutoOpenWizard: 1
   ShowSettings: 1

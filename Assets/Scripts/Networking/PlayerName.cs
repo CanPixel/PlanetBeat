@@ -32,4 +32,8 @@ public class PlayerName : MonoBehaviour {
     public void SetColor(Color col) {
         text.color = col;
     }
+
+    public string GetName() {
+        return text.text;
+    }
 }

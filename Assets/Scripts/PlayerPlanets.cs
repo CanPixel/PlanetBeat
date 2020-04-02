@@ -7,8 +7,8 @@ using Photon.Realtime;
 
 public class PlayerPlanets : MonoBehaviourPun {
     private PlayerShip player;
-    [HideInInspector] public int playerNumber = 0;
-    [HideInInspector] public float currentScore;
+    public int playerNumber = 0;
+    public float currentScore;
     public float maxScore = 100f;
     [HideInInspector] public float minScore;
     public Text scoreText;
@@ -91,6 +91,7 @@ public class PlayerPlanets : MonoBehaviourPun {
         scoreText.color = player.playerColor;
         scoreText.enabled = true;
         orbitTrail.material.color = orbitColor; 
+        player.SetHomePlanet(gameObject);
     }
 
     public void AssignPlayer(PlayerShip player) {
@@ -131,7 +132,7 @@ public class PlayerPlanets : MonoBehaviourPun {
     }
 
     public void AddingResource(float amount) {
-        if(playerNumber <= 0) return;
+        if(playerNumber <= 0 || GameManager.GAME_WON) return;
         if (currentScore < maxScore) {
             AudioManager.PLAY_SOUND("Musicalhit", 1.5f);
             currentScore += amount;
@@ -143,9 +144,24 @@ public class PlayerPlanets : MonoBehaviourPun {
 
             GetComponent<UIFloat>().SetBaseScale(newScale);
             if(photonView != null) photonView.RPC("SetResource", RpcTarget.AllBufferedViaServer, currentScore + amount);
+        }  
+        if(currentScore >= maxScore) {
+            WinGame();
+            SynchWin(player.photonView.ViewID);
         }
         if (currentScore <= minScore) currentScore = minScore;
 
         AudioManager.PLAY_SOUND("collect", 1, 1.2f);
+    }
+
+    protected void WinGame() {
+        GameManager.GAME_WON = true;
+        photonView.RPC("SynchWin", RpcTarget.AllViaServer, player.photonView.ViewID);
+    }
+
+    [PunRPC]
+    public void SynchWin(int viewID) {
+        GameManager.GAME_WON = true;
+        GameManager.WinState(viewID);
     }
 }

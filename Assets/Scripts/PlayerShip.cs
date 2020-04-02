@@ -77,7 +77,6 @@ public class PlayerShip : MonoBehaviourPunCallbacks {
     public void SetHomePlanet(GameObject planet) {
         homePlanet = planet;
         this.planet = homePlanet.GetComponent<PlayerPlanets>();
-        transform.position = homePlanet.transform.position;
     }
 
     [PunRPC]
@@ -139,10 +138,17 @@ public class PlayerShip : MonoBehaviourPunCallbacks {
         }
     #endregion
 
+    public void PositionToPlanet() {
+        if(homePlanet != null) transform.position = photonView.transform.position = homePlanet.transform.position;
+        if(planet != null) transform.position = photonView.transform.position = planet.transform.position;
+    }
+
     public void ForceColor(float r, float g, float b) {
         var col = new Color(r, g, b);
         playerColor = col;
-        if(planet != null) planet.AssignPlayer(this);
+        if(planet != null) {
+            planet.AssignPlayer(this);
+        }
         SetTexture(TextureSwitcher.GetCurrentTexturePack());
         var settings = exhaust.main;
         settings.startColor = new ParticleSystem.MinMaxGradient(col);
@@ -190,6 +196,8 @@ public class PlayerShip : MonoBehaviourPunCallbacks {
     }
 
     void Update() {
+        if(!GameManager.GAME_STARTED) PositionToPlanet();
+
         exhaustSound.volume = Mathf.Lerp(exhaustSound.volume, IsThrust() ? 0.05f : 0, Time.deltaTime * 10f);
 
         if (ReleaseAsteroidKey() && trailingObjects.Count > 0) {
@@ -275,7 +283,7 @@ public class PlayerShip : MonoBehaviourPunCallbacks {
     public void AddAsteroid(GameObject obj) {
         obj.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
         var script = obj.GetComponent<Asteroid>();
-        photonView.RPC("SetAsteroidColors", RpcTarget.All, playerColor.r, playerColor.g, playerColor.b, script.photonView.ViewID);
+        //photonView.RPC("SetAsteroidColors", RpcTarget.All, playerColor.r, playerColor.g, playerColor.b, script.photonView.ViewID);
         if(script != null) trailingObjects.Add(script);
     }
 
