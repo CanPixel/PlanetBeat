@@ -18,6 +18,10 @@ Muzikaal spel? Lock on mechanism is een accent op de maat?
 
 
 
+
+- Asteroids still consume after 100
+
+
 - HTML5 export?
 - asteroid belts
 
