@@ -15,7 +15,9 @@ public class GameManager : MonoBehaviourPunCallbacks {
    private bool turnValue;
 
    public Text countdown;
+   [Header("Start Game")]
    public bool skipCountdown = false;
+   public int playerCount = 4;
 
    public static Dictionary<string, GameObject> playerLabels = new Dictionary<string, GameObject>();
 
@@ -23,8 +25,6 @@ public class GameManager : MonoBehaviourPunCallbacks {
    private bool startCountdown = false;
    private float countdownTimer, startupDelayTimer;
    private int count = 3;
-
-   public int playerCount = 4;
 
    public static GameManager instance;
    [Space(10)]
@@ -94,9 +94,8 @@ public class GameManager : MonoBehaviourPunCallbacks {
          }
       }
 
-      if(startupDelayTimer > 0.6f && skipCountdown) {
-         GAME_STARTED = true;
-      } else startupDelayTimer += Time.deltaTime;
+      if(startupDelayTimer > 0.6f && skipCountdown) GAME_STARTED = true;
+      else startupDelayTimer += Time.deltaTime;
    }
 
    [PunRPC]

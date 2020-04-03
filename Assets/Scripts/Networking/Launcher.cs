@@ -5,7 +5,7 @@ using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine.UI;
 
-public class Launcher : MonoBehaviourPunCallbacks {
+public class Launcher : MonoBehaviourPunCallbacks, IInRoomCallbacks, IMatchmakingCallbacks {
     [Header("REFERENCES")]
     [SerializeField] private GameObject controlPanel;
     public Sprite freeAim, lockOn, looker, player;
@@ -13,15 +13,13 @@ public class Launcher : MonoBehaviourPunCallbacks {
     public Button playButton;
 
     public Slider SpectSlider, AimSlider;
-    public Text particiText, lockonText, playText, playersOnline, playersInSpace;
+    public Text particiText, lockonText, playText, playersOnline, playersInSpace, countOfRooms, title;
     public Image reticleIcon, spectateHandle, aimSliderBackground;
 
     private int amountPlayers;
 
     string gameVersion = "1";
     public string roomName = "PLANETSPACE";
-
-    //bool isConnecting;
 
     [Space(15)]
     public string LEVELNAME = "Space";
@@ -32,7 +30,20 @@ public class Launcher : MonoBehaviourPunCallbacks {
 
     private bool connectNow = false;
 
+    private float beginZoom;
+
+    public override void OnEnable() {
+        PhotonNetwork.AddCallbackTarget(this);
+        base.OnEnable();
+    }
+
+    public override void OnDisable() {
+        PhotonNetwork.RemoveCallbackTarget(this);
+        base.OnDisable();
+    }
+
     void Awake() {
+        beginZoom = Camera.main.orthographicSize;
         levelName = LEVELNAME;
         playButton.interactable = false;
         playText.text = "CONNECTING...";
@@ -53,6 +64,9 @@ public class Launcher : MonoBehaviourPunCallbacks {
         playersOnline.text = PhotonNetwork.CountOfPlayers + " player" + ((PhotonNetwork.CountOfPlayers == 1) ? "" : "s") + " online";
         playersInSpace.text = PhotonNetwork.CountOfPlayersInRooms + " player" + ((PhotonNetwork.CountOfPlayersInRooms == 1) ? "" : "s") + " in space";
         amountPlayers = PhotonNetwork.CountOfPlayers;
+        countOfRooms.text = PhotonNetwork.CountOfRooms + " rooms active";
+
+        if(connectNow) Camera.main.orthographicSize = Mathf.Lerp(Camera.main.orthographicSize, beginZoom - 1.5f, Time.deltaTime * 1f);
 
         var activePlay = PhotonNetwork.CountOfPlayersInRooms <= 0;
         AimSlider.interactable = activePlay;
@@ -106,6 +120,8 @@ public class Launcher : MonoBehaviourPunCallbacks {
         if(controlPanel != null) controlPanel.SetActive(false);
         playersInSpace.gameObject.SetActive(false);
         playersOnline.gameObject.SetActive(false);
+        countOfRooms.gameObject.SetActive(false);
+        title.gameObject.SetActive(false);
 
         PhotonNetwork.GameVersion = gameVersion;
         
@@ -119,8 +135,12 @@ public class Launcher : MonoBehaviourPunCallbacks {
     public override void OnConnectedToMaster() {
         playText.text = "PLAY";
         playButton.interactable = true;
-
         PhotonNetwork.JoinRoom(roomName);
+    }
+
+    public override void OnRoomListUpdate(List<RoomInfo> roomList) {
+        foreach(var i in roomList) Debug.LogError(i.Name);
+        base.OnRoomListUpdate(roomList);
     }
 
     public override void OnCreateRoomFailed(short returnCode, string message) {
@@ -130,14 +150,17 @@ public class Launcher : MonoBehaviourPunCallbacks {
 
     public override void OnDisconnected(DisconnectCause cause) {
         if(controlPanel != null) controlPanel.SetActive(true);
+        base.OnDisconnected(cause);
     }
 
     public override void OnJoinRoomFailed(short returnCode, string message) {
+        base.OnJoinRoomFailed(returnCode, message);
         PhotonNetwork.CreateRoom(roomName, new RoomOptions(){MaxPlayers = maxPlayers});
     }
 
     public override void OnJoinedRoom() {
         if(!connectNow) return;
+        base.OnJoinedRoom();
         Debug.LogError("Client joined room " + roomName);
         PhotonNetwork.LoadLevel(levelName);
     }
