@@ -64,7 +64,7 @@ public class Launcher : MonoBehaviourPunCallbacks, IInRoomCallbacks, IMatchmakin
         playersOnline.text = PhotonNetwork.CountOfPlayers + " player" + ((PhotonNetwork.CountOfPlayers == 1) ? "" : "s") + " online";
         playersInSpace.text = PhotonNetwork.CountOfPlayersInRooms + " player" + ((PhotonNetwork.CountOfPlayersInRooms == 1) ? "" : "s") + " in space";
         amountPlayers = PhotonNetwork.CountOfPlayers;
-        countOfRooms.text = PhotonNetwork.CountOfRooms + " rooms active";
+        countOfRooms.text = PhotonNetwork.CountOfRooms + " room" + ((PhotonNetwork.CountOfRooms == 1) ? "" : "s") + " active";
 
         if(connectNow) Camera.main.orthographicSize = Mathf.Lerp(Camera.main.orthographicSize, beginZoom - 1.5f, Time.deltaTime * 1f);
 
