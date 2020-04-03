@@ -79,7 +79,7 @@ public class TextureSwitcher : MonoBehaviour {
 
     public static void ForceUpdateTextures() {
         if(instance == null) instance = GameObject.FindGameObjectWithTag("TEXTURESWITCHER").GetComponent<TextureSwitcher>();
-        instance.UpdateTexturePack(PlayerPrefs.GetInt("TexturePack"));
+        if(instance != null) instance.UpdateTexturePack(PlayerPrefs.GetInt("TexturePack"));
     }
 
     public void UpdateTexturePack(int change) {

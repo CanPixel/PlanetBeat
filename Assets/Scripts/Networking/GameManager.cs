@@ -213,11 +213,11 @@ public class GameManager : MonoBehaviourPunCallbacks {
 
    public override void OnPlayerEnteredRoom(Player other) {
       base.OnPlayerEnteredRoom(other);
-      //Debug.LogError(other.NickName + " JOINED");
+      Debug.LogError(other.NickName + " JOINED");
    }
 
    public override void OnPlayerLeftRoom(Player other) {
-      //Debug.LogErrorFormat("{0} LEFT", other.NickName);
+      Debug.LogErrorFormat("{0} LEFT", other.NickName);
       int viewID = -1;
       foreach(KeyValuePair<int, int> pair in ActorToViewID) if(pair.Key == other.ActorNumber) {
          viewID = pair.Value;

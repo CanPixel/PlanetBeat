@@ -19,8 +19,9 @@ public class Launcher : MonoBehaviourPunCallbacks {
     private int amountPlayers;
 
     string gameVersion = "1";
+    public string roomName = "PLANETSPACE";
 
-    bool isConnecting;
+    //bool isConnecting;
 
     [Space(15)]
     public string LEVELNAME = "Space";
@@ -28,6 +29,8 @@ public class Launcher : MonoBehaviourPunCallbacks {
 
     [Range(1, 20)]
     [SerializeField] private byte maxPlayers = 5;
+
+    private bool connectNow = false;
 
     void Awake() {
         levelName = LEVELNAME;
@@ -100,17 +103,15 @@ public class Launcher : MonoBehaviourPunCallbacks {
         TextureSwitcher.Detach();
         PhotonNetwork.Disconnect();
 
-        isConnecting = PhotonNetwork.ConnectUsingSettings();
-
         if(controlPanel != null) controlPanel.SetActive(false);
         playersInSpace.gameObject.SetActive(false);
         playersOnline.gameObject.SetActive(false);
+
+        PhotonNetwork.GameVersion = gameVersion;
         
-        if(!PhotonNetwork.IsConnected) PhotonNetwork.JoinRandomRoom();
-        else {
-            PhotonNetwork.ConnectUsingSettings();
-            PhotonNetwork.GameVersion = gameVersion;
-        }
+        if(!PhotonNetwork.IsConnected) PhotonNetwork.JoinRoom(roomName);
+        else PhotonNetwork.ConnectUsingSettings();
+        connectNow = true;
     }
 
     #region MonoBehaviourPunCallbacks Callbacks
@@ -119,23 +120,25 @@ public class Launcher : MonoBehaviourPunCallbacks {
         playText.text = "PLAY";
         playButton.interactable = true;
 
-        if(isConnecting) {
-            PhotonNetwork.JoinRandomRoom();
-            isConnecting = false;
-        }
+        PhotonNetwork.JoinRoom(roomName);
+    }
+
+    public override void OnCreateRoomFailed(short returnCode, string message) {
+        Debug.LogError("Create Room Failed: " + message);
+        base.OnCreateRoomFailed(returnCode, message);
     }
 
     public override void OnDisconnected(DisconnectCause cause) {
         if(controlPanel != null) controlPanel.SetActive(true);
     }
 
-    public override void OnJoinRandomFailed(short returnCode, string message) {
-        Debug.Log("JoinRandomFailed(): No random room available, so we create one.");
-        PhotonNetwork.CreateRoom(null, new RoomOptions(){MaxPlayers = maxPlayers});
+    public override void OnJoinRoomFailed(short returnCode, string message) {
+        PhotonNetwork.CreateRoom(roomName, new RoomOptions(){MaxPlayers = maxPlayers});
     }
 
     public override void OnJoinedRoom() {
-        Debug.Log("OnJoinedRoom(): Now this client is in a room.");
+        if(!connectNow) return;
+        Debug.LogError("Client joined room " + roomName);
         PhotonNetwork.LoadLevel(levelName);
     }
 

@@ -32,27 +32,17 @@ MonoBehaviour:
   - AssignMasterPlanet
   - CastHook
   - ClaimPlayer
+  - ClearHomePlanet
+  - ClearPlanet
   - ClickRpc
   - DestroyRpc
+  - EnableCountdown
+  - RequestPlanet
+  - ResetAsteroidColors
   - ResetPlanet
-  - SendResetToServer
   - SetAim
   - SetAsteroidOwner
   - SetResource
-  - SetResource
-  - SetResource
-  - ClearHomePlanet
-  - CslaimPlayer
-  - SendResetToSserver
-  - SendRessetToServer
-  - ClearPlanet
-  - RequestPlanet
-  - SetAsteroidColor
-  - SetAsteroidColors
-  - SetAssteroidOwner
-  - ResetAsteroidColors
-  - PositionToPlanet
-  - EnableCountdown
   - SynchWin
   DisableAutoOpenWizard: 1
   ShowSettings: 1
