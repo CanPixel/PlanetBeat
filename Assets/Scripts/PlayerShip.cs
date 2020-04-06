@@ -9,6 +9,7 @@ public class PlayerShip : MonoBehaviourPunCallbacks {
     public bool isSinglePlayer {
         get {return GameManager.instance != null && GameManager.instance.isSinglePlayer;}
     } 
+    public PlayerHighlighter playerHighlighter;
     public HookShot hookShot;
     public ParticleSystem exhaust;
 
@@ -73,7 +74,6 @@ public class PlayerShip : MonoBehaviourPunCallbacks {
     public GameObject GetHomePlanet() {
         return homePlanet;
     }
-
     public void SetHomePlanet(GameObject planet) {
         homePlanet = planet;
         this.planet = homePlanet.GetComponent<PlayerPlanets>();

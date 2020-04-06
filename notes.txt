@@ -41,32 +41,5 @@ Muzikaal spel? Lock on mechanism is een accent op de maat?
 
 
 
------------------------------------------------------------------------------------
-SCRIPT
-
-
-- Mijn taak in het team
-
-- Technische maatregelen Corona
-
-- Onderzoek naar Networking APIs
-
-- PHOTON API keuze ---> Cloud server, Slither.io voorbeeld
-
-- Playtesten en nieuwe bugs
-
-- Overall bugs en progressie
-
-- Switching styles, synchroniseren van spelerkleuren & planeet identities
-
-- Verschillende mechanics testbaar en switchable maken in-game
-
-- GitHub, project methode
-
-
-
-
-
-
 
 

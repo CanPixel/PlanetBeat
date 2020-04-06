@@ -5,16 +5,18 @@ using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine.UI;
 
-public class Launcher : MonoBehaviourPunCallbacks, IInRoomCallbacks, IMatchmakingCallbacks {
+public class Launcher : MonoBehaviourPunCallbacks, IInRoomCallbacks {
     [Header("REFERENCES")]
     [SerializeField] private GameObject controlPanel;
     public Sprite freeAim, lockOn, looker, player;
 
     public Button playButton;
 
-    public Slider SpectSlider, AimSlider;
-    public Text particiText, lockonText, playText, playersOnline, playersInSpace, countOfRooms, title;
-    public Image reticleIcon, spectateHandle, aimSliderBackground;
+    public Toggle SpectToggle;
+    public Image SpectIcon;
+    public Slider AimSlider;
+    public Text lockonText, playText, playersOnline, playersInSpace, countOfRooms, title;
+    public Image reticleIcon, aimSliderBackground;
 
     private int amountPlayers;
 
@@ -48,11 +50,11 @@ public class Launcher : MonoBehaviourPunCallbacks, IInRoomCallbacks, IMatchmakin
         playButton.interactable = false;
         playText.text = "CONNECTING...";
         PhotonNetwork.AutomaticallySyncScene = true;
+        SpectIcon.gameObject.SetActive(false);
         if(controlPanel != null) controlPanel.SetActive(true);
 
-        int val = (PlayerPrefs.GetInt("Spectate") == 0) ? 1 : 0;
-        SpectSlider.value = val;
-        OnChangeSpectate(SpectSlider.value);
+        SpectToggle.isOn = false;
+        OnChangeSpectate(SpectToggle.isOn);
         AimSlider.value = PlayerPrefs.GetInt("AIM_MODE");
         OnChangeAim(PlayerPrefs.GetInt("AIM_MODE"));
 
@@ -75,16 +77,10 @@ public class Launcher : MonoBehaviourPunCallbacks, IInRoomCallbacks, IMatchmakin
         if(Input.GetKeyUp(KeyCode.Escape)) Screen.fullScreen = !Screen.fullScreen;
     }
 
-    public void OnChangeSpectate(System.Single value) {
-        if(value == 0) {
-            particiText.enabled = false;
-            spectateHandle.sprite = player;
-        }
-        else {
-            particiText.enabled = true;
-            spectateHandle.sprite = looker;
-        }
-        int spect = (value == 0) ? 1 : 0;
+    public void OnChangeSpectate(bool value) {
+        if(!value) SpectIcon.sprite = player;
+        else SpectIcon.sprite = looker;
+        int spect = (value) ? 0 : 1;
         PlayerPrefs.SetInt("Spectate", spect);
     }
 
@@ -123,22 +119,26 @@ public class Launcher : MonoBehaviourPunCallbacks, IInRoomCallbacks, IMatchmakin
         countOfRooms.gameObject.SetActive(false);
         title.gameObject.SetActive(false);
 
-        PhotonNetwork.GameVersion = gameVersion;
-        
-        if(!PhotonNetwork.IsConnected) PhotonNetwork.JoinRoom(roomName);
-        else PhotonNetwork.ConnectUsingSettings();
         connectNow = true;
+        PhotonNetwork.ConnectUsingSettings();
     }
 
     #region MonoBehaviourPunCallbacks Callbacks
 
     public override void OnConnectedToMaster() {
+        //Debug.LogError("CONNECT TO MASTER");
         playText.text = "PLAY";
+        SpectIcon.gameObject.SetActive(true);
         playButton.interactable = true;
-        PhotonNetwork.JoinRoom(roomName);
+        if(connectNow) PhotonNetwork.JoinRoom(roomName);
+    }
+
+    public override void OnJoinedLobby() {
+        Debug.LogError("Joined Lobby");
     }
 
     public override void OnRoomListUpdate(List<RoomInfo> roomList) {
+        Debug.LogError("ROOMLISTUPDATE");
         foreach(var i in roomList) Debug.LogError(i.Name);
         base.OnRoomListUpdate(roomList);
     }
@@ -161,7 +161,7 @@ public class Launcher : MonoBehaviourPunCallbacks, IInRoomCallbacks, IMatchmakin
     public override void OnJoinedRoom() {
         if(!connectNow) return;
         base.OnJoinedRoom();
-        Debug.LogError("Client joined room " + roomName);
+//        Debug.LogError("Client joined room " + roomName);
         PhotonNetwork.LoadLevel(levelName);
     }
 

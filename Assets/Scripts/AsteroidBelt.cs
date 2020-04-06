@@ -10,13 +10,10 @@ public class AsteroidBelt : MonoBehaviour {
     private GameObject[] AsteroidsList;
     public GameObject prefab;
 
-    void Start() {
-        for (int i = 0; i < asteroidAmount; i++) SpawnAsteroid();
-    }
-
     void Update() {
-        AsteroidsList = GameObject.FindGameObjectsWithTag("Resource");
+        if(!GameManager.GAME_STARTED) return;
 
+        AsteroidsList = GameObject.FindGameObjectsWithTag("Resource");
         if (AsteroidsList.Length < asteroidAmount) SpawnAsteroid();
     }
 

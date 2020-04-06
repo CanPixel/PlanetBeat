@@ -144,6 +144,7 @@ public class HookShot : MonoBehaviour {
     #endregion
 
     public void CastHook() {
+        if(!GameManager.GAME_STARTED) return;
         AudioManager.PLAY_SOUND("Kick", 1f, 0.9f);
         AudioManager.PLAY_SOUND("CastHook", 0.8f, Random.Range(0.9f, 1f));
         isShootingHook = true;
