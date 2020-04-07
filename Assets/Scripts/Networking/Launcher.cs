@@ -25,7 +25,6 @@ public class Launcher : MonoBehaviourPunCallbacks, IInRoomCallbacks {
 
     [Space(15)]
     public string LEVELNAME = "Space";
-    public static string levelName;
 
     [Range(1, 20)]
     [SerializeField] private byte maxPlayers = 5;
@@ -46,7 +45,6 @@ public class Launcher : MonoBehaviourPunCallbacks, IInRoomCallbacks {
 
     void Awake() {
         beginZoom = Camera.main.orthographicSize;
-        levelName = LEVELNAME;
         playButton.interactable = false;
         playText.text = "CONNECTING...";
         PhotonNetwork.AutomaticallySyncScene = true;
@@ -121,6 +119,7 @@ public class Launcher : MonoBehaviourPunCallbacks, IInRoomCallbacks {
 
         connectNow = true;
         PhotonNetwork.ConnectUsingSettings();
+        //PhotonNetwork.JoinRoom(roomName);
     }
 
     #region MonoBehaviourPunCallbacks Callbacks
@@ -162,7 +161,7 @@ public class Launcher : MonoBehaviourPunCallbacks, IInRoomCallbacks {
         if(!connectNow) return;
         base.OnJoinedRoom();
 //        Debug.LogError("Client joined room " + roomName);
-        PhotonNetwork.LoadLevel(levelName);
+        PhotonNetwork.LoadLevel(LEVELNAME);
     }
 
     #endregion

@@ -1,5 +1,43 @@
+Bug lijst:
 - Lock on and free aim kan samen?
+- asteroids verdwijnen mogelijk niet op de server bij consume planet
+- Planets should get 10 points per consume, niet 20
+- Winscreen doesn't show
+
+- Asteroid loslaten color whitening tracken op trail-tag manager delay 
+
+- players online dingessen niet accurate
+
+
+- Soft borders
+
+- play doesnt always connect 
+
+
+
+
+Feedback:
+- Freeze frame for grabbing (only in local client)
+- chatroom
+- player stats / scoreboard
+- Prototyping rooms / multiple rooms (with/without player-limit restriction)
+
+- Grab Assist / Laser Aim before grabbing / Multiple colored laser aim
+
+
+???
 - Lock-on bij space ingedrukt moet weer kleiner worden.
+???
+
+
+
+
+- 3D art uitdiepen?
+
+- Teamplay / Free For All?
+
+
+
 
 
 
