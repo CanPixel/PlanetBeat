@@ -25,7 +25,7 @@ public class PlanetGlow : MonoBehaviour {
     }
 
     public void SetTexture(TextureSwitcher.TextureElement element) {
-        src.sprite = element.src;
+        if(src != null && element != null) src.sprite = element.src;
         if(element.glow == null) {
             glow.sprite = null;
             glow.color = new Color(0, 0, 0, 0);

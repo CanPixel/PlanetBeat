@@ -74,11 +74,14 @@ public class TextureSwitcher : MonoBehaviour {
         playerColors = new Color[typeOfPlanets];
         if(dropdown == null) dropdown = GetComponent<Dropdown>();
         instance.pack = PlayerPrefs.GetInt("TexturePack");
-        dropdown.value = PlayerPrefs.GetInt("TexturePack");
+        if(dropdown != null) dropdown.value = PlayerPrefs.GetInt("TexturePack");
     }
 
     public static void ForceUpdateTextures() {
-        if(instance == null) instance = GameObject.FindGameObjectWithTag("TEXTURESWITCHER").GetComponent<TextureSwitcher>();
+        if(instance == null) {
+            var obj = GameObject.FindGameObjectWithTag("TEXTURESWITCHER");
+            if(obj != null) instance = obj.GetComponent<TextureSwitcher>();
+        }
         if(instance != null) instance.UpdateTexturePack(PlayerPrefs.GetInt("TexturePack"));
     }
 
@@ -100,13 +103,13 @@ public class TextureSwitcher : MonoBehaviour {
 
         var textPack = texturePacks[change];
         if(planetsReference != null) for(int i = 0; i < planetsReference.Length; i++) planetsReference[i].SetTexture(textPack.planets[i % typeOfPlanets]);
-        sunGlowReference.sprite = textPack.blackHole.glow;
-        sunReference.sprite = textPack.blackHole.src;
+        if(sunGlowReference != null) sunGlowReference.sprite = textPack.blackHole.glow;
+        if(sunReference != null) sunReference.sprite = textPack.blackHole.src;
 
         var bgs = backgroundReference.GetComponent<Background>();
         bgs.SetTexture(textPack);
 
-        sun.UpdateSize();
+        if(sun != null) sun.UpdateSize();
 
         if(asteroidReference != null) {
             var asts = asteroidReference.GetComponentsInChildren<Asteroid>();

@@ -1,64 +1,70 @@
 Bug lijst:
-- Lock on and free aim kan samen?
-- asteroids verdwijnen mogelijk niet op de server bij consume planet
-- Planets should get 10 points per consume, niet 20
-- Winscreen doesn't show
-
-- Asteroid loslaten color whitening tracken op trail-tag manager delay 
-
-- players online dingessen niet accurate
-
-
-- Soft borders
-
-- play doesnt always connect 
+[HIGH] - asteroids verdwijnen mogelijk niet op de server bij consume planet 
+[HIGH] - Prototyping rooms / multiple rooms (with/without player-limit restriction)
+[HIGH] - fix STEALING(PhotonNetwork.Destroy)
+[Med] - Asteroids getting "stuck"
+[Med] - Asteroids oppakken zonder grapple action.
+[Med] - Winscreen doesn't show
+[Low] - Planets should get 10 points per consume, niet 20
+[Low] - Lock on and free aim kan samen? (Rigidbodies on trailinglist)
+[Low] - Asteroid loslaten color whitening tracken op trail-tag manager delay 
+[Low] - players online text niet accurate
 
 
+- Delay on 4th player join ? 
 
-
-Feedback:
-- Freeze frame for grabbing (only in local client)
-- chatroom
-- player stats / scoreboard
-- Prototyping rooms / multiple rooms (with/without player-limit restriction)
-
-- Grab Assist / Laser Aim before grabbing / Multiple colored laser aim
-
-
-???
-- Lock-on bij space ingedrukt moet weer kleiner worden.
-???
+[??????] - play doesnt always connect ???
 
 
 
+- Controls bij "you are here".
 
-- 3D art uitdiepen?
+Free Aim:
+"Arrow keys to move"
+"Space to shoot grapple"
+"F to drop"
 
+Lock On:
+"Arrow keys to move"
+"Hold space to extend grappling range"
+"F to drop"
+
+
+
+
+
+FEATURE LIJST:
 - Teamplay / Free For All?
+[] - Soft borders
+- Time hoe snel mensen winnen ?
+- player stats / scoreboard? endstate dingen
+- asteroid belts
+- Grab Assist / Laser Aim before grabbing / Multiple colored laser aim
+- Lock-on bij space ingedrukt moet weer kleiner worden.
+- Ready knop?
 
 
-
-
-
-
-- Kick all players button
-
-- Verschillende Rooms
-
-- Controls locken (capturen) tijdens freeze
-
-- player win doesn't trigger
-
-
-
-
+Art bespreking punten (woensdag):
+- Freeze frame for grabbing (only in local client) ----> voor powerfulness
 - hook veranderen, player trails? asteroid trails? planet orbits?
 
-- Time hoe snel mensen winnen
 
-- asteroid belts
 
-- Ready knop?
+
+
+
+
+
+----- Feedback midterms:
+- presentatie beginnen met ''de oplossing''. het doel is nog niet duidelijk.
+- begroting mag specifieker, gedetailleerder.
+- Bruikbaarheid v doelgroep testen -+-+-
+- wat betreft Pesten/plagen (dark play), hoe voorkomen we dat het naar/aggressief wordt. 
+cartoony art style op zichzelf werkt niet. Hoe balanceren we dit? ---> onderzoek
+
+----- Feedback Rob:
+- Lage tafel, zodat mensen over schouders mee kunnen kijken ----> meer betrokkenheid
+
 
 
 
@@ -68,16 +74,8 @@ SEMI-PROBLEEM: SERIAL PORTS MOETEN ALTIJD HANDMATIG GESELECTEERD WORDEN
 
 - Failed to network-remove GameObject. Client is neither owner nor MasterClient taking over for owner who left: View 2 on ASTEROID
 
-
-
 - Wat voor muziek feel zoeken we? 
 Sound Design == Cartoony / Funny? 
 Muzikaal spel? Lock on mechanism is een accent op de maat?
-
-
-
-
-
-
 
 

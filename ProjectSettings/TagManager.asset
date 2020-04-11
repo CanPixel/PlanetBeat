@@ -21,6 +21,8 @@ TagManager:
   - BACKGROUND
   - TEXTURESWITCHER
   - GAMEMANAGER
+  - LAUNCHER
+  - RoomToggle
   layers:
   - Default
   - TransparentFX

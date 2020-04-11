@@ -16,8 +16,8 @@ public class GameManager : MonoBehaviourPunCallbacks {
 
    public Text countdown;
    [Header("Start Game")]
-   public bool skipCountdown = false;
    public int playerCount = 4;
+   private bool skipCountdown = false;  
 
    public static Dictionary<string, GameObject> playerLabels = new Dictionary<string, GameObject>();
 
@@ -137,6 +137,8 @@ public class GameManager : MonoBehaviourPunCallbacks {
          if(PlayerPrefs.GetInt("Spectate") != 0) AddPlayer(PlayerShip.PLAYERNAME);
       }
       AssignPlayerIdentity(1001);
+
+      skipCountdown = Launcher.GetSkipCountDown();
    }
 
    public static void AssignPlayerIdentity(int ID) {
@@ -151,7 +153,12 @@ public class GameManager : MonoBehaviourPunCallbacks {
 
    [PunRPC]
    public void AssignMasterPlanet(int playerNum, float r, float g, float b) {
-      var pl = PhotonNetwork.GetPhotonView(playerNum).GetComponent<PlayerShip>();
+      var play = PhotonNetwork.GetPhotonView(playerNum);
+      if(play == null) {
+         Debug.LogError("NOPLAY");
+         return;
+      }
+      var pl = play.GetComponent<PlayerShip>();
       pl.ForceColor(r, g, b);
    }
 
