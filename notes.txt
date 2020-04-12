@@ -1,41 +1,30 @@
 Bug lijst:
-[HIGH] - asteroids verdwijnen mogelijk niet op de server bij consume planet 
-[HIGH] - Prototyping rooms / multiple rooms (with/without player-limit restriction)
-[HIGH] - fix STEALING(PhotonNetwork.Destroy)
-[Med] - Asteroids getting "stuck"
+[Med] - Asteroids getting "stuck"  (Rigidbodies on trailinglist)
+[Low] - Lock on and free aim kan samen?
+
+------------- FIXED
+- Color reset tijdens asteroids loslaten gebeurt nu op de daadwerkelijke trail-tag
+- Added controls text at start
+- 1 game room, 3 designer rooms met zijn eigen wel/niet skip countdown
 [Med] - Asteroids oppakken zonder grapple action.
+[HIGH] - asteroids verdwijnen mogelijk niet op de server bij consume planet 
 [Med] - Winscreen doesn't show
 [Low] - Planets should get 10 points per consume, niet 20
-[Low] - Lock on and free aim kan samen? (Rigidbodies on trailinglist)
-[Low] - Asteroid loslaten color whitening tracken op trail-tag manager delay 
-[Low] - players online text niet accurate
+[HIGH] - fix STEALING
+-------------------
 
 
+
+- Twitchy asteroids for non-masterclients
 - Delay on 4th player join ? 
-
-[??????] - play doesnt always connect ???
-
-
-
-- Controls bij "you are here".
-
-Free Aim:
-"Arrow keys to move"
-"Space to shoot grapple"
-"F to drop"
-
-Lock On:
-"Arrow keys to move"
-"Hold space to extend grappling range"
-"F to drop"
-
+- Resizing playing field is beetje gek bij bepaalde aspects
 
 
 
 
 FEATURE LIJST:
 - Teamplay / Free For All?
-[] - Soft borders
+- Soft borders
 - Time hoe snel mensen winnen ?
 - player stats / scoreboard? endstate dingen
 - asteroid belts

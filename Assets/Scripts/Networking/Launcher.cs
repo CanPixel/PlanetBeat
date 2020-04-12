@@ -38,7 +38,7 @@ public class Launcher : MonoBehaviourPunCallbacks, ILobbyCallbacks, IInRoomCallb
     public Image reticleIcon, aimSliderBackground;
     [Header("ROOM SELECTION")]
     public ToggleGroup roomGroup;
-    public List<SpaceRoomToggle> roomList = new List<SpaceRoomToggle>();
+    private List<SpaceRoomToggle> roomList = new List<SpaceRoomToggle>();
     public GameObject roomTogglePrefab;
 
     private int amountPlayers;
@@ -67,7 +67,7 @@ public class Launcher : MonoBehaviourPunCallbacks, ILobbyCallbacks, IInRoomCallb
             self = this;
         }
 
-        PhotonNetwork.AutomaticallySyncScene = true;
+        PhotonNetwork.AutomaticallySyncScene = false;
         PhotonNetwork.NetworkingClient.EnableLobbyStatistics = true;
         SpectIcon.gameObject.SetActive(false);
         if(controlPanel != null) controlPanel.SetActive(true);

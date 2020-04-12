@@ -47,7 +47,9 @@ public class PlayerTagsManager : MonoBehaviour {
         }
         tagNum = 0;
         asteroidTrailRenderer.material.color = ogTrailColor;
+        
         src.color = glow.color = Color.white;
+        _asteroid.ForceRelease(true);
     }
 
     public void TagOn(bool state) {
@@ -67,16 +69,4 @@ public class PlayerTagsManager : MonoBehaviour {
         }
         else tagTimer = 0f;
     }
-
-    /* 
-    public void OnCollisionEnter2D(Collision2D col) {
-        if (col.gameObject.tag == "PLAYERSHIP") {
-            var _playerShip = col.gameObject.GetComponent<PlayerShip>();
-
-            if (_playerShip.playerNumber == tagNum) {
-                _playerShip.SetCollision(asteroidColl, false);
-                tagPlayer = _playerShip;
-            } 
-        }
-    }*/
 }

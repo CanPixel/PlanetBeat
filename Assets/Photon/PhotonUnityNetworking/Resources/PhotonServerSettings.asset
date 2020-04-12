@@ -44,5 +44,6 @@ MonoBehaviour:
   - SetAsteroidOwner
   - SetResource
   - SynchWin
+  - DestroyAsteroid
   DisableAutoOpenWizard: 1
   ShowSettings: 1

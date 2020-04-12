@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 
 public class SpaceRoomToggle : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler {
     public Text text;
-    public Image image;
+    public Image image, baseIMG;
     private int index = -1;
     private Toggle toggle;
 
@@ -17,6 +17,7 @@ public class SpaceRoomToggle : MonoBehaviour, IPointerEnterHandler, IPointerExit
     private int amountOfPlayers = 0;
 
     private Color titleColor;
+    public Color uiColor;
 
     public string roomName;
 
@@ -40,9 +41,9 @@ public class SpaceRoomToggle : MonoBehaviour, IPointerEnterHandler, IPointerExit
 
     void Update() {
         if(toggle.isOn) {
-            toggle.Select();
+            baseIMG.color = Color.Lerp(baseIMG.color, uiColor, Time.deltaTime * 8f);
             launcher.SetRoomSelection(index);
-        }
+        } else baseIMG.color = Color.Lerp(baseIMG.color, Color.white, Time.deltaTime * 7f);
         isPrevOn = toggle.isOn;
 
         text.color = Color.Lerp(text.color, (hover || toggle.isOn) ? Color.white : titleColor, Time.deltaTime * 20f);

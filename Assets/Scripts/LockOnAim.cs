@@ -37,9 +37,9 @@ public class LockOnAim : MonoBehaviour {
         }
         line.startColor = line.endColor = selectColor;
 
-        if(!GameManager.GAME_STARTED) return;
+        if(!GameManager.GAME_STARTED || ship.hookMethod != PlayerShip.HookMethod.LockOn) return;
 
-        if(Input.GetKey(KeyCode.Space) && (GameManager.instance.isSinglePlayer || ship.photonView.IsMine)) if(radius < maxRadius * 10f) radius += Time.deltaTime * 1000f * expandSpeed;
+        if(Input.GetKey(KeyCode.Space) && ship.photonView.IsMine) if(radius < maxRadius * 10f) radius += Time.deltaTime * 1000f * expandSpeed;
         if(Input.GetKeyDown(KeyCode.Space)) AudioManager.PLAY_SOUND("Leap", 0.45f, 0.8f);
         if(Input.GetKeyUp(KeyCode.Space)) radius = minRadius;
 

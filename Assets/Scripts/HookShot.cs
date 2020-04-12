@@ -73,7 +73,6 @@ public class HookShot : MonoBehaviour {
         public void FireLockOn(GameObject target) {
             lockOnAimTarget = target;
             if(hostPlayer.IsThisClient()) hostPlayer.photonView.RPC("CastHook", RpcTarget.All, hostPlayer.photonView.ViewID);
-            else if(hostPlayer.isSinglePlayer) CastHook();
         }
 
         protected void LockOn() {
@@ -105,7 +104,6 @@ public class HookShot : MonoBehaviour {
             if(Input.GetKey(KeyCode.Space)) triggerHook = true;
             if(Input.GetKeyUp(KeyCode.Space) && triggerHook && shootTimer <= 0) {
                 if(hostPlayer.IsThisClient()) hostPlayer.photonView.RPC("CastHook", RpcTarget.All, hostPlayer.photonView.ViewID);
-                else if(hostPlayer.isSinglePlayer) CastHook();
             }
 
             if(IsShooting()) {

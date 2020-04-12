@@ -293,6 +293,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   text: {fileID: 2148302010744521727}
-  count: {fileID: 0}
   image: {fileID: 2148302009173481886}
+  baseIMG: {fileID: 2148302010840234956}
+  uiColor: {r: 0.12156863, g: 0.6784314, b: 0.827451, a: 1}
   roomName: 

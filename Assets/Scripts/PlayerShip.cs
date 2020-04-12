@@ -6,9 +6,6 @@ using Photon.Realtime;
 using UnityEngine.UI;
 
 public class PlayerShip : MonoBehaviourPunCallbacks {
-    public bool isSinglePlayer {
-        get {return GameManager.instance != null && GameManager.instance.isSinglePlayer;}
-    } 
     public PlayerHighlighter playerHighlighter;
     public HookShot hookShot;
     public ParticleSystem exhaust;
@@ -57,8 +54,6 @@ public class PlayerShip : MonoBehaviourPunCallbacks {
     [Range(0.1f,10)]
     public float throwingReduction = 1f; 
 
-    //Voor het herkennen van de local player (die jij speelt) ivm network
-    public static GameObject LocalPlayerInstance;
     public static string PLAYERNAME;
 
     private Vector3 exLastPos;
@@ -81,7 +76,7 @@ public class PlayerShip : MonoBehaviourPunCallbacks {
 
     [PunRPC]
     public void ClearHomePlanet() {
-        if(planet != null && photonView != null) planet.ResetPlanet(photonView.ViewID);
+        if(planet != null && photonView != null) planet.ResetPlanet();
         homePlanet = null;
         planet = null;
     }
@@ -104,23 +99,17 @@ public class PlayerShip : MonoBehaviourPunCallbacks {
             exhaustSound = GetComponent<AudioSource>();
             transform.SetParent(GameObject.FindGameObjectWithTag("GAMEFIELD").transform, false);
 
-            if(!isSinglePlayer && photonView != null) {
-                playerNumber = photonView.ViewID;
-                playerColor = TextureSwitcher.GetPlayerTint(photonView.ViewID);
-                GameManager.AssignPlayerIdentity(photonView.ViewID);
-                if(!GameManager.ActorToViewID.ContainsKey(photonView.Owner.ActorNumber)) GameManager.ActorToViewID.Add(photonView.Owner.ActorNumber, photonView.ViewID);
-                else GameManager.ActorToViewID[photonView.Owner.ActorNumber] = photonView.ViewID;
-            }
-            if(!isSinglePlayer && photonView != null && !photonView.IsMine) {
-                exLastPos = transform.position;
+            //REMOTE PLAYERS (Non-controllable from client)
+            if(!photonView.IsMine) {
+                exLastPos = transform.position; //For movement/exhaust particles
                 var playerNameTag = Instantiate(Resources.Load("PlayerName"), transform.position, Quaternion.identity) as GameObject;
                 playerName = playerNameTag.GetComponent<PlayerName>();
-                if(playerName != null) {
-                    if(photonView.Owner != null) playerName.SetHost(gameObject, photonView.Owner.NickName);
-                }
+                if(playerName != null && photonView.Owner != null) playerName.SetHost(gameObject, photonView.Owner.NickName);
                 if(photonView.Owner != null) PLAYERNAME = photonView.Owner.NickName;
                 playerLabel = playerNameTag;
-                if(playerNameTag != null) {
+
+                //Name tag replacement
+                /* if(playerNameTag != null) {
                     if(!GameManager.playerLabels.ContainsKey(PLAYERNAME)) GameManager.playerLabels.Add(PLAYERNAME, playerNameTag);
                     else {
                         string replacementName = PLAYERNAME + Random.Range(0, 1000);
@@ -128,14 +117,26 @@ public class PlayerShip : MonoBehaviourPunCallbacks {
                         playerName.Rename(replacementName);
                         GameManager.playerLabels.Add(replacementName, playerNameTag);
                     }
-                }
+                }*/
+
                 foreach(var i in networkIgnore) if(i != null) DestroyImmediate(i);
             }
+
+            playerColor = TextureSwitcher.GetPlayerTint(photonView.ViewID);
+            playerNumber = photonView.ViewID;
             if(playerLabel != null) playerLabel.GetComponent<Text>().color = playerColor;
-            if(PhotonNetwork.IsMasterClient && photonView != null && !isSinglePlayer) photonView.RPC("SetAim", RpcTarget.All, PlayerPrefs.GetInt("AIM_MODE"));
+            if(PhotonNetwork.IsMasterClient && photonView != null) photonView.RPC("SetAim", RpcTarget.All, PlayerPrefs.GetInt("AIM_MODE"));
             lockOnAim.gameObject.SetActive(hookMethod == HookMethod.LockOn);
+            ForceColor(TextureSwitcher.GetPlayerTint(photonView.ViewID));
             GameManager.ClaimPlanet(this);
         }
+
+        public override void OnDisable() {
+            if(playerName != null) Destroy(playerName.gameObject);
+            if(planet != null) ClearHomePlanet();
+            base.OnDisable();
+        }
+            
     #endregion
 
     public void PositionToPlanet() {
@@ -143,6 +144,9 @@ public class PlayerShip : MonoBehaviourPunCallbacks {
         if(planet != null) transform.position = photonView.transform.position = planet.transform.position;
     }
 
+    public void ForceColor(Color col) {
+        ForceColor(col.r, col.g, col.b);
+    }
     public void ForceColor(float r, float g, float b) {
         var col = new Color(r, g, b);
         playerColor = col;
@@ -173,7 +177,7 @@ public class PlayerShip : MonoBehaviourPunCallbacks {
     }
 
     void FixedUpdate() {
-        if(IsThisClient() || isSinglePlayer) {
+        if(IsThisClient()) {
             ProcessInputs();
             if(rb != null) {
                 rb.AddForce(transform.up * velocity);
@@ -207,7 +211,7 @@ public class PlayerShip : MonoBehaviourPunCallbacks {
 
         lockOnAim.selectColor = playerColor;
         //Particles emitten wanneer movement
-        if(IsThisClient() || isSinglePlayer) {
+        if(IsThisClient()) {
             var emitting = exhaust.emission;
             emitting.enabled = IsThrust();
         } else {
@@ -221,10 +225,7 @@ public class PlayerShip : MonoBehaviourPunCallbacks {
             emitting.enabled = shouldEmit;
         }
 
-        if (!isSinglePlayer) {
-            if (photonView == null) return;
-            if (!photonView.IsMine && PhotonNetwork.IsConnected) return;
-        }
+        if (!photonView.IsMine && PhotonNetwork.IsConnected) return;
 
         //Removes asteroids that got destroyed / eaten by the sun
         for(int i = 0; i < trailingObjects.Count; i++) if(trailingObjects[i] == null) {
@@ -283,15 +284,8 @@ public class PlayerShip : MonoBehaviourPunCallbacks {
     public void AddAsteroid(GameObject obj) {
         obj.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
         var script = obj.GetComponent<Asteroid>();
-        //photonView.RPC("SetAsteroidColors", RpcTarget.All, playerColor.r, playerColor.g, playerColor.b, script.photonView.ViewID);
         if(script != null) trailingObjects.Add(script);
     }
-
-    /* 
-    [PunRPC]
-    public void SetAsteroidColors(float r, float g, float b, int viewID) {
-        foreach(var i in trailingObjects) if(i.photonView.ViewID == viewID) i.SetColor(r, g, b);
-    } */
 
     [PunRPC]
     public void ResetAsteroidColors(int viewID) {

@@ -7,7 +7,6 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class GameManager : MonoBehaviourPunCallbacks {
-   public bool isSinglePlayer = false;
    public bool spectating = false;
 
    public Background background;
@@ -28,7 +27,6 @@ public class GameManager : MonoBehaviourPunCallbacks {
 
    public static GameManager instance;
    [Space(10)]
-   public GameObject singlePlayer;
    public GameObject playerPrefab;
    public GameObject PlayerName;
    public float playerScale = 0.02f;
@@ -36,8 +34,10 @@ public class GameManager : MonoBehaviourPunCallbacks {
    public static Dictionary<int, int> ActorToViewID = new Dictionary<int, int>();
    private static List<PlayerPlanets> allPlanets = new List<PlayerPlanets>();
 
+   public static PlayerShip LOCAL_PLAYER;
+
    public static void ClaimPlanet(PlayerShip ship) {
-      if(ship.photonView != null && ship.photonView.IsMine) instance.ClaimFreePlanet(ship);
+      if(ship.photonView.IsMine) instance.ClaimFreePlanet(ship);
    }
 
    //ONLY LOCAL PLAYERS
@@ -131,17 +131,14 @@ public class GameManager : MonoBehaviourPunCallbacks {
       allPlanets.Clear();
       var plans = GameObject.FindGameObjectsWithTag("PLAYERPLANET");
       foreach(var i in plans) allPlanets.Add(i.GetComponent<PlayerPlanets>());
-      
-      if(!isSinglePlayer) {
-         DestroyImmediate(singlePlayer);
-         if(PlayerPrefs.GetInt("Spectate") != 0) AddPlayer(PlayerShip.PLAYERNAME);
-      }
-      AssignPlayerIdentity(1001);
+
+      if(PlayerPrefs.GetInt("Spectate") != 0) AddLocalClient(PlayerShip.PLAYERNAME);
 
       skipCountdown = Launcher.GetSkipCountDown();
    }
 
-   public static void AssignPlayerIdentity(int ID) {
+   protected void AssignPlayerIdentity(int ID) {
+      var playerID = TextureSwitcher.GetPlayerTintIndex(ID);
       var photon = PhotonNetwork.GetPhotonView(ID);
       if(photon == null) return;
       var pl = photon.GetComponent<PlayerShip>();
@@ -154,49 +151,36 @@ public class GameManager : MonoBehaviourPunCallbacks {
    [PunRPC]
    public void AssignMasterPlanet(int playerNum, float r, float g, float b) {
       var play = PhotonNetwork.GetPhotonView(playerNum);
-      if(play == null) {
-         Debug.LogError("NOPLAY");
-         return;
-      }
+      if(play == null) return;
       var pl = play.GetComponent<PlayerShip>();
       pl.ForceColor(r, g, b);
    }
 
    public static GameObject SPAWN_SERVER_OBJECT(GameObject obj, Vector3 pos, Quaternion rot) {
       if(instance == null) return null;
-      if(instance.isSinglePlayer) {
-         var objF = Instantiate(obj, pos, rot);
-         return objF;
-      } else {
-         var objF = PhotonNetwork.InstantiateSceneObject(obj.name, pos, rot, 0, null);
-         return objF;
-      }
+      var objF = PhotonNetwork.InstantiateSceneObject(obj.name, pos, rot, 0, null);
+      return objF;
    }
    public static void DESTROY_SERVER_OBJECT(GameObject obj) {
       if(instance == null) return;
-      if(instance.isSinglePlayer || !PhotonNetwork.IsMasterClient) Destroy(obj);
-      else {
-         if(PlayerShip.LocalPlayerInstance.GetPhotonView().IsMine) PhotonNetwork.Destroy(obj);
-      }
+      if(!PhotonNetwork.IsMasterClient) Destroy(obj);
+      else if(LOCAL_PLAYER.photonView.IsMine) PhotonNetwork.Destroy(obj);
    }
 
-   private void AddPlayer(string name) {
-      if(playerPrefab == null) {
-         Debug.LogError("No PlayerPrefab reference!");
-         return;
-      }
-      //Adds the local player (Client)
-      if(PlayerShip.LocalPlayerInstance == null) {
+   private void AddLocalClient(string name) {
+      if(LOCAL_PLAYER == null) {
          TextureSwitcher.ForceUpdateTextures();
          var player = PhotonNetwork.Instantiate(playerPrefab.name, Vector3.zero, Quaternion.identity, 0);
-         PlayerShip.LocalPlayerInstance = player;
          player.transform.localScale = new Vector3(playerScale, playerScale, playerScale);
          var playerShip = player.GetComponent<PlayerShip>();
+         LOCAL_PLAYER = playerShip;
          var playerName = Instantiate(PlayerName, player.transform.position, Quaternion.identity);
+
          var pN = playerName.GetComponent<PlayerName>();
          pN.SetHost(player, name);
          playerShip.playerName = pN;
-      } 
+         AssignPlayerIdentity(playerShip.photonView.ViewID);
+      }
    }
 
    public override void OnLeftRoom() {
@@ -219,11 +203,11 @@ public class GameManager : MonoBehaviourPunCallbacks {
 
    public override void OnPlayerEnteredRoom(Player other) {
       base.OnPlayerEnteredRoom(other);
-      Debug.LogError(other.NickName + " JOINED");
+//      Debug.LogError(other.NickName + " JOINED");
    }
 
    public override void OnPlayerLeftRoom(Player other) {
-      Debug.LogErrorFormat("{0} LEFT", other.NickName);
+    //  Debug.LogErrorFormat("{0} LEFT", other.NickName);
       int viewID = -1;
       foreach(KeyValuePair<int, int> pair in ActorToViewID) if(pair.Key == other.ActorNumber) {
          viewID = pair.Value;
@@ -242,7 +226,7 @@ public class GameManager : MonoBehaviourPunCallbacks {
    public void ClearPlanet(int viewID, int ActorNumber) {
       foreach(var i in allPlanets) {
          if(i.playerNumber == viewID) {
-            i.ResetPlanet(viewID);
+            i.ResetPlanet();
             allPlanets.Remove(i);
             if(ActorToViewID.ContainsKey(ActorNumber)) ActorToViewID.Remove(ActorNumber);
             break;

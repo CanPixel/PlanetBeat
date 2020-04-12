@@ -17,13 +17,20 @@ public class PlayerHighlighter : MonoBehaviour {
         text = GetComponentInChildren<Text>();
         line = GetComponent<LineRenderer>();
         line.positionCount = segments + 1;
+        text.color = new Color(1, 1, 1, 1);
+
+        string hookString = "";
+        if(host.hookMethod == PlayerShip.HookMethod.FreeAim) hookString = "Space to shoot grapple";
+        else hookString = "Hold space to extend grappling range";
+        text.text = "THIS IS YOU! \n \n" + "<size=100>Arrow keys to move\n" + hookString + "\n" + "F to drop</size>";
     }
 
     void Update() {
         var sine = Mathf.Sin(Time.time * 7f);
 
         text.transform.rotation = Quaternion.identity;
-        text.transform.position = new Vector3(transform.position.x + 1.55f + sine / 7f, transform.position.y + 0.75f, 0);
+        text.transform.position = new Vector3(transform.position.x + 1.35f + sine / 7f, transform.position.y + 0.75f, 0);
+        text.color = line.startColor = line.endColor = new Color(1, 1, 1, radius / 100f);
 
         if(!GameManager.GAME_STARTED && host.photonView.IsMine) {
             line.enabled = text.enabled = true;
@@ -31,7 +38,7 @@ public class PlayerHighlighter : MonoBehaviour {
             CreatePoints(radius);
         } else {
             radius = Mathf.Lerp(radius, 0, Time.deltaTime * 3f);
-            if(radius <= 10) line.enabled = text.enabled = false;
+            if(radius <= 45) line.enabled = text.enabled = false;
             else CreatePoints(radius);
         }
     }

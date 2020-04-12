@@ -13,7 +13,7 @@ public class HookTip : MonoBehaviour {
     }
 
     void OnCollisionEnter2D(Collision2D col) {
-        if(col.gameObject.tag == "Resource") {
+        if(col.gameObject.tag == "Resource" && hookShot.IsShooting()) {
             var ast = col.gameObject.GetComponent<Asteroid>();
             ast.Capture(hookShot);
             AudioManager.PLAY_SOUND("kickVerb", 1, Random.Range(1f, 1.1f));

@@ -21,7 +21,7 @@ public class PlanetGlow : MonoBehaviour {
     }
 
     void OnEnable() {
-        if(randomGen || (GameManager.instance != null && GameManager.instance.isSinglePlayer) || PhotonNetwork.IsMasterClient) SetTexture(TextureSwitcher.GetRandomPlanet());
+        if(randomGen || PhotonNetwork.IsMasterClient) SetTexture(TextureSwitcher.GetRandomPlanet());
     }
 
     public void SetTexture(TextureSwitcher.TextureElement element) {

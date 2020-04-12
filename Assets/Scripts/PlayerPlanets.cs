@@ -42,11 +42,6 @@ public class PlayerPlanets : MonoBehaviourPun {
         wiggleOffset = Random.Range(0, 10000f);
         basePos = transform.localPosition;
         planetGlow = GetComponent<PlanetGlow>();
-        PhotonNetwork.AddCallbackTarget(this);
-    }
-
-    public void OnDisable() {
-        PhotonNetwork.RemoveCallbackTarget(this);
     }
 
     void Start() {
@@ -70,7 +65,7 @@ public class PlayerPlanets : MonoBehaviourPun {
     }
 
     [PunRPC]
-    public void ResetPlanet(int playerNum) {
+    public void ResetPlanet() {
         playerNumber = -1;
         player = null;
         currentScore = minScore;
@@ -90,7 +85,8 @@ public class PlayerPlanets : MonoBehaviourPun {
         orbitColor = player.playerColor;
         scoreText.color = player.playerColor;
         scoreText.enabled = true;
-        orbitTrail.material.color = orbitColor; 
+        orbitTrail.material.color = orbitColor;
+        currentScore = minScore = 0; 
         player.SetHomePlanet(gameObject);
     }
 
@@ -104,6 +100,11 @@ public class PlayerPlanets : MonoBehaviourPun {
     }
 
     void Update() {
+        if(currentScore >= maxScore && player != null && GameManager.GAME_STARTED && !GameManager.GAME_WON) {
+            WinGame();
+            SynchWin(player.photonView.ViewID);
+        }
+
         orbit.transform.localScale = Vector3.Lerp(orbit.transform.localScale, transform.localScale / orbitScaleReduction.Evaluate(currentScore / maxScore), Time.deltaTime * 2f);
         transform.localScale = Vector3.Lerp(transform.localScale, new Vector3(Mathf.Clamp(transform.localScale.x, 0, maxScale), Mathf.Clamp(transform.localScale.y, 0, maxScale), Mathf.Clamp(transform.localScale.z, 0, maxScale)), Time.deltaTime * 2f);
 
@@ -135,7 +136,6 @@ public class PlayerPlanets : MonoBehaviourPun {
         if(playerNumber <= 0 || GameManager.GAME_WON) return;
         if (currentScore < maxScore) {
             AudioManager.PLAY_SOUND("Musicalhit", 1.5f);
-            currentScore += amount;
             var newScale = transform.localScale + new Vector3(amount, amount, 0) / 150f;
             newScale = new Vector3(Mathf.Clamp(newScale.x, 0, maxScale), Mathf.Clamp(newScale.y, 0, maxScale), Mathf.Clamp(newScale.z, 0, maxScale));
 
@@ -145,10 +145,6 @@ public class PlayerPlanets : MonoBehaviourPun {
             GetComponent<UIFloat>().SetBaseScale(newScale);
             if(photonView != null) photonView.RPC("SetResource", RpcTarget.AllBufferedViaServer, currentScore + amount);
         }  
-        if(currentScore >= maxScore) {
-            WinGame();
-            SynchWin(player.photonView.ViewID);
-        }
         if (currentScore <= minScore) currentScore = minScore;
 
         AudioManager.PLAY_SOUND("collect", 1, 1.2f);

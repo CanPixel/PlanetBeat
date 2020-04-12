@@ -77,7 +77,7 @@ public class Asteroid : MonoBehaviourPun {
     }
 
     public void Capture(HookShot hookShot) {
-        if((!held || (held && hookShot.hostPlayer.photonView != null && ownerID != hookShot.hostPlayer.photonView.ViewID)) && hookShot.canHold()) {
+        if((!held || (held && ownerID != hookShot.hostPlayer.photonView.ViewID)) && hookShot.canHold()) {
             scaleBack = false;
             transform.position = hookShot.transform.position;
             ownerPlayer = hookShot.hostPlayer;
@@ -85,20 +85,24 @@ public class Asteroid : MonoBehaviourPun {
             hookShot.CatchObject(gameObject);
             collectTimer = grabDelay; 
             playerTagsManager.GiveTag();
-            if(photonView != null && ownerPlayer.photonView != null) photonView.RPC("SetAsteroidOwner", RpcTarget.All, ownerPlayer.photonView.ViewID);
+            photonView.RPC("SetAsteroidOwner", RpcTarget.AllBufferedViaServer, ownerPlayer.photonView.ViewID, false);
         }
     }
 
     [PunRPC]
-    public void SetAsteroidOwner(int ownerID) {
-        if(rb != null) {
-            if(ownerID > 0) rb.simulated = false;
-            else rb.simulated = true;
-        }
+    public void SetAsteroidOwner(int ownerID, bool forceReset) {
         Color col = Color.white;
         var owner = PhotonNetwork.GetPhotonView(ownerID);
-        if(owner != null) col = owner.GetComponent<PlayerShip>().playerColor;
-        SetColor(col.r, col.g, col.b);
+        if(owner != null) {
+            ownerPlayer = owner.GetComponent<PlayerShip>();
+            held = true;
+            col = ownerPlayer.playerColor;
+            SetColor(col.r, col.g, col.b);
+        }
+        if(forceReset) {
+            SetColor(1f, 1f, 1f);
+            held = false;
+        }
         this.ownerID = ownerID; 
     }
 
@@ -159,11 +163,27 @@ public class Asteroid : MonoBehaviourPun {
         } else inOrbitTimer = 0;
     }
 
+    [PunRPC]
+    public void DestroyAsteroid(int asteroidID) {
+        if(photonView != null && photonView.ViewID == asteroidID) {
+            GameManager.DESTROY_SERVER_OBJECT(gameObject);
+            Destroy(gameObject);
+        }
+    }
+
     public void ConsumeResource() {
         playerPlanets.AddingResource(value);
-        if(photonView != null && playerPlanets.photonView != null) photonView.TransferOwnership(playerPlanets.photonView.Controller.ActorNumber);
         GameManager.DESTROY_SERVER_OBJECT(gameObject);
+        if(photonView != null) photonView.RPC("DestroyAsteroid", RpcTarget.All, photonView.ViewID);
+        Destroy(gameObject);
         canConsume = false;
+    }
+
+    public void ForceRelease(bool force = false) {
+        if(photonView != null && ownerPlayer.photonView != null) {
+            if(!force) photonView.RPC("SetAsteroidOwner", RpcTarget.All, 0, false);
+            else photonView.RPC("SetAsteroidOwner", RpcTarget.All, 0, true);
+        }
     }
 
     public void ReleaseAsteroid(bool released) {
@@ -174,7 +194,7 @@ public class Asteroid : MonoBehaviourPun {
             canScore = true;
             scaleBack = true;
             ReleasedTimer();
-             if(photonView != null && ownerPlayer.photonView != null) photonView.RPC("SetAsteroidOwner", RpcTarget.All, 0);
+            ForceRelease();
         } else {
             held = true;
             playerTagsManager.runTagTimer = false;
