@@ -8,7 +8,7 @@ public class TextureSwitcher : MonoBehaviour {
 
     [HideInInspector] public int pack = 0;
 
-    [HideInInspector] public SunTextures sun;
+    [HideInInspector] public BlackHoleTextures sun;
 
     private Color[] playerColors;
     public static Color GetPlayerTint(int i) {
@@ -92,7 +92,7 @@ public class TextureSwitcher : MonoBehaviour {
         if(sunReference == null) {
             var sunObj = GameObject.FindGameObjectWithTag("SUN");
             if(sunObj != null) {
-                sun = sunObj.GetComponent<SunTextures>();
+                sun = sunObj.GetComponent<BlackHoleTextures>();
                 if(sun != null) {
                     sunReference = sun.src;
                     sunGlowReference = sun.glow;

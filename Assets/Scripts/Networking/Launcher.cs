@@ -29,7 +29,7 @@ public class Launcher : MonoBehaviourPunCallbacks, ILobbyCallbacks, IInRoomCallb
     [SerializeField] private GameObject controlPanel;
     public Sprite freeAim, lockOn, looker, player;
 
-    public Button playButton;
+    public Button playButton, exitButton;
 
     public Toggle SpectToggle;
     public Image SpectIcon;
@@ -83,6 +83,10 @@ public class Launcher : MonoBehaviourPunCallbacks, ILobbyCallbacks, IInRoomCallb
 
         PhotonNetwork.GameVersion = gameVersion;
         PhotonNetwork.ConnectUsingSettings();
+
+        #if UNITY_WEBGL
+            exitButton.gameObject.SetActive(false);
+        #endif
     }
 
     private void AddRoomToList(SpaceRoom room, int i) {

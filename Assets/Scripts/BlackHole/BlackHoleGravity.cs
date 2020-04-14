@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 
-public class SunGravity : MonoBehaviour {
+public class BlackHoleGravity : MonoBehaviour {
     [Header("PHYSICS")]
     [Range(0, 10)]
     public float planetForceResource = 1;
@@ -53,7 +53,8 @@ public class SunGravity : MonoBehaviour {
             col.GetComponent<Rigidbody2D>().AddForce(orientation * totalForce);
         }
         if (col.tag == "Resource") {
-            if(col.GetComponent<Asteroid>().held) return; //Influence of sun gravity bij trailingObjects 
+            var ast = col.GetComponent<Asteroid>();
+            if(ast.held || !ast.IsDoneSpawning) return; //Influence of sun gravity bij trailingObjects 
 
             float totalForce = -(planetForceResource * (Mass / 2f));
             var orientation = (col.transform.position - transform.position).normalized;
@@ -63,6 +64,8 @@ public class SunGravity : MonoBehaviour {
 
     void OnCollisionEnter2D(Collision2D collision) {
         if (collision.collider.tag == "Resource") {
+            if(!collision.gameObject.GetComponent<Asteroid>().IsDoneSpawning) return; 
+            collision.gameObject.GetComponent<Asteroid>().DisableTrails();
             destroyingObjects.Add(new DyingObject(collision.gameObject));
             AudioManager.PLAY_SOUND("Burn", 0.8f, 1.3f);
         }

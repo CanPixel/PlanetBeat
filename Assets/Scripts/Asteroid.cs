@@ -7,16 +7,28 @@ using UnityEngine.UI;
 public class Asteroid : MonoBehaviourPun {
     [HideInInspector] public Rigidbody2D rb;
     public Image src, glow;
+    public Text scoreText, increasePopupTxt;
 
     [HideInInspector] public bool held = false;
     [HideInInspector] public bool inOrbit = false;
     [HideInInspector] public bool giveTag = false;
     [HideInInspector] public float inOrbitTimer;
 
-    public float value = 5;
     public float timeToScore = 0.3f;
     public float grabDelay = .5f; 
     
+    [Header("VALUE & WORTH")]
+    public float baseValue = 10;
+    public Vector2 increaseValueDelay = new Vector2(4, 6);
+    private float currentIncreaseDelay = 4;
+    public Vector2Int increaseRate = new Vector2Int(2, 5);
+    private int currentIncrease;
+    private float value, increaseValueTimer;
+
+    //SUPERNOVA AFTER
+    
+    //
+
     [Header("PHYSICS")]
     public float thrust = 20;
     public float defaultRbDrag = 0.008f;
@@ -40,7 +52,15 @@ public class Asteroid : MonoBehaviourPun {
     private AsteroidNetwork network;
 
     private Vector3 baseScale;
+    private float baseTextScale, increasePopupBaseSize, increasePopupHideTimer;
     private bool scaleBack = false;
+
+    private const float activateAfterSpawning = 1.25f;
+
+    private float spawnTimer = 0;
+    public bool IsDoneSpawning {
+        get {return spawnTimer > activateAfterSpawning;}
+    }
 
     void Start() {
         network = GetComponent<AsteroidNetwork>();
@@ -50,6 +70,13 @@ public class Asteroid : MonoBehaviourPun {
         rb.drag = defaultRbDrag - .15f;
         SetTexture(TextureSwitcher.GetCurrentTexturePack());
         rb.AddForce(-transform.right * thrust);
+        value = baseValue;
+        baseTextScale = scoreText.transform.localScale.x;
+        scoreText.transform.localScale = Vector3.zero;
+        increasePopupBaseSize = increasePopupTxt.transform.localScale.x;
+        increasePopupTxt.transform.localScale = Vector3.zero;
+        currentIncreaseDelay = Random.Range(increaseValueDelay.x, increaseValueDelay.y);
+        currentIncrease = Random.Range(increaseRate.x, increaseRate.y);
     }
 
     void OnEnable() {
@@ -58,6 +85,24 @@ public class Asteroid : MonoBehaviourPun {
     }
 
     void Update() {
+        increasePopupTxt.transform.rotation = Quaternion.Euler(0, 0, Mathf.Sin(Time.time * 3f) * 10f);
+        increasePopupTxt.transform.position = transform.position + new Vector3(0.05f, 0.35f, 0);
+        if(increasePopupHideTimer > 1f) increasePopupTxt.transform.localScale = Vector3.Lerp(increasePopupTxt.transform.localScale, Vector3.zero, Time.deltaTime * 2f);
+        
+        scoreText.transform.localScale = Vector3.Lerp(scoreText.transform.localScale, Vector3.one * baseTextScale, Time.deltaTime * 2f);
+        scoreText.text = value.ToString();
+        scoreText.transform.rotation = Quaternion.identity;
+        
+        spawnTimer += Time.deltaTime;
+        increasePopupHideTimer += Time.deltaTime;
+        if(spawnTimer < activateAfterSpawning) return;
+
+        increaseValueTimer += Time.deltaTime;
+        if(increaseValueTimer > currentIncreaseDelay) {
+            IncreaseValue();
+            increaseValueTimer = 0;
+        }
+
         if(scaleBack) transform.localScale = Vector3.Lerp(transform.localScale, baseScale, Time.deltaTime * 2f);
 
         if (collectTimer > 0) collectTimer -= Time.deltaTime;
@@ -65,6 +110,19 @@ public class Asteroid : MonoBehaviourPun {
 
         if(held) ReleaseAsteroid(false);
         else ReleasedTimer();
+    }
+
+    public void DisableTrails() {
+        playerTagsManager.DisableTrails();
+    }
+
+    protected void IncreaseValue() {
+        value += currentIncrease;
+        increasePopupTxt.text = "+" + currentIncrease.ToString() + "!";
+        currentIncrease = Random.Range(increaseRate.x, increaseRate.y);
+        increasePopupTxt.transform.localScale = Vector3.one * increasePopupBaseSize * 1.5f;
+        increasePopupHideTimer = 0;
+        currentIncreaseDelay = Random.Range(increaseValueDelay.x, increaseValueDelay.y);
     }
 
     public bool IsOwnedBy(PlayerShip player) {

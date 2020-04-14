@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI; 
 
-public class Sun : MonoBehaviour {
+public class BlackHole : MonoBehaviour {
     [Header("REFERENCES")]
-    public GameObject sun;
     private UIFloat sunFloatAnim;
     public Text roundCountdownText;
+
+    public BlackHoleEffect effect;
 
     private float timer = 0;
 
@@ -21,7 +22,7 @@ public class Sun : MonoBehaviour {
 
     void Start() {
         baseScale = transform.localScale;
-        sunFloatAnim = sun.GetComponent<UIFloat>();
+        sunFloatAnim = GetComponent<UIFloat>();
 
         timer = roundDuration; 
         roundHasEnded = false;

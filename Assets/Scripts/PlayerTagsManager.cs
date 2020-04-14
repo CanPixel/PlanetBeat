@@ -27,6 +27,10 @@ public class PlayerTagsManager : MonoBehaviour {
         asteroidTrailRenderer.material.color = ogTrailColor; 
     }
 
+    public void DisableTrails() {
+        asteroidTrailRenderer.enabled = false;
+    }
+
     void Update() {
         StartTagTimer(); 
 

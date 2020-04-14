@@ -4,8 +4,10 @@ using System.Collections.Generic;
 using Photon.Pun;
 using Photon.Realtime;
 
-public class AsteroidBelt : MonoBehaviour {
+public class AsteroidSpawner : MonoBehaviour {
     public int asteroidAmount = 4;
+
+    public GameObject blackHole;
 
     private GameObject[] AsteroidsList;
     public GameObject prefab;
@@ -22,8 +24,7 @@ public class AsteroidBelt : MonoBehaviour {
         Vector3 pos = RandomCircle(center, Random.Range(8f, 9f), Random.Range(0, 360));
         Quaternion rot = Quaternion.FromToRotation(Vector2.up, center + pos);
         
-        GameObject InstancedPrefab = GameManager.SPAWN_SERVER_OBJECT(prefab, pos, rot);
-        if(InstancedPrefab != null) InstancedPrefab.transform.SetParent(transform);
+        GameObject InstancedPrefab = GameManager.SPAWN_SERVER_OBJECT(prefab, blackHole.transform.position, rot);
     }
 
     Vector3 RandomCircle(Vector3 center, float radius, int a) {
