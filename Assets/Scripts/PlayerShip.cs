@@ -34,6 +34,7 @@ public class PlayerShip : MonoBehaviourPunCallbacks {
     #region MOVEMENT
     [Header("PHYSICS")]
         public float maxVelocity = 5;
+        private float baseVelocity;
         public float acceleration = 0.1f;
 
         [Range(1, 20)]
@@ -43,6 +44,7 @@ public class PlayerShip : MonoBehaviourPunCallbacks {
 
         public float defaultDrag;
         public float stopDrag;
+        private float baseStopDrag, baseDefaultDrag;
     #endregion
 
     //Rigidbody reference voor physics en movement hoeraaa
@@ -171,6 +173,9 @@ public class PlayerShip : MonoBehaviourPunCallbacks {
 
     void Start() {
         rb = GetComponent<Rigidbody2D>();
+        baseVelocity = maxVelocity;
+        baseStopDrag = stopDrag;
+        baseDefaultDrag = defaultDrag;
   //      var cont = GameObject.FindGameObjectWithTag("CUSTOM CONTROLLER");
     //    if(cont != null) customController = cont.GetComponent<CustomController>();
       //  if(customController != null && customController.useCustomControls) hookShot.customController = customController;
@@ -203,6 +208,13 @@ public class PlayerShip : MonoBehaviourPunCallbacks {
         if(!GameManager.GAME_STARTED) PositionToPlanet();
 
         exhaustSound.volume = Mathf.Lerp(exhaustSound.volume, IsThrust() ? 0.05f : 0, Time.deltaTime * 10f);
+
+        //Soft borders
+        var DistFromCenter = Vector2.Distance(Camera.main.WorldToScreenPoint(transform.position), new Vector2(Screen.width, Screen.height) / 2f);
+        DistFromCenter /= 200f;
+        //maxVelocity = Mathf.Lerp(maxVelocity, baseVelocity * Mathf.Clamp(1.75f - DistFromCenter, 0.2f, 1), Time.deltaTime * 4f);
+        stopDrag = Mathf.Lerp(stopDrag, baseStopDrag * Mathf.Clamp(4f - DistFromCenter, 0.1f, 1), Time.deltaTime * 4f);
+        defaultDrag = Mathf.Lerp(defaultDrag, baseDefaultDrag * Mathf.Clamp(4f - DistFromCenter, 0.1f, 1), Time.deltaTime * 4f);
 
         if (ReleaseAsteroidKey() && trailingObjects.Count > 0) {
             AudioManager.PLAY_SOUND("collect");

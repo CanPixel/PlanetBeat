@@ -10,6 +10,9 @@ public class GameManager : MonoBehaviourPunCallbacks {
    public bool spectating = false;
 
    public Background background;
+   public GameObject gameField;
+   private float gameFieldScale;
+   public float gameFieldStartScale;
    public Text winText;
    private bool turnValue;
 
@@ -70,6 +73,8 @@ public class GameManager : MonoBehaviourPunCallbacks {
    }
 
    void Update() {
+      gameField.transform.localScale = Vector3.Lerp(gameField.transform.localScale, gameFieldScale * Vector3.one, Time.deltaTime * 7f);
+
       spectating = PlayerPrefs.GetInt("Spectate") == 0;
       if(Input.GetKeyUp(KeyCode.Escape)) Screen.fullScreen = !Screen.fullScreen;
 
@@ -94,7 +99,7 @@ public class GameManager : MonoBehaviourPunCallbacks {
          }
       }
 
-      if(startupDelayTimer > 0.6f && skipCountdown) GAME_STARTED = true;
+      if(startupDelayTimer > 0.8f && skipCountdown) GAME_STARTED = true;
       else startupDelayTimer += Time.deltaTime;
    }
 
@@ -113,6 +118,9 @@ public class GameManager : MonoBehaviourPunCallbacks {
 
    public override void OnEnable() {
       if(instance == null) instance = this;
+      gameFieldScale = gameField.transform.localScale.x;
+      gameField.transform.localScale = Vector3.one * gameFieldStartScale;
+
       base.OnEnable();
 
       turnValue = background.TURN;

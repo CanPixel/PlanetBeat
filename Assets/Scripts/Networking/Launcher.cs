@@ -84,7 +84,7 @@ public class Launcher : MonoBehaviourPunCallbacks, ILobbyCallbacks, IInRoomCallb
         PhotonNetwork.GameVersion = gameVersion;
         PhotonNetwork.ConnectUsingSettings();
 
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_EDITOR
             exitButton.gameObject.SetActive(false);
         #endif
     }
