@@ -113,7 +113,7 @@ public class PlayerPlanets : MonoBehaviourPun {
         if(scoreText != null) {
             scoreText.transform.rotation = Quaternion.identity;
             scoreText.transform.localScale = Vector2.Lerp(scoreText.transform.localScale, scoreBaseScale, Time.deltaTime * 1f);
-            textOutline.effectDistance = Vector2.Lerp(textOutline.effectDistance, outlineBase, Time.deltaTime * 0.7f);
+            textOutline.effectDistance = Vector2.Lerp(textOutline.effectDistance, outlineBase, Time.deltaTime * 1.2f);
 
             scoreText.text = currentScore.ToString("F0");
             if(player != null) {
@@ -139,7 +139,7 @@ public class PlayerPlanets : MonoBehaviourPun {
             var newScale = transform.localScale + new Vector3(amount, amount, 0) / 150f;
             newScale = new Vector3(Mathf.Clamp(newScale.x, 0, maxScale), Mathf.Clamp(newScale.y, 0, maxScale), Mathf.Clamp(newScale.z, 0, maxScale));
 
-            textOutline.effectDistance *= 2.5f;
+            textOutline.effectDistance *= 2.25f;
             scoreText.transform.localScale *= 1.2f;
 
             GetComponent<UIFloat>().SetBaseScale(newScale);

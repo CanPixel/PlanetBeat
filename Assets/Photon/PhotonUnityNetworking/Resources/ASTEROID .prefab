@@ -419,7 +419,6 @@ MonoBehaviour:
   outOrbitForce: 40
   playerPlanets: {fileID: 0}
   ownerPlayer: {fileID: 0}
-  ownerID: 0
   playerTagsManager: {fileID: 0}
   playerOrbit: {fileID: 0}
 --- !u!50 &8069275902880659584

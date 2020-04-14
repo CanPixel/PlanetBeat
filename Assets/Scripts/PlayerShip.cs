@@ -189,7 +189,7 @@ public class PlayerShip : MonoBehaviourPunCallbacks {
                 rb.rotation = turn;
             }
         }
-        if(dropAsteroid) {
+        if(dropAsteroid && trailingObjects.Count > 0) {
             var asteroid = trailingObjects[0];
             trailingObjects.RemoveAt(0);
             asteroid.rb.constraints = RigidbodyConstraints2D.None;
@@ -247,6 +247,7 @@ public class PlayerShip : MonoBehaviourPunCallbacks {
 
         //Removes asteroids owned by other players
         for(int i = 0; i < trailingObjects.Count; i++) if(!trailingObjects[i].IsOwnedBy(this)) {
+            trailingObjects[i].ReleaseAsteroid(true);
             trailingObjects.RemoveAt(i);
             i--;
         }
@@ -311,6 +312,7 @@ public class PlayerShip : MonoBehaviourPunCallbacks {
         for(int i = 0; i < trailingObjects.Count; i++) {
             if(trailingObjects[i] == obj) {
                 photonView.RPC("ResetAsteroidColors", RpcTarget.All, trailingObjects[i].photonView.ViewID);
+                trailingObjects[i].ReleaseAsteroid(true);
                 trailingObjects.RemoveAt(i);
                 return;
             }

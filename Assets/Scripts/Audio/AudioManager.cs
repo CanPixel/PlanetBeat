@@ -6,12 +6,6 @@ public class AudioManager : MonoBehaviour {
 	public float SoundLevel = 0.2f, AmbientLevel = 1;
 	private float SoundBase, AmbientBase;
 
-	protected float crescendo = 0;
-	protected float crescendoTarget = 1;
-	public static void SetCrescendo(float target) {
-		instance.crescendoTarget = target;
-	}
-
 	public float GetMasterSoundLevel {
 		get {return SoundLevel;}
 	}
@@ -49,10 +43,6 @@ public class AudioManager : MonoBehaviour {
 	private void UpdateVolumeLevels() {
 		SoundBase = SoundLevel;
 		AmbientBase = AmbientLevel;
-	}
-
-	void Update() {
-		crescendo = Mathf.Lerp(crescendo, crescendoTarget, Time.deltaTime);
 	}
 
 	void LateUpdate() {

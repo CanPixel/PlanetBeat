@@ -9,7 +9,7 @@ public class Asteroid : MonoBehaviourPun {
     public Image src, glow;
     public Text scoreText, increasePopupTxt;
 
-    [HideInInspector] public bool held = false;
+    public bool held = false;
     [HideInInspector] public bool inOrbit = false;
     [HideInInspector] public bool giveTag = false;
     [HideInInspector] public float inOrbitTimer;
@@ -42,8 +42,7 @@ public class Asteroid : MonoBehaviourPun {
     private Collider2D asteroidColl;
     [HideInInspector] public PlayerPlanets playerPlanets;
 
-    [HideInInspector] public PlayerShip ownerPlayer;
-    [HideInInspector] public int ownerID;
+    public PlayerShip ownerPlayer;
 
     [HideInInspector] public PlayerTagsManager playerTagsManager;
 
@@ -126,8 +125,8 @@ public class Asteroid : MonoBehaviourPun {
     }
 
     public bool IsOwnedBy(PlayerShip player) {
-        if(player.photonView == null) return true;
-        return ownerID == player.photonView.ViewID;
+        if(ownerPlayer == null) return false;
+        return ownerPlayer.photonView.ViewID == player.photonView.ViewID;
     }
 
     public void SetColor(float r, float g, float b) {
@@ -135,7 +134,8 @@ public class Asteroid : MonoBehaviourPun {
     }
 
     public void Capture(HookShot hookShot) {
-        if((!held || (held && ownerID != hookShot.hostPlayer.photonView.ViewID)) && hookShot.canHold()) {
+        if(!hookShot.canHold()) return;
+        if((!held || (held && ownerPlayer != null && ownerPlayer.photonView.ViewID != hookShot.hostPlayer.photonView.ViewID))) {
             scaleBack = false;
             transform.position = hookShot.transform.position;
             ownerPlayer = hookShot.hostPlayer;
@@ -152,16 +152,16 @@ public class Asteroid : MonoBehaviourPun {
         Color col = Color.white;
         var owner = PhotonNetwork.GetPhotonView(ownerID);
         if(owner != null) {
-            ownerPlayer = owner.GetComponent<PlayerShip>();
             held = true;
             col = ownerPlayer.playerColor;
             SetColor(col.r, col.g, col.b);
+            this.ownerPlayer = owner.GetComponent<PlayerShip>();
         }
         if(forceReset) {
             SetColor(1f, 1f, 1f);
             held = false;
         }
-        this.ownerID = ownerID; 
+        //this.ownerID = ownerID; 
     }
 
     void OnTriggerStay2D(Collider2D col) {
