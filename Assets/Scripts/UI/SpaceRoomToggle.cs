@@ -56,4 +56,8 @@ public class SpaceRoomToggle : MonoBehaviour, IPointerEnterHandler, IPointerExit
     public void OnPointerExit(PointerEventData eventData) {
         hover = false;
     }
+
+    public void ClickSound(float pitch) {
+        GameManager.ClickSound(pitch);
+    }
 }

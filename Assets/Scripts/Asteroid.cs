@@ -28,7 +28,7 @@ public class Asteroid : MonoBehaviourPun {
     //EXPLOSION
     public GameObject explodeParticles;
     public Color explosionColor;
-    public float ExplosionPhaseTime = 7f, TimeBeforeExplosion = 5f;
+    public float CriticalPhaseTime = 7f, TimeBeforeExplosion = 5f, TimeAfterSizzle = 2f;
     private float bombTimer = 0;
     private bool nearExplode = false;
     private ShockwaveScript distortionFX;
@@ -105,10 +105,10 @@ public class Asteroid : MonoBehaviourPun {
         if(spawnTimer < activateAfterSpawning) return;
 
         //Explosion phase
-        if(spawnTimer > ExplosionPhaseTime) {
+        if(spawnTimer > CriticalPhaseTime) {
             bombTimer += Time.deltaTime;
                 
-            var tickBomb = spawnTimer - ExplosionPhaseTime;
+            var tickBomb = spawnTimer - CriticalPhaseTime;
             src.transform.localPosition = glow.transform.localPosition = scoreText.transform.localPosition = Vector3.Lerp(src.transform.localPosition, new Vector3(Mathf.Sin(Time.time * tickBomb * 4f) * 10f * tickBomb, Mathf.Sin(Time.time * tickBomb * 4f) * 10f * tickBomb, 0), tickBomb * Time.deltaTime * 4f);
 
             glow.fillAmount = Mathf.Sin(Time.time * tickBomb);
@@ -124,10 +124,10 @@ public class Asteroid : MonoBehaviourPun {
             //Actual explosion
             if(bombTimer > TimeBeforeExplosion) {
                 if(!nearExplode) {
-                    /////CLICK SOUND FX
+                    AudioManager.PLAY_SOUND("sizzle", 1f, Random.Range(0.98f, 1.02f));
                     nearExplode = true;
                 }
-                if(bombTimer > TimeBeforeExplosion + 1f) ExplodeAsteroid();
+                if(bombTimer > TimeBeforeExplosion + TimeAfterSizzle) ExplodeAsteroid();
             }
         }
 
@@ -148,7 +148,7 @@ public class Asteroid : MonoBehaviourPun {
 
     public void ExplodeAsteroid() {
         Camera.main.GetComponent<ScreenShake>().Turn(2f);
-        ////EXPLODE SOUND
+        AudioManager.PLAY_SOUND("Explode", 1f, Random.Range(0.95f, 1.05f));
         Instantiate(explodeParticles, transform.position, Quaternion.identity);
         var shockwave = PhotonNetwork.InstantiateSceneObject("Shockwave", transform.position, Quaternion.identity);
         shockwave.GetComponent<ShockwaveScript>().Detonate();

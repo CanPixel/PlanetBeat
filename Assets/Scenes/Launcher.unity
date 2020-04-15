@@ -578,6 +578,8 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 40fda5cf717af824fb9a6a9708477038, type: 3}
   - {fileID: 8300000, guid: baf477ad3947a9741bb46f2f6ca93722, type: 3}
   - {fileID: 8300000, guid: 1c5ca9a1750d10b4cb5c1fc308316743, type: 3}
+  - {fileID: 8300000, guid: 31b5b810a5a3f734789b9279e8c1dfeb, type: 3}
+  - {fileID: 8300000, guid: a434054a81408744d9cd1a44ba9139ec, type: 3}
 --- !u!114 &185244985
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6112,7 +6114,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 533948573842649025}
-  m_LocalRotation: {x: 0, y: 0, z: 0.9647435, w: -0.26319197}
+  m_LocalRotation: {x: 0, y: 0, z: 0.39489707, w: 0.9187254}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -6199,7 +6201,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 533948573944061022}
-  m_LocalRotation: {x: 0, y: 0, z: 0.021648297, w: -0.99976563}
+  m_LocalRotation: {x: 0, y: 0, z: 0.99304885, w: -0.11770298}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -7131,7 +7133,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 533948575062331776}
-  m_LocalRotation: {x: 0, y: 0, z: 0.3212816, w: -0.9469837}
+  m_LocalRotation: {x: 0, y: 0, z: 0.9824815, w: 0.18636027}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -7313,7 +7315,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 533948575445420487}
-  m_LocalRotation: {x: 0, y: 0, z: 0.6850615, w: -0.7284852}
+  m_LocalRotation: {x: 0, y: 0, z: 0.81673783, w: 0.57700896}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -7422,6 +7424,7 @@ MonoBehaviour:
   roomGroup: {fileID: 1402536668}
   roomTogglePrefab: {fileID: 2148302010840234953, guid: 95828d0a0bb162844af501fea778b863,
     type: 3}
+  connectedToMaster: 0
 --- !u!1 &6045767007770380079
 GameObject:
   m_ObjectHideFlags: 0

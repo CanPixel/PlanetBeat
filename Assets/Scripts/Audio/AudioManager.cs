@@ -71,6 +71,7 @@ public class AudioManager : MonoBehaviour {
 	}
 
 	public static void PLAY_SOUND(string name, float volume = 1.0f, float pitch = 1.0f) {
+		if(Camera.main == null) return;
 		PLAY_SOUND(name.ToLower(), Camera.main.transform.position - new Vector3(0, 20, 0), volume, pitch);
 	}
 

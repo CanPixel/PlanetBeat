@@ -68,6 +68,10 @@ public class GameManager : MonoBehaviourPunCallbacks {
       }
    }
 
+   public static void ClickSound(float pitch) {
+      AudioManager.PLAY_SOUND("click", 1, pitch);
+   }
+
    void OnValidate() {
       if(playerScale <= 0) playerScale = 0.01f;
    }
@@ -143,6 +147,7 @@ public class GameManager : MonoBehaviourPunCallbacks {
       if(PlayerPrefs.GetInt("Spectate") != 0) AddLocalClient(PlayerShip.PLAYERNAME);
 
       skipCountdown = Launcher.GetSkipCountDown();
+      AudioManager.PLAY_SOUND("sizzle", 1f, 1.5f);
    }
 
    protected void AssignPlayerIdentity(int ID) {
