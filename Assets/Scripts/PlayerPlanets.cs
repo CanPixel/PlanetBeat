@@ -15,13 +15,15 @@ public class PlayerPlanets : MonoBehaviourPun {
     private Color orbitColor;
     public TrailRenderer orbitTrail; 
     public GameObject orbit;
-    public int explodePenalty = 10;
 
     [HideInInspector] public float wiggleSpeed = 10, wiggleRange = 100f;
 
     public float maxScale = 4;
     private Vector3 baseScale;
     public AnimationCurve orbitScaleReduction;
+
+    [Space(10)]
+    public int explodePenalty = 10;
 
     private PlanetGlow planetGlow;
     private Vector3 basePos;
