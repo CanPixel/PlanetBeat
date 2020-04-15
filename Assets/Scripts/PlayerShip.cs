@@ -42,6 +42,8 @@ public class PlayerShip : MonoBehaviourPunCallbacks {
         [Range(1, 5)]
         public float brakingSpeed = 1;
 
+        public float respawningTime = 2;
+
         public float defaultDrag;
         public float stopDrag;
         private float baseStopDrag, baseDefaultDrag;
@@ -67,6 +69,12 @@ public class PlayerShip : MonoBehaviourPunCallbacks {
     private PlayerPlanets planet;
 
     private bool dropAsteroid = false;
+    private float respawnDelay = 0;
+    private float flicker = 0;
+
+    public bool CanExplode() {
+        return respawnDelay <= 0;
+    }
 
     public GameObject GetHomePlanet() {
         return homePlanet;
@@ -146,6 +154,13 @@ public class PlayerShip : MonoBehaviourPunCallbacks {
         if(planet != null) transform.position = photonView.transform.position = planet.transform.position;
     }
 
+    public void Explode() {
+        if(planet != null) planet.ExplodeReduce();
+        flicker = 1;
+        PositionToPlanet();
+        respawnDelay = respawningTime;
+    }
+
     public void ForceColor(Color col) {
         ForceColor(col.r, col.g, col.b);
     }
@@ -182,7 +197,17 @@ public class PlayerShip : MonoBehaviourPunCallbacks {
     }
 
     void FixedUpdate() {
-        if(IsThisClient()) {
+        if(respawnDelay > 0) {
+            respawnDelay -= Time.deltaTime;
+
+            flicker += Time.deltaTime;
+            if(flicker > 0.2f) {
+                ship.enabled = !ship.enabled;
+                flicker = 0;
+            }
+        } else ship.enabled = true;
+
+        if(IsThisClient() && respawnDelay <= 0) {
             ProcessInputs();
             if(rb != null) {
                 rb.AddForce(transform.up * velocity);

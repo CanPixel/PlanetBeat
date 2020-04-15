@@ -15,6 +15,7 @@ public class PlayerPlanets : MonoBehaviourPun {
     private Color orbitColor;
     public TrailRenderer orbitTrail; 
     public GameObject orbit;
+    public int explodePenalty = 10;
 
     [HideInInspector] public float wiggleSpeed = 10, wiggleRange = 100f;
 
@@ -130,6 +131,12 @@ public class PlayerPlanets : MonoBehaviourPun {
         currentScore = amount;
         var newScale = transform.localScale + new Vector3(amount, amount, 0) / 50f;
         GetComponent<UIFloat>().SetBaseScale(newScale);
+    }
+
+    public void ExplodeReduce() {
+        planetGlow.Flicker();
+        if(currentScore - explodePenalty >= 0) currentScore -= explodePenalty;
+        else currentScore = 0;
     }
 
     public void AddingResource(float amount) {

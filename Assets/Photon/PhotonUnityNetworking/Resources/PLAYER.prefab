@@ -5696,12 +5696,13 @@ MonoBehaviour:
   - {fileID: 1662954744308020766}
   - {fileID: 7716859393941716483}
   - {fileID: 1662954744308020737}
-  maxVelocity: 3.3
+  maxVelocity: 8
   acceleration: 20000
-  turningSpeed: 7
+  turningSpeed: 6
   brakingSpeed: 2
-  defaultDrag: 0.2
-  stopDrag: 0.6
+  respawningTime: 2
+  defaultDrag: 2
+  stopDrag: 2
   trailingSpeed: 8
   throwingReduction: 0.55
   playerName: {fileID: 0}
@@ -5718,7 +5719,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1.5
+  m_Mass: 1
   m_LinearDrag: 0.1
   m_AngularDrag: 0.05
   m_GravityScale: 1
@@ -6029,7 +6030,7 @@ RectTransform:
   m_GameObject: {fileID: 7728442620695218153}
   m_LocalRotation: {x: 0, y: 0, z: -0.7071068, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 8, y: 8, z: 1}
+  m_LocalScale: {x: 9, y: 9, z: 1}
   m_Children: []
   m_Father: {fileID: 1484607488769715593}
   m_RootOrder: 0

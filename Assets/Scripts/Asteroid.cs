@@ -9,7 +9,7 @@ public class Asteroid : MonoBehaviourPun {
     public Image src, glow;
     public Text scoreText, increasePopupTxt;
 
-    public bool held = false;
+    [HideInInspector] public bool held = false;
     [HideInInspector] public bool inOrbit = false;
     [HideInInspector] public bool giveTag = false;
     [HideInInspector] public float inOrbitTimer;
@@ -25,9 +25,13 @@ public class Asteroid : MonoBehaviourPun {
     private int currentIncrease;
     private float value, increaseValueTimer;
 
-    //SUPERNOVA AFTER
-    
-    //
+    //EXPLOSION
+    public GameObject explodeParticles;
+    public Color explosionColor;
+    public float ExplosionPhaseTime = 7f, TimeBeforeExplosion = 5f;
+    private float bombTimer = 0;
+    private bool nearExplode = false;
+    private ShockwaveScript distortionFX;
 
     [Header("PHYSICS")]
     public float thrust = 20;
@@ -42,7 +46,7 @@ public class Asteroid : MonoBehaviourPun {
     private Collider2D asteroidColl;
     [HideInInspector] public PlayerPlanets playerPlanets;
 
-    public PlayerShip ownerPlayer;
+    [HideInInspector] public PlayerShip ownerPlayer;
 
     [HideInInspector] public PlayerTagsManager playerTagsManager;
 
@@ -50,11 +54,12 @@ public class Asteroid : MonoBehaviourPun {
 
     private AsteroidNetwork network;
 
-    private Vector3 baseScale;
+    private Vector3 baseScale, explosionExpand = Vector3.zero;
     private float baseTextScale, increasePopupBaseSize, increasePopupHideTimer;
     private bool scaleBack = false;
 
     private const float activateAfterSpawning = 1.25f;
+    private Vector3 standardGlowScale;
 
     private float spawnTimer = 0;
     public bool IsDoneSpawning {
@@ -62,6 +67,8 @@ public class Asteroid : MonoBehaviourPun {
     }
 
     void Start() {
+        distortionFX = transform.GetComponentInChildren<ShockwaveScript>();
+        distortionFX.gameObject.SetActive(false);
         network = GetComponent<AsteroidNetwork>();
         rb = GetComponent<Rigidbody2D>();
         asteroidColl = GetComponent<Collider2D>();
@@ -76,6 +83,7 @@ public class Asteroid : MonoBehaviourPun {
         increasePopupTxt.transform.localScale = Vector3.zero;
         currentIncreaseDelay = Random.Range(increaseValueDelay.x, increaseValueDelay.y);
         currentIncrease = Random.Range(increaseRate.x, increaseRate.y);
+        standardGlowScale = glow.transform.localScale;
     }
 
     void OnEnable() {
@@ -96,6 +104,33 @@ public class Asteroid : MonoBehaviourPun {
         increasePopupHideTimer += Time.deltaTime;
         if(spawnTimer < activateAfterSpawning) return;
 
+        //Explosion phase
+        if(spawnTimer > ExplosionPhaseTime) {
+            bombTimer += Time.deltaTime;
+                
+            var tickBomb = spawnTimer - ExplosionPhaseTime;
+            src.transform.localPosition = glow.transform.localPosition = scoreText.transform.localPosition = Vector3.Lerp(src.transform.localPosition, new Vector3(Mathf.Sin(Time.time * tickBomb * 4f) * 10f * tickBomb, Mathf.Sin(Time.time * tickBomb * 4f) * 10f * tickBomb, 0), tickBomb * Time.deltaTime * 4f);
+
+            glow.fillAmount = Mathf.Sin(Time.time * tickBomb);
+
+            src.color = glow.color = Color.Lerp(src.color, explosionColor, tickBomb * Time.deltaTime);
+
+            explosionExpand = Vector2.one * Mathf.Sin(Time.time * tickBomb) / 50f;
+            transform.localScale = Vector3.Lerp(transform.localScale, baseScale + explosionExpand, Time.deltaTime * tickBomb);
+            distortionFX.SetIntensity(tickBomb / 1000f);
+
+            if(bombTimer > TimeBeforeExplosion / 2f) distortionFX.gameObject.SetActive(true);
+
+            //Actual explosion
+            if(bombTimer > TimeBeforeExplosion) {
+                if(!nearExplode) {
+                    /////CLICK SOUND FX
+                    nearExplode = true;
+                }
+                if(bombTimer > TimeBeforeExplosion + 1f) ExplodeAsteroid();
+            }
+        }
+
         increaseValueTimer += Time.deltaTime;
         if(increaseValueTimer > currentIncreaseDelay) {
             IncreaseValue();
@@ -109,6 +144,15 @@ public class Asteroid : MonoBehaviourPun {
 
         if(held) ReleaseAsteroid(false);
         else ReleasedTimer();
+    }
+
+    public void ExplodeAsteroid() {
+        Camera.main.GetComponent<ScreenShake>().Turn(2f);
+        ////EXPLODE SOUND
+        Instantiate(explodeParticles, transform.position, Quaternion.identity);
+        var shockwave = PhotonNetwork.InstantiateSceneObject("Shockwave", transform.position, Quaternion.identity);
+        shockwave.GetComponent<ShockwaveScript>().Detonate();
+        GameManager.DESTROY_SERVER_OBJECT(gameObject);
     }
 
     public void DisableTrails() {
@@ -161,7 +205,6 @@ public class Asteroid : MonoBehaviourPun {
             SetColor(1f, 1f, 1f);
             held = false;
         }
-        //this.ownerID = ownerID; 
     }
 
     void OnTriggerStay2D(Collider2D col) {

@@ -161,6 +161,7 @@ GameObject:
   - component: {fileID: 1649782154533145730}
   - component: {fileID: 1649782154533145733}
   - component: {fileID: 6579721475729894769}
+  - component: {fileID: -373622163061192173}
   m_Layer: 5
   m_Name: BLACK HOLE
   m_TagString: SUN
@@ -250,3 +251,33 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   src: {fileID: 1649782153080609184}
   glow: {fileID: 1649782153398875425}
+--- !u!114 &-373622163061192173
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1649782154533145740}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ecab13549aed208489fcd1cc90964c90, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  beatSection: 0
+  groundMovement: 0
+  spawnPositionSphere: 0
+  _prefabEffect: []
+  _prefabWallSegment: []
+  _prefabSphere: []
+  _prefabPosEffect: []
+  _prefabPosWallSegment: []
+  _prefabPosSphere: []
+  _audioMixer: {fileID: 24100000, guid: b09d2d7020b845640913f95bdc122078, type: 2}
+  _groundplane: {fileID: 0}
+  _groundbounceCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  _bounceDistanceMultiplier: 0

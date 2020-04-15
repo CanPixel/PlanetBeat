@@ -22,14 +22,14 @@ public class PlayerHighlighter : MonoBehaviour {
         string hookString = "";
         if(host.hookMethod == PlayerShip.HookMethod.FreeAim) hookString = "Space to shoot grapple";
         else hookString = "Hold space to extend grappling range";
-        text.text = "THIS IS YOU! \n \n" + "<size=100>Arrow keys to move\n" + hookString + "\n" + "F to drop</size>";
+        text.text = "THIS IS YOU! \n \n" + "<size=110>< and > to steer\n ^ to thrust \n" + "F to throw \n"+hookString+"</size>";
     }
 
     void Update() {
         var sine = Mathf.Sin(Time.time * 7f);
 
         text.transform.rotation = Quaternion.identity;
-        text.transform.position = new Vector3(transform.position.x + 1.35f + sine / 7f, transform.position.y + 0.75f, 0);
+        text.transform.position = new Vector3(transform.position.x + 2.25f + sine / 7f, transform.position.y + 0.25f, 0);
         text.color = line.startColor = line.endColor = new Color(1, 1, 1, radius / 100f);
 
         if(!GameManager.GAME_STARTED && host.photonView.IsMine) {

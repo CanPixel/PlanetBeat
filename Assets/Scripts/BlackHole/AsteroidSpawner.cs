@@ -20,9 +20,11 @@ public class AsteroidSpawner : MonoBehaviour {
 
     private BlackHoleEffect blackHoleEffect;
     private float baseRadius;
-    private bool openBlackHole = false;
+    private bool openBlackHole = false, shake = false;
 
     private ScreenShake mainCamScreenShake;
+
+    private bool kickOrSnare = false;
 
     void Start() {
         mainCamScreenShake = Camera.main.GetComponent<ScreenShake>();
@@ -41,17 +43,18 @@ public class AsteroidSpawner : MonoBehaviour {
         AsteroidsList = GameObject.FindGameObjectsWithTag("Resource");
         if (AsteroidsList.Length < asteroidAmount) {
             asteroidSpawnTimer += Time.deltaTime;
-            if(asteroidSpawnTimer > currentSpawnDelay) {
-                //if(!openBlackHole) mainCamScreenShake.Shake(Random.Range(1f, 2f));
-                openBlackHole = true;
+            if(asteroidSpawnTimer > currentSpawnDelay) openBlackHole = true;
+
+            if(asteroidSpawnTimer > currentSpawnDelay + (spawnAnimationDelay / 2f) && !shake) {
+                mainCamScreenShake.Shake(1f);
+                shake = true;
             }
 
             if(asteroidSpawnTimer > currentSpawnDelay + spawnAnimationDelay) {
-                mainCamScreenShake.Shake(Random.Range(1f, 2f));
                 SpawnAsteroid();
                 currentSpawnDelay = Random.Range(asteroidSpawnDelay.x, asteroidSpawnDelay.y);
                 asteroidSpawnTimer = 0;
-                openBlackHole = false;
+                openBlackHole = shake = false;
             }
         }
     }
@@ -60,8 +63,12 @@ public class AsteroidSpawner : MonoBehaviour {
         Vector3 center = transform.position;
         Vector3 pos = RandomCircle(center, Random.Range(8f, 9f), Random.Range(0, 360));
         Quaternion rot = Quaternion.FromToRotation(Vector2.up, center + pos);
-        
         GameObject InstancedPrefab = GameManager.SPAWN_SERVER_OBJECT(prefab, blackHole.transform.position, rot);
+
+        AudioManager.PLAY_SOUND("actualBeat", 2f, Random.Range(0.9f, 1.1f));
+        if(!kickOrSnare) AudioManager.PLAY_SOUND("DRUMS_KICK", 2f, 1f);
+        else AudioManager.PLAY_SOUND("DRUMS_SNARE", 2f, 1f);
+        kickOrSnare = !kickOrSnare;
     }
 
     private Vector3 RandomCircle(Vector3 center, float radius, int a) {

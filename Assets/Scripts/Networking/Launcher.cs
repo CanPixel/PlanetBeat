@@ -50,10 +50,11 @@ public class Launcher : MonoBehaviourPunCallbacks, ILobbyCallbacks, IInRoomCallb
 
     private bool update = true;
 
-    public delegate bool SimpleAction();
-    private Coroutine _connectingCoroutine;
+    public bool connectedToMaster = false;
+    private float connectTimer = 0;
 
     void Awake() {
+        connectedToMaster = false;
         roomInit = 0;
         beginZoom = Camera.main.orthographicSize;
         playButton.interactable = false;
@@ -81,12 +82,18 @@ public class Launcher : MonoBehaviourPunCallbacks, ILobbyCallbacks, IInRoomCallb
         AimSlider.value = PlayerPrefs.GetInt("AIM_MODE");
         OnChangeAim(PlayerPrefs.GetInt("AIM_MODE"));
 
-        PhotonNetwork.GameVersion = gameVersion;
-        PhotonNetwork.ConnectUsingSettings();
+        TryConnect();
 
         #if UNITY_WEBGL || UNITY_EDITOR
             exitButton.gameObject.SetActive(false);
         #endif
+    }
+
+    protected void TryConnect(bool retry = false) {
+        if(retry) Debug.Log("Reconnect");
+        connectTimer = 0;
+        PhotonNetwork.GameVersion = gameVersion;
+        PhotonNetwork.ConnectUsingSettings();
     }
 
     private void AddRoomToList(SpaceRoom room, int i) {
@@ -113,6 +120,11 @@ public class Launcher : MonoBehaviourPunCallbacks, ILobbyCallbacks, IInRoomCallb
     }
 
     void Update() {
+        connectTimer += Time.deltaTime;
+        if(connectTimer > 3 && !connectedToMaster) {
+            PhotonNetwork.Disconnect();
+            TryConnect(true);
+        }
         if(!update) return; 
 
         playersOnline.text = PhotonNetwork.CountOfPlayers + " player" + ((PhotonNetwork.CountOfPlayers == 1) ? "" : "s") + " online";
@@ -167,6 +179,7 @@ public class Launcher : MonoBehaviourPunCallbacks, ILobbyCallbacks, IInRoomCallb
     #region MonoBehaviourPunCallbacks Callbacks
     
     public override void OnConnectedToMaster() {
+        connectedToMaster = true;
         if(connectNow) PhotonNetwork.JoinLobby();
         if(playText != null) playText.text = "PLAY";
         SpectIcon.gameObject.SetActive(true);
