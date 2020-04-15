@@ -42,11 +42,12 @@ public class AsteroidSpawner : MonoBehaviour {
         if (AsteroidsList.Length < asteroidAmount) {
             asteroidSpawnTimer += Time.deltaTime;
             if(asteroidSpawnTimer > currentSpawnDelay) {
-                if(!openBlackHole) mainCamScreenShake.Shake(2);
+                //if(!openBlackHole) mainCamScreenShake.Shake(Random.Range(1f, 2f));
                 openBlackHole = true;
             }
 
             if(asteroidSpawnTimer > currentSpawnDelay + spawnAnimationDelay) {
+                mainCamScreenShake.Shake(Random.Range(1f, 2f));
                 SpawnAsteroid();
                 currentSpawnDelay = Random.Range(asteroidSpawnDelay.x, asteroidSpawnDelay.y);
                 asteroidSpawnTimer = 0;
