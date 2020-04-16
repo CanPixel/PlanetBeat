@@ -6,15 +6,13 @@ public class ShockwaveScript : MonoBehaviour {
     private Vector3 baseScale;
     private Material mat;
 
-    public GameObject explodeParticles;
-
     private bool once = false;
     public float expandSpeed = 1f;
-
     private float expandTime = 0;
+
     private float intens, baseIntens;
 
-    private bool hurt = false;
+    public BlastRadius blastRadius;
 
     void Start() {
         baseScale = transform.localScale;
@@ -44,18 +42,10 @@ public class ShockwaveScript : MonoBehaviour {
         baseIntens = mat.GetFloat("_Intensity");
         intens = baseIntens;
         expandTime = 1;
-        hurt = true;
-        expandSpeed = 0.5f;
+        blastRadius.Hurt(expandSpeed);
+        blastRadius.gameObject.transform.SetParent(transform.parent, true);
         once = true;
         transform.localScale = Vector3.zero;
-    }
-
-    void OnTriggerEnter2D(Collider2D col) {
-        if(hurt && col.gameObject.tag == "PLAYERSHIP" && col.gameObject.GetComponent<PlayerShip>().CanExplode()) {
-            var i = Instantiate(explodeParticles, col.transform.position, Quaternion.identity);
-            i.transform.localScale /= 2f;
-            col.gameObject.GetComponent<PlayerShip>().Explode();
-        }
     }
 }
     

@@ -361,8 +361,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03b2c34f699d61f48b15227d428d4125, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  explodeParticles: {fileID: 0}
   expandSpeed: 1
+  blastRadius: {fileID: 0}
 --- !u!1 &7322705006172146250
 GameObject:
   m_ObjectHideFlags: 0
@@ -515,9 +515,9 @@ MonoBehaviour:
   explodeParticles: {fileID: 1067106092621830195, guid: cd0b03d048d9905489b14408260a7a72,
     type: 3}
   explosionColor: {r: 0.8490566, g: 0.41251338, b: 0.4473327, a: 1}
-  CriticalPhaseTime: 5
-  TimeBeforeExplosion: 4
-  TimeAfterSizzle: 2
+  CriticalPhaseTime: {x: 2, y: 6}
+  TimeBeforeExplosion: {x: 3, y: 5}
+  TimeAfterSizzle: 1
   thrust: 20
   defaultRbDrag: 0.2
   inPlayerOrbitRbDrag: 0.6
