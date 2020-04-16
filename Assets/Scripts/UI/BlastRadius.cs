@@ -15,6 +15,8 @@ public class BlastRadius : MonoBehaviour {
     private LineRenderer line;
 
     private float expandSpeed, lifeSpan;
+    private bool exploded = false;
+    private Vector3 endSize;
 
     void Start() {
         line = GetComponent<LineRenderer>();
@@ -34,11 +36,13 @@ public class BlastRadius : MonoBehaviour {
     }
 
     void Update() {
-        if(transform.localScale.x > maxRange) {
+        if(transform.localScale.x > maxRange || exploded) {
             lifeSpan += Time.deltaTime;
-            transform.localScale = Vector3.Lerp(transform.localScale, Vector3.one * expandSpeed, Time.deltaTime);
+            if(!exploded) endSize = transform.localScale * 1.4f;
+            exploded = true;
+            transform.localScale = Vector3.Lerp(transform.localScale, endSize, Time.deltaTime * 2f);
         }
-        else transform.localScale += Vector3.one * Time.deltaTime * expandSpeed;
+        else if(!exploded) transform.localScale += Vector3.one * Time.deltaTime * expandSpeed;
 
         CreatePoints(1);
         line.startColor = line.endColor = Color.Lerp(line.startColor, new Color(radiusColor.r, radiusColor.g, radiusColor.b, 0), Time.deltaTime * 0.85f);

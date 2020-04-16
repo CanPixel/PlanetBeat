@@ -50,7 +50,7 @@ public class Launcher : MonoBehaviourPunCallbacks, ILobbyCallbacks, IInRoomCallb
 
     private bool update = true;
 
-    public bool connectedToMaster = false;
+    [HideInInspector] public bool connectedToMaster = false;
     private float connectTimer = 0;
 
     void Awake() {

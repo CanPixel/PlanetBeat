@@ -515,8 +515,8 @@ MonoBehaviour:
   explodeParticles: {fileID: 1067106092621830195, guid: cd0b03d048d9905489b14408260a7a72,
     type: 3}
   explosionColor: {r: 0.8490566, g: 0.41251338, b: 0.4473327, a: 1}
-  CriticalPhaseTime: {x: 2, y: 6}
-  TimeBeforeExplosion: {x: 3, y: 5}
+  CriticalPhaseTime: {x: 1, y: 3}
+  TimeBeforeExplosion: {x: 1, y: 3}
   TimeAfterSizzle: 1
   thrust: 20
   defaultRbDrag: 0.2

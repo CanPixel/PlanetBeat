@@ -117,7 +117,7 @@ public class Asteroid : MonoBehaviourPun {
             src.transform.localPosition = glow.transform.localPosition = scoreText.transform.localPosition = Vector3.Lerp(src.transform.localPosition, new Vector3(Mathf.Sin(Time.time * tickBomb * 4f) * 10f * tickBomb, Mathf.Sin(Time.time * tickBomb * 4f) * 10f * tickBomb, 0), tickBomb * Time.deltaTime * 4f);
 
             if(timeBombTick > 1f / tickBomb) {
-                AudioManager.PLAY_SOUND("click", 2.5f, Random.Range(0.5f, 0.55f) + tickBomb / 5f);
+                AudioManager.PLAY_SOUND("timebombtick", 2f, Random.Range(0.5f, 0.55f) + tickBomb / 3f);
                 timeBombTick = 0;
             }
 
@@ -134,7 +134,7 @@ public class Asteroid : MonoBehaviourPun {
             //Actual explosion
             if(bombTimer > timeBeforeExpl) {
                 if(!nearExplode) {
-                    AudioManager.PLAY_SOUND("sizzle", 1f, Random.Range(0.98f, 1.02f));
+                    AudioManager.PLAY_SOUND("sizzle21", 2f, Random.Range(1f, 1.05f));
                     nearExplode = true;
                 }
                 if(bombTimer > timeBeforeExpl + TimeAfterSizzle) ExplodeAsteroid();
