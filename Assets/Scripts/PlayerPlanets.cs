@@ -11,7 +11,7 @@ public class PlayerPlanets : MonoBehaviourPun {
     public float currentScore;
     public float maxScore = 100f;
     [HideInInspector] public float minScore;
-    public Text scoreText;
+    public Text scoreText, increasePopupTxt;
     private Color orbitColor;
     public TrailRenderer orbitTrail; 
     public GameObject orbit;
@@ -27,7 +27,7 @@ public class PlayerPlanets : MonoBehaviourPun {
 
     private PlanetGlow planetGlow;
     private Vector3 basePos;
-    private float wiggleOffset;
+    private float wiggleOffset, increasePopupBaseSize, increasePopupHideTimer;
     
     private Outline textOutline;
     private Vector2 outlineBase;
@@ -45,6 +45,8 @@ public class PlayerPlanets : MonoBehaviourPun {
         wiggleOffset = Random.Range(0, 10000f);
         basePos = transform.localPosition;
         planetGlow = GetComponent<PlanetGlow>();
+        increasePopupTxt.transform.localScale = Vector3.zero;
+        increasePopupTxt.enabled = false;
     }
 
     void Start() {
@@ -57,6 +59,8 @@ public class PlayerPlanets : MonoBehaviourPun {
             scoreText.enabled = false;
             return;
         }
+        increasePopupBaseSize = increasePopupTxt.transform.localScale.x;
+        increasePopupTxt.transform.localScale = Vector3.zero;
     }
 
     public bool HasReachedMax() {
@@ -103,6 +107,11 @@ public class PlayerPlanets : MonoBehaviourPun {
     }
 
     void Update() {
+        increasePopupHideTimer += Time.deltaTime;
+        increasePopupTxt.transform.rotation = Quaternion.Euler(0, 0, Mathf.Sin(Time.time * 5f) * 10f);
+        increasePopupTxt.transform.position = transform.position + new Vector3(0.05f, 0.35f, 0);
+        if(increasePopupHideTimer > 1f) increasePopupTxt.transform.localScale = Vector3.Lerp(increasePopupTxt.transform.localScale, Vector3.zero, Time.deltaTime * 0.5f);
+
         if(currentScore >= maxScore && player != null && GameManager.GAME_STARTED && !GameManager.GAME_WON) {
             WinGame();
             SynchWin(player.photonView.ViewID);
@@ -136,9 +145,13 @@ public class PlayerPlanets : MonoBehaviourPun {
     }
 
     public void ExplodeReduce() {
+        increasePopupTxt.enabled = true;
         planetGlow.Flicker();
         if(currentScore - explodePenalty >= 0) currentScore -= explodePenalty;
         else currentScore = 0;
+        increasePopupTxt.text = "-" + explodePenalty.ToString() + "!";
+        increasePopupHideTimer = 0;
+        increasePopupTxt.transform.localScale = Vector3.one * increasePopupBaseSize * 1.5f;
     }
 
     public void AddingResource(float amount) {

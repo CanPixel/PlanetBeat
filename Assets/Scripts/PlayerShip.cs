@@ -198,6 +198,7 @@ public class PlayerShip : MonoBehaviourPunCallbacks {
 
     void FixedUpdate() {
         if(respawnDelay > 0) {
+            PositionToPlanet();
             respawnDelay -= Time.deltaTime;
 
             flicker += Time.deltaTime;

@@ -34,14 +34,17 @@ public class BlastRadius : MonoBehaviour {
     }
 
     void Update() {
-        lifeSpan += Time.deltaTime;
+        if(transform.localScale.x > maxRange) {
+            lifeSpan += Time.deltaTime;
+            transform.localScale = Vector3.Lerp(transform.localScale, Vector3.one * expandSpeed, Time.deltaTime);
+        }
+        else transform.localScale += Vector3.one * Time.deltaTime * expandSpeed;
 
         CreatePoints(1);
         line.startColor = line.endColor = Color.Lerp(line.startColor, new Color(radiusColor.r, radiusColor.g, radiusColor.b, 0), Time.deltaTime * 0.85f);
 
-        transform.localScale += Vector3.one * Time.deltaTime * expandSpeed;
         if(expandSpeed > 0.1f) expandSpeed -= Time.deltaTime / 2f;
-        if(transform.localScale.x > maxRange || lifeSpan > timeUntillDestroy) GameManager.DESTROY_SERVER_OBJECT(gameObject);
+        if(transform.localScale.x > maxRange && lifeSpan > timeUntillDestroy) GameManager.DESTROY_SERVER_OBJECT(gameObject);
     }
 
     void OnTriggerEnter2D(Collider2D col) {

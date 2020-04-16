@@ -66,7 +66,7 @@ MonoBehaviour:
   explodeParticles: {fileID: 1067106092621830195, guid: cd0b03d048d9905489b14408260a7a72,
     type: 3}
   segments: 16
-  maxRange: 4
+  maxRange: 1.8
   timeUntillDestroy: 2
   radiusColor: {r: 0.8867924, g: 0.21333212, b: 0.49357116, a: 1}
 --- !u!120 &3169242050043294802
@@ -144,8 +144,8 @@ LineRenderer:
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 0.8862745, g: 0.21176471, b: 0.49411765, a: 0.45882353}
-      key1: {r: 0.8862745, g: 0.21176471, b: 0.49411765, a: 0.45882353}
+      key0: {r: 0.8862745, g: 0.21176471, b: 0.49411765, a: 0.019607844}
+      key1: {r: 0.8862745, g: 0.21176471, b: 0.49411765, a: 0.019607844}
       key2: {r: 0, g: 0, b: 0, a: 0}
       key3: {r: 0, g: 0, b: 0, a: 0}
       key4: {r: 0, g: 0, b: 0, a: 0}
@@ -316,7 +316,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03b2c34f699d61f48b15227d428d4125, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  expandSpeed: 0.7
+  expandSpeed: 3.5
   blastRadius: {fileID: 2737845490263930765}
 --- !u!114 &-2122985349770358416
 MonoBehaviour:
