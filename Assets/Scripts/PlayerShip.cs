@@ -218,9 +218,11 @@ public class PlayerShip : MonoBehaviourPunCallbacks {
         if(dropAsteroid && trailingObjects.Count > 0) {
             var asteroid = trailingObjects[0];
             trailingObjects.RemoveAt(0);
-            asteroid.rb.constraints = RigidbodyConstraints2D.None;
+            if(asteroid.rb != null) {
+                asteroid.rb.constraints = RigidbodyConstraints2D.None;
+                asteroid.rb.velocity = rb.velocity / throwingReduction; 
+            }
             asteroid.transform.TransformDirection(new Vector2(transform.forward.x * asteroid.transform.forward.x, transform.forward.y * asteroid.transform.forward.y));
-            asteroid.rb.velocity = rb.velocity / throwingReduction; 
             asteroid.ReleaseAsteroid(true); 
             dropAsteroid = false;
         }

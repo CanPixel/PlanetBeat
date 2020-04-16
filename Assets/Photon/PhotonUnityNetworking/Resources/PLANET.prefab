@@ -28,14 +28,14 @@ RectTransform:
   m_GameObject: {fileID: 1541882919655562108}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_LocalScale: {x: 4, y: 4, z: 4}
   m_Children: []
   m_Father: {fileID: 5336174367327457932}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 300, y: 300}
+  m_AnchoredPosition: {x: 600, y: 500}
   m_SizeDelta: {x: 10000, y: 10000}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4908318339080154690
@@ -303,15 +303,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerNumber: 0
   currentScore: 100
-  maxScore: 100
   minScore: 0
+  maxScore: 100
   scoreText: {fileID: 5336174368059501565}
   increasePopupTxt: {fileID: 7336624222899132335}
   orbitTrail: {fileID: 5336174368840663174}
   orbit: {fileID: 5336174368953841514}
   wiggleSpeed: 0
   wiggleRange: 500
-  maxScale: 4
+  maxScale: 2.2
   orbitScaleReduction:
     serializedVersion: 2
     m_Curve:
@@ -326,7 +326,7 @@ MonoBehaviour:
       outWeight: 0.33333334
     - serializedVersion: 3
       time: 0.9984486
-      value: 5.5096602
+      value: 2.5872335
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -336,7 +336,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  explodePenalty: 10
+  explodePenalty: 15
 --- !u!114 &5336174367327457940
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -685,7 +685,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5336174368953841514}
-  m_LocalRotation: {x: 0, y: 0, z: 0.69163376, w: 0.7222484}
+  m_LocalRotation: {x: 0, y: 0, z: -0.013255772, w: -0.99991214}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:

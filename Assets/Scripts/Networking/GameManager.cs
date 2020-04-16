@@ -126,6 +126,7 @@ public class GameManager : MonoBehaviourPunCallbacks {
       gameField.transform.localScale = Vector3.one * gameFieldStartScale;
 
       base.OnEnable();
+      Random.InitState((int)Time.time * 1000);
 
       turnValue = background.TURN;
       background.TURN = false;

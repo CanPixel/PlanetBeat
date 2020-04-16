@@ -12,7 +12,7 @@ public class ScreenShake : MonoBehaviour {
     void Update() {
         if(intensity > 0) {
             if(!turn) transform.localPosition = basePos + new Vector3(Mathf.Sin(Time.time * 10f * intensity) * intensity, Mathf.Cos(Time.time * 10f * intensity) * intensity, 0);
-            else transform.localRotation = Quaternion.Lerp(transform.localRotation, Quaternion.Euler(0, 0, Mathf.Sin(Time.time * 10f * intensity) * intensity * 10f), Time.deltaTime * 2f);
+            else transform.localRotation = Quaternion.Lerp(transform.localRotation, Quaternion.Euler(0, 0, Mathf.Sin(Time.time * 10f * intensity) * intensity * 10f), Time.deltaTime * 5f);
             intensity -= Time.deltaTime;
         } else transform.localRotation = Quaternion.Lerp(transform.localRotation, Quaternion.Euler(0, 0, 0), Time.deltaTime * 2f);
     }

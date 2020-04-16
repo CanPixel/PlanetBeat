@@ -8,9 +8,9 @@ using Photon.Realtime;
 public class PlayerPlanets : MonoBehaviourPun {
     private PlayerShip player;
     public int playerNumber = 0;
-    public float currentScore;
+    [HideInInspector] public float currentScore;
+    public float minScore = 0;
     public float maxScore = 100f;
-    [HideInInspector] public float minScore;
     public Text scoreText, increasePopupTxt;
     private Color orbitColor;
     public TrailRenderer orbitTrail; 
@@ -45,8 +45,6 @@ public class PlayerPlanets : MonoBehaviourPun {
         wiggleOffset = Random.Range(0, 10000f);
         basePos = transform.localPosition;
         planetGlow = GetComponent<PlanetGlow>();
-        increasePopupTxt.transform.localScale = Vector3.zero;
-        increasePopupTxt.enabled = false;
     }
 
     void Start() {
@@ -54,7 +52,8 @@ public class PlayerPlanets : MonoBehaviourPun {
         textOutline = scoreText.GetComponent<Outline>();
         outlineBase = textOutline.effectDistance;
         baseScale = transform.localScale;
-        currentScore = minScore = 0;
+        currentScore = minScore;
+        increasePopupTxt.enabled = false;
         if(player == null) {
             scoreText.enabled = false;
             return;
@@ -93,7 +92,7 @@ public class PlayerPlanets : MonoBehaviourPun {
         scoreText.color = player.playerColor;
         scoreText.enabled = true;
         orbitTrail.material.color = orbitColor;
-        currentScore = minScore = 0; 
+        currentScore = minScore; 
         player.SetHomePlanet(gameObject);
     }
 
@@ -107,10 +106,15 @@ public class PlayerPlanets : MonoBehaviourPun {
     }
 
     void Update() {
-        increasePopupHideTimer += Time.deltaTime;
+        if(increasePopupHideTimer > 0) increasePopupHideTimer += Time.deltaTime;
         increasePopupTxt.transform.rotation = Quaternion.Euler(0, 0, Mathf.Sin(Time.time * 5f) * 10f);
-        increasePopupTxt.transform.position = transform.position + new Vector3(0.05f, 0.35f, 0);
-        if(increasePopupHideTimer > 1f) increasePopupTxt.transform.localScale = Vector3.Lerp(increasePopupTxt.transform.localScale, Vector3.zero, Time.deltaTime * 0.5f);
+        if(increasePopupHideTimer > 2f) {
+            increasePopupTxt.transform.localScale = Vector3.Lerp(increasePopupTxt.transform.localScale, Vector3.zero, Time.deltaTime * 2f);
+            if(increasePopupHideTimer > 4f) {
+                increasePopupHideTimer = 0;
+                increasePopupTxt.enabled = false;
+            }
+        }
 
         if(currentScore >= maxScore && player != null && GameManager.GAME_STARTED && !GameManager.GAME_WON) {
             WinGame();
@@ -145,13 +149,13 @@ public class PlayerPlanets : MonoBehaviourPun {
     }
 
     public void ExplodeReduce() {
-        increasePopupTxt.enabled = true;
         planetGlow.Flicker();
         if(currentScore - explodePenalty >= 0) currentScore -= explodePenalty;
         else currentScore = 0;
+        increasePopupTxt.enabled = true;    
         increasePopupTxt.text = "-" + explodePenalty.ToString() + "!";
-        increasePopupHideTimer = 0;
-        increasePopupTxt.transform.localScale = Vector3.one * increasePopupBaseSize * 1.5f;
+        increasePopupHideTimer = 0.1f;
+        increasePopupTxt.transform.localScale = Vector3.one * increasePopupBaseSize;
     }
 
     public void AddingResource(float amount) {

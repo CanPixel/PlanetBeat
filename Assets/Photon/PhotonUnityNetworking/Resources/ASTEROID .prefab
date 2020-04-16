@@ -509,14 +509,14 @@ MonoBehaviour:
   inOrbitTimer: 0
   timeToScore: 2
   grabDelay: 0.5
-  baseValue: 10
-  increaseValueDelay: {x: 5, y: 9}
-  increaseRate: {x: 2, y: 5}
+  baseValue: {x: 1, y: 6}
+  increaseValueDelay: {x: 2, y: 4}
+  increaseRate: {x: 1, y: 3}
   explodeParticles: {fileID: 1067106092621830195, guid: cd0b03d048d9905489b14408260a7a72,
     type: 3}
   explosionColor: {r: 0.8490566, g: 0.41251338, b: 0.4473327, a: 1}
-  CriticalPhaseTime: {x: 1, y: 3}
-  TimeBeforeExplosion: {x: 1, y: 3}
+  CriticalPhaseTime: {x: 5, y: 9}
+  TimeBeforeExplosion: {x: 15, y: 25}
   TimeAfterSizzle: 1
   thrust: 20
   defaultRbDrag: 0.2

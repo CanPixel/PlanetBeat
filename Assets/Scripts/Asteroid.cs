@@ -18,7 +18,7 @@ public class Asteroid : MonoBehaviourPun {
     public float grabDelay = .5f; 
     
     [Header("VALUE & WORTH")]
-    public float baseValue = 10;
+    public Vector2Int baseValue = new Vector2Int(8, 12);
     public Vector2 increaseValueDelay = new Vector2(4, 6);
     private float currentIncreaseDelay = 4;
     public Vector2Int increaseRate = new Vector2Int(2, 5);
@@ -81,7 +81,7 @@ public class Asteroid : MonoBehaviourPun {
         rb.drag = defaultRbDrag - .15f;
         SetTexture(TextureSwitcher.GetCurrentTexturePack());
         rb.AddForce(-transform.right * thrust);
-        value = baseValue;
+        value = Random.Range(baseValue.x, baseValue.y);
         baseTextScale = scoreText.transform.localScale.x;
         scoreText.transform.localScale = Vector3.zero;
         increasePopupBaseSize = increasePopupTxt.transform.localScale.x;

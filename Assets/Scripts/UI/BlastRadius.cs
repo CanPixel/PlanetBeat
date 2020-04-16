@@ -11,6 +11,7 @@ public class BlastRadius : MonoBehaviour {
     public float maxRange = 10;
     public float timeUntillDestroy = 1;
     public Color radiusColor;
+    public float startSize = 0.1f;
 
     private LineRenderer line;
 
@@ -23,7 +24,7 @@ public class BlastRadius : MonoBehaviour {
         line.positionCount = segments + 1;
         line.startColor = line.endColor = radiusColor;
         CreatePoints(1);
-        transform.localScale = Vector3.zero;
+        transform.localScale = Vector3.one * startSize;
     }
     
     public void Hurt(float expand) {
