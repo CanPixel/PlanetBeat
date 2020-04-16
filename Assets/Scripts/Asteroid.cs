@@ -28,8 +28,8 @@ public class Asteroid : MonoBehaviourPun {
     //EXPLOSION
     public GameObject explodeParticles;
     public Color explosionColor;
-    public Vector2 CriticalPhaseTime = new Vector2(3, 6), TimeBeforeExplosion = new Vector2(3, 5);
-    private float criticalPhase, timeBeforeExpl;
+    public Vector2 StablePhase = new Vector2(3, 6), UnstablePhase = new Vector2(3, 5);
+    private float stablePhaseTime, unstablePhaseTime;
     public float TimeAfterSizzle = 2f;
     private float bombTimer = 0;
     private bool nearExplode = false;
@@ -70,8 +70,8 @@ public class Asteroid : MonoBehaviourPun {
     }
 
     void Start() {
-        criticalPhase = Random.Range(CriticalPhaseTime.x, CriticalPhaseTime.y);
-        timeBeforeExpl = Random.Range(TimeBeforeExplosion.x, TimeBeforeExplosion.y);
+        stablePhaseTime = Random.Range(StablePhase.x, StablePhase.y);
+        unstablePhaseTime = Random.Range(UnstablePhase.x, UnstablePhase.y);
         distortionFX = transform.GetComponentInChildren<ShockwaveScript>();
         distortionFX.gameObject.SetActive(false);
         network = GetComponent<AsteroidNetwork>();
@@ -110,10 +110,10 @@ public class Asteroid : MonoBehaviourPun {
         if(spawnTimer < activateAfterSpawning) return;
 
         //Explosion phase
-        if(spawnTimer > criticalPhase) {
+        if(spawnTimer > stablePhaseTime) {
             bombTimer += Time.deltaTime;
             timeBombTick += Time.deltaTime;
-            var tickBomb = spawnTimer - criticalPhase;
+            var tickBomb = spawnTimer - stablePhaseTime;
             src.transform.localPosition = glow.transform.localPosition = scoreText.transform.localPosition = Vector3.Lerp(src.transform.localPosition, new Vector3(Mathf.Sin(Time.time * tickBomb * 4f) * 10f * tickBomb, Mathf.Sin(Time.time * tickBomb * 4f) * 10f * tickBomb, 0), tickBomb * Time.deltaTime * 4f);
 
             if(timeBombTick > 1f / tickBomb) {
@@ -129,15 +129,15 @@ public class Asteroid : MonoBehaviourPun {
             transform.localScale = Vector3.Lerp(transform.localScale, baseScale + explosionExpand, Time.deltaTime * tickBomb);
             distortionFX.SetIntensity(tickBomb / 1000f);
 
-            if(bombTimer > timeBeforeExpl / 2f) distortionFX.gameObject.SetActive(true);
+            if(bombTimer > unstablePhaseTime / 2f) distortionFX.gameObject.SetActive(true);
 
             //Actual explosion
-            if(bombTimer > timeBeforeExpl) {
+            if(bombTimer > unstablePhaseTime) {
                 if(!nearExplode) {
                     AudioManager.PLAY_SOUND("sizzle21", 2f, Random.Range(1f, 1.05f));
                     nearExplode = true;
                 }
-                if(bombTimer > timeBeforeExpl + TimeAfterSizzle) ExplodeAsteroid();
+                if(bombTimer > unstablePhaseTime + TimeAfterSizzle) ExplodeAsteroid();
             }
         }
 
