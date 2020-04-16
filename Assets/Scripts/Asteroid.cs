@@ -59,6 +59,7 @@ public class Asteroid : MonoBehaviourPun {
     private Vector3 baseScale, explosionExpand = Vector3.zero;
     private float baseTextScale, increasePopupBaseSize, increasePopupHideTimer;
     private bool scaleBack = false;
+    private float timeBombTick = 0;
 
     private const float activateAfterSpawning = 1.25f;
     private Vector3 standardGlowScale;
@@ -111,9 +112,14 @@ public class Asteroid : MonoBehaviourPun {
         //Explosion phase
         if(spawnTimer > criticalPhase) {
             bombTimer += Time.deltaTime;
-                
+            timeBombTick += Time.deltaTime;
             var tickBomb = spawnTimer - criticalPhase;
             src.transform.localPosition = glow.transform.localPosition = scoreText.transform.localPosition = Vector3.Lerp(src.transform.localPosition, new Vector3(Mathf.Sin(Time.time * tickBomb * 4f) * 10f * tickBomb, Mathf.Sin(Time.time * tickBomb * 4f) * 10f * tickBomb, 0), tickBomb * Time.deltaTime * 4f);
+
+            if(timeBombTick > 1f / tickBomb) {
+                AudioManager.PLAY_SOUND("click", 2.5f, Random.Range(0.5f, 0.55f) + tickBomb / 5f);
+                timeBombTick = 0;
+            }
 
             glow.fillAmount = Mathf.Sin(Time.time * tickBomb);
 
