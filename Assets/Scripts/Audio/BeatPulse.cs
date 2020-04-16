@@ -2,53 +2,27 @@
 using System.Collections;
 using UnityEngine.Audio;
 
-[RequireComponent (typeof (AudioSource))]
 public class BeatPulse : MonoBehaviour {
-	public AudioSource _audioSource;
-
-    //Beat Detection
     public float _bpm;
     float _beatTime, _beatTimeD8;
-    int _tap;
     public static bool _beatFull, _beatD8;
-    float[] _tapTime = new float[4];
     float _beatTimer, _beatTimerD8;
     int _beatCount, _beatCountD;
     public static int _beatCountX2, _beatCountX4, _beatCountX8, _beatCountX16, _beatCountD2, _beatCountD4;
-    bool _customBeat;
 
-    void BeatDetection() {
-        if (Input.GetKeyUp(KeyCode.F1)) {
-            _customBeat = true;
-            _tap = 0;
-        }
+    public static bool BEGIN = false;
 
-        if (_customBeat) {
-            if (Input.GetKeyDown(KeyCode.F2)) {
-                if (_tap < 4) {
-                    _tapTime[_tap] = Time.realtimeSinceStartup;
-                    _tap++;
-                }
-                if (_tap == 4) {
-                    _bpm = 60 / ((_tapTime[3] - _tapTime[0]) * 0.25f);
-                    _tap = 0;
-                    _beatTimer = 0;
-                    _beatTimeD8 = 0;
-                    _beatCount = 0;
-                    _beatCountD = 0;
-                    _customBeat = false;
-                }
-            }
-        }
+    private void BeatDetection() {
         _beatFull = false;
         _beatTime = 60 / _bpm;
         _beatTimer += Time.deltaTime;
-       
+
         if (_beatTimer >= _beatTime) {
             _beatTimer -= _beatTime;
             _beatFull = true;
             _beatCount++;
         }
+
         _beatCountX2 = _beatCount % 2;
         _beatCountX4 = _beatCount % 4;
         _beatCountX8 = _beatCount % 8;
@@ -68,6 +42,6 @@ public class BeatPulse : MonoBehaviour {
     }
 
 	void Update () {
-        BeatDetection();
+        if(BEGIN) BeatDetection();
     }
 }

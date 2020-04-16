@@ -56,15 +56,9 @@ public class HookShot : MonoBehaviour {
                 if(didntCatch) {
                 }
             }
-        }
-        else { */ //Oude input systeem
-           switch(hostPlayer.hookMethod) {
-               default:
-               case PlayerShip.HookMethod.FreeAim: FreeAim(); break;
-               case PlayerShip.HookMethod.LockOn: LockOn(); break;
-           }
-  //      }
+        }*/
 
+        FreeAim();
         if(shootTimer > 0) shootTimer += Time.deltaTime;
         if(shootTimer > 1) didntCatch = true;
     }
@@ -73,31 +67,6 @@ public class HookShot : MonoBehaviour {
         public void FireLockOn(GameObject target) {
             lockOnAimTarget = target;
             if(hostPlayer.IsThisClient()) hostPlayer.photonView.RPC("CastHook", RpcTarget.All, hostPlayer.photonView.ViewID);
-        }
-
-        protected void LockOn() {
-            if(lockOnAimTarget != null) {
-                var targetDir = lockOnAimTarget.transform.position - transform.position;
-                float angle = Mathf.Atan2(targetDir.x, targetDir.y) * Mathf.Rad2Deg;
-                transform.rotation = Quaternion.AngleAxis(angle, Vector3.back);
-            }
-
-            if(IsShooting()) {
-                if(rope.sizeDelta.y + hookShotSpeed < hookShotRange * 1000f && !didntCatch) {
-                    if(!hitObject) rope.sizeDelta = new Vector2(rope.sizeDelta.x, rope.sizeDelta.y + hookShotSpeed);
-                    else if(rope.sizeDelta.y > 0) rope.sizeDelta = new Vector2(rope.sizeDelta.x, rope.sizeDelta.y - hookShotSpeed);
-                    else ResetHook();
-                }
-
-                if(didntCatch) {
-                    if(!reelback) {
-                        AudioManager.PLAY_SOUND("reel");
-                        reelback = true;
-                    }
-                    if(rope.sizeDelta.y > 0) rope.sizeDelta = new Vector2(rope.sizeDelta.x, rope.sizeDelta.y - hookShotSpeed);
-                    else ResetHook();
-                }
-            }
         }
 
         protected void FreeAim() {

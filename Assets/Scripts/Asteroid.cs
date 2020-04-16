@@ -63,6 +63,7 @@ public class Asteroid : MonoBehaviourPun {
 
     private const float activateAfterSpawning = 1.25f;
     private Vector3 standardGlowScale;
+    private float thrustDelay = 0;
 
     private float spawnTimer = 0;
     public bool IsDoneSpawning {
@@ -97,6 +98,12 @@ public class Asteroid : MonoBehaviourPun {
     }
 
     void Update() {
+        /* 
+        thrustDelay += Time.deltaTime;
+        if(thrustDelay < 0.2f) {
+            rb.AddForce(transform.forward * 4f + transform.right * 8f);
+        }*/
+        
         increasePopupTxt.transform.rotation = Quaternion.Euler(0, 0, Mathf.Sin(Time.time * 3f) * 10f);
         increasePopupTxt.transform.position = transform.position + new Vector3(0.05f, 0.35f, 0);
         if(increasePopupHideTimer > 1f) increasePopupTxt.transform.localScale = Vector3.Lerp(increasePopupTxt.transform.localScale, Vector3.zero, Time.deltaTime * 2f);

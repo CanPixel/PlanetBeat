@@ -33,6 +33,9 @@ public class PlayerPlanets : MonoBehaviourPun {
     private Vector2 outlineBase;
     private Vector2 scoreBaseScale;
 
+    private bool ScorePoint = false;
+    private float lastAmount;
+
     public bool HasPlayer() {
         return player != null && playerNumber > 0;
     }
@@ -160,20 +163,42 @@ public class PlayerPlanets : MonoBehaviourPun {
 
     public void AddingResource(float amount) {
         if(playerNumber <= 0 || GameManager.GAME_WON) return;
-        if (currentScore < maxScore) {
+
+       /*  if (currentScore < maxScore) {
             AudioManager.PLAY_SOUND("Musicalhit", 1.5f);
-            var newScale = transform.localScale + new Vector3(amount, amount, 0) / 150f;
+            var newScale = transform.localScale + new Vector3(lastAmount, lastAmount, 0) / 150f;
             newScale = new Vector3(Mathf.Clamp(newScale.x, 0, maxScale), Mathf.Clamp(newScale.y, 0, maxScale), Mathf.Clamp(newScale.z, 0, maxScale));
 
             textOutline.effectDistance *= 2.25f;
             scoreText.transform.localScale *= 1.2f;
 
             GetComponent<UIFloat>().SetBaseScale(newScale);
-            if(photonView != null) photonView.RPC("SetResource", RpcTarget.AllBufferedViaServer, currentScore + amount);
+            if(photonView != null) photonView.RPC("SetResource", RpcTarget.AllBufferedViaServer, currentScore + lastAmount);
         }  
         if (currentScore <= minScore) currentScore = minScore;
+        AudioManager.PLAY_SOUND("collect", 2, 1.2f); */
+        ScorePoint = true;
+        lastAmount = amount;
+    }
 
-        AudioManager.PLAY_SOUND("collect", 1, 1.2f);
+    public void AddOnBeat() {
+        if(player == null || playerNumber <= 0 || GameManager.GAME_WON || !ScorePoint) return;
+        if(ScorePoint) {
+            if (currentScore < maxScore) {
+                AudioManager.PLAY_SOUND("Musicalhit", 3.5f);
+                var newScale = transform.localScale + new Vector3(lastAmount, lastAmount, 0) / 150f;
+                newScale = new Vector3(Mathf.Clamp(newScale.x, 0, maxScale), Mathf.Clamp(newScale.y, 0, maxScale), Mathf.Clamp(newScale.z, 0, maxScale));
+
+                textOutline.effectDistance *= 2.25f;
+                scoreText.transform.localScale *= 1.2f;
+
+                GetComponent<UIFloat>().SetBaseScale(newScale);
+                if(photonView != null) photonView.RPC("SetResource", RpcTarget.AllBufferedViaServer, currentScore + lastAmount);
+            }  
+            if (currentScore <= minScore) currentScore = minScore;
+            AudioManager.PLAY_SOUND("collect", 2.5f);
+            ScorePoint = false;
+        }
     }
 
     protected void WinGame() {

@@ -15,7 +15,7 @@ public class PlayerName : MonoBehaviour {
     }
 
     void Update() {
-        if(host != null) transform.localPosition = host.transform.localPosition + new Vector3(0, 50, 0);
+        if(host != null) transform.localPosition = host.transform.localPosition + new Vector3(0, 70, 0);
     }
 
     public void SetHost(GameObject host, string name) {

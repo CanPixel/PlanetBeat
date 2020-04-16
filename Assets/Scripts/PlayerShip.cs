@@ -13,17 +13,18 @@ public class PlayerShip : MonoBehaviourPunCallbacks {
     public GameObject homePlanet;
     [HideInInspector] public GameObject playerLabel;
 
+    /* 
     [System.Serializable]
     public enum HookMethod {
         FreeAim, LockOn
     }
     [Space(5)]
-    public HookMethod hookMethod;
+    public HookMethod hookMethod; */
 
     [HideInInspector] public Collider2D[] colliders;
 
     [Header("PLAYER VALUES")]
-    public LockOnAim lockOnAim;
+   // public LockOnAim lockOnAim;
     public Image ship;
     public int playerNumber;
     public Color playerColor;
@@ -96,11 +97,6 @@ public class PlayerShip : MonoBehaviourPunCallbacks {
         ship.SetNativeSize();
     }
 
-    [PunRPC]
-    public void SetAim(int i) {
-         hookMethod = (i == 0) ? HookMethod.FreeAim : HookMethod.LockOn;
-    }
-
     #region IPunObservable implementation
         public override void OnEnable() {
             base.OnEnable();
@@ -135,8 +131,6 @@ public class PlayerShip : MonoBehaviourPunCallbacks {
             playerColor = TextureSwitcher.GetPlayerTint(photonView.ViewID);
             playerNumber = photonView.ViewID;
             if(playerLabel != null) playerLabel.GetComponent<Text>().color = playerColor;
-            if(PhotonNetwork.IsMasterClient && photonView != null) photonView.RPC("SetAim", RpcTarget.All, PlayerPrefs.GetInt("AIM_MODE"));
-            lockOnAim.gameObject.SetActive(hookMethod == HookMethod.LockOn);
             ForceColor(TextureSwitcher.GetPlayerTint(photonView.ViewID));
             GameManager.ClaimPlanet(this);
         }
@@ -249,7 +243,6 @@ public class PlayerShip : MonoBehaviourPunCallbacks {
             DropAsteroid();
         }
 
-        lockOnAim.selectColor = playerColor;
         //Particles emitten wanneer movement
         if(IsThisClient()) {
             var emitting = exhaust.emission;

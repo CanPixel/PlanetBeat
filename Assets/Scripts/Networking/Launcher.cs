@@ -33,9 +33,9 @@ public class Launcher : MonoBehaviourPunCallbacks, ILobbyCallbacks, IInRoomCallb
 
     public Toggle SpectToggle;
     public Image SpectIcon;
-    public Slider AimSlider;
+    //public Slider AimSlider;
     public Text lockonText, playText, playersOnline, playersInSpace, countOfRooms, title;
-    public Image reticleIcon, aimSliderBackground;
+    //public Image reticleIcon, aimSliderBackground;
     [Header("ROOM SELECTION")]
     public ToggleGroup roomGroup;
     private List<SpaceRoomToggle> roomList = new List<SpaceRoomToggle>();
@@ -79,8 +79,8 @@ public class Launcher : MonoBehaviourPunCallbacks, ILobbyCallbacks, IInRoomCallb
 
         SpectToggle.isOn = false;
         OnChangeSpectate(SpectToggle.isOn);
-        AimSlider.value = PlayerPrefs.GetInt("AIM_MODE");
-        OnChangeAim(PlayerPrefs.GetInt("AIM_MODE"));
+        //AimSlider.value = PlayerPrefs.GetInt("AIM_MODE");
+        //OnChangeAim(PlayerPrefs.GetInt("AIM_MODE"));
 
         TryConnect();
 
@@ -143,7 +143,8 @@ public class Launcher : MonoBehaviourPunCallbacks, ILobbyCallbacks, IInRoomCallb
         int spect = (value) ? 0 : 1;
         PlayerPrefs.SetInt("Spectate", spect);
     }
-    public void OnChangeAim(System.Single value) {
+    
+    /* public void OnChangeAim(System.Single value) {
         if(value == 0) {
             lockonText.enabled = false;
             reticleIcon.sprite = freeAim;
@@ -153,7 +154,7 @@ public class Launcher : MonoBehaviourPunCallbacks, ILobbyCallbacks, IInRoomCallb
             reticleIcon.sprite = lockOn;
         }
         PlayerPrefs.SetInt("AIM_MODE", (int)value);
-    }
+    } */
 
     public void ClickSound(float pitch) {
         AudioManager.PLAY_SOUND("click", 1, pitch);
@@ -233,6 +234,7 @@ public class Launcher : MonoBehaviourPunCallbacks, ILobbyCallbacks, IInRoomCallb
     }
 
     public static bool GetSkipCountDown() {
+        if(self == null) return true;
         return self.rooms[self.selectedRoom].noCountdown;
     }
 }

@@ -105,6 +105,8 @@ public class GameManager : MonoBehaviourPunCallbacks {
 
       if(startupDelayTimer > 0.8f && skipCountdown) GAME_STARTED = true;
       else startupDelayTimer += Time.deltaTime;
+
+      BeatPulse.BEGIN = GAME_STARTED;
    }
 
    [PunRPC]

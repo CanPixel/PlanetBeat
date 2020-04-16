@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class AudioManager : MonoBehaviour {
-	public float SoundLevel = 0.2f, AmbientLevel = 1;
-	private float SoundBase, AmbientBase;
+	public float SoundLevel = 0.1f, AmbientLevel = 0.1f, MusicLevel = 0.8f;
+	private float SoundBase, AmbientBase, MusicBase;
 
 	public float GetMasterSoundLevel {
 		get {return SoundLevel;}
@@ -12,6 +12,10 @@ public class AudioManager : MonoBehaviour {
 
 	public float GetMasterAmbientLevel {
 		get {return AmbientLevel;}
+	}
+
+	public float GetMasterMusicLevel {
+		get {return MusicBase;}
 	}
 
 	private static AudioManager instance;
@@ -43,6 +47,7 @@ public class AudioManager : MonoBehaviour {
 	private void UpdateVolumeLevels() {
 		SoundBase = SoundLevel;
 		AmbientBase = AmbientLevel;
+		MusicBase = MusicLevel;
 	}
 
 	void LateUpdate() {
@@ -52,6 +57,11 @@ public class AudioManager : MonoBehaviour {
 	public static float GetMasterAmbientVolume() {
 		if(instance == null) return 0;
 		else return instance.GetMasterAmbientLevel;
+	}
+
+	public static float GetMasterMusicVolume() {
+		if(instance == null) return 0;
+		else return instance.GetMasterMusicLevel;
 	}
 
 	public void PlaySound(string name) {

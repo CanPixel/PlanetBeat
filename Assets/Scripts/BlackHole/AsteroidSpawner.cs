@@ -45,11 +45,23 @@ public class AsteroidSpawner : MonoBehaviour {
             asteroidSpawnTimer += Time.deltaTime;
             if(asteroidSpawnTimer > currentSpawnDelay) openBlackHole = true;
 
-            if(asteroidSpawnTimer > currentSpawnDelay + (spawnAnimationDelay / 2f) && !shake) {
-                mainCamScreenShake.Shake(1f);
-                shake = true;
-            }
+            /* if(asteroidSpawnTimer > currentSpawnDelay + spawnAnimationDelay) {
+                SpawnAsteroid();
+                currentSpawnDelay = Random.Range(asteroidSpawnDelay.x, asteroidSpawnDelay.y);
+                asteroidSpawnTimer = 0;
+                openBlackHole = shake = false;
+            }*/
+        }
+    }
 
+    public void SpitAsteroidOnBeat() {
+        AsteroidsList = GameObject.FindGameObjectsWithTag("Resource");
+        if(asteroidSpawnTimer > currentSpawnDelay + (spawnAnimationDelay / 2f) && !shake) {
+            mainCamScreenShake.Shake(1f);
+            shake = true;
+        }
+
+        if (AsteroidsList.Length < asteroidAmount && openBlackHole) {
             if(asteroidSpawnTimer > currentSpawnDelay + spawnAnimationDelay) {
                 SpawnAsteroid();
                 currentSpawnDelay = Random.Range(asteroidSpawnDelay.x, asteroidSpawnDelay.y);

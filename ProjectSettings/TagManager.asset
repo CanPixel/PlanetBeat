@@ -23,6 +23,7 @@ TagManager:
   - GAMEMANAGER
   - LAUNCHER
   - RoomToggle
+  - CENTER
   layers:
   - Default
   - TransparentFX

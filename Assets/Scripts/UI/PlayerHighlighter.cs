@@ -12,6 +12,7 @@ public class PlayerHighlighter : MonoBehaviour {
     private float radius = 0;
 
     public PlayerShip host;
+    public Image[] images;
 
     void Start() {
         text = GetComponentInChildren<Text>();
@@ -19,9 +20,7 @@ public class PlayerHighlighter : MonoBehaviour {
         line.positionCount = segments + 1;
         text.color = new Color(1, 1, 1, 1);
 
-        string hookString = "";
-        if(host.hookMethod == PlayerShip.HookMethod.FreeAim) hookString = "Space to shoot grapple";
-        else hookString = "Hold space to extend grappling range";
+        string hookString = "Space to shoot grapple";
         text.text = "THIS IS YOU! \n \n" + "<size=110>< and > to steer\n ^ to thrust \n" + "F to throw \n"+hookString+"</size>";
     }
 
@@ -30,7 +29,10 @@ public class PlayerHighlighter : MonoBehaviour {
 
         text.transform.rotation = Quaternion.identity;
         text.transform.position = new Vector3(transform.position.x + 2.25f + sine / 7f, transform.position.y + 0.25f, 0);
-        text.color = line.startColor = line.endColor = new Color(1, 1, 1, radius / 100f);
+
+        var targetCol = new Color(1, 1, 1, radius / 100f);
+        foreach(var i in images) i.color = targetCol;
+        text.color = line.startColor = line.endColor = targetCol;
 
         if(!GameManager.GAME_STARTED && host.photonView.IsMine) {
             line.enabled = text.enabled = true;
