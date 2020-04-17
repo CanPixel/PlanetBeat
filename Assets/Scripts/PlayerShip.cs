@@ -16,7 +16,6 @@ public class PlayerShip : MonoBehaviourPunCallbacks {
     [HideInInspector] public Collider2D[] colliders;
 
     [Header("PLAYER VALUES")]
-   // public LockOnAim lockOnAim;
     public Image ship;
     public int playerNumber;
     public Color playerColor;
