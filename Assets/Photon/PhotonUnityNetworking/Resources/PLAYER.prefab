@@ -289,8 +289,8 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 0.3
-      minScalar: 0.1
+      scalar: 0.2
+      minScalar: 0.05
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -5474,6 +5474,7 @@ MonoBehaviour:
   respawningTime: 2
   defaultDrag: 2
   stopDrag: 2
+  maxAsteroids: 2
   trailingSpeed: 15
   throwingReduction: 0.55
   playerName: {fileID: 0}

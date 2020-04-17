@@ -137,8 +137,8 @@ public class HookShot : MonoBehaviour {
         if(photon != null && hostPlayer.photonView != null) photon.TransferOwnership(hostPlayer.photonView.Controller.ActorNumber);
     }
 
-    public bool canHold() {
-        return grabbedObj == null;
+    public bool CanHold() {
+        return grabbedObj == null && hostPlayer.CanHold();
     }
 
     public bool IsShooting() {

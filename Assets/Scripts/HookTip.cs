@@ -13,11 +13,6 @@ public class HookTip : MonoBehaviour {
     }
 
     void OnTriggerEnter2D(Collider2D col) {
-        if(col.gameObject.tag == "Resource" && hookShot.IsShooting()) {
-            var ast = col.gameObject.GetComponent<Asteroid>();
-            ast.Capture(hookShot);
-            AudioManager.PLAY_SOUND("kickVerb", 1, Random.Range(1f, 1.1f));
-            AudioManager.PLAY_SOUND("Reel");
-        }
+        if(col.gameObject.tag == "Resource" && hookShot.IsShooting()) col.gameObject.GetComponent<Asteroid>().Capture(hookShot);
     }
 }

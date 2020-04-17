@@ -141,7 +141,7 @@ public class Asteroid : MonoBehaviourPun {
 
             src.color = glow.color = Color.Lerp(src.color, explosionColor, tickBomb * Time.deltaTime);
 
-            explosionExpand = Vector2.one * Mathf.Sin(Time.time * tickBomb) / 50f;
+            explosionExpand = Vector2.one * Mathf.Sin(Time.time * tickBomb) / 25f;
             transform.localScale = Vector3.Lerp(transform.localScale, baseScale + explosionExpand, Time.deltaTime * tickBomb);
             distortionFX.SetIntensity(tickBomb / 1000f);
 
@@ -173,7 +173,10 @@ public class Asteroid : MonoBehaviourPun {
         asteroidColl.enabled = collectTimer <= 0f; 
 
         if(held) ReleaseAsteroid(false, photonView.ViewID);
-        else ReleasedTimer();
+        else ReleasedTimer();  
+
+        float maxScale = 0.8f;
+        transform.localScale = new Vector3(Mathf.Clamp(transform.localScale.x, 0, maxScale), Mathf.Clamp(transform.localScale.y, 0, maxScale), Mathf.Clamp(transform.localScale.z, 0, maxScale));
     }
     
     [PunRPC]
@@ -214,7 +217,9 @@ public class Asteroid : MonoBehaviourPun {
     }
 
     public void Capture(HookShot hookShot) {
-        if(!hookShot.canHold()) return;
+        if(!hookShot.CanHold()) return;
+        AudioManager.PLAY_SOUND("kickVerb", 1, Random.Range(1f, 1.1f));
+        AudioManager.PLAY_SOUND("Reel");
         if((!held || (held && ownerPlayer != null && ownerPlayer.photonView.ViewID != hookShot.hostPlayer.photonView.ViewID))) {
             scaleBack = false;
             transform.position = hookShot.transform.position;
