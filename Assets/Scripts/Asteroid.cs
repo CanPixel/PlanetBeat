@@ -85,8 +85,6 @@ public class Asteroid : MonoBehaviourPun {
         scoreText.transform.localScale = Vector3.zero;
         increasePopupBaseSize = increasePopupTxt.transform.localScale.x;
         increasePopupTxt.transform.localScale = Vector3.zero;
-        currentIncreaseDelay = Random.Range(increaseValueDelay.x, increaseValueDelay.y);
-        currentIncrease = Random.Range(increaseRate.x, increaseRate.y);
         standardGlowScale = glow.transform.localScale;
     }
 
@@ -94,14 +92,18 @@ public class Asteroid : MonoBehaviourPun {
         transform.SetParent(GameObject.FindGameObjectWithTag("ASTEROIDBELT").transform, true);
         baseScale = transform.localScale;
         if(PhotonNetwork.IsMasterClient) {
+            currentIncreaseDelay = Random.Range(increaseValueDelay.x, increaseValueDelay.y);
+            currentIncrease = Random.Range(increaseRate.x, increaseRate.y);
             value = Random.Range(baseValue.x, baseValue.y);
-            photonView.RPC("SynchValue", RpcTarget.All, value);
+            photonView.RPC("SynchValues", RpcTarget.All, value, currentIncrease, currentIncreaseDelay);
         }
     }
 
     [PunRPC]
-    public void SynchValue(float val) {
+    public void SynchValues(float val, int inc, float del) {
         this.value = val;
+        this.currentIncrease = inc;
+        this.currentIncreaseDelay = del;
     }
 
     void Update() {
@@ -160,7 +162,7 @@ public class Asteroid : MonoBehaviourPun {
             if(PhotonNetwork.IsMasterClient) {
                 int inc = Random.Range(increaseRate.x, increaseRate.y);
                 float del = Random.Range(increaseValueDelay.x, increaseValueDelay.y);
-                photonView.RPC("IncreaseValue", RpcTarget.All, inc, del);
+                photonView.RPC("SetValue", RpcTarget.All, value + inc, inc, del);
                 increaseValueTimer = 0;
             }
         }
@@ -183,7 +185,6 @@ public class Asteroid : MonoBehaviourPun {
             PhotonNetwork.InstantiateSceneObject("Shockwave", transform.position, Quaternion.identity);
 
             destroy = true;
-
             photonView.RPC("DestroyAsteroid", RpcTarget.All, photonView.ViewID);
             Destroy(gameObject);
         }
@@ -194,9 +195,9 @@ public class Asteroid : MonoBehaviourPun {
     }
 
     [PunRPC]
-    public void IncreaseValue(int increase, float delay) {
-        value += currentIncrease;
-        increasePopupTxt.text = "+" + currentIncrease.ToString() + "!";
+    public void SetValue(float value, int increase, float delay) {
+        this.value = value;
+        increasePopupTxt.text = "+" + increase.ToString() + "!";
         currentIncrease = increase;
         increasePopupTxt.transform.localScale = Vector3.one * increasePopupBaseSize * 1.5f;
         increasePopupHideTimer = 0;
@@ -221,7 +222,7 @@ public class Asteroid : MonoBehaviourPun {
             FetchAsteroid(hookShot.hostPlayer);
             hookShot.CatchObject(gameObject);
             collectTimer = grabDelay; 
-            playerTagsManager.GiveTag();
+            //playerTagsManager.GiveTag();
             photonView.RPC("SetAsteroidOwner", RpcTarget.AllBufferedViaServer, ownerPlayer.photonView.ViewID, false);
         }
     }
@@ -232,9 +233,10 @@ public class Asteroid : MonoBehaviourPun {
         var owner = PhotonNetwork.GetPhotonView(ownerID);
         if(owner != null) {
             held = true;
-            if(ownerPlayer != null) col = ownerPlayer.playerColor;
-            SetColor(col.r, col.g, col.b);
             this.ownerPlayer = owner.GetComponent<PlayerShip>();
+            col = ownerPlayer.playerColor;
+            SetColor(col.r, col.g, col.b);
+            playerTagsManager.GiveTag();
         }
         if(forceReset) {
             SetColor(1f, 1f, 1f);

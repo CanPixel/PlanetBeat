@@ -151,7 +151,12 @@ public class PlayerPlanets : MonoBehaviourPun {
         GetComponent<UIFloat>().SetBaseScale(newScale);
     }
 
-    public void ExplodeReduce() {
+    public void Explode() {
+        photonView.RPC("ExplodeReduce", RpcTarget.All);
+    }
+
+    [PunRPC]
+    protected void ExplodeReduce() {
         planetGlow.Flicker();
         if(currentScore - explodePenalty >= 0) currentScore -= explodePenalty;
         else currentScore = 0;

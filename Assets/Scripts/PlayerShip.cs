@@ -141,7 +141,7 @@ public class PlayerShip : MonoBehaviourPunCallbacks {
     }
 
     public void Explode() {
-        if(planet != null) planet.ExplodeReduce();
+        if(planet != null) planet.Explode();
         flicker = 1;
         PositionToPlanet();
         respawnDelay = respawningTime;
