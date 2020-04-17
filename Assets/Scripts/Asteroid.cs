@@ -236,7 +236,7 @@ public class Asteroid : MonoBehaviourPun {
             this.ownerPlayer = owner.GetComponent<PlayerShip>();
             col = ownerPlayer.playerColor;
             SetColor(col.r, col.g, col.b);
-            playerTagsManager.GiveTag();
+            if(playerTagsManager != null) playerTagsManager.GiveTag();
             Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("ASTEROID"), LayerMask.NameToLayer("PLAYER"), true);
         }
         if(forceReset) {

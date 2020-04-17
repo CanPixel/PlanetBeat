@@ -123,7 +123,7 @@ public class PlayerShip : MonoBehaviourPunCallbacks {
             playerColor = TextureSwitcher.GetPlayerTint(photonView.ViewID);
             playerNumber = photonView.ViewID;
             if(playerLabel != null) playerLabel.GetComponent<Text>().color = playerColor;
-            ForceColor(TextureSwitcher.GetPlayerTint(photonView.ViewID));
+            ForceColor(playerColor);
             GameManager.ClaimPlanet(this);
         }
 
@@ -153,9 +153,7 @@ public class PlayerShip : MonoBehaviourPunCallbacks {
     public void ForceColor(float r, float g, float b) {
         var col = new Color(r, g, b);
         playerColor = col;
-        if(planet != null) {
-            planet.AssignPlayer(this);
-        }
+        if(planet != null) planet.AssignPlayer(this);
         SetTexture(TextureSwitcher.GetCurrentTexturePack());
         var settings = exhaust.main;
         settings.startColor = new ParticleSystem.MinMaxGradient(col);

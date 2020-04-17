@@ -59,13 +59,24 @@ public class GameManager : MonoBehaviourPunCallbacks {
    }
 
    private void ChoosePlanet(PlayerShip player) {
+      PlayerPlanets playerPlanets = null;
       for(int i = 0; i < allPlanets.Count; i++) {
          var planet = allPlanets[i];
          if(planet.HasPlayer()) continue;
          player.SetHomePlanet(planet.gameObject);
          planet.AssignPlayer(player);
+         playerPlanets = planet;
          break;
       }
+      if(playerPlanets != null) photonView.RPC("SynchPlanet", RpcTarget.All, player.photonView.ViewID, playerPlanets.photonView.ViewID);
+   }
+
+   [PunRPC]
+   public void SynchPlanet(int playerID, int planetID) {
+      var planet = PhotonNetwork.GetPhotonView(planetID).GetComponent<PlayerPlanets>();
+      var player = PhotonNetwork.GetPhotonView(playerID).GetComponent<PlayerShip>();
+      player.SetHomePlanet(planet.gameObject);
+      planet.AssignPlayer(player);
    }
 
    public static void ClickSound(float pitch) {

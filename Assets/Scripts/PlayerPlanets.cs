@@ -83,7 +83,7 @@ public class PlayerPlanets : MonoBehaviourPun {
     }
     
     [PunRPC]
-    public void ClaimPlayer(int playerNumbe, float r, float g, float b) {
+    private void ClaimPlayer(int playerNumbe, float r, float g, float b) {
         playerNumber = playerNumbe;
         var pl = PhotonNetwork.GetPhotonView(playerNumber);
         if(pl != null) player = pl.GetComponent<PlayerShip>();
@@ -104,7 +104,7 @@ public class PlayerPlanets : MonoBehaviourPun {
         this.player.homePlanet = gameObject;
         playerNumber = player.playerNumber;
         scoreText = GetComponentInChildren<Text>();
-        photonView.RPC("ClaimPlayer", RpcTarget.AllBuffered, playerNumber, player.playerColor.r, player.playerColor.g, player.playerColor.b);
+        photonView.RPC("ClaimPlayer", RpcTarget.AllBufferedViaServer, playerNumber, player.playerColor.r, player.playerColor.g, player.playerColor.b);
         scoreText.enabled = true;
     }
 
