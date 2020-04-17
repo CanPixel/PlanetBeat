@@ -14,9 +14,15 @@ public class ShockwaveScript : MonoBehaviour {
 
     public BlastRadius blastRadius;
 
+    public bool forExplosion = true;
+
     void Start() {
         baseScale = transform.localScale;
         mat = GetComponent<SpriteRenderer>().material;
+    }
+
+    void OnEnable() {
+        if(forExplosion) Detonate();
     }
 
 	void Update () {
@@ -28,7 +34,10 @@ public class ShockwaveScript : MonoBehaviour {
             SetIntensity(intens);
 
             if(expandTime > 0) expandTime -= Time.deltaTime;
-            else GameManager.DESTROY_SERVER_OBJECT(gameObject);
+            else {
+                GameManager.DESTROY_SERVER_OBJECT(gameObject);
+                Destroy(gameObject);
+            }
         }
     }
 

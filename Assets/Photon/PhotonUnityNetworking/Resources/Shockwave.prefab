@@ -68,7 +68,7 @@ MonoBehaviour:
   segments: 30
   maxRange: 1.1
   timeUntillDestroy: 0.5
-  radiusColor: {r: 0.8867924, g: 0.21333212, b: 0.49357116, a: 1}
+  radiusColor: {r: 1, g: 0.3532159, b: 0.20392156, a: 1}
   startSize: 0.1
 --- !u!120 &3169242050043294802
 LineRenderer:
@@ -159,8 +159,8 @@ LineRenderer:
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 0.8862745, g: 0.21176471, b: 0.49411765, a: 0.019607844}
-      key1: {r: 0.8862745, g: 0.21176471, b: 0.49411765, a: 0.019607844}
+      key0: {r: 0.8039216, g: 0.3019608, b: 0.5568628, a: 0.18431373}
+      key1: {r: 0.8039216, g: 0.3019608, b: 0.5568628, a: 0.18431373}
       key2: {r: 0, g: 0, b: 0, a: 0}
       key3: {r: 0, g: 0, b: 0, a: 0}
       key4: {r: 0, g: 0, b: 0, a: 0}
@@ -333,6 +333,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   expandSpeed: 5
   blastRadius: {fileID: 2737845490263930765}
+  forExplosion: 1
 --- !u!114 &-2122985349770358416
 MonoBehaviour:
   m_ObjectHideFlags: 0

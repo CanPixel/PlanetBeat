@@ -5477,6 +5477,7 @@ MonoBehaviour:
   trailingSpeed: 15
   throwingReduction: 0.55
   playerName: {fileID: 0}
+  planet: {fileID: 0}
   trailingObjects: []
 --- !u!50 &1662954744308020766
 Rigidbody2D:

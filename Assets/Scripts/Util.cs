@@ -20,4 +20,8 @@ public class Util {
         float min = Mathf.Min(a, b);
         return Mathf.Abs(max - min) <= threshold;
     }
+
+    public static void HiResScreenshot(string name, int res) {
+        ScreenCapture.CaptureScreenshot(name, res);
+    }
 }

@@ -47,11 +47,8 @@ public class Asteroid : MonoBehaviourPun {
     private bool canScore = false;
     private Collider2D asteroidColl;
     [HideInInspector] public PlayerPlanets playerPlanets;
-
     [HideInInspector] public PlayerShip ownerPlayer;
-
     [HideInInspector] public PlayerTagsManager playerTagsManager;
-
     [HideInInspector] public GameObject playerOrbit;
 
     private AsteroidNetwork network;
@@ -64,6 +61,8 @@ public class Asteroid : MonoBehaviourPun {
     private const float activateAfterSpawning = 1.25f;
     private Vector3 standardGlowScale;
     private float thrustDelay = 0;
+
+    private bool destroy = false;
 
     private float spawnTimer = 0;
     public bool IsDoneSpawning {
@@ -82,7 +81,6 @@ public class Asteroid : MonoBehaviourPun {
         rb.drag = defaultRbDrag - .15f;
         SetTexture(TextureSwitcher.GetCurrentTexturePack());
         rb.AddForce(-transform.right * thrust);
-        value = Random.Range(baseValue.x, baseValue.y);
         baseTextScale = scoreText.transform.localScale.x;
         scoreText.transform.localScale = Vector3.zero;
         increasePopupBaseSize = increasePopupTxt.transform.localScale.x;
@@ -95,6 +93,15 @@ public class Asteroid : MonoBehaviourPun {
     void OnEnable() {
         transform.SetParent(GameObject.FindGameObjectWithTag("ASTEROIDBELT").transform, true);
         baseScale = transform.localScale;
+        if(PhotonNetwork.IsMasterClient) {
+            value = Random.Range(baseValue.x, baseValue.y);
+            photonView.RPC("SynchValue", RpcTarget.All, value);
+        }
+    }
+
+    [PunRPC]
+    public void SynchValue(float val) {
+        this.value = val;
     }
 
     void Update() {
@@ -144,14 +151,18 @@ public class Asteroid : MonoBehaviourPun {
                     AudioManager.PLAY_SOUND("sizzle21", 2f, Random.Range(1f, 1.05f));
                     nearExplode = true;
                 }
-                if(bombTimer > unstablePhaseTime + TimeAfterSizzle) ExplodeAsteroid();
+                if(bombTimer > unstablePhaseTime + TimeAfterSizzle && !destroy) photonView.RPC("ExplodeAsteroid", RpcTarget.All, photonView.ViewID);
             }
         }
 
         increaseValueTimer += Time.deltaTime;
         if(increaseValueTimer > currentIncreaseDelay) {
-            IncreaseValue();
-            increaseValueTimer = 0;
+            if(PhotonNetwork.IsMasterClient) {
+                int inc = Random.Range(increaseRate.x, increaseRate.y);
+                float del = Random.Range(increaseValueDelay.x, increaseValueDelay.y);
+                photonView.RPC("IncreaseValue", RpcTarget.All, inc, del);
+                increaseValueTimer = 0;
+            }
         }
 
         if(scaleBack) transform.localScale = Vector3.Lerp(transform.localScale, baseScale, Time.deltaTime * 2f);
@@ -162,27 +173,34 @@ public class Asteroid : MonoBehaviourPun {
         if(held) ReleaseAsteroid(false);
         else ReleasedTimer();
     }
+    
+    [PunRPC]
+    public void ExplodeAsteroid(int viewID) {
+        if(photonView.ViewID == viewID) {
+            Camera.main.GetComponent<ScreenShake>().Turn(2f);
+            AudioManager.PLAY_SOUND("Explode", 1f, Random.Range(0.95f, 1.05f));
+            Instantiate(explodeParticles, transform.position, Quaternion.identity);
+            PhotonNetwork.InstantiateSceneObject("Shockwave", transform.position, Quaternion.identity);
 
-    public void ExplodeAsteroid() {
-        Camera.main.GetComponent<ScreenShake>().Turn(2f);
-        AudioManager.PLAY_SOUND("Explode", 1f, Random.Range(0.95f, 1.05f));
-        Instantiate(explodeParticles, transform.position, Quaternion.identity);
-        var shockwave = PhotonNetwork.InstantiateSceneObject("Shockwave", transform.position, Quaternion.identity);
-        shockwave.GetComponent<ShockwaveScript>().Detonate();
-        GameManager.DESTROY_SERVER_OBJECT(gameObject);
+            destroy = true;
+
+            photonView.RPC("DestroyAsteroid", RpcTarget.All, photonView.ViewID);
+            Destroy(gameObject);
+        }
     }
 
     public void DisableTrails() {
         playerTagsManager.DisableTrails();
     }
 
-    protected void IncreaseValue() {
+    [PunRPC]
+    public void IncreaseValue(int increase, float delay) {
         value += currentIncrease;
         increasePopupTxt.text = "+" + currentIncrease.ToString() + "!";
-        currentIncrease = Random.Range(increaseRate.x, increaseRate.y);
+        currentIncrease = increase;
         increasePopupTxt.transform.localScale = Vector3.one * increasePopupBaseSize * 1.5f;
         increasePopupHideTimer = 0;
-        currentIncreaseDelay = Random.Range(increaseValueDelay.x, increaseValueDelay.y);
+        currentIncreaseDelay = delay;
     }
 
     public bool IsOwnedBy(PlayerShip player) {
@@ -214,7 +232,7 @@ public class Asteroid : MonoBehaviourPun {
         var owner = PhotonNetwork.GetPhotonView(ownerID);
         if(owner != null) {
             held = true;
-            col = ownerPlayer.playerColor;
+            if(ownerPlayer != null) col = ownerPlayer.playerColor;
             SetColor(col.r, col.g, col.b);
             this.ownerPlayer = owner.GetComponent<PlayerShip>();
         }

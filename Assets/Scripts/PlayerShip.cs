@@ -13,14 +13,6 @@ public class PlayerShip : MonoBehaviourPunCallbacks {
     public GameObject homePlanet;
     [HideInInspector] public GameObject playerLabel;
 
-    /* 
-    [System.Serializable]
-    public enum HookMethod {
-        FreeAim, LockOn
-    }
-    [Space(5)]
-    public HookMethod hookMethod; */
-
     [HideInInspector] public Collider2D[] colliders;
 
     [Header("PLAYER VALUES")]
@@ -67,7 +59,7 @@ public class PlayerShip : MonoBehaviourPunCallbacks {
     private AudioSource exhaustSound;
 
     [HideInInspector] public PlayerName playerName;
-    private PlayerPlanets planet;
+    [HideInInspector] public PlayerPlanets planet;
 
     private bool dropAsteroid = false;
     private float respawnDelay = 0;
@@ -235,8 +227,8 @@ public class PlayerShip : MonoBehaviourPunCallbacks {
         var DistFromCenter = Vector2.Distance(Camera.main.WorldToScreenPoint(transform.position), new Vector2(Screen.width, Screen.height) / 2f);
         DistFromCenter /= 200f;
         //maxVelocity = Mathf.Lerp(maxVelocity, baseVelocity * Mathf.Clamp(1.75f - DistFromCenter, 0.2f, 1), Time.deltaTime * 4f);
-        stopDrag = Mathf.Lerp(stopDrag, baseStopDrag * Mathf.Clamp(4f - DistFromCenter, 0.1f, 1), Time.deltaTime * 4f);
-        defaultDrag = Mathf.Lerp(defaultDrag, baseDefaultDrag * Mathf.Clamp(4f - DistFromCenter, 0.1f, 1), Time.deltaTime * 4f);
+        //stopDrag = Mathf.Lerp(stopDrag, baseStopDrag * Mathf.Clamp(4f - DistFromCenter, 0.1f, 1), Time.deltaTime * 4f);
+        //defaultDrag = Mathf.Lerp(defaultDrag, baseDefaultDrag * Mathf.Clamp(4f - DistFromCenter, 0.1f, 1), Time.deltaTime * 4f);
 
         if (ReleaseAsteroidKey() && trailingObjects.Count > 0) {
             AudioManager.PLAY_SOUND("collect");
