@@ -172,7 +172,7 @@ public class Asteroid : MonoBehaviourPun {
         if (collectTimer > 0) collectTimer -= Time.deltaTime;
         asteroidColl.enabled = collectTimer <= 0f; 
 
-        if(held) ReleaseAsteroid(false);
+        if(held) ReleaseAsteroid(false, photonView.ViewID);
         else ReleasedTimer();
     }
     
@@ -237,8 +237,10 @@ public class Asteroid : MonoBehaviourPun {
             col = ownerPlayer.playerColor;
             SetColor(col.r, col.g, col.b);
             playerTagsManager.GiveTag();
+            Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("ASTEROID"), LayerMask.NameToLayer("PLAYER"), true);
         }
         if(forceReset) {
+            Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("ASTEROID"), LayerMask.NameToLayer("PLAYER"), false);
             SetColor(1f, 1f, 1f);
             held = false;
         }
@@ -324,18 +326,21 @@ public class Asteroid : MonoBehaviourPun {
         }
     }
 
-    public void ReleaseAsteroid(bool released) {
-        if(released) {
-            playerTagsManager.TagOn(true);
-            playerTagsManager.runTagTimer = true;
-            held = false;
-            canScore = true;
-            scaleBack = true;
-            ReleasedTimer();
-            ForceRelease();
-        } else {
-            held = true;
-            playerTagsManager.runTagTimer = false;
+    [PunRPC]
+    public void ReleaseAsteroid(bool released, int viewID) {
+        if(photonView.ViewID == viewID) {
+            if(released) {
+                playerTagsManager.TagOn(true);
+                playerTagsManager.runTagTimer = true;
+                held = false;
+                canScore = true;
+                scaleBack = true;
+                ReleasedTimer();
+                ForceRelease();
+            } else {
+                held = true;
+                playerTagsManager.runTagTimer = false;
+            }
         }
     }
 

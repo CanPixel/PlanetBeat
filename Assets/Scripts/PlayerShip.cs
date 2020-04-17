@@ -209,7 +209,7 @@ public class PlayerShip : MonoBehaviourPunCallbacks {
                 asteroid.rb.velocity = rb.velocity / throwingReduction; 
             }
             asteroid.transform.TransformDirection(new Vector2(transform.forward.x * asteroid.transform.forward.x, transform.forward.y * asteroid.transform.forward.y));
-            asteroid.ReleaseAsteroid(true); 
+            asteroid.photonView.RPC("ReleaseAsteroid", RpcTarget.All, true, asteroid.photonView.ViewID); 
             dropAsteroid = false;
         }
     }
@@ -260,7 +260,7 @@ public class PlayerShip : MonoBehaviourPunCallbacks {
 
         //Removes asteroids owned by other players
         for(int i = 0; i < trailingObjects.Count; i++) if(!trailingObjects[i].IsOwnedBy(this)) {
-            trailingObjects[i].ReleaseAsteroid(true);
+            //trailingObjects[i].ReleaseAsteroid(true);
             trailingObjects.RemoveAt(i);
             i--;
         }
@@ -313,19 +313,21 @@ public class PlayerShip : MonoBehaviourPunCallbacks {
         if(script != null) trailingObjects.Add(script);
     }
 
-    [PunRPC]
-    public void ResetAsteroidColors(int viewID) {
-        foreach(var i in trailingObjects) if(i.photonView.ViewID == viewID) {
-            i.SetColor(1, 1, 1);
-            break;
-        }
-    } 
+    //[PunRPC]
+    //protected void ResetAsteroidColors(int viewID) {
+     //   foreach(var i in trailingObjects) 
+      //  if(i.photonView.ViewID == viewID) {
+       //     i.SetColor(1, 1, 1);
+        //    break;
+       // }
+    //} 
 
     public void RemoveAsteroid(GameObject obj) {
         for(int i = 0; i < trailingObjects.Count; i++) {
             if(trailingObjects[i] == obj) {
-                photonView.RPC("ResetAsteroidColors", RpcTarget.All, trailingObjects[i].photonView.ViewID);
-                trailingObjects[i].ReleaseAsteroid(true);
+                //photonView.RPC("ResetAsteroidColors", RpcTarget.All, trailingObjects[i].photonView.ViewID);
+                //trailingObjects[i].SetColor(1, 1, 1);
+                trailingObjects[i].photonView.RPC("ReleaseAsteroid", RpcTarget.All, true, trailingObjects[i].photonView.ViewID);
                 trailingObjects.RemoveAt(i);
                 return;
             }

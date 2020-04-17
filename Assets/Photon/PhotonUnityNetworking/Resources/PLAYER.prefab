@@ -4959,7 +4959,7 @@ GameObject:
   - component: {fileID: 1446986112358890862}
   - component: {fileID: 1446986112358890863}
   - component: {fileID: 1446986112358890860}
-  m_Layer: 5
+  m_Layer: 11
   m_Name: Tip
   m_TagString: HOOKSHOT
   m_Icon: {fileID: 0}
