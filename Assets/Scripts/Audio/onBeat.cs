@@ -11,14 +11,16 @@ public class onBeat : MonoBehaviour {
 
     [System.Serializable]
     public enum BeatTime {
-        X2, X4, X8, X16, D2, D4, Full, D8, Every4
+        X2, X4, Full,  Every4
     }
     
     [System.Serializable]
     public class BeatEvent {
+        public string name = "OnBeat";
         public UnityEvent Event;
         public AudioSource src;
         public BeatTime BeatTime;
+        public int afterBeat = 0;
         [HideInInspector] public float delay = 0;
     }
     public BeatEvent[] beatEvents;
@@ -48,10 +50,10 @@ public class onBeat : MonoBehaviour {
                         i.delay -= Time.deltaTime;
                         continue;
                     }
-                    if(BeatPulse._beatCountX2 == 1) {
+                    if(BeatPulse._beatCountX2 == 0 && beatSection >= i.afterBeat) {
                         i.Event.Invoke(); 
                         PlaySound(i);
-                        i.delay = 0.2f;
+                        i.delay = 1f;
                     }
                     break;
                 case BeatTime.X4:
@@ -59,7 +61,7 @@ public class onBeat : MonoBehaviour {
                         i.delay -= Time.deltaTime;
                         continue;
                     }
-                    if(BeatPulse._beatCountX4 % 4 == 0) {
+                    if(BeatPulse._beatCountX4 % 4 == 0 && beatSection >= i.afterBeat) {
                         i.Event.Invoke(); 
                         PlaySound(i);
                         i.delay = 0.2f;
@@ -70,28 +72,18 @@ public class onBeat : MonoBehaviour {
                         i.delay -= Time.deltaTime;
                         continue;
                     }
-                    if (BeatPulse._beatFull) {
+                    if (BeatPulse._beatFull && beatSection >= i.afterBeat) {
                         i.Event.Invoke();
                         PlaySound(i);
                         i.delay = 0.2f;
                     }
-                    break;
-                case BeatTime.X8:
-                    break;
-                case BeatTime.X16:
-                    break;
-                case BeatTime.D2:
-                    break;
-                case BeatTime.D8:
-                    break;
-                case BeatTime.D4:
                     break;
                 case BeatTime.Full:
                     if(i.delay > 0) {
                         i.delay -= Time.deltaTime;
                         continue;
                     }
-                     if (BeatPulse._beatCountX8 == 0 && BeatPulse._beatFull) {
+                     if (BeatPulse._beatCountX8 == 0 && BeatPulse._beatFull && beatSection >= i.afterBeat) {
                         i.Event.Invoke(); 
                         PlaySound(i);
                         i.delay = 0.2f;

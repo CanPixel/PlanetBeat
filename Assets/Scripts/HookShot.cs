@@ -15,8 +15,10 @@ public class HookShot : MonoBehaviour {
 
     [Header("PHYSICS")]
     [Range(20, 400)]
-    public float hookShotSpeed = 50;
-    [Range(1, 10)]
+    public float hookShotCastSpeed = 50;
+    [Range(20, 400)]
+    public float HookShotReelSpeed = 50;
+
     public float hookShotRange = 5;
 
     private bool isShootingHook = false, triggerHook = false;
@@ -75,10 +77,10 @@ public class HookShot : MonoBehaviour {
             }
 
             if(IsShooting()) {
-                if(rope.sizeDelta.y + hookShotSpeed < hookShotRange * 1000f && !didntCatch) {
-                    if(!hitObject) rope.sizeDelta = new Vector2(rope.sizeDelta.x, rope.sizeDelta.y + hookShotSpeed);
-                    else if(rope.sizeDelta.y > 0) rope.sizeDelta = new Vector2(rope.sizeDelta.x, rope.sizeDelta.y - hookShotSpeed);
-                    else ResetHook();
+                if(rope.sizeDelta.y < hookShotRange * 10f && !didntCatch) {
+                    if(!hitObject) rope.sizeDelta = new Vector2(rope.sizeDelta.x, rope.sizeDelta.y + hookShotCastSpeed);
+                    else if(rope.sizeDelta.y > 0) rope.sizeDelta = new Vector2(rope.sizeDelta.x, rope.sizeDelta.y - HookShotReelSpeed);
+                    //else ResetHook();
                 }
 
                 if(didntCatch) {
@@ -87,7 +89,7 @@ public class HookShot : MonoBehaviour {
                         reelback = true;
                     }
 
-                    if(rope.sizeDelta.y > 0) rope.sizeDelta = new Vector2(rope.sizeDelta.x, rope.sizeDelta.y - hookShotSpeed);
+                    if(rope.sizeDelta.y > 0) rope.sizeDelta = new Vector2(rope.sizeDelta.x, rope.sizeDelta.y - HookShotReelSpeed);
                     else ResetHook();
                 }
             }

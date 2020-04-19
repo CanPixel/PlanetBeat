@@ -24,7 +24,7 @@ public class AsteroidSpawner : MonoBehaviour {
 
     private ScreenShake mainCamScreenShake;
 
-    private bool kickOrSnare = false;
+    private int sample = 0;
 
     void Start() {
         mainCamScreenShake = Camera.main.GetComponent<ScreenShake>();
@@ -77,10 +77,14 @@ public class AsteroidSpawner : MonoBehaviour {
         Quaternion rot = Quaternion.FromToRotation(Vector2.up, center + pos);
         GameObject InstancedPrefab = GameManager.SPAWN_SERVER_OBJECT(prefab, blackHole.transform.position, rot);
 
-        AudioManager.PLAY_SOUND("actualBeat", 2f, Random.Range(0.9f, 1.1f));
-        if(!kickOrSnare) AudioManager.PLAY_SOUND("DRUMS_KICK", 2f, 1f);
-        else AudioManager.PLAY_SOUND("DRUMS_SNARE", 2f, 1f);
-        kickOrSnare = !kickOrSnare;
+        int maxSamples = 4;
+        if(sample == 0) AudioManager.PLAY_SOUND("LowSpit", 1f, 1f);
+        else if(sample == 1) AudioManager.PLAY_SOUND("MajorChord", 0.8f, 1f);
+        else if(sample == 2) AudioManager.PLAY_SOUND("LowDrone", 1f, 1f);
+        else AudioManager.PLAY_SOUND("LowHarmony", 1f, 1f);
+        
+        sample++;
+        if(sample > maxSamples) sample = 0;
     }
 
     private Vector3 RandomCircle(Vector3 center, float radius, int a) {

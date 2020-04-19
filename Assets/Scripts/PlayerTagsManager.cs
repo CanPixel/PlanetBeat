@@ -25,6 +25,8 @@ public class PlayerTagsManager : MonoBehaviour {
         glow = _asteroid.glow;
         asteroidTrailRenderer = GetComponent<TrailRenderer>();
         asteroidTrailRenderer.material.color = ogTrailColor; 
+        
+        DisableTrails();
     }
 
     public void DisableTrails() {
@@ -57,7 +59,7 @@ public class PlayerTagsManager : MonoBehaviour {
     }
 
     public void TagOn(bool state) {
-        if(asteroidTrailRenderer != null) asteroidTrailRenderer.enabled = state;
+        //if(asteroidTrailRenderer != null) asteroidTrailRenderer.enabled = state;
     }
 
     public void StartTagTimer() {

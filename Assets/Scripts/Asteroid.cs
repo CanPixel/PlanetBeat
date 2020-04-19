@@ -9,6 +9,8 @@ public class Asteroid : MonoBehaviourPun {
     public Image src, glow;
     public Text scoreText, increasePopupTxt;
 
+    public bool canScoreWithoutDropping = false;
+
     [HideInInspector] public bool held = false;
     [HideInInspector] public bool inOrbit = false;
     [HideInInspector] public bool giveTag = false;
@@ -255,7 +257,7 @@ public class Asteroid : MonoBehaviourPun {
         if (col.gameObject.tag == "PLAYERPLANET" && col.gameObject != null) {
             playerPlanets = col.gameObject.GetComponent<PlayerPlanets>();
             if(playerTagsManager.tagNum == playerPlanets.playerNumber && playerPlanets.HasPlayer() && !playerPlanets.HasReachedMax()) {
-                if(canConsume) ConsumeResource();
+                if(canConsume || canScoreWithoutDropping) ConsumeResource();
             }
         }
         if(col.gameObject.tag == "ORBIT") {
@@ -353,7 +355,7 @@ public class Asteroid : MonoBehaviourPun {
         held = true;
     }
 
-    public void ReleasedTimer() {//Gives a small time window in which the player can instantly score
+    public void ReleasedTimer() { //Gives a small time window in which the player can instantly score
         if (canScore && canConsume == false) {
             releaseTimer += Time.deltaTime;
             canConsume = true; 

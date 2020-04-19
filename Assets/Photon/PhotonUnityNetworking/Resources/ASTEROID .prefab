@@ -504,6 +504,7 @@ MonoBehaviour:
   glow: {fileID: 7942915855959860691}
   scoreText: {fileID: 1658768576256901087}
   increasePopupTxt: {fileID: 7083921187275832242}
+  canScoreWithoutDropping: 0
   held: 0
   inOrbit: 0
   giveTag: 0

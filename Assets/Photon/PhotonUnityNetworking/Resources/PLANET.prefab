@@ -446,7 +446,8 @@ MonoBehaviour:
   beatSection: 0
   _audioMixer: {fileID: 0}
   beatEvents:
-  - Event:
+  - name: Add Score On Beat
+    Event:
       m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 5336174367327457939}
@@ -463,7 +464,7 @@ MonoBehaviour:
       m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
     src: {fileID: 0}
-    BeatTime: 8
+    BeatTime: 3
     delay: 0
 --- !u!1 &5336174368059501567
 GameObject:
