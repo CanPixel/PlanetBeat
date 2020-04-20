@@ -14,8 +14,7 @@ public class BlackHoleTextures : MonoBehaviour {
 		}
 
 		void Update() {
-			//Glow fluctuation black hole
-        	if(glow.enabled) glow.color = new Color(1, 1, 1, Mathf.Sin(Time.time * 5f) * 0.9f + 0.2f);
+        	if(glow.enabled) glow.color = new Color(1, 1, 1, Mathf.Sin(Time.time * 5f) * 0.9f + 0.2f); //Glow fluctuation black hole
 
 			transform.Rotate(0, 0, -5);
 		}

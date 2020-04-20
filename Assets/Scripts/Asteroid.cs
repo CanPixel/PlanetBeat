@@ -229,7 +229,6 @@ public class Asteroid : MonoBehaviourPun {
             FetchAsteroid(hookShot.hostPlayer);
             hookShot.CatchObject(gameObject);
             collectTimer = grabDelay; 
-            //playerTagsManager.GiveTag();
             photonView.RPC("SetAsteroidOwner", RpcTarget.AllBufferedViaServer, ownerPlayer.photonView.ViewID, false);
         }
     }

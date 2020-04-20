@@ -9,6 +9,9 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviourPunCallbacks {
    public bool spectating = false;
 
+   public Image muteButton;
+   public Sprite soundIcon, noSoundIcon;
+
    public Background background;
    public GameObject gameField;
    private float gameFieldScale;
@@ -77,6 +80,11 @@ public class GameManager : MonoBehaviourPunCallbacks {
       var player = PhotonNetwork.GetPhotonView(playerID).GetComponent<PlayerShip>();
       player.SetHomePlanet(planet.gameObject);
       planet.AssignPlayer(player);
+   }
+
+   public void MuteGame(bool mute) {
+      muteButton.sprite = (mute) ? noSoundIcon : soundIcon;
+      AudioManager.MuteMusic(mute);
    }
 
    public static void ClickSound(float pitch) {

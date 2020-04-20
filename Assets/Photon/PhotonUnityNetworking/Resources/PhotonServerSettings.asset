@@ -53,5 +53,6 @@ MonoBehaviour:
   - ExplodeReduce
   - ReleaseAsteroid
   - SynchPlanet
+  - SynchRadius
   DisableAutoOpenWizard: 1
   ShowSettings: 1

@@ -6,6 +6,8 @@ public class AudioManager : MonoBehaviour {
 	public float SoundLevel = 0.1f, AmbientLevel = 0.1f, MusicLevel = 0.8f;
 	private float SoundBase, AmbientBase, MusicBase;
 
+	private float OldMusicLevel;
+
 	public float GetMasterSoundLevel {
 		get {return SoundLevel;}
 	}
@@ -41,6 +43,7 @@ public class AudioManager : MonoBehaviour {
 		DontDestroyOnLoad(gameObject);
 		for(int i = 0; i < sounds.Length; i++) soundBank.Add(sounds[i].name.ToLower(), sounds[i]);
 
+		OldMusicLevel = MusicLevel;
 		UpdateVolumeLevels();
 	}
 
@@ -51,7 +54,13 @@ public class AudioManager : MonoBehaviour {
 	}
 
 	void LateUpdate() {
-		if(SoundBase != SoundLevel || AmbientBase != AmbientLevel) UpdateVolumeLevels();
+		if(SoundBase != SoundLevel || AmbientBase != AmbientLevel || MusicBase != MusicLevel) UpdateVolumeLevels();
+	}
+
+	public static void MuteMusic(bool i) {
+		if(instance == null) return;
+		if(i) instance.MusicLevel = 0;
+		else instance.MusicLevel = instance.OldMusicLevel;
 	}
 
 	public static float GetMasterAmbientVolume() {

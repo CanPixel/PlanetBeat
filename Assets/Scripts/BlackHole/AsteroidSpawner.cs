@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Photon.Pun;
 using Photon.Realtime;
 
-public class AsteroidSpawner : MonoBehaviour {
+public class AsteroidSpawner : MonoBehaviourPun {
     public int asteroidAmount = 4;
 
     public GameObject blackHole;
@@ -34,11 +34,20 @@ public class AsteroidSpawner : MonoBehaviour {
         blackHoleEffect.radius = 0;
     }
 
+    [PunRPC]
+    public void SynchRadius(float radius) {
+        if(PhotonNetwork.IsMasterClient) return;
+        blackHoleEffect.radius = radius;
+    }
+
     void Update() {
         if(!GameManager.GAME_STARTED) return;
 
-        if(openBlackHole) blackHoleEffect.radius = Mathf.Lerp(blackHoleEffect.radius, baseRadius * 1.5f + Mathf.Sin(Time.time * 15f) * 1f, Time.deltaTime * 2f);
-        else blackHoleEffect.radius = Mathf.Lerp(blackHoleEffect.radius, 0, Time.deltaTime * 1f);
+        if(PhotonNetwork.IsMasterClient) {
+            if(openBlackHole) blackHoleEffect.radius = Mathf.Lerp(blackHoleEffect.radius, baseRadius * 1.5f + Mathf.Sin(Time.time * 15f) * 1f, Time.deltaTime * 2f);
+            else blackHoleEffect.radius = Mathf.Lerp(blackHoleEffect.radius, 0, Time.deltaTime * 1f);
+            if(photonView != null) photonView.RPC("SynchRadius", RpcTarget.All, blackHoleEffect.radius);
+        }
 
         AsteroidsList = GameObject.FindGameObjectsWithTag("Resource");
         if (AsteroidsList.Length < asteroidAmount) {
