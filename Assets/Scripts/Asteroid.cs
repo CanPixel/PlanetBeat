@@ -97,7 +97,7 @@ public class Asteroid : MonoBehaviourPun {
             currentIncreaseDelay = Random.Range(increaseValueDelay.x, increaseValueDelay.y);
             currentIncrease = Random.Range(increaseRate.x, increaseRate.y);
             value = Random.Range(baseValue.x, baseValue.y);
-            photonView.RPC("SynchValues", RpcTarget.All, value, currentIncrease, currentIncreaseDelay);
+            photonView.RPC("SynchValues", RpcTarget.All, value, currentIncrease, currentIncreaseDelay, stablePhaseTime, unstablePhaseTime);
         }
     }
 
@@ -118,8 +118,7 @@ public class Asteroid : MonoBehaviourPun {
     }
 
     void Update() {
-        /* 
-        thrustDelay += Time.deltaTime;
+        /* thrustDelay += Time.deltaTime;
         if(thrustDelay < 0.2f) {
             rb.AddForce(transform.forward * 4f + transform.right * 8f);
         }*/
@@ -150,16 +149,14 @@ public class Asteroid : MonoBehaviourPun {
                 AudioManager.PLAY_SOUND("timebombtick", 2f, Random.Range(0.5f, 0.55f) + tickBomb / 3f);
                 timeBombTick = 0;
             }
-
             glow.fillAmount = Mathf.Sin(Time.time * tickBomb);
-
             src.color = glow.color = Color.Lerp(src.color, explosionColor, tickBomb * Time.deltaTime);
 
             explosionExpand = Vector2.one * Mathf.Sin(Time.time * tickBomb) / 25f;
             transform.localScale = Vector3.Lerp(transform.localScale, baseScale + explosionExpand, Time.deltaTime * tickBomb);
             distortionFX.SetIntensity(tickBomb / 1000f);
 
-            if(bombTimer > unstablePhaseTime / 2f) distortionFX.gameObject.SetActive(true);
+            if(bombTimer > unstablePhaseTime / 2f) distortionFX.gameObject.SetActive(true); 
 
             //Actual explosion
             if(bombTimer > unstablePhaseTime) {
@@ -183,7 +180,7 @@ public class Asteroid : MonoBehaviourPun {
 
         if(scaleBack) transform.localScale = Vector3.Lerp(transform.localScale, baseScale, Time.deltaTime * 2f);
 
-        if (collectTimer > 0) collectTimer -= Time.deltaTime;
+        if(collectTimer > 0) collectTimer -= Time.deltaTime;
         asteroidColl.enabled = collectTimer <= 0f; 
 
         if(held) ReleaseAsteroid(false, photonView.ViewID);
