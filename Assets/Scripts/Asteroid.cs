@@ -145,16 +145,18 @@ public class Asteroid : MonoBehaviourPun {
             var tickBomb = spawnTimer - stablePhaseTime;
             src.transform.localPosition = glow.transform.localPosition = scoreText.transform.localPosition = Vector3.Lerp(src.transform.localPosition, new Vector3(Mathf.Sin(Time.time * tickBomb * 4f) * 10f * tickBomb, Mathf.Sin(Time.time * tickBomb * 4f) * 10f * tickBomb, 0), tickBomb * Time.deltaTime * 4f);
 
+            glow.fillAmount = Mathf.Sin(Time.time * tickBomb);
+            src.color = glow.color = Color.Lerp(src.color, explosionColor, tickBomb * Time.deltaTime);
+
             if(timeBombTick > 1f / tickBomb) {
                 AudioManager.PLAY_SOUND("timebombtick", 2f, Random.Range(0.5f, 0.55f) + tickBomb / 3f);
                 timeBombTick = 0;
             }
-            glow.fillAmount = Mathf.Sin(Time.time * tickBomb);
-            src.color = glow.color = Color.Lerp(src.color, explosionColor, tickBomb * Time.deltaTime);
-
-            explosionExpand = Vector2.one * Mathf.Sin(Time.time * tickBomb) / 25f;
-            transform.localScale = Vector3.Lerp(transform.localScale, baseScale + explosionExpand, Time.deltaTime * tickBomb);
-            distortionFX.SetIntensity(tickBomb / 1000f);
+            if(bombTimer > 1f / tickBomb) {
+                explosionExpand = new Vector3(1.2f, 1.2f, 1.2f) * Mathf.Sin(Time.time * tickBomb) / 20f;
+                transform.localScale = Vector3.Lerp(transform.localScale, baseScale + explosionExpand, Time.deltaTime * tickBomb);
+                distortionFX.SetIntensity(tickBomb / 1000f);
+            }
 
             if(bombTimer > unstablePhaseTime / 2f) distortionFX.gameObject.SetActive(true); 
 

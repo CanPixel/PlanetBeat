@@ -289,8 +289,8 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 0.2
-      minScalar: 0.05
+      scalar: 0.1
+      minScalar: 0.01
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -5458,7 +5458,6 @@ MonoBehaviour:
   playerHighlighter: {fileID: 1495154344142073387}
   hookShot: {fileID: 1446986111338685776}
   exhaust: {fileID: 1446986110815659415}
-  homePlanet: {fileID: 0}
   playerLabel: {fileID: 0}
   colliders: []
   ship: {fileID: 1446986112751458336}
@@ -5472,7 +5471,7 @@ MonoBehaviour:
   acceleration: 20000
   turningSpeed: 6
   brakingSpeed: 2
-  respawningTime: 2
+  respawningTime: 3
   defaultDrag: 2
   stopDrag: 2
   maxAsteroids: 2

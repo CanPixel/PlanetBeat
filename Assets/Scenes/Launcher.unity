@@ -4093,6 +4093,17 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 6045767007770380077}
+        m_MethodName: ClickSound
+        m_Mode: 4
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0.75
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Toggle+ToggleEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
   m_IsOn: 0
@@ -5382,7 +5393,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 533948573842649025}
-  m_LocalRotation: {x: 0, y: 0, z: 0.5337552, w: 0.84563905}
+  m_LocalRotation: {x: 0, y: 0, z: 0.9713816, w: 0.23752427}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -5469,7 +5480,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 533948573944061022}
-  m_LocalRotation: {x: 0, y: 0, z: 0.9624101, w: -0.27160054}
+  m_LocalRotation: {x: 0, y: 0, z: 0.50363004, w: -0.86391944}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -6401,7 +6412,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 533948575062331776}
-  m_LocalRotation: {x: 0, y: 0, z: 0.99953866, w: 0.030372316}
+  m_LocalRotation: {x: 0, y: 0, z: 0.74010605, w: -0.6724902}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -6583,7 +6594,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 533948575445420487}
-  m_LocalRotation: {x: 0, y: 0, z: 0.8969463, w: 0.44213954}
+  m_LocalRotation: {x: 0, y: 0, z: 0.9523451, w: -0.30502275}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:

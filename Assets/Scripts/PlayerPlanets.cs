@@ -101,7 +101,7 @@ public class PlayerPlanets : MonoBehaviourPun {
 
     public void AssignPlayer(PlayerShip player) {
         this.player = player;
-        this.player.homePlanet = gameObject;
+        this.player.planet = this;
         playerNumber = player.playerNumber;
         scoreText = GetComponentInChildren<Text>();
         photonView.RPC("ClaimPlayer", RpcTarget.AllBufferedViaServer, playerNumber, player.playerColor.r, player.playerColor.g, player.playerColor.b);
@@ -111,9 +111,9 @@ public class PlayerPlanets : MonoBehaviourPun {
     void Update() {
         if(increasePopupHideTimer > 0) increasePopupHideTimer += Time.deltaTime;
         increasePopupTxt.transform.rotation = Quaternion.Euler(0, 0, Mathf.Sin(Time.time * 5f) * 10f);
-        if(increasePopupHideTimer > 2f) {
+        if(increasePopupHideTimer > 4f) {
             increasePopupTxt.transform.localScale = Vector3.Lerp(increasePopupTxt.transform.localScale, Vector3.zero, Time.deltaTime * 2f);
-            if(increasePopupHideTimer > 4f) {
+            if(increasePopupHideTimer > 8f) {
                 increasePopupHideTimer = 0;
                 increasePopupTxt.enabled = false;
             }
@@ -126,7 +126,6 @@ public class PlayerPlanets : MonoBehaviourPun {
 
         orbit.transform.localScale = Vector3.Lerp(orbit.transform.localScale, transform.localScale / orbitScaleReduction.Evaluate(currentScore / maxScore), Time.deltaTime * 2f);
         transform.localScale = Vector3.Lerp(transform.localScale, new Vector3(Mathf.Clamp(transform.localScale.x, 0, maxScale), Mathf.Clamp(transform.localScale.y, 0, maxScale), Mathf.Clamp(transform.localScale.z, 0, maxScale)), Time.deltaTime * 2f);
-
         transform.localPosition = Vector3.Lerp(transform.localPosition, new Vector3(basePos.x + Mathf.Sin(Time.time * wiggleSpeed + wiggleOffset) * wiggleRange, basePos.y + Mathf.Sin(Time.time * wiggleSpeed + wiggleOffset) * wiggleRange, basePos.z), Time.deltaTime * 2f);
 
         if(scoreText != null) {

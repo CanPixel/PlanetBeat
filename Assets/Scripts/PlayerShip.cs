@@ -10,7 +10,6 @@ public class PlayerShip : MonoBehaviourPunCallbacks {
     public HookShot hookShot;
     public ParticleSystem exhaust;
 
-    public GameObject homePlanet;
     [HideInInspector] public GameObject playerLabel;
 
     [HideInInspector] public Collider2D[] colliders;
@@ -72,17 +71,16 @@ public class PlayerShip : MonoBehaviourPunCallbacks {
     }
 
     public GameObject GetHomePlanet() {
-        return homePlanet;
+        if(planet == null) return null;
+        return planet.gameObject;
     }
     public void SetHomePlanet(GameObject planet) {
-        homePlanet = planet;
-        this.planet = homePlanet.GetComponent<PlayerPlanets>();
+        this.planet = planet.GetComponent<PlayerPlanets>();
     }
 
     [PunRPC]
     public void ClearHomePlanet() {
         if(planet != null && photonView != null) planet.ResetPlanet();
-        homePlanet = null;
         planet = null;
     }
 
@@ -137,8 +135,12 @@ public class PlayerShip : MonoBehaviourPunCallbacks {
     #endregion
 
     public void PositionToPlanet() {
-        if(homePlanet != null) transform.position = photonView.transform.position = homePlanet.transform.position;
         if(planet != null) transform.position = photonView.transform.position = planet.transform.position;
+    }
+
+    public void LerpToPlanet() {
+        if(planet == null) return;
+        transform.position = photonView.transform.position = Vector3.Lerp(transform.position, planet.transform.position, Time.deltaTime * 2f);
     }
 
     public bool CanHold() {
@@ -148,7 +150,6 @@ public class PlayerShip : MonoBehaviourPunCallbacks {
     public void Explode() {
         if(planet != null) planet.Explode();
         flicker = 1;
-        PositionToPlanet();
         respawnDelay = respawningTime;
 
         for(int i = 0; i < trailingObjects.Count; i++) {
@@ -195,7 +196,9 @@ public class PlayerShip : MonoBehaviourPunCallbacks {
 
     void FixedUpdate() {
         if(respawnDelay > 0) {
-            PositionToPlanet();
+            ship.color = Color.Lerp(ship.color, new Color(ship.color.r, ship.color.g, ship.color.b, 0.25f), Time.deltaTime * 8f);
+
+            LerpToPlanet();
             respawnDelay -= Time.deltaTime;
 
             flicker += Time.deltaTime;
@@ -203,7 +206,10 @@ public class PlayerShip : MonoBehaviourPunCallbacks {
                 ship.enabled = !ship.enabled;
                 flicker = 0;
             }
-        } else ship.enabled = true;
+        } else {
+            ship.color = Color.Lerp(ship.color, new Color(ship.color.r, ship.color.g, ship.color.b, 1), Time.deltaTime * 4f);
+            ship.enabled = true;
+        }
 
         if(IsThisClient() && respawnDelay <= 0) {
             ProcessInputs();
@@ -257,7 +263,7 @@ public class PlayerShip : MonoBehaviourPunCallbacks {
                 exLastTime = 0.25f;
             }
             var emitting = exhaust.emission;
-            bool shouldEmit = Mathf.Abs(Vector3.Distance(exLastPos, transform.position)) > 0.035f;
+            bool shouldEmit = Mathf.Abs(Vector3.Distance(exLastPos, transform.position)) > 0.04f;
             emitting.enabled = shouldEmit;
         }
 
