@@ -72,8 +72,6 @@ public class Asteroid : MonoBehaviourPun {
     }
 
     void Start() {
-        stablePhaseTime = Random.Range(StablePhase.x, StablePhase.y);
-        unstablePhaseTime = Random.Range(UnstablePhase.x, UnstablePhase.y);
         distortionFX = transform.GetComponentInChildren<ShockwaveScript>();
         distortionFX.gameObject.SetActive(false);
         network = GetComponent<AsteroidNetwork>();
@@ -94,6 +92,8 @@ public class Asteroid : MonoBehaviourPun {
         transform.SetParent(GameObject.FindGameObjectWithTag("ASTEROIDBELT").transform, true);
         baseScale = transform.localScale;
         if(PhotonNetwork.IsMasterClient) {
+            stablePhaseTime = Random.Range(StablePhase.x, StablePhase.y);
+            unstablePhaseTime = Random.Range(UnstablePhase.x, UnstablePhase.y);
             currentIncreaseDelay = Random.Range(increaseValueDelay.x, increaseValueDelay.y);
             currentIncrease = Random.Range(increaseRate.x, increaseRate.y);
             value = Random.Range(baseValue.x, baseValue.y);
@@ -102,10 +102,19 @@ public class Asteroid : MonoBehaviourPun {
     }
 
     [PunRPC]
-    public void SynchValues(float val, int inc, float del) {
+    public void SynchValues(float val, int inc, float del, float stablePhaseTime, float unstablePhaseTime) {
+        if(PhotonNetwork.IsMasterClient) return;
         this.value = val;
         this.currentIncrease = inc;
         this.currentIncreaseDelay = del;
+        this.stablePhaseTime = stablePhaseTime;
+        this.unstablePhaseTime = unstablePhaseTime;
+    }
+
+    [PunRPC]
+    public void SynchTimer(float timer) {
+        if(PhotonNetwork.IsMasterClient) return;
+        this.spawnTimer = timer;
     }
 
     void Update() {
@@ -123,7 +132,10 @@ public class Asteroid : MonoBehaviourPun {
         scoreText.text = value.ToString();
         scoreText.transform.rotation = Quaternion.identity;
         
-        spawnTimer += Time.deltaTime;
+        if(PhotonNetwork.IsMasterClient) {
+            spawnTimer += Time.deltaTime;
+            photonView.RPC("SynchTimer", RpcTarget.All, spawnTimer);
+        }
         increasePopupHideTimer += Time.deltaTime;
         if(spawnTimer < activateAfterSpawning) return;
 

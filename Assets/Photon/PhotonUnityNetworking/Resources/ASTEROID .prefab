@@ -513,11 +513,11 @@ MonoBehaviour:
   grabDelay: 0.5
   baseValue: {x: 1, y: 5}
   increaseValueDelay: {x: 2, y: 3}
-  increaseRate: {x: 2, y: 4}
+  increaseRate: {x: 3, y: 5}
   explodeParticles: {fileID: 1067106092621830195, guid: cd0b03d048d9905489b14408260a7a72,
     type: 3}
   explosionColor: {r: 0.5529412, g: 0.20392157, b: 1, a: 1}
-  StablePhase: {x: 9, y: 15}
+  StablePhase: {x: 10, y: 15}
   UnstablePhase: {x: 5, y: 8}
   TimeAfterSizzle: 1
   thrust: 29

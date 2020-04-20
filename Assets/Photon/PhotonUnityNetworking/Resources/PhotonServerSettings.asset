@@ -54,5 +54,6 @@ MonoBehaviour:
   - ReleaseAsteroid
   - SynchPlanet
   - SynchRadius
+  - SynchTimer
   DisableAutoOpenWizard: 1
   ShowSettings: 1

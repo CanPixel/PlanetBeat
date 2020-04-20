@@ -4868,9 +4868,9 @@ MonoBehaviour:
   playerColliders:
   - {fileID: 7716859393941716483}
   - {fileID: 1662954744308020737}
-  hookShotCastSpeed: 160
-  HookShotReelSpeed: 100
-  hookShotRange: 500
+  hookShotCastSpeed: 500
+  HookShotReelSpeed: 500
+  hookShotRange: 400
 --- !u!1 &1446986112285196594
 GameObject:
   m_ObjectHideFlags: 0
