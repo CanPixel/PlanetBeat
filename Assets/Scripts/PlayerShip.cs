@@ -257,7 +257,7 @@ public class PlayerShip : MonoBehaviourPunCallbacks {
                 exLastTime = 0.25f;
             }
             var emitting = exhaust.emission;
-            bool shouldEmit = Mathf.Abs(Vector3.Distance(exLastPos, transform.position)) > 0.025f;
+            bool shouldEmit = Mathf.Abs(Vector3.Distance(exLastPos, transform.position)) > 0.035f;
             emitting.enabled = shouldEmit;
         }
 

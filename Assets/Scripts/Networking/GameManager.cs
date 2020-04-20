@@ -142,7 +142,6 @@ public class GameManager : MonoBehaviourPunCallbacks {
       Random.InitState((int)Time.time * 1000);
 
       turnValue = background.TURN;
-      background.TURN = false;
 
       GAME_WON = false;
 
