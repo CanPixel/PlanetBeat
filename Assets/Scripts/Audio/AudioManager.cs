@@ -34,7 +34,7 @@ public class AudioManager : MonoBehaviour {
 			instance.soundBank.Clear();
 			instance.ambientDrone = ambientDrone;
 			instance.sounds = sounds;
-		    for(int i = 0; i < sounds.Length; i++) instance.soundBank.Add(sounds[i].name.ToLower(), sounds[i]);
+		    for(int i = 0; i < sounds.Length; i++) if(sounds[i] != null) instance.soundBank.Add(sounds[i].name.ToLower(), sounds[i]);
 			instance.UpdateVolumeLevels();
 			Destroy(gameObject);
 			return;

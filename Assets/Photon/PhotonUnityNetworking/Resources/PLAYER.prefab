@@ -5476,7 +5476,7 @@ MonoBehaviour:
   stopDrag: 2
   maxAsteroids: 2
   trailingSpeed: 15
-  throwingReduction: 0.55
+  throwingReduction: 0.5
   playerName: {fileID: 0}
   planet: {fileID: 0}
   trailingObjects: []

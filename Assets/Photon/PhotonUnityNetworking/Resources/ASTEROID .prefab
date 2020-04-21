@@ -510,21 +510,24 @@ MonoBehaviour:
   giveTag: 0
   inOrbitTimer: 0
   timeToScore: 3
-  grabDelay: 0.5
-  baseValue: {x: 1, y: 5}
+  grabDelay: 5
+  baseValue: {x: 4, y: 6}
   increaseValueDelay: {x: 2, y: 3}
   increaseRate: {x: 3, y: 5}
   explodeParticles: {fileID: 1067106092621830195, guid: cd0b03d048d9905489b14408260a7a72,
     type: 3}
   explosionColor: {r: 0.5529412, g: 0.20392157, b: 1, a: 1}
-  StablePhase: {x: 10, y: 15}
-  UnstablePhase: {x: 5, y: 8}
+  UnstableTextColor: {r: 0.9245283, g: 0.45068684, b: 0.33579564, a: 1}
+  StablePhase: {x: 8, y: 10}
+  UnstablePhase: {x: 5, y: 7}
   TimeAfterSizzle: 1
-  thrust: 29
   defaultRbDrag: 0.2
   inPlayerOrbitRbDrag: 0.6
   maxInOrbitTime: 5
   outOrbitForce: 40
+  thrust: 55
+  spinSpeed: 3
+  swirlDuration: 1
   playerPlanets: {fileID: 0}
   ownerPlayer: {fileID: 0}
   playerTagsManager: {fileID: 0}

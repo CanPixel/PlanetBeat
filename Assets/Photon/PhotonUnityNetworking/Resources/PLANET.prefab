@@ -465,6 +465,7 @@ MonoBehaviour:
         Culture=neutral, PublicKeyToken=null
     src: {fileID: 0}
     BeatTime: 3
+    afterBeat: 0
     delay: 0
 --- !u!1 &5336174368059501567
 GameObject:
@@ -721,7 +722,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5336174368953841514}
-  m_LocalRotation: {x: 0, y: 0, z: -0.013255772, w: -0.99991214}
+  m_LocalRotation: {x: 0, y: 0, z: 0.5337552, w: 0.84563905}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -745,7 +746,7 @@ MonoBehaviour:
   gravityRing: {fileID: 5336174368840663168}
   orbitTrailOffset: 750
   planetForcePlayer: 1.4
-  planetForceResource: 1.3
+  planetForceResource: 1.8
   Mass: 1
   PlayerExitVelocityReduction: 1
   ResourceExitVelocityReduction: 1

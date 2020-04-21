@@ -90,6 +90,9 @@ public class GameManager : MonoBehaviourPunCallbacks {
    public static void ClickSound(float pitch) {
       AudioManager.PLAY_SOUND("click", 1, pitch);
    }
+   public void Click(float pitch) {
+      AudioManager.PLAY_SOUND("click", 1, pitch);
+   }
 
    void OnValidate() {
       if(playerScale <= 0) playerScale = 0.01f;

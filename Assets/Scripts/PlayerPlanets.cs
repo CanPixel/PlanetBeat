@@ -7,7 +7,7 @@ using Photon.Realtime;
 
 public class PlayerPlanets : MonoBehaviourPun {
     private PlayerShip player;
-    public int playerNumber = 0;
+    [HideInInspector] public int playerNumber = 0;
     [HideInInspector] public float currentScore;
     public float minScore = 0;
     public float maxScore = 100f;
@@ -146,8 +146,8 @@ public class PlayerPlanets : MonoBehaviourPun {
     public void SetResource(float i) {
         float amount = Mathf.Clamp(i, 0, maxScore);
         currentScore = amount;
-        var newScale = transform.localScale + new Vector3(amount, amount, 0) / 50f;
-        GetComponent<UIFloat>().SetBaseScale(newScale);
+        //var newScale = transform.localScale + new Vector3(amount, amount, 0) / 50f;
+        //GetComponent<UIFloat>().SetBaseScale(newScale);
     }
 
     public void Explode() {
@@ -167,22 +167,13 @@ public class PlayerPlanets : MonoBehaviourPun {
 
     public void AddingResource(float amount) {
         if(playerNumber <= 0 || GameManager.GAME_WON) return;
-
-       /*  if (currentScore < maxScore) {
-            AudioManager.PLAY_SOUND("Musicalhit", 1.5f);
-            var newScale = transform.localScale + new Vector3(lastAmount, lastAmount, 0) / 150f;
-            newScale = new Vector3(Mathf.Clamp(newScale.x, 0, maxScale), Mathf.Clamp(newScale.y, 0, maxScale), Mathf.Clamp(newScale.z, 0, maxScale));
-
-            textOutline.effectDistance *= 2.25f;
-            scoreText.transform.localScale *= 1.2f;
-
-            GetComponent<UIFloat>().SetBaseScale(newScale);
-            if(photonView != null) photonView.RPC("SetResource", RpcTarget.AllBufferedViaServer, currentScore + lastAmount);
+        if(currentScore < maxScore) {
+            AudioManager.PLAY_SOUND("Musicalhit", 0.7f, 0.95f);
+            lastAmount = amount;
+            photonView.RPC("SetResource", RpcTarget.AllBufferedViaServer, currentScore + lastAmount);
         }  
         if (currentScore <= minScore) currentScore = minScore;
-        AudioManager.PLAY_SOUND("collect", 2, 1.2f); */
         ScorePoint = true;
-        lastAmount = amount;
     }
 
     public void AddOnBeat() {
@@ -192,14 +183,10 @@ public class PlayerPlanets : MonoBehaviourPun {
                 AudioManager.PLAY_SOUND("Musicalhit", 3.5f);
                 var newScale = transform.localScale + new Vector3(lastAmount, lastAmount, 0) / 150f;
                 newScale = new Vector3(Mathf.Clamp(newScale.x, 0, maxScale), Mathf.Clamp(newScale.y, 0, maxScale), Mathf.Clamp(newScale.z, 0, maxScale));
-
                 textOutline.effectDistance *= 2.25f;
                 scoreText.transform.localScale *= 1.2f;
-
                 GetComponent<UIFloat>().SetBaseScale(newScale);
-                if(photonView != null) photonView.RPC("SetResource", RpcTarget.AllBufferedViaServer, currentScore + lastAmount);
             }  
-            if (currentScore <= minScore) currentScore = minScore;
             AudioManager.PLAY_SOUND("collect", 2.5f);
             ScorePoint = false;
         }

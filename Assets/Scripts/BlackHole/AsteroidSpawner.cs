@@ -96,8 +96,7 @@ public class AsteroidSpawner : MonoBehaviourPun {
         if(sample > maxSamples) sample = 0;
     }
 
-    private Vector3 RandomCircle(Vector3 center, float radius, int a) {
-        float ang = a;
+    private Vector3 RandomCircle(Vector3 center, float radius, int ang) {
         return new Vector3(center.x + radius * Mathf.Sin(ang * Mathf.Deg2Rad), center.y + radius * Mathf.Cos(ang * Mathf.Deg2Rad), center.z);
     }
 }

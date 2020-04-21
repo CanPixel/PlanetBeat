@@ -55,5 +55,6 @@ MonoBehaviour:
   - SynchPlanet
   - SynchRadius
   - SynchTimer
+  - SynchCollectTimer
   DisableAutoOpenWizard: 1
   ShowSettings: 1

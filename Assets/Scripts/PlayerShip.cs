@@ -137,10 +137,9 @@ public class PlayerShip : MonoBehaviourPunCallbacks {
     public void PositionToPlanet() {
         if(planet != null) transform.position = photonView.transform.position = planet.transform.position;
     }
-
     public void LerpToPlanet() {
         if(planet == null) return;
-        transform.position = photonView.transform.position = Vector3.Lerp(transform.position, planet.transform.position, Time.deltaTime * 2f);
+        transform.position = photonView.transform.position = Vector3.Lerp(transform.position, planet.transform.position, Time.deltaTime);
     }
 
     public bool CanHold() {

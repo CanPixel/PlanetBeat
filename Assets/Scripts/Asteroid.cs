@@ -29,7 +29,7 @@ public class Asteroid : MonoBehaviourPun {
 
     //EXPLOSION
     public GameObject explodeParticles;
-    public Color explosionColor;
+    public Color explosionColor, UnstableTextColor;
     public Vector2 StablePhase = new Vector2(3, 6), UnstablePhase = new Vector2(3, 5);
     private float stablePhaseTime, unstablePhaseTime;
     public float TimeAfterSizzle = 2f;
@@ -38,12 +38,16 @@ public class Asteroid : MonoBehaviourPun {
     private ShockwaveScript distortionFX;
 
     [Header("PHYSICS")]
-    public float thrust = 20;
     public float defaultRbDrag = 0.008f;
     public float inPlayerOrbitRbDrag = 0.25f;
     public float maxInOrbitTime = 5;
     public float outOrbitForce = 20;
-    
+
+    [Header("SPAWN")]
+    public float thrust = 29;
+    public float spinSpeed = 3;
+    public float swirlDuration = 5;
+
     private bool canConsume = false;
     private float collectTimer, releaseTimer = 0;
     private bool canScore = false;
@@ -62,14 +66,16 @@ public class Asteroid : MonoBehaviourPun {
 
     private const float activateAfterSpawning = 1.25f;
     private Vector3 standardGlowScale;
-    private float thrustDelay = 0;
 
     private bool destroy = false;
 
-    private float spawnTimer = 0;
+    private bool isThrusting = true;
+    private float spawnTimer = 0, thrustDelay = 0;
     public bool IsDoneSpawning {
         get {return spawnTimer > activateAfterSpawning;}
     }
+
+    private GameObject curveSpinner;
 
     void Start() {
         distortionFX = transform.GetComponentInChildren<ShockwaveScript>();
@@ -80,16 +86,23 @@ public class Asteroid : MonoBehaviourPun {
         playerTagsManager = GetComponent<PlayerTagsManager>();
         rb.drag = defaultRbDrag - .15f;
         SetTexture(TextureSwitcher.GetCurrentTexturePack());
-        rb.AddForce(-transform.right * thrust);
+        rb.AddForce(-transform.right * 20);
+
         baseTextScale = scoreText.transform.localScale.x;
         scoreText.transform.localScale = Vector3.zero;
         increasePopupBaseSize = increasePopupTxt.transform.localScale.x;
         increasePopupTxt.transform.localScale = Vector3.zero;
         standardGlowScale = glow.transform.localScale;
+
+        curveSpinner = new GameObject("Curve Spinner");
+        curveSpinner.transform.SetParent(transform.parent);
+        curveSpinner.transform.position = Vector3.zero;
+        transform.SetParent(curveSpinner.transform, true);
     }
 
     void OnEnable() {
         transform.SetParent(GameObject.FindGameObjectWithTag("ASTEROIDBELT").transform, true);
+
         baseScale = transform.localScale;
         if(PhotonNetwork.IsMasterClient) {
             stablePhaseTime = Random.Range(StablePhase.x, StablePhase.y);
@@ -112,17 +125,29 @@ public class Asteroid : MonoBehaviourPun {
     }
 
     [PunRPC]
-    public void SynchTimer(float timer) {
+    public void SynchTimer(float timer, float timeBombTick) {
         if(PhotonNetwork.IsMasterClient) return;
         this.spawnTimer = timer;
+        this.timeBombTick = timeBombTick;
     }
 
     void Update() {
-        /* thrustDelay += Time.deltaTime;
-        if(thrustDelay < 0.2f) {
-            rb.AddForce(transform.forward * 4f + transform.right * 8f);
-        }*/
-        
+        thrustDelay += Time.deltaTime;
+        if(thrustDelay < swirlDuration) curveSpinner.transform.Rotate(0, 0, spinSpeed);
+        else if(isThrusting) {
+            transform.SetParent(curveSpinner.transform.parent, true);
+            Destroy(curveSpinner);
+            isThrusting = false;
+            rb.AddForce(-transform.right * thrust);
+        }
+
+        float fade = (collectTimer <= 0f) ? 1 : 0.4f;
+        src.color = glow.color = Color.Lerp(src.color, new Color(src.color.r, src.color.g, src.color.b, fade), Time.deltaTime * 5f);
+        scoreText.color = Color.Lerp(scoreText.color, new Color(scoreText.color.r, scoreText.color.g, scoreText.color.b, fade), Time.deltaTime * 5f);
+
+        if(collectTimer > 0) collectTimer -= Time.deltaTime;
+        //asteroidColl.enabled = collectTimer <= 0f; 
+
         increasePopupTxt.transform.rotation = Quaternion.Euler(0, 0, Mathf.Sin(Time.time * 3f) * 10f);
         increasePopupTxt.transform.position = transform.position + new Vector3(0.05f, 0.35f, 0);
         if(increasePopupHideTimer > 1f) increasePopupTxt.transform.localScale = Vector3.Lerp(increasePopupTxt.transform.localScale, Vector3.zero, Time.deltaTime * 2f);
@@ -133,13 +158,15 @@ public class Asteroid : MonoBehaviourPun {
         
         if(PhotonNetwork.IsMasterClient) {
             spawnTimer += Time.deltaTime;
-            photonView.RPC("SynchTimer", RpcTarget.All, spawnTimer);
+            photonView.RPC("SynchTimer", RpcTarget.All, spawnTimer, timeBombTick);
         }
         increasePopupHideTimer += Time.deltaTime;
         if(spawnTimer < activateAfterSpawning) return;
 
         //Explosion phase
         if(spawnTimer > stablePhaseTime) {
+            scoreText.CrossFadeColor(UnstableTextColor, 0.5f, false, false);
+
             bombTimer += Time.deltaTime;
             timeBombTick += Time.deltaTime;
             var tickBomb = spawnTimer - stablePhaseTime;
@@ -182,9 +209,6 @@ public class Asteroid : MonoBehaviourPun {
 
         if(scaleBack) transform.localScale = Vector3.Lerp(transform.localScale, baseScale, Time.deltaTime * 2f);
 
-        if(collectTimer > 0) collectTimer -= Time.deltaTime;
-        asteroidColl.enabled = collectTimer <= 0f; 
-
         if(held) ReleaseAsteroid(false, photonView.ViewID);
         else ReleasedTimer();  
 
@@ -195,7 +219,7 @@ public class Asteroid : MonoBehaviourPun {
     [PunRPC]
     public void ExplodeAsteroid(int viewID) {
         if(photonView.ViewID == viewID) {
-            Camera.main.GetComponent<ScreenShake>().Turn(2f);
+            Camera.main.GetComponent<ScreenShake>().Turn(1.5f);
             AudioManager.PLAY_SOUND("Explode", 1f, Random.Range(0.95f, 1.05f));
             Instantiate(explodeParticles, transform.position, Quaternion.identity);
             PhotonNetwork.InstantiateSceneObject("Shockwave", transform.position, Quaternion.identity);
@@ -230,7 +254,7 @@ public class Asteroid : MonoBehaviourPun {
     }
 
     public void Capture(HookShot hookShot) {
-        if(!hookShot.CanHold()) return;
+        if(!hookShot.CanHold() || collectTimer > 0) return;
         AudioManager.PLAY_SOUND("kickVerb", 1, Random.Range(1f, 1.1f));
         AudioManager.PLAY_SOUND("Reel");
         if((!held || (held && ownerPlayer != null && ownerPlayer.photonView.ViewID != hookShot.hostPlayer.photonView.ViewID))) {
@@ -240,8 +264,14 @@ public class Asteroid : MonoBehaviourPun {
             FetchAsteroid(hookShot.hostPlayer);
             hookShot.CatchObject(gameObject);
             collectTimer = grabDelay; 
+            if(PhotonNetwork.IsMasterClient)  photonView.RPC("SynchCollectTimer", RpcTarget.All, collectTimer);
             photonView.RPC("SetAsteroidOwner", RpcTarget.AllBufferedViaServer, ownerPlayer.photonView.ViewID, false);
         }
+    }
+
+    [PunRPC]
+    protected void SynchCollectTimer(float del) {
+        collectTimer = del;
     }
 
     [PunRPC]
