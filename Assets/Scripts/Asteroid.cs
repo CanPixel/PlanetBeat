@@ -115,6 +115,7 @@ public class Asteroid : MonoBehaviourPun {
         this.currentIncreaseDelay = del;
         this.stablePhaseTime = stablePhaseTime;
         this.unstablePhaseTime = unstablePhaseTime;
+
     }
 
     [PunRPC]
@@ -150,6 +151,7 @@ public class Asteroid : MonoBehaviourPun {
         if(PhotonNetwork.IsMasterClient) {
             spawnTimer += Time.deltaTime;
             photonView.RPC("SynchTimer", RpcTarget.All, spawnTimer, timeBombTick);
+            photonView.RPC("SynchCollectTimer", RpcTarget.All, collectTimer);
         }
         increasePopupHideTimer += Time.deltaTime;
         if(spawnTimer < activateAfterSpawning) return;
@@ -255,7 +257,6 @@ public class Asteroid : MonoBehaviourPun {
             FetchAsteroid(hookShot.hostPlayer);
             hookShot.CatchObject(gameObject);
             collectTimer = grabDelay; 
-            if(PhotonNetwork.IsMasterClient)  photonView.RPC("SynchCollectTimer", RpcTarget.All, collectTimer);
             photonView.RPC("SetAsteroidOwner", RpcTarget.AllBufferedViaServer, ownerPlayer.photonView.ViewID, false);
         }
     }

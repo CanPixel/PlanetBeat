@@ -510,7 +510,7 @@ MonoBehaviour:
   giveTag: 0
   inOrbitTimer: 0
   timeToScore: 3
-  grabDelay: 5
+  grabDelay: 3
   baseValue: {x: 4, y: 6}
   increaseValueDelay: {x: 2, y: 3}
   increaseRate: {x: 3, y: 5}
