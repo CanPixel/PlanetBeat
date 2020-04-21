@@ -44,8 +44,8 @@ public class Asteroid : MonoBehaviourPun {
     public float outOrbitForce = 20;
 
     [Header("SPAWN")]
-    public float thrust = 29;
-    public float spinSpeed = 3;
+    public float beginThrust = 29;
+    public float curve = 0.1f;
     public float swirlDuration = 5;
 
     private bool canConsume = false;
@@ -75,8 +75,6 @@ public class Asteroid : MonoBehaviourPun {
         get {return spawnTimer > activateAfterSpawning;}
     }
 
-    private GameObject curveSpinner;
-
     void Start() {
         distortionFX = transform.GetComponentInChildren<ShockwaveScript>();
         distortionFX.gameObject.SetActive(false);
@@ -86,18 +84,13 @@ public class Asteroid : MonoBehaviourPun {
         playerTagsManager = GetComponent<PlayerTagsManager>();
         rb.drag = defaultRbDrag - .15f;
         SetTexture(TextureSwitcher.GetCurrentTexturePack());
-        rb.AddForce(-transform.right * 20);
+        rb.AddForce(-transform.right * beginThrust);
 
         baseTextScale = scoreText.transform.localScale.x;
         scoreText.transform.localScale = Vector3.zero;
         increasePopupBaseSize = increasePopupTxt.transform.localScale.x;
         increasePopupTxt.transform.localScale = Vector3.zero;
         standardGlowScale = glow.transform.localScale;
-
-        curveSpinner = new GameObject("Curve Spinner");
-        curveSpinner.transform.SetParent(transform.parent);
-        curveSpinner.transform.position = Vector3.zero;
-        transform.SetParent(curveSpinner.transform, true);
     }
 
     void OnEnable() {
@@ -132,13 +125,12 @@ public class Asteroid : MonoBehaviourPun {
     }
 
     void Update() {
-        thrustDelay += Time.deltaTime;
-        if(thrustDelay < swirlDuration) curveSpinner.transform.Rotate(0, 0, spinSpeed);
+        thrustDelay += Time.fixedDeltaTime;
+        if(thrustDelay > 0.25f && thrustDelay < swirlDuration) {
+            rb.AddRelativeForce(transform.right * 0.05f * (swirlDuration - thrustDelay) * curve, ForceMode2D.Impulse);
+        }
         else if(isThrusting) {
-            transform.SetParent(curveSpinner.transform.parent, true);
-            Destroy(curveSpinner);
             isThrusting = false;
-            rb.AddForce(-transform.right * thrust);
         }
 
         float fade = (collectTimer <= 0f) ? 1 : 0.4f;
@@ -146,7 +138,6 @@ public class Asteroid : MonoBehaviourPun {
         scoreText.color = Color.Lerp(scoreText.color, new Color(scoreText.color.r, scoreText.color.g, scoreText.color.b, fade), Time.deltaTime * 5f);
 
         if(collectTimer > 0) collectTimer -= Time.deltaTime;
-        //asteroidColl.enabled = collectTimer <= 0f; 
 
         increasePopupTxt.transform.rotation = Quaternion.Euler(0, 0, Mathf.Sin(Time.time * 3f) * 10f);
         increasePopupTxt.transform.position = transform.position + new Vector3(0.05f, 0.35f, 0);
