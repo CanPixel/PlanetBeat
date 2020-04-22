@@ -5479,6 +5479,7 @@ MonoBehaviour:
   throwingReduction: 0.5
   playerName: {fileID: 0}
   planet: {fileID: 0}
+  respawnDelay: 0
   trailingObjects: []
 --- !u!50 &1662954744308020766
 Rigidbody2D:
@@ -5552,6 +5553,7 @@ MonoBehaviour:
   OwnershipTransfer: 0
   ObservedComponents:
   - {fileID: 7325083743037304914}
+  - {fileID: 3506364950220654683}
   viewIdField: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0

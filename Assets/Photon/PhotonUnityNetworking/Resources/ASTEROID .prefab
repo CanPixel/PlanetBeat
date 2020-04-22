@@ -525,9 +525,9 @@ MonoBehaviour:
   inPlayerOrbitRbDrag: 0.6
   maxInOrbitTime: 5
   outOrbitForce: 40
-  beginThrust: 20
-  curve: 0.1
-  swirlDuration: 2
+  beginThrust: 25
+  swirlSpeed: 5
+  curveReduction: 0.5
   playerPlanets: {fileID: 0}
   ownerPlayer: {fileID: 0}
   playerTagsManager: {fileID: 0}

@@ -35,9 +35,10 @@ public class AsteroidSpawner : MonoBehaviourPun {
     }
 
     [PunRPC]
-    public void SynchRadius(float radius) {
+    public void SynchRadius(float radius, float asteroidSpawnTimer) {
         if(PhotonNetwork.IsMasterClient) return;
         blackHoleEffect.radius = radius;
+        this.asteroidSpawnTimer = asteroidSpawnTimer;
     }
 
     void Update() {
@@ -46,31 +47,32 @@ public class AsteroidSpawner : MonoBehaviourPun {
         if(PhotonNetwork.IsMasterClient) {
             if(openBlackHole) blackHoleEffect.radius = Mathf.Lerp(blackHoleEffect.radius, baseRadius * 1.5f + Mathf.Sin(Time.time * 15f) * 1f, Time.deltaTime * 2f);
             else blackHoleEffect.radius = Mathf.Lerp(blackHoleEffect.radius, 0, Time.deltaTime * 1f);
-            if(photonView != null) photonView.RPC("SynchRadius", RpcTarget.All, blackHoleEffect.radius);
+            photonView.RPC("SynchRadius", RpcTarget.All, blackHoleEffect.radius, asteroidSpawnTimer);
         }
 
         AsteroidsList = GameObject.FindGameObjectsWithTag("Resource");
-        if (AsteroidsList.Length < asteroidAmount) {
+        if(AsteroidsList.Length < asteroidAmount) {
             asteroidSpawnTimer += Time.deltaTime;
             if(asteroidSpawnTimer > currentSpawnDelay) openBlackHole = true;
-
-            /* if(asteroidSpawnTimer > currentSpawnDelay + spawnAnimationDelay) {
-                SpawnAsteroid();
-                currentSpawnDelay = Random.Range(asteroidSpawnDelay.x, asteroidSpawnDelay.y);
-                asteroidSpawnTimer = 0;
-                openBlackHole = shake = false;
-            }*/
         }
+    }
+
+    [PunRPC]
+    protected void ShakeScreenNetwork() {
+        if(PhotonNetwork.IsMasterClient) return;
+        mainCamScreenShake.Shake(1f);
+        shake = true;
     }
 
     public void SpitAsteroidOnBeat() {
         AsteroidsList = GameObject.FindGameObjectsWithTag("Resource");
         if(asteroidSpawnTimer > currentSpawnDelay + (spawnAnimationDelay / 2f) && !shake) {
             mainCamScreenShake.Shake(1f);
+            photonView.RPC("ShakeScreenNetwork", RpcTarget.All);
             shake = true;
         }
 
-        if (AsteroidsList.Length < asteroidAmount && openBlackHole) {
+        if (AsteroidsList.Length < asteroidAmount && openBlackHole && PhotonNetwork.IsMasterClient) {
             if(asteroidSpawnTimer > currentSpawnDelay + spawnAnimationDelay) {
                 SpawnAsteroid();
                 currentSpawnDelay = Random.Range(asteroidSpawnDelay.x, asteroidSpawnDelay.y);

@@ -5,7 +5,7 @@ using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine.UI;
 
-public class PlayerShip : MonoBehaviourPunCallbacks {
+public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
     public PlayerHighlighter playerHighlighter;
     public HookShot hookShot;
     public ParticleSystem exhaust;
@@ -63,7 +63,7 @@ public class PlayerShip : MonoBehaviourPunCallbacks {
     [HideInInspector] public PlayerPlanets planet;
 
     private bool dropAsteroid = false;
-    private float respawnDelay = 0;
+    [SerializeField] private float respawnDelay = 0;
     private float flicker = 0;
 
     public bool CanExplode() {
@@ -90,6 +90,14 @@ public class PlayerShip : MonoBehaviourPunCallbacks {
     }
 
     #region IPunObservable implementation
+        public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
+            if(stream.IsWriting) {
+                stream.SendNext(respawnDelay);
+            } else {
+                respawnDelay = (float)stream.ReceiveNext();
+            }
+        }
+
         public override void OnEnable() {
             base.OnEnable();
 
