@@ -13,6 +13,17 @@ TagManager:
   - Bullet
   - Resource
   - GAMEFIELD
+  - PLAYERNAME
+  - ASTEROIDBELT
+  - CUSTOM CONTROLLER
+  - PLANETS
+  - SUN
+  - BACKGROUND
+  - TEXTURESWITCHER
+  - GAMEMANAGER
+  - LAUNCHER
+  - RoomToggle
+  - CENTER
   layers:
   - Default
   - TransparentFX
@@ -24,8 +35,8 @@ TagManager:
   - 
   - ASTEROID
   - BOUNDS
-  - 
-  - 
+  - PLAYER
+  - HOOK
   - 
   - 
   - 

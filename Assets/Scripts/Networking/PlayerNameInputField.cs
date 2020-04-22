@@ -27,5 +27,7 @@ public class PlayerNameInputField : MonoBehaviour {
             return;
         }
         PlayerPrefs.SetString(playerNamePrefKey, value);
+        PlayerShip.SetName(value);
+        PhotonNetwork.NickName = value;
     }
 }

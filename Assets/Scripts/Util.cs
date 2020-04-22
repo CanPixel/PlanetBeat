@@ -14,4 +14,14 @@ public class Util {
     public static Vector2 Abs(Vector2 root) {
         return new Vector2(Mathf.Abs(root.x), Mathf.Abs(root.y));
     }
+
+    public static bool Approximately(float a, float b, float threshold = 0.05f) {
+        float max = Mathf.Max(a, b);
+        float min = Mathf.Min(a, b);
+        return Mathf.Abs(max - min) <= threshold;
+    }
+
+    public static void HiResScreenshot(string name, int res) {
+        ScreenCapture.CaptureScreenshot(name, res);
+    }
 }

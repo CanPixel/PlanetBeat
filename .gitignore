@@ -6,6 +6,7 @@
 /[Tt]emp/
 /[Oo]bj/
 /[Bb]uilds/
+/[Bb]uild/
 /[Ll]ogs/
 /[Mm]emoryCaptures/
 
@@ -60,3 +61,5 @@ sysinfo.txt
 # Crashlytics generated file
 crashlytics-build.properties
 
+
+notes.txt

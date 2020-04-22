@@ -3,67 +3,221 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
+using UnityEngine.UI;
 
-public class Launcher : MonoBehaviourPunCallbacks {
-    [Header("REFERENCES")]
-    [SerializeField] private GameObject controlPanel;
-    [SerializeField] private GameObject progressLabel;
+public class Launcher : MonoBehaviourPunCallbacks, ILobbyCallbacks, IInRoomCallbacks {
+    [System.Serializable]
+    public class SpaceRoom {
+        public string name;
+        public Sprite icon;
+        public bool noCountdown = false;
+    }
+    public SpaceRoom[] rooms = new SpaceRoom[3];
+    public Vector2 roomLabelSize = new Vector2(225, 50);
 
     string gameVersion = "1";
 
-    bool isConnecting;
+    [Space(15)]
+    public string levelSceneName = "Space";
+
+    private static Launcher self;
 
     [Range(1, 20)]
-    [SerializeField] private byte maxPlayers = 4;
+    [SerializeField] private byte maxPlayers = 5;
+
+    [Header("REFERENCES")]
+    [SerializeField] private GameObject controlPanel;
+    public Sprite freeAim, lockOn, looker, player;
+
+    public Button playButton, exitButton;
+
+    public Toggle SpectToggle;
+    public Image SpectIcon;
+    public Text lockonText, playText, playersOnline, playersInSpace, countOfRooms, title;
+    [Header("ROOM SELECTION")]
+    public ToggleGroup roomGroup;
+    private List<SpaceRoomToggle> roomList = new List<SpaceRoomToggle>();
+    public GameObject roomTogglePrefab;
+
+    private int amountPlayers;
+    private bool connectNow = false;
+    private float beginZoom;
+
+    private int selectedRoom = -1;
+    private int roomInit = 0;
+
+    private bool update = true;
+
+    [HideInInspector] public bool connectedToMaster = false;
+    private float connectTimer = 0;
 
     void Awake() {
-        PhotonNetwork.AutomaticallySyncScene = true;
-        if(progressLabel != null) progressLabel.SetActive(false);
+        connectedToMaster = false;
+        roomInit = 0;
+        beginZoom = Camera.main.orthographicSize;
+        playButton.interactable = false;
+        playText.text = "CONNECTING...";
+
+        if(self == null){ 
+            self = this;
+            DontDestroyOnLoad(gameObject);
+        } else {
+            Destroy(self.gameObject);
+            self = this;
+        }
+
+        PhotonNetwork.AutomaticallySyncScene = false;
+        PhotonNetwork.NetworkingClient.EnableLobbyStatistics = true;
+        SpectIcon.gameObject.SetActive(false);
         if(controlPanel != null) controlPanel.SetActive(true);
+
+        selectedRoom = PlayerPrefs.GetInt("DEFAULT_ROOM");
+        for(int i = 0; i < rooms.Length; i++) AddRoomToList(rooms[i], i);
+        SetRoomSelection(selectedRoom);
+
+        SpectToggle.isOn = false;
+        OnChangeSpectate(SpectToggle.isOn);
+
+        TryConnect();
+
+        #if UNITY_WEBGL || UNITY_EDITOR
+            exitButton.gameObject.SetActive(false);
+        #endif
+    }
+
+    protected void TryConnect(bool retry = false) {
+        if(retry) Debug.Log("Reconnect");
+        connectTimer = 0;
+        PhotonNetwork.GameVersion = gameVersion;
+        PhotonNetwork.ConnectUsingSettings();
+    }
+
+    private void AddRoomToList(SpaceRoom room, int i) {
+        var img = room.icon;
+        var name = room.name;
+        Random.InitState(32452545 * i); 
+        var obj = Instantiate(roomTogglePrefab).GetComponent<SpaceRoomToggle>();
+        obj.SetProperties(name, img, roomGroup, i, maxPlayers, Random.ColorHSV(0, 1, 0, 1, 0, 0.8f));
+        obj.transform.SetParent(roomGroup.transform);
+        obj.transform.localScale = Vector3.one;
+        obj.transform.localPosition = new Vector3(0, (roomLabelSize.y * (rooms.Length - 1)) / 2f - i * roomLabelSize.y, 0);
+        obj.GetComponent<RectTransform>().sizeDelta = roomLabelSize;
+        roomList.Add(obj);
+    }
+
+    public void ClearSelection() {
+        for(int i = 0; i < roomList.Count; i++) roomList[i].SetState(false);
+    }
+    public void SetRoomSelection(int index, bool reset = false) {
+        if(reset) ClearSelection();
+        selectedRoom = index;
+        if(roomList.Count > index) roomList[index].SetState(true);
+        RoomListSelectChange(index);
+    }
+
+    void Update() {
+        connectTimer += Time.deltaTime;
+        if(connectTimer > 3 && !connectedToMaster) {
+            PhotonNetwork.Disconnect();
+            TryConnect(true);
+        }
+        if(!update) return; 
+
+        playersOnline.text = PhotonNetwork.CountOfPlayers + " player" + ((PhotonNetwork.CountOfPlayers == 1) ? "" : "s") + " online";
+        playersInSpace.text = PhotonNetwork.CountOfPlayersInRooms + " player" + ((PhotonNetwork.CountOfPlayersInRooms == 1) ? "" : "s") + " in space";
+        amountPlayers = PhotonNetwork.CountOfPlayers;
+        countOfRooms.text = PhotonNetwork.CountOfRooms + " room" + ((PhotonNetwork.CountOfRooms == 1) ? "" : "s") + " active";
+
+        if(connectNow) Camera.main.orthographicSize = Mathf.Lerp(Camera.main.orthographicSize, beginZoom - 1.5f, Time.deltaTime * 1f);
+
+        if(Input.GetKeyUp(KeyCode.Escape)) Screen.fullScreen = !Screen.fullScreen;
+    }
+
+    public void OnChangeSpectate(bool value) {
+        if(!value) SpectIcon.sprite = player;
+        else SpectIcon.sprite = looker;
+        int spect = (value) ? 0 : 1;
+        PlayerPrefs.SetInt("Spectate", spect);
+    }
+
+    public void ClickSound(float pitch) {
+        AudioManager.PLAY_SOUND("click", 1, pitch);
+    }
+
+    public void Quit() {
+        Application.Quit();
     }
 
     public void Connect() {
-        isConnecting = PhotonNetwork.ConnectUsingSettings();
+        TextureSwitcher.Detach();
 
-        if(progressLabel != null) progressLabel.SetActive(true);
         if(controlPanel != null) controlPanel.SetActive(false);
-        if(!PhotonNetwork.IsConnected) PhotonNetwork.JoinRandomRoom();
-        else {
-            PhotonNetwork.ConnectUsingSettings();
-            PhotonNetwork.GameVersion = gameVersion;
-        }
+        playersInSpace.gameObject.SetActive(false);
+        playersOnline.gameObject.SetActive(false);
+        countOfRooms.gameObject.SetActive(false);
+        title.gameObject.SetActive(false);
+
+        connectNow = true;
+        EnterRoom(PlayerPrefs.GetInt("DEFAULT_ROOM"));
     }
 
     #region MonoBehaviourPunCallbacks Callbacks
-
     public override void OnConnectedToMaster() {
-        if(isConnecting) {
-            PhotonNetwork.JoinRandomRoom();
-            isConnecting = false;
-        }
-    }
-
-    public override void OnDisconnected(DisconnectCause cause) {
-        progressLabel.SetActive(false);
-        controlPanel.SetActive(true);
-        Debug.LogWarningFormat("DISCONNECT was called because of {0}", cause);
+        connectedToMaster = true;
+        if(connectNow) PhotonNetwork.JoinLobby();
+        if(playText != null) playText.text = "PLAY";
+        SpectIcon.gameObject.SetActive(true);
+        playButton.interactable = true;
     }
 
     public override void OnJoinedLobby() {
-        
+        CreateRooms();
     }
 
-    public override void OnJoinRandomFailed(short returnCode, string message) {
-        Debug.Log("JoinRandomFailed(): No random room available, so we create one.\nCalling: PhotonNetwork.CreateRoom");
+    private void EnterRoom(int i) {
+        var options = new RoomOptions();
+        options.MaxPlayers = maxPlayers;
+        options.IsVisible = true;
+        options.IsOpen = true;
+        PhotonNetwork.JoinOrCreateRoom(roomList[i].roomName, options, TypedLobby.Default);
+    }
 
-        // #Critical: we failed to join a random room, maybe none exists or they are all full. No worries, we create a new room.
-        PhotonNetwork.CreateRoom(null, new RoomOptions(){MaxPlayers = maxPlayers});
+    private bool CreateRooms(bool join = false) {
+        var options = new RoomOptions();
+        options.MaxPlayers = maxPlayers;
+        options.IsVisible = true;
+        options.IsOpen = true;
+        if(roomInit >= roomList.Count) return true;
+        bool val = (join)? PhotonNetwork.JoinOrCreateRoom(roomList[roomInit].roomName, options, TypedLobby.Default) : PhotonNetwork.CreateRoom(roomList[roomInit].roomName, options, TypedLobby.Default);
+        if(val) {
+            if(roomInit < roomList.Count && !val) roomInit++;
+            if(!join) PhotonNetwork.ConnectUsingSettings();
+            return true;
+        }
+        return false;
+    }
+
+    public override void OnDisconnected(DisconnectCause cause) {
+        PhotonNetwork.LeaveLobby();
+        self = null;
+        Destroy(gameObject);
+        if(controlPanel != null) controlPanel.SetActive(true);
+        base.OnDisconnected(cause);
     }
 
     public override void OnJoinedRoom() {
-        Debug.Log("OnJoinedRoom(): Now this client is in a room.");
-        PhotonNetwork.LoadLevel("MULTIPLAY");
+        base.OnJoinedRoom();
+        PhotonNetwork.LoadLevel(levelSceneName);
+        update = connectNow = false;
+    }
+    #endregion
+
+    public void RoomListSelectChange(int chosenRoom) {
+        PlayerPrefs.SetInt("DEFAULT_ROOM", chosenRoom);
     }
 
-    #endregion
+    public static bool GetSkipCountDown() {
+        if(self == null) return true;
+        return self.rooms[self.selectedRoom].noCountdown;
+    }
 }
