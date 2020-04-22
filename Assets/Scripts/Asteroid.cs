@@ -69,7 +69,6 @@ public class Asteroid : MonoBehaviourPun {
 
     private bool destroy = false;
 
-    private bool isThrusting = true;
     private float spawnTimer = 0, thrustDelay = 0;
     public bool IsDoneSpawning {
         get {return spawnTimer > activateAfterSpawning;}
@@ -115,7 +114,6 @@ public class Asteroid : MonoBehaviourPun {
         this.currentIncreaseDelay = del;
         this.stablePhaseTime = stablePhaseTime;
         this.unstablePhaseTime = unstablePhaseTime;
-
     }
 
     [PunRPC]
@@ -125,15 +123,14 @@ public class Asteroid : MonoBehaviourPun {
         this.timeBombTick = timeBombTick;
     }
 
-    void Update() {
+    void FixedUpdate() {
         thrustDelay += Time.fixedDeltaTime;
         if(thrustDelay > 0.25f && thrustDelay < swirlDuration) {
             rb.AddRelativeForce(transform.right * 0.05f * (swirlDuration - thrustDelay) * curve, ForceMode2D.Impulse);
         }
-        else if(isThrusting) {
-            isThrusting = false;
-        }
+    }
 
+    void Update() {
         float fade = (collectTimer <= 0f) ? 1 : 0.4f;
         src.color = glow.color = Color.Lerp(src.color, new Color(src.color.r, src.color.g, src.color.b, fade), Time.deltaTime * 5f);
         scoreText.color = Color.Lerp(scoreText.color, new Color(scoreText.color.r, scoreText.color.g, scoreText.color.b, fade), Time.deltaTime * 5f);
@@ -151,7 +148,6 @@ public class Asteroid : MonoBehaviourPun {
         if(PhotonNetwork.IsMasterClient) {
             spawnTimer += Time.deltaTime;
             photonView.RPC("SynchTimer", RpcTarget.All, spawnTimer, timeBombTick);
-            photonView.RPC("SynchCollectTimer", RpcTarget.All, collectTimer);
         }
         increasePopupHideTimer += Time.deltaTime;
         if(spawnTimer < activateAfterSpawning) return;
@@ -257,6 +253,7 @@ public class Asteroid : MonoBehaviourPun {
             FetchAsteroid(hookShot.hostPlayer);
             hookShot.CatchObject(gameObject);
             collectTimer = grabDelay; 
+            photonView.RPC("SynchCollectTimer", RpcTarget.All, collectTimer);
             photonView.RPC("SetAsteroidOwner", RpcTarget.AllBufferedViaServer, ownerPlayer.photonView.ViewID, false);
         }
     }
