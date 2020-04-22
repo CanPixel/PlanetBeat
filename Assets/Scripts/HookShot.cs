@@ -78,7 +78,6 @@ public class HookShot : MonoBehaviour {
                 if(rope.sizeDelta.y < hookShotRange * 10f && !didntCatch) {
                     if(!hitObject) rope.sizeDelta = new Vector2(rope.sizeDelta.x, rope.sizeDelta.y + hookShotCastSpeed);
                     else if(rope.sizeDelta.y > 0) rope.sizeDelta = new Vector2(rope.sizeDelta.x, rope.sizeDelta.y - HookShotReelSpeed);
-                    //else ResetHook();
                 }
 
                 if(didntCatch) {
@@ -110,7 +109,7 @@ public class HookShot : MonoBehaviour {
     #endregion
 
     public void CastHook() {
-        if(!GameManager.GAME_STARTED) return;
+        if(!hostPlayer.CanCastHook()) return;
         AudioManager.PLAY_SOUND("Kick", 1f, 0.9f);
         AudioManager.PLAY_SOUND("CastHook", 0.8f, Random.Range(0.9f, 1f));
         isShootingHook = true;

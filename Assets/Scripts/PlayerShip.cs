@@ -225,26 +225,23 @@ public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
                 rb.rotation = turn;
             }
         }
-        if(dropAsteroid && trailingObjects.Count > 0) {
+
+        if(dropAsteroid && trailingObjects.Count > 0 && respawnDelay <= 0) {
             var asteroid = trailingObjects[0];
             trailingObjects.RemoveAt(0);
             if(asteroid.rb != null) {
                 asteroid.rb.constraints = RigidbodyConstraints2D.None;
                 asteroid.rb.velocity = rb.velocity / throwingReduction; 
             }
+            SetCollision(asteroid.GetCollider2D(), false);
             asteroid.transform.TransformDirection(new Vector2(transform.forward.x * asteroid.transform.forward.x, transform.forward.y * asteroid.transform.forward.y));
             asteroid.photonView.RPC("ReleaseAsteroid", RpcTarget.All, true, asteroid.photonView.ViewID); 
             dropAsteroid = false;
         }
     }
 
-    public bool ReleaseAsteroidKey() {
-        return Input.GetKeyDown(KeyCode.F) | Input.GetKeyDown(KeyCode.E) | Input.GetKeyDown(KeyCode.R) | Input.GetKeyDown(KeyCode.C);
-    }
-
     void Update() {
         if(!GameManager.GAME_STARTED) PositionToPlanet();
-
         exhaustSound.volume = Mathf.Lerp(exhaustSound.volume, IsThrust() ? 0.05f : 0, Time.deltaTime * 10f);
 
         //Soft borders
@@ -254,9 +251,9 @@ public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
         //stopDrag = Mathf.Lerp(stopDrag, baseStopDrag * Mathf.Clamp(4f - DistFromCenter, 0.1f, 1), Time.deltaTime * 4f);
         //defaultDrag = Mathf.Lerp(defaultDrag, baseDefaultDrag * Mathf.Clamp(4f - DistFromCenter, 0.1f, 1), Time.deltaTime * 4f);
 
-        if (ReleaseAsteroidKey() && trailingObjects.Count > 0) {
+        if(ReleaseAsteroidKey() && trailingObjects.Count > 0 && respawnDelay <= 0) {
             AudioManager.PLAY_SOUND("collect");
-            DropAsteroid();
+            dropAsteroid = true;
         }
 
         //Particles emitten wanneer movement
@@ -274,7 +271,7 @@ public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
             emitting.enabled = shouldEmit;
         }
 
-        if (!photonView.IsMine && PhotonNetwork.IsConnected) return;
+        if(!photonView.IsMine && PhotonNetwork.IsConnected) return;
 
         //Removes asteroids that got destroyed / eaten by the sun
         for(int i = 0; i < trailingObjects.Count; i++) if(trailingObjects[i] == null) {
@@ -295,13 +292,10 @@ public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
                 trailingObjects[i].transform.localScale = Vector3.Lerp(trailingObjects[i].transform.localScale, Vector3.one * 0.09f, Time.deltaTime * 2f);
                 trailingObjects[i].transform.position = Vector3.Lerp(trailingObjects[i].transform.position, (transform.position - (transform.up * (i + 1) * 0.5f)), Time.deltaTime * trailingSpeed);
             }
-
-        //ignore this, this is for later
-        // if(Health < 0) GameManager.instance.LeaveRoom();
     }
 
-    private void DropAsteroid() {
-        dropAsteroid = true;
+    public bool ReleaseAsteroidKey() {
+        return Input.GetKeyDown(KeyCode.F) | Input.GetKeyDown(KeyCode.E) | Input.GetKeyDown(KeyCode.R) | Input.GetKeyDown(KeyCode.C);
     }
 
     void ProcessInputs() {
@@ -351,8 +345,13 @@ public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
         return photonView != null && photonView.IsMine;
     }
 
+    public bool CanCastHook() {
+        return respawnDelay <= 0 && GameManager.GAME_STARTED;
+    }
+
     [PunRPC]
     public void CastHook(int viewID) {
+        if(!CanCastHook()) return;
         if(photonView.ViewID == viewID) hookShot.CastHook();
     }
 

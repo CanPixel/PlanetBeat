@@ -245,6 +245,10 @@ public class Asteroid : MonoBehaviourPun {
         playerTagsManager.DisableTrails();
     }
 
+    public Collider2D GetCollider2D() {
+        return asteroidColl;
+    }
+
     [PunRPC]
     public void SetValue(float value, int increase, float delay) {
         this.value = value;

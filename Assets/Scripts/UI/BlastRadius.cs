@@ -12,8 +12,11 @@ public class BlastRadius : MonoBehaviour {
     public float timeUntillDestroy = 1;
     public Color radiusColor;
     public float startSize = 0.1f;
+    public float explosionForce = 100;
 
     private LineRenderer line;
+
+    private float radius;
 
     private float expandSpeed, lifeSpan;
     private bool exploded = false;
@@ -58,9 +61,15 @@ public class BlastRadius : MonoBehaviour {
             i.transform.localScale /= 2f;
             col.gameObject.GetComponent<PlayerShip>().Explode();
         }
+        if(col.gameObject.tag == "Resource") {
+            var dir = (col.transform.position - transform.position);
+            float wearoff = 1 - (dir.magnitude / radius);
+            col.attachedRigidbody.AddForce(dir.normalized * explosionForce * wearoff);
+        }
     }
 
     void CreatePoints(float radius) {
+        this.radius = radius;
         line.positionCount = segments + 1;
         float x;
         float y;
