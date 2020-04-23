@@ -42,6 +42,15 @@ public class PlayerShip : MonoBehaviourPunCallbacks {
         [Range(1, 10)]
         public int maxAsteroids = 2;
     #endregion
+        
+        // ----- Bradley
+        
+        private bool ResourceGrabbed = false;
+        public GameObject SpeedShart;
+        public Vector3 SpeedShartOffset;
+        public GameObject SpawnStarShard;
+        public float TimeInterval = 1.1f;
+    //
 
     //Rigidbody reference voor physics en movement hoeraaa
     private Rigidbody2D rb;
@@ -228,8 +237,31 @@ public class PlayerShip : MonoBehaviourPunCallbacks {
             asteroid.photonView.RPC("ReleaseAsteroid", RpcTarget.All, true, asteroid.photonView.ViewID); 
             dropAsteroid = false;
         }
+        
+        // -------------- Bradley
+        
+        Debug.Log("MaxVelocity : " + maxVelocity);
     }
-
+    
+        void OnTriggerEnter2D(Collider2D collision)
+        {
+             //Destroy(other.gameObject);
+             if(collision.gameObject.tag == "SpeedShart")
+             {
+                Debug.Log("Speeeed");
+                 maxVelocity = 13;
+            }
+        }
+            void OnTriggerExit2D(Collider2D collision)
+        {
+             //Destroy(other.gameObject);
+             if(collision.gameObject.tag == "SpeedShart")
+             {
+                 maxVelocity = 4;
+                 Destroy(collision.gameObject);
+            }
+        }
+    
     public bool ReleaseAsteroidKey() {
         return Input.GetKeyDown(KeyCode.F) | Input.GetKeyDown(KeyCode.E) | Input.GetKeyDown(KeyCode.R) | Input.GetKeyDown(KeyCode.C);
     }
@@ -290,6 +322,33 @@ public class PlayerShip : MonoBehaviourPunCallbacks {
 
         //ignore this, this is for later
         // if(Health < 0) GameManager.instance.LeaveRoom();
+        
+        // ------------------------------------- Bradley
+        if (ResourceGrabbed == true)
+        {
+            // Spawn met interval
+        TimeInterval += Time.deltaTime;
+        if (TimeInterval >= 0.5f)
+        {
+            TimeInterval = 0;
+            
+            GameObject instance = (GameObject)Instantiate(SpeedShart, SpawnStarShard.transform.position, transform.rotation, GameObject.Find("Canvas").transform); 
+        }
+
+            
+        }
+        
+        if(trailingObjects.Count == 0)
+        {
+            ResourceGrabbed = false;
+        }
+        else if(trailingObjects.Count > 0)
+        {
+            ResourceGrabbed = true;
+        }
+        
+        // -------------
+
     }
 
     private void DropAsteroid() {
@@ -327,13 +386,15 @@ public class PlayerShip : MonoBehaviourPunCallbacks {
         obj.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
         var script = obj.GetComponent<Asteroid>();
         if(script != null) trailingObjects.Add(script);
+        
+
     }
 
-    public void RemoveAsteroid(GameObject obj) {
+    public void RemoveAsteroid(GameObject obj) {    
         for(int i = 0; i < trailingObjects.Count; i++) {
             if(trailingObjects[i] == obj) {
                 trailingObjects[i].photonView.RPC("ReleaseAsteroid", RpcTarget.All, true, trailingObjects[i].photonView.ViewID);
-                trailingObjects.RemoveAt(i);
+                trailingObjects.RemoveAt(i);         
                 return;
             }
         }

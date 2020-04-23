@@ -73,7 +73,16 @@ public class Asteroid : MonoBehaviourPun {
     public bool IsDoneSpawning {
         get {return spawnTimer > activateAfterSpawning;}
     }
-
+    
+    // ------------ Bradley
+    private bool StartThrustTimer = true;
+    private bool CurveThrustTimer = true;
+    public float Thrust = 1.0f;
+    public float StartThrustTimerAmount = 10.0f;
+    public float speedRotate = 10.0f;
+    public float timeRotate = -70;
+    private int LinksOfRechts = 0;
+    
     void Start() {
         distortionFX = transform.GetComponentInChildren<ShockwaveScript>();
         distortionFX.gameObject.SetActive(false);
@@ -83,7 +92,10 @@ public class Asteroid : MonoBehaviourPun {
         playerTagsManager = GetComponent<PlayerTagsManager>();
         rb.drag = defaultRbDrag - .15f;
         SetTexture(TextureSwitcher.GetCurrentTexturePack());
-        rb.AddForce(-transform.right * beginThrust);
+        
+        // ----- Bradley
+        rb.AddForce(transform.up * Thrust);
+        LinksOfRechts = Random.Range(0,2);
 
         baseTextScale = scoreText.transform.localScale.x;
         scoreText.transform.localScale = Vector3.zero;
@@ -123,13 +135,52 @@ public class Asteroid : MonoBehaviourPun {
         this.timeBombTick = timeBombTick;
     }
 
+        // ------- Bradley
     void FixedUpdate() {
         thrustDelay += Time.fixedDeltaTime;
         if(thrustDelay > 0.25f && thrustDelay < swirlDuration) {
             rb.AddRelativeForce(transform.right * 0.05f * (swirlDuration - thrustDelay) * curve, ForceMode2D.Impulse);
         }
+        
+        StartThrustTimerAmount -= Time.deltaTime;
+        if (StartThrustTimerAmount < 0)
+        {
+            StartThrustTimer = false;
+        }
+        
+        if (StartThrustTimer == true)
+        {
+            int Richting = 0;
+            int Links = 10;
+            int Rechts = -10;
+            
+            Debug.Log(LinksOfRechts);
+            
+            if(LinksOfRechts == 1)
+            {
+                Richting = Links;
+            }
+            else if (LinksOfRechts == 0){
+                Richting = Rechts;
+            }
+            rb.AddForce(transform.up * beginThrust); 
+            transform.Rotate(0,0, Time.deltaTime * speedRotate * Richting );
+            
+            //rb.AddForce(-transform.right * 4.5f); 
+        }
+        
+        if (StartThrustTimerAmount < timeRotate)
+        {
+            CurveThrustTimer = false;
+        }
+        
+        if (CurveThrustTimer == true)
+        {       
+            //transform.Rotate(0,0, Time.deltaTime * speedRotate * 20 );
+            //rb.AddForce(transform.up * 1.0f); 
+        }
     }
-
+    
     void Update() {
         float fade = (collectTimer <= 0f) ? 1 : 0.4f;
         src.color = glow.color = Color.Lerp(src.color, new Color(src.color.r, src.color.g, src.color.b, fade), Time.deltaTime * 5f);

@@ -28,10 +28,24 @@ public class HookShot : MonoBehaviour {
     private bool reelback = false;
 
     private GameObject lockOnAimTarget;
+    
+    // ------------- Bradley
+    
+    private bool HookCooldown = false;
+    public float HookCooldownTime = 10.0f;
+    private float timeLeft;
+    
+    public GameObject HookCooldownOn;
+    public GameObject HookCooldownOff;
+    
+
 
     void Start() {
         rope = transform.GetChild(0).GetComponent<RectTransform>();
         tip = rope.transform.GetChild(0).GetComponent<CircleCollider2D>();
+        
+        // ------------ Bradley
+        timeLeft = HookCooldownTime;
     }
 
     void Update() {
@@ -56,10 +70,32 @@ public class HookShot : MonoBehaviour {
                 }
             }
         }*/
-
+        
+        
         FreeAim();
+        
         if(shootTimer > 0) shootTimer += Time.deltaTime;
         if(shootTimer > 1) didntCatch = true;
+        
+        // ------ Bradley
+        
+            
+        if(HookCooldown == true)
+        {
+            
+            timeLeft -= Time.deltaTime;
+            if (timeLeft < 0)
+            {
+                HookCooldownOff.SetActive(true);
+                HookCooldownOn.SetActive(false);
+                HookCooldown = false;
+                
+            }
+        }
+        
+
+        // ------ 
+        
     }
 
     #region AIMING_TYPES_LOGIC
@@ -69,8 +105,27 @@ public class HookShot : MonoBehaviour {
         }
 
         protected void FreeAim() {
-            if(Input.GetKey(KeyCode.Space)) triggerHook = true;
-            if(Input.GetKeyUp(KeyCode.Space) && triggerHook && shootTimer <= 0) {
+            
+            // ------ Bradley
+        if(Input.GetKey(KeyCode.Space))
+            {
+
+                if(HookCooldown == false)
+                {
+                    triggerHook = true;
+                    
+                    HookCooldownOff.SetActive(false);
+                    HookCooldownOn.SetActive(true);
+                    
+                    HookCooldown = true;
+                    timeLeft = HookCooldownTime;
+                }
+        }
+            
+            // ------ 
+            
+            if(Input.GetKeyUp(KeyCode.Space) && triggerHook && shootTimer <= 0) 
+            {
                 if(hostPlayer.IsThisClient()) hostPlayer.photonView.RPC("CastHook", RpcTarget.All, hostPlayer.photonView.ViewID);
             }
 
@@ -131,6 +186,9 @@ public class HookShot : MonoBehaviour {
     }
 
     public void CatchObject(GameObject obj) {
+        
+
+        
         hitObject = true;
         grabbedObj = obj;
         var photon = obj.GetComponent<PhotonView>();
