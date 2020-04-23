@@ -578,7 +578,7 @@ MonoBehaviour:
   giveTag: 0
   inOrbitTimer: 0
   timeToScore: 3
-  grabDelay: 3
+  grabDelay: 0
   baseValue: {x: 4, y: 6}
   increaseValueDelay: {x: 2, y: 3}
   increaseRate: {x: 3, y: 5}
@@ -593,9 +593,13 @@ MonoBehaviour:
   inPlayerOrbitRbDrag: 0.6
   maxInOrbitTime: 5
   outOrbitForce: 40
-  beginThrust: 25
-  swirlSpeed: 5
-  curveReduction: 0.5
+  beginThrust: 0.4
+  curve: 0
+  swirlDuration: 2
+  Thrust: 0.1
+  StartThrustTimerAmount: 2.5
+  speedRotate: 7
+  timeRotate: -70
   playerPlanets: {fileID: 0}
   ownerPlayer: {fileID: 0}
   playerTagsManager: {fileID: 0}

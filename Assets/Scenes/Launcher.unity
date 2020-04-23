@@ -5393,7 +5393,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 533948573842649025}
-  m_LocalRotation: {x: 0, y: 0, z: 0.39489707, w: 0.9187254}
+  m_LocalRotation: {x: 0, y: 0, z: 0.722479, w: 0.6913929}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -5415,6 +5415,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   coll: {fileID: 533948573842649028}
   gravityRing: {fileID: 533948574031206443}
+  planet: {fileID: 0}
   orbitTrailOffset: 750
   planetForcePlayer: 1.4
   planetForceResource: 1.3
@@ -5467,6 +5468,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   coll: {fileID: 533948573944061019}
   gravityRing: {fileID: 533948574057130932}
+  planet: {fileID: 0}
   orbitTrailOffset: 750
   planetForcePlayer: 1.4
   planetForceResource: 1.3
@@ -5480,7 +5482,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 533948573944061022}
-  m_LocalRotation: {x: 0, y: 0, z: 0.99304885, w: -0.11770298}
+  m_LocalRotation: {x: 0, y: 0, z: 0.8681162, w: -0.49636105}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -6399,6 +6401,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   coll: {fileID: 533948575062331781}
   gravityRing: {fileID: 533948574974207594}
+  planet: {fileID: 0}
   orbitTrailOffset: 750
   planetForcePlayer: 1.4
   planetForceResource: 1.3
@@ -6412,7 +6415,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 533948575062331776}
-  m_LocalRotation: {x: 0, y: 0, z: 0.9824815, w: 0.18636027}
+  m_LocalRotation: {x: 0, y: 0, z: 0.9771958, w: -0.2123402}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -6594,7 +6597,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 533948575445420487}
-  m_LocalRotation: {x: 0, y: 0, z: 0.81673783, w: 0.57700896}
+  m_LocalRotation: {x: 0, y: 0, z: 0.9772664, w: 0.21201509}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -6616,6 +6619,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   coll: {fileID: 533948575445420482}
   gravityRing: {fileID: 533948575256903213}
+  planet: {fileID: 0}
   orbitTrailOffset: 750
   planetForcePlayer: 1.4
   planetForceResource: 1.3

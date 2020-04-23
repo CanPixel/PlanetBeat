@@ -5,6 +5,8 @@ using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine.UI;
 
+///////CAN 
+
 public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
     public PlayerHighlighter playerHighlighter;
     public HookShot hookShot;
@@ -27,6 +29,9 @@ public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
         public float maxVelocity = 5;
         private float baseVelocity;
         public float acceleration = 0.1f;
+
+        public float defaultVelocity = 4.0f;
+        public float boostVelocity = 13.0f;
 
         [Range(1, 20)]
         public float turningSpeed = 2.5f;
@@ -52,6 +57,11 @@ public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
     [Range(0.1f,10)]
     public float throwingReduction = 1f; 
 
+    public GameObject SpeedShardPrefab;
+    public Vector3 SpeedShardOffset;
+    public GameObject SpawnStarShard;
+    public float ShardTimeInterval = 1.1f;
+
     public static string PLAYERNAME;
 
     private Vector3 exLastPos;
@@ -63,7 +73,7 @@ public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
     [HideInInspector] public PlayerPlanets planet;
 
     private bool dropAsteroid = false;
-    [SerializeField] private float respawnDelay = 0;
+    [SerializeField] [HideInInspector] private float respawnDelay = 0;
     private float flicker = 0;
 
     public bool CanExplode() {
@@ -292,6 +302,26 @@ public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
                 trailingObjects[i].transform.localScale = Vector3.Lerp(trailingObjects[i].transform.localScale, Vector3.one * 0.09f, Time.deltaTime * 2f);
                 trailingObjects[i].transform.position = Vector3.Lerp(trailingObjects[i].transform.position, (transform.position - (transform.up * (i + 1) * 0.5f)), Time.deltaTime * trailingSpeed);
             }
+    
+        //Grapple Cooldown Code
+        if(trailingObjects.Count > 0) {
+            ShardTimeInterval += Time.deltaTime;
+            if (ShardTimeInterval >= 0.5f) {
+                ShardTimeInterval = 0;
+                PhotonNetwork.Instantiate("SpeedShard", SpawnStarShard.transform.position, transform.rotation); 
+            }    
+        }
+    }
+
+    void OnTriggerEnter2D(Collider2D collision) {
+        if(collision.gameObject.tag == "SpeedShard") maxVelocity = boostVelocity;
+    }
+    void OnTriggerExit2D(Collider2D collision) {
+        if(collision.gameObject.tag == "SpeedShard") {
+            maxVelocity = defaultVelocity;
+            GameManager.DESTROY_SERVER_OBJECT(collision.gameObject);
+            Destroy(collision.gameObject);
+        }
     }
 
     public bool ReleaseAsteroidKey() {

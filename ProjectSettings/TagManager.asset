@@ -24,6 +24,7 @@ TagManager:
   - LAUNCHER
   - RoomToggle
   - CENTER
+  - SPEEDSHARD
   layers:
   - Default
   - TransparentFX

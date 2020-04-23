@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
@@ -91,12 +91,8 @@ public class HookShot : MonoBehaviour {
         }
 
         protected void FreeAim() {
-            if(Input.GetKey(KeyCode.Space) && !HookCooldown) {
+            if(Input.GetKey(KeyCode.Space)) {
                 triggerHook = true;
-                HookCooldownOff.SetActive(false);
-                HookCooldownOn.SetActive(true);
-                HookCooldown = true;
-                timeLeft = HookCooldownTime;
             }
             if(Input.GetKeyUp(KeyCode.Space) && triggerHook && shootTimer <= 0) {
                 if(hostPlayer.IsThisClient()) hostPlayer.photonView.RPC("CastHook", RpcTarget.All, hostPlayer.photonView.ViewID);
