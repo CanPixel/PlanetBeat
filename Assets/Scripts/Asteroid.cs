@@ -165,9 +165,9 @@ public class Asteroid : MonoBehaviourPun {
             }
             rb.AddForce(transform.up * beginThrust); 
             transform.Rotate(0,0, Time.deltaTime * speedRotate * Richting );
-            
-            //rb.AddForce(-transform.right * 4.5f); 
         }
+        
+        // ------------
         
         if (StartThrustTimerAmount < timeRotate)
         {

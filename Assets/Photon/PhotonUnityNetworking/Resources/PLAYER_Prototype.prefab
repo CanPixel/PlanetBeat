@@ -4791,7 +4791,7 @@ ParticleSystemRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 5
+  m_SortingOrder: 3
   m_RenderMode: 0
   m_SortMode: 0
   m_MinParticleSize: 0
@@ -4871,7 +4871,8 @@ MonoBehaviour:
   hookShotCastSpeed: 500
   HookShotReelSpeed: 500
   hookShotRange: 400
-  HookCooldownTime: 2.5
+  HookCooldownTime: 3.5
+  HookCooldownParent: {fileID: 9121570756019671609}
   HookCooldownOn: {fileID: 7896070833147778563}
   HookCooldownOff: {fileID: 5956432207261546541}
 --- !u!1 &1446986112285196594
@@ -5485,6 +5486,8 @@ MonoBehaviour:
   SpeedShartOffset: {x: 0, y: -1, z: 0}
   SpawnStarShard: {fileID: 7852350941077473399}
   TimeInterval: 0.5
+  defaultVelocity: 4
+  boostVelocity: 17
   trailingSpeed: 15
   throwingReduction: 0.5
   playerName: {fileID: 0}

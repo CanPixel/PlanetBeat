@@ -50,6 +50,9 @@ public class PlayerShip : MonoBehaviourPunCallbacks {
         public Vector3 SpeedShartOffset;
         public GameObject SpawnStarShard;
         public float TimeInterval = 1.1f;
+    
+        public float defaultVelocity = 4.0f;
+        public float boostVelocity = 13.0f;
     //
 
     //Rigidbody reference voor physics en movement hoeraaa
@@ -197,9 +200,9 @@ public class PlayerShip : MonoBehaviourPunCallbacks {
         baseVelocity = maxVelocity;
         baseStopDrag = stopDrag;
         baseDefaultDrag = defaultDrag;
-  //      var cont = GameObject.FindGameObjectWithTag("CUSTOM CONTROLLER");
-    //    if(cont != null) customController = cont.GetComponent<CustomController>();
-      //  if(customController != null && customController.useCustomControls) hookShot.customController = customController;
+        //  var cont = GameObject.FindGameObjectWithTag("CUSTOM CONTROLLER");
+        //  if(cont != null) customController = cont.GetComponent<CustomController>();
+        //  if(customController != null && customController.useCustomControls) hookShot.customController = customController;
     }
 
     void FixedUpdate() {
@@ -240,24 +243,23 @@ public class PlayerShip : MonoBehaviourPunCallbacks {
         
         // -------------- Bradley
         
-        Debug.Log("MaxVelocity : " + maxVelocity);
+        Debug.Log("Velocity : " + maxVelocity);
     }
     
         void OnTriggerEnter2D(Collider2D collision)
         {
-             //Destroy(other.gameObject);
              if(collision.gameObject.tag == "SpeedShart")
              {
                 Debug.Log("Speeeed");
-                 maxVelocity = 13;
+                 maxVelocity = boostVelocity;
             }
         }
             void OnTriggerExit2D(Collider2D collision)
         {
-             //Destroy(other.gameObject);
              if(collision.gameObject.tag == "SpeedShart")
              {
-                 maxVelocity = 4;
+                 maxVelocity = defaultVelocity;
+                 GameManager.DESTROY_SERVER_OBJECT(collision.gameObject);
                  Destroy(collision.gameObject);
             }
         }
@@ -315,7 +317,8 @@ public class PlayerShip : MonoBehaviourPunCallbacks {
 
         //Trailing object positions & (stiekem) een kleinere scaling, anders waren ze wel fk bulky
         for (int i = 0; i < trailingObjects.Count; i++)
-            if(trailingObjects[i].held) {
+            if(trailingObjects[i].held) 
+            {
                 trailingObjects[i].transform.localScale = Vector3.Lerp(trailingObjects[i].transform.localScale, Vector3.one * 0.09f, Time.deltaTime * 2f);
                 trailingObjects[i].transform.position = Vector3.Lerp(trailingObjects[i].transform.position, (transform.position - (transform.up * (i + 1) * 0.5f)), Time.deltaTime * trailingSpeed);
             }
@@ -324,18 +327,15 @@ public class PlayerShip : MonoBehaviourPunCallbacks {
         // if(Health < 0) GameManager.instance.LeaveRoom();
         
         // ------------------------------------- Bradley
+        
         if (ResourceGrabbed == true)
         {
-            // Spawn met interval
-        TimeInterval += Time.deltaTime;
-        if (TimeInterval >= 0.5f)
-        {
-            TimeInterval = 0;
-            
-            GameObject instance = (GameObject)Instantiate(SpeedShart, SpawnStarShard.transform.position, transform.rotation, GameObject.Find("Canvas").transform); 
-        }
-
-            
+            TimeInterval += Time.deltaTime;
+            if (TimeInterval >= 0.5f)
+            {
+                TimeInterval = 0;
+                PhotonNetwork.Instantiate("SpeedShart", SpawnStarShard.transform.position, transform.rotation); 
+            }    
         }
         
         if(trailingObjects.Count == 0)

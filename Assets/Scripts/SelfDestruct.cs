@@ -6,9 +6,9 @@ public class SelfDestruct : MonoBehaviour
 {
 public float liveTime = 5.0f;
     // Start is called before the first frame update
-    void Start()
+    void OnEnable()
     {
-        
+        transform.SetParent(GameObject.Find("Canvas").transform, true);
     }
 
     // Update is called once per frame
@@ -17,6 +17,7 @@ public float liveTime = 5.0f;
         liveTime -= Time.deltaTime;
         if (liveTime <= 0)
         {
+             GameManager.DESTROY_SERVER_OBJECT(this.gameObject);
              Destroy(this.gameObject);
         }
     }

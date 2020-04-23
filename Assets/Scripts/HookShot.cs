@@ -35,6 +35,7 @@ public class HookShot : MonoBehaviour {
     public float HookCooldownTime = 10.0f;
     private float timeLeft;
     
+    public GameObject HookCooldownParent;
     public GameObject HookCooldownOn;
     public GameObject HookCooldownOff;
     
@@ -46,6 +47,10 @@ public class HookShot : MonoBehaviour {
         
         // ------------ Bradley
         timeLeft = HookCooldownTime;
+        if(!hostPlayer.photonView.IsMine)
+        {
+            HookCooldownParent.SetActive(false);
+        }
     }
 
     void Update() {
@@ -89,7 +94,6 @@ public class HookShot : MonoBehaviour {
                 HookCooldownOff.SetActive(true);
                 HookCooldownOn.SetActive(false);
                 HookCooldown = false;
-                
             }
         }
         

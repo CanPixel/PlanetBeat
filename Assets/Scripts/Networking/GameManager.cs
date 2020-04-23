@@ -138,7 +138,7 @@ public class GameManager : MonoBehaviourPunCallbacks {
       this.count = count;
       countdown.text = count.ToString();
       if(count <= 0) {
-         background.TURN = true;
+         //background.TURN = true;
          GAME_STARTED = true;
          countdown.gameObject.SetActive(false);
       }
