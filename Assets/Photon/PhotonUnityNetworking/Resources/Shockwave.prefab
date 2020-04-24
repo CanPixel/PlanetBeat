@@ -65,6 +65,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   explodeParticles: {fileID: 1067106092621830195, guid: cd0b03d048d9905489b14408260a7a72,
     type: 3}
+  explodePenalty: 10
   segments: 30
   maxRange: 1.1
   timeUntillDestroy: 0.3

@@ -253,7 +253,7 @@ public class Asteroid : PickupableObject {
     }
 
     public void SetColor(float r, float g, float b) {
-        src.color = glow.color = new Color(r, g, b);
+        src.color = new Color(r, g, b);
     }
 
     public override void Capture(HookShot hookShot) {
