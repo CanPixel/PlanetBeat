@@ -156,6 +156,7 @@ public class PlayerPlanets : MonoBehaviourPun {
 
     [PunRPC]
     protected void ExplodeReduce() {
+        if(playerNumber <= 0 || GameManager.GAME_WON) return;
         planetGlow.Flicker();
         if(currentScore - explodePenalty >= 0) currentScore -= explodePenalty;
         else currentScore = 0;

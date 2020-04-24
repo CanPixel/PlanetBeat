@@ -5,7 +5,9 @@ using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine.UI;
 
-public class PlayerShip : MonoBehaviourPunCallbacks {
+///////CAN 
+
+public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
     public PlayerHighlighter playerHighlighter;
     public HookShot hookShot;
     public ParticleSystem exhaust;
@@ -27,6 +29,9 @@ public class PlayerShip : MonoBehaviourPunCallbacks {
         public float maxVelocity = 5;
         private float baseVelocity;
         public float acceleration = 0.1f;
+
+        public float defaultVelocity = 4.0f;
+        public float boostVelocity = 13.0f;
 
         [Range(1, 20)]
         public float turningSpeed = 2.5f;
@@ -64,6 +69,11 @@ public class PlayerShip : MonoBehaviourPunCallbacks {
     [Range(0.1f,10)]
     public float throwingReduction = 1f; 
 
+    public GameObject SpeedShardPrefab;
+    public Vector3 SpeedShardOffset;
+    public GameObject SpawnStarShard;
+    public float ShardTimeInterval = 1.1f;
+
     public static string PLAYERNAME;
 
     private Vector3 exLastPos;
@@ -75,7 +85,7 @@ public class PlayerShip : MonoBehaviourPunCallbacks {
     [HideInInspector] public PlayerPlanets planet;
 
     private bool dropAsteroid = false;
-    private float respawnDelay = 0;
+    [SerializeField] [HideInInspector] private float respawnDelay = 0;
     private float flicker = 0;
 
     public bool CanExplode() {
@@ -102,6 +112,14 @@ public class PlayerShip : MonoBehaviourPunCallbacks {
     }
 
     #region IPunObservable implementation
+        public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
+            if(stream.IsWriting) {
+                stream.SendNext(respawnDelay);
+            } else {
+                respawnDelay = (float)stream.ReceiveNext();
+            }
+        }
+
         public override void OnEnable() {
             base.OnEnable();
 
@@ -229,13 +247,15 @@ public class PlayerShip : MonoBehaviourPunCallbacks {
                 rb.rotation = turn;
             }
         }
-        if(dropAsteroid && trailingObjects.Count > 0) {
+
+        if(dropAsteroid && trailingObjects.Count > 0 && respawnDelay <= 0) {
             var asteroid = trailingObjects[0];
             trailingObjects.RemoveAt(0);
             if(asteroid.rb != null) {
                 asteroid.rb.constraints = RigidbodyConstraints2D.None;
                 asteroid.rb.velocity = rb.velocity / throwingReduction; 
             }
+            SetCollision(asteroid.GetCollider2D(), false);
             asteroid.transform.TransformDirection(new Vector2(transform.forward.x * asteroid.transform.forward.x, transform.forward.y * asteroid.transform.forward.y));
             asteroid.photonView.RPC("ReleaseAsteroid", RpcTarget.All, true, asteroid.photonView.ViewID); 
             dropAsteroid = false;
@@ -245,32 +265,9 @@ public class PlayerShip : MonoBehaviourPunCallbacks {
         
         Debug.Log("Velocity : " + maxVelocity);
     }
-    
-        void OnTriggerEnter2D(Collider2D collision)
-        {
-             if(collision.gameObject.tag == "SpeedShart")
-             {
-                Debug.Log("Speeeed");
-                 maxVelocity = boostVelocity;
-            }
-        }
-            void OnTriggerExit2D(Collider2D collision)
-        {
-             if(collision.gameObject.tag == "SpeedShart")
-             {
-                 maxVelocity = defaultVelocity;
-                 GameManager.DESTROY_SERVER_OBJECT(collision.gameObject);
-                 Destroy(collision.gameObject);
-            }
-        }
-    
-    public bool ReleaseAsteroidKey() {
-        return Input.GetKeyDown(KeyCode.F) | Input.GetKeyDown(KeyCode.E) | Input.GetKeyDown(KeyCode.R) | Input.GetKeyDown(KeyCode.C);
-    }
 
     void Update() {
         if(!GameManager.GAME_STARTED) PositionToPlanet();
-
         exhaustSound.volume = Mathf.Lerp(exhaustSound.volume, IsThrust() ? 0.05f : 0, Time.deltaTime * 10f);
 
         //Soft borders
@@ -280,9 +277,9 @@ public class PlayerShip : MonoBehaviourPunCallbacks {
         //stopDrag = Mathf.Lerp(stopDrag, baseStopDrag * Mathf.Clamp(4f - DistFromCenter, 0.1f, 1), Time.deltaTime * 4f);
         //defaultDrag = Mathf.Lerp(defaultDrag, baseDefaultDrag * Mathf.Clamp(4f - DistFromCenter, 0.1f, 1), Time.deltaTime * 4f);
 
-        if (ReleaseAsteroidKey() && trailingObjects.Count > 0) {
+        if(ReleaseAsteroidKey() && trailingObjects.Count > 0 && respawnDelay <= 0) {
             AudioManager.PLAY_SOUND("collect");
-            DropAsteroid();
+            dropAsteroid = true;
         }
 
         //Particles emitten wanneer movement
@@ -300,7 +297,7 @@ public class PlayerShip : MonoBehaviourPunCallbacks {
             emitting.enabled = shouldEmit;
         }
 
-        if (!photonView.IsMine && PhotonNetwork.IsConnected) return;
+        if(!photonView.IsMine && PhotonNetwork.IsConnected) return;
 
         //Removes asteroids that got destroyed / eaten by the sun
         for(int i = 0; i < trailingObjects.Count; i++) if(trailingObjects[i] == null) {
@@ -322,37 +319,30 @@ public class PlayerShip : MonoBehaviourPunCallbacks {
                 trailingObjects[i].transform.localScale = Vector3.Lerp(trailingObjects[i].transform.localScale, Vector3.one * 0.09f, Time.deltaTime * 2f);
                 trailingObjects[i].transform.position = Vector3.Lerp(trailingObjects[i].transform.position, (transform.position - (transform.up * (i + 1) * 0.5f)), Time.deltaTime * trailingSpeed);
             }
-
-        //ignore this, this is for later
-        // if(Health < 0) GameManager.instance.LeaveRoom();
-        
-        // ------------------------------------- Bradley
-        
-        if (ResourceGrabbed == true)
-        {
-            TimeInterval += Time.deltaTime;
-            if (TimeInterval >= 0.5f)
-            {
-                TimeInterval = 0;
-                PhotonNetwork.Instantiate("SpeedShart", SpawnStarShard.transform.position, transform.rotation); 
+    
+        //Grapple Cooldown Code
+        if(trailingObjects.Count > 0) {
+            ShardTimeInterval += Time.deltaTime;
+            if (ShardTimeInterval >= 0.5f) {
+                ShardTimeInterval = 0;
+                PhotonNetwork.Instantiate("SpeedShard", SpawnStarShard.transform.position, transform.rotation); 
             }    
         }
-        
-        if(trailingObjects.Count == 0)
-        {
-            ResourceGrabbed = false;
-        }
-        else if(trailingObjects.Count > 0)
-        {
-            ResourceGrabbed = true;
-        }
-        
-        // -------------
-
     }
 
-    private void DropAsteroid() {
-        dropAsteroid = true;
+    void OnTriggerEnter2D(Collider2D collision) {
+        if(collision.gameObject.tag == "SpeedShard") maxVelocity = boostVelocity;
+    }
+    void OnTriggerExit2D(Collider2D collision) {
+        if(collision.gameObject.tag == "SpeedShard") {
+            maxVelocity = defaultVelocity;
+            GameManager.DESTROY_SERVER_OBJECT(collision.gameObject);
+            Destroy(collision.gameObject);
+        }
+    }
+
+    public bool ReleaseAsteroidKey() {
+        return Input.GetKeyDown(KeyCode.F) | Input.GetKeyDown(KeyCode.E) | Input.GetKeyDown(KeyCode.R) | Input.GetKeyDown(KeyCode.C);
     }
 
     void ProcessInputs() {
@@ -404,8 +394,13 @@ public class PlayerShip : MonoBehaviourPunCallbacks {
         return photonView != null && photonView.IsMine;
     }
 
+    public bool CanCastHook() {
+        return respawnDelay <= 0 && GameManager.GAME_STARTED;
+    }
+
     [PunRPC]
     public void CastHook(int viewID) {
+        if(!CanCastHook()) return;
         if(photonView.ViewID == viewID) hookShot.CastHook();
     }
 

@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
@@ -28,17 +28,6 @@ public class HookShot : MonoBehaviour {
     private bool reelback = false;
 
     private GameObject lockOnAimTarget;
-    
-    // ------------- Bradley
-    
-    private bool HookCooldown = false;
-    public float HookCooldownTime = 10.0f;
-    private float timeLeft;
-    
-    public GameObject HookCooldownParent;
-    public GameObject HookCooldownOn;
-    public GameObject HookCooldownOff;
-    
 
     private bool HookCooldown = false;
     public float HookCooldownTime = 10.0f;
@@ -78,10 +67,8 @@ public class HookShot : MonoBehaviour {
                 }
             }
         }*/
-        
-        
+
         FreeAim();
-        
         if(shootTimer > 0) shootTimer += Time.deltaTime;
         if(shootTimer > 1) didntCatch = true;
 
@@ -104,12 +91,8 @@ public class HookShot : MonoBehaviour {
         }
 
         protected void FreeAim() {
-            if(Input.GetKey(KeyCode.Space) && !HookCooldown) {
+            if(Input.GetKey(KeyCode.Space)) {
                 triggerHook = true;
-                HookCooldownOff.SetActive(false);
-                HookCooldownOn.SetActive(true);
-                HookCooldown = true;
-                timeLeft = HookCooldownTime;
             }
             if(Input.GetKeyUp(KeyCode.Space) && triggerHook && shootTimer <= 0) {
                 if(hostPlayer.IsThisClient()) hostPlayer.photonView.RPC("CastHook", RpcTarget.All, hostPlayer.photonView.ViewID);
@@ -171,9 +154,6 @@ public class HookShot : MonoBehaviour {
     }
 
     public void CatchObject(GameObject obj) {
-        
-
-        
         hitObject = true;
         grabbedObj = obj;
         var photon = obj.GetComponent<PhotonView>();

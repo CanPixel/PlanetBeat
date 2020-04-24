@@ -13,6 +13,9 @@ public class BlackHoleGravity : MonoBehaviour {
     [Range(0, 1)]
     public float Mass = 1;
 
+    [Space(10)]
+    public bool killAsteroids = true;
+
     private List<DyingObject> destroyingObjects = new List<DyingObject>();
     private class DyingObject {
         public GameObject obj;
@@ -70,7 +73,7 @@ public class BlackHoleGravity : MonoBehaviour {
     }
 
     void OnCollisionEnter2D(Collision2D collision) {
-        if (collision.collider.tag == "Resource") {
+        if (collision.collider.tag == "Resource" && killAsteroids) {
             if(!collision.gameObject.GetComponent<Asteroid>().IsDoneSpawning) return; 
             collision.gameObject.GetComponent<Asteroid>().DisableTrails();
             destroyingObjects.Add(new DyingObject(collision.gameObject));

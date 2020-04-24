@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
@@ -47,17 +47,8 @@ public class Asteroid : MonoBehaviourPun {
     public float beginThrust = 29;
     public float curve = 0.1f;
     public float swirlDuration = 5;
-    private bool StartThrustTimer = true;
-    private bool CurveThrustTimer = true;
-    public float Thrust = 1.0f;
-    public float StartThrustTimerAmount = 10.0f;
-    public float speedRotate = 10.0f;
-    public float timeRotate = -70;
-    private int LinksOfRechts = 0;
-    private float thrustDelay = 0, spawnTimer = 0;
-    public bool IsDoneSpawning {
-        get {return spawnTimer > activateAfterSpawning;}
-    }
+    public float curveInterval = 0.25f;
+    public float torque = 5f;
 
     private bool canConsume = false;
     private float collectTimer, releaseTimer = 0;
@@ -80,6 +71,11 @@ public class Asteroid : MonoBehaviourPun {
 
     private bool destroy = false;
 
+    private float spawnTimer = 0, thrustDelay = 0, applyForce = 0;
+    public bool IsDoneSpawning {
+        get {return spawnTimer > activateAfterSpawning;}
+    }
+
     void Start() {
         distortionFX = transform.GetComponentInChildren<ShockwaveScript>();
         distortionFX.gameObject.SetActive(false);
@@ -89,8 +85,7 @@ public class Asteroid : MonoBehaviourPun {
         playerTagsManager = GetComponent<PlayerTagsManager>();
         rb.drag = defaultRbDrag - .15f;
         SetTexture(TextureSwitcher.GetCurrentTexturePack());
-        rb.AddForce(transform.up * Thrust);
-        LinksOfRechts = Random.Range(0, 2);
+        rb.AddForce(-transform.right * beginThrust);
 
         baseTextScale = scoreText.transform.localScale.x;
         scoreText.transform.localScale = Vector3.zero;
@@ -130,38 +125,16 @@ public class Asteroid : MonoBehaviourPun {
         this.timeBombTick = timeBombTick;
     }
 
-        // ------- Bradley
     void FixedUpdate() {
-        thrustDelay += Time.fixedDeltaTime;
-        if(thrustDelay > 0.25f && thrustDelay < swirlDuration) {
-            rb.AddRelativeForce(transform.right * 0.05f * (swirlDuration - thrustDelay) * curve, ForceMode2D.Impulse);
+        thrustDelay += Time.deltaTime;
+        applyForce += Time.deltaTime;
+        if(thrustDelay < swirlDuration && applyForce > curveInterval) {
+            rb.angularVelocity = curve * torque;
+            rb.AddRelativeForce(-transform.right * 0.05f * curve, ForceMode2D.Impulse);
+            applyForce = 0;
         }
-        
-        StartThrustTimerAmount -= Time.deltaTime;
-        if (StartThrustTimerAmount < 0)
-        {
-            StartThrustTimer = false;
-        }
-        
-        if (StartThrustTimer == true)
-        {
-            int Richting = 0;
-            int Links = 10;
-            int Rechts = -10;
-            
-            if(LinksOfRechts == 1)
-            {
-                Richting = Links;
-            }
-            else if (LinksOfRechts == 0){
-                Richting = Rechts;
-            }
-            rb.AddForce(transform.up * beginThrust); 
-            transform.Rotate(0,0, Time.deltaTime * speedRotate * Richting );
-        }
-        if(StartThrustTimerAmount < timeRotate) CurveThrustTimer = false;
     }
-    
+
     void Update() {
         float fade = (collectTimer <= 0f) ? 1 : 0.4f;
         src.color = glow.color = Color.Lerp(src.color, new Color(src.color.r, src.color.g, src.color.b, fade), Time.deltaTime * 5f);
@@ -253,10 +226,6 @@ public class Asteroid : MonoBehaviourPun {
 
     public void DisableTrails() {
         playerTagsManager.DisableTrails();
-    }
-
-    public Collider2D GetCollider2D() {
-        return asteroidColl;
     }
 
     [PunRPC]

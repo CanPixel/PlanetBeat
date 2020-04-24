@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
@@ -45,19 +45,8 @@ public class Asteroid : MonoBehaviourPun {
 
     [Header("SPAWN")]
     public float beginThrust = 29;
-    public float curve = 0.1f;
-    public float swirlDuration = 5;
-    private bool StartThrustTimer = true;
-    private bool CurveThrustTimer = true;
-    public float Thrust = 1.0f;
-    public float StartThrustTimerAmount = 10.0f;
-    public float speedRotate = 10.0f;
-    public float timeRotate = -70;
-    private int LinksOfRechts = 0;
-    private float thrustDelay = 0, spawnTimer = 0;
-    public bool IsDoneSpawning {
-        get {return spawnTimer > activateAfterSpawning;}
-    }
+    public float swirlSpeed = 5f;
+    public float curveReduction = 0.5f;
 
     private bool canConsume = false;
     private float collectTimer, releaseTimer = 0;
@@ -80,6 +69,14 @@ public class Asteroid : MonoBehaviourPun {
 
     private bool destroy = false;
 
+    private float spawnTimer = 0, thrustDelay = 0, applyForce = 0;
+    public bool IsDoneSpawning {
+        get {return spawnTimer > activateAfterSpawning;}
+    }
+
+    private GameObject asteroidSpinner;
+    private float rotateSpeed;
+
     void Start() {
         distortionFX = transform.GetComponentInChildren<ShockwaveScript>();
         distortionFX.gameObject.SetActive(false);
@@ -89,14 +86,20 @@ public class Asteroid : MonoBehaviourPun {
         playerTagsManager = GetComponent<PlayerTagsManager>();
         rb.drag = defaultRbDrag - .15f;
         SetTexture(TextureSwitcher.GetCurrentTexturePack());
-        rb.AddForce(transform.up * Thrust);
-        LinksOfRechts = Random.Range(0, 2);
+        rb.AddForce(-transform.right * beginThrust);
 
         baseTextScale = scoreText.transform.localScale.x;
         scoreText.transform.localScale = Vector3.zero;
         increasePopupBaseSize = increasePopupTxt.transform.localScale.x;
         increasePopupTxt.transform.localScale = Vector3.zero;
         standardGlowScale = glow.transform.localScale;
+
+        asteroidSpinner = new GameObject("Asteroid Spinner");
+        asteroidSpinner.transform.position = Vector3.zero;
+        asteroidSpinner.transform.localScale = Vector3.one;
+        asteroidSpinner.transform.SetParent(transform.parent, true);
+        transform.SetParent(asteroidSpinner.transform, true);
+        rotateSpeed = swirlSpeed;
     }
 
     void OnEnable() {
@@ -130,38 +133,25 @@ public class Asteroid : MonoBehaviourPun {
         this.timeBombTick = timeBombTick;
     }
 
-        // ------- Bradley
     void FixedUpdate() {
-        thrustDelay += Time.fixedDeltaTime;
-        if(thrustDelay > 0.25f && thrustDelay < swirlDuration) {
-            rb.AddRelativeForce(transform.right * 0.05f * (swirlDuration - thrustDelay) * curve, ForceMode2D.Impulse);
-        }
-        
-        StartThrustTimerAmount -= Time.deltaTime;
-        if (StartThrustTimerAmount < 0)
-        {
-            StartThrustTimer = false;
-        }
-        
-        if (StartThrustTimer == true)
-        {
-            int Richting = 0;
-            int Links = 10;
-            int Rechts = -10;
-            
-            if(LinksOfRechts == 1)
-            {
-                Richting = Links;
+        if(asteroidSpinner != null && PhotonNetwork.IsMasterClient) {
+            asteroidSpinner.transform.Rotate(0, 0, rotateSpeed);
+            rotateSpeed = Mathf.Lerp(rotateSpeed, 0, Time.deltaTime * curveReduction);
+
+            if(Util.Approximately(rotateSpeed, 0, 1f)) {
+                photonView.RPC("RemoveSpin", RpcTarget.All);
+                return;
             }
-            else if (LinksOfRechts == 0){
-                Richting = Rechts;
-            }
-            rb.AddForce(transform.up * beginThrust); 
-            transform.Rotate(0,0, Time.deltaTime * speedRotate * Richting );
         }
-        if(StartThrustTimerAmount < timeRotate) CurveThrustTimer = false;
     }
-    
+
+    [PunRPC]
+    protected void RemoveSpin() {
+        if(asteroidSpinner == null) return;
+        transform.SetParent(asteroidSpinner.transform.parent, true);
+        Destroy(asteroidSpinner);
+    }
+
     void Update() {
         float fade = (collectTimer <= 0f) ? 1 : 0.4f;
         src.color = glow.color = Color.Lerp(src.color, new Color(src.color.r, src.color.g, src.color.b, fade), Time.deltaTime * 5f);
@@ -280,6 +270,7 @@ public class Asteroid : MonoBehaviourPun {
 
     public void Capture(HookShot hookShot) {
         if(!hookShot.CanHold() || collectTimer > 0) return;
+        photonView.RPC("RemoveSpin", RpcTarget.All);
         AudioManager.PLAY_SOUND("kickVerb", 1, Random.Range(1f, 1.1f));
         AudioManager.PLAY_SOUND("Reel");
         if((!held || (held && ownerPlayer != null && ownerPlayer.photonView.ViewID != hookShot.hostPlayer.photonView.ViewID))) {

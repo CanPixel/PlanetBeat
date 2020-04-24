@@ -6,6 +6,7 @@ using UnityEngine;
 public class Orbit : MonoBehaviour {
     public CircleCollider2D coll;
     [SerializeField] private GameObject gravityRing;
+    public PlayerPlanets planet;
 
     [Header("PHYSICS - ORBIT TRAILS")]
     public int orbitTrailOffset = 700;
