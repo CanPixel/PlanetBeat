@@ -17,7 +17,6 @@ public class Remoteroid : PickupableObject {
     
     //EXPLOSION
     public Color explosionColor;
-    private ShockwaveScript distortionFX;
 
     [Header("PHYSICS")]
     public float defaultRbDrag = 0.2f;
@@ -58,8 +57,6 @@ public class Remoteroid : PickupableObject {
     void Start() {
         dropBoosts = false;
         base.Init();
-        distortionFX = transform.GetComponentInChildren<ShockwaveScript>();
-        distortionFX.gameObject.SetActive(false);
         network = GetComponent<AsteroidNetwork>();
         rb = GetComponent<Rigidbody2D>();
         rb.drag = defaultRbDrag - .15f;

@@ -304,7 +304,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerNumber: 0
   currentScore: 100
-  minScore: 30
+  minScore: 0
   maxScore: 100
   scoreText: {fileID: 5336174368059501565}
   increasePopupTxt: {fileID: 7336624222899132335}
