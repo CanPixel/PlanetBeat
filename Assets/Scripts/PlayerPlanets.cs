@@ -35,11 +35,16 @@ public class PlayerPlanets : MonoBehaviourPun {
 
     private bool ScorePoint = false;
     private float lastAmount;
+    
+
 
     public bool HasPlayer() {
         return player != null && playerNumber > 0;
     }
 
+    
+
+    
     void OnValidate() {
         if(maxScale < 0) maxScale = 0;
     }
@@ -126,6 +131,7 @@ public class PlayerPlanets : MonoBehaviourPun {
 
         orbit.transform.localScale = Vector3.Lerp(orbit.transform.localScale, transform.localScale / orbitScaleReduction.Evaluate(currentScore / maxScore), Time.deltaTime * 2f);
         transform.localScale = Vector3.Lerp(transform.localScale, new Vector3(Mathf.Clamp(transform.localScale.x, 0, maxScale), Mathf.Clamp(transform.localScale.y, 0, maxScale), Mathf.Clamp(transform.localScale.z, 0, maxScale)), Time.deltaTime * 2f);
+        
         transform.localPosition = Vector3.Lerp(transform.localPosition, new Vector3(basePos.x + Mathf.Sin(Time.time * wiggleSpeed + wiggleOffset) * wiggleRange, basePos.y + Mathf.Sin(Time.time * wiggleSpeed + wiggleOffset) * wiggleRange, basePos.z), Time.deltaTime * 2f);
 
         if(scoreText != null) {

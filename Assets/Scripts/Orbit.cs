@@ -33,7 +33,7 @@ public class Orbit : MonoBehaviour {
     void Update() {
         coll.radius = orbitTrailOffset;
         gravityRing.transform.localPosition = new Vector3(orbitTrailOffset, 0, 0);
-        transform.localRotation = Quaternion.Euler(0, 0, transform.localEulerAngles.z + 7);
+        transform.localRotation = Quaternion.Euler(0, 0, transform.localEulerAngles.z + 20);
         //old 20
     }
 

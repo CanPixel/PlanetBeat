@@ -5546,6 +5546,9 @@ MonoBehaviour:
   defaultDrag: 2
   stopDrag: 2
   maxAsteroids: 2
+  SpeedShart: {fileID: 0}
+  SpeedShartOffset: {x: 0, y: 0, z: 0}
+  TimeInterval: 1.1
   trailingSpeed: 15
   throwingReduction: 0.5
   SpeedShardPrefab: {fileID: 2844512524737966751, guid: 38879c7c098f8084c8ee2711729647dc,
