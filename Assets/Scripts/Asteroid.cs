@@ -204,7 +204,6 @@ public class Asteroid : MonoBehaviourPun {
                 transform.localScale = Vector3.Lerp(transform.localScale, baseScale + explosionExpand, Time.deltaTime * tickBomb);
                 distortionFX.SetIntensity(tickBomb / 1000f);
             }
-
             if(bombTimer > unstablePhaseTime / 2f) distortionFX.gameObject.SetActive(true); 
 
             //Actual explosion

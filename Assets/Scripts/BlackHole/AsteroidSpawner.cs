@@ -5,12 +5,14 @@ using Photon.Pun;
 using Photon.Realtime;
 
 public class AsteroidSpawner : MonoBehaviourPun {
+    public List<GameObject> spawnObjects;
+    private int objectToSpawn = 0;
+
     public int asteroidAmount = 4;
 
     public GameObject blackHole;
 
     private GameObject[] AsteroidsList;
-    public GameObject prefab;
 
     public Vector2 asteroidSpawnDelay = new Vector2(2, 5);
     private float currentSpawnDelay, asteroidSpawnTimer = 0;
@@ -74,6 +76,7 @@ public class AsteroidSpawner : MonoBehaviourPun {
 
         if (AsteroidsList.Length < asteroidAmount && openBlackHole && PhotonNetwork.IsMasterClient) {
             if(asteroidSpawnTimer > currentSpawnDelay + spawnAnimationDelay) {
+                objectToSpawn = Random.Range(0, spawnObjects.Count);
                 SpawnAsteroid();
                 currentSpawnDelay = Random.Range(asteroidSpawnDelay.x, asteroidSpawnDelay.y);
                 asteroidSpawnTimer = 0;
@@ -86,7 +89,7 @@ public class AsteroidSpawner : MonoBehaviourPun {
         Vector3 center = transform.position;
         Vector3 pos = RandomCircle(center, Random.Range(8f, 9f), Random.Range(0, 360));
         Quaternion rot = Quaternion.FromToRotation(Vector2.up, center + pos);
-        GameObject InstancedPrefab = GameManager.SPAWN_SERVER_OBJECT(prefab, blackHole.transform.position, rot);
+        GameObject InstancedPrefab = GameManager.SPAWN_SERVER_OBJECT(spawnObjects[objectToSpawn], blackHole.transform.position, rot);
 
         int maxSamples = 4;
         if(sample == 0) AudioManager.PLAY_SOUND("LowSpit", 1f, 1f);
