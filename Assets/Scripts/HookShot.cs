@@ -7,6 +7,7 @@ public class HookShot : MonoBehaviour {
     public PlayerShip hostPlayer;
     private RectTransform rope;
     private CircleCollider2D tip;
+    public GameObject aimPos;
 
     public Collider2D[] playerColliders;
 
@@ -61,6 +62,8 @@ public class HookShot : MonoBehaviour {
 
         float hookScale = Mathf.Lerp(rope.transform.localScale.x, (IsShooting() ? 1 : 0.1f), Time.deltaTime * 2f);
         rope.transform.localScale = new Vector3(hookScale, hookScale, hookScale);
+
+        HookCooldownParent.transform.position = Vector3.Lerp(HookCooldownParent.transform.position, aimPos.transform.position, Time.deltaTime * 2f);
 
         //Spelen op custom controls
     /*     if (customController != null) {

@@ -5,15 +5,12 @@ using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine.UI;
 
-///////CAN 
-
 public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
     public PlayerHighlighter playerHighlighter;
     public HookShot hookShot;
     public ParticleSystem exhaust;
 
     [HideInInspector] public GameObject playerLabel;
-
     [HideInInspector] public Collider2D[] colliders;
 
     [Header("PLAYER VALUES")]
@@ -26,7 +23,7 @@ public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
 
     #region MOVEMENT
     [Header("PHYSICS")]
-        public float maxVelocity = 5;
+        private float maxVelocity = 5;
         private float baseVelocity;
         public float acceleration = 0.1f;
 
@@ -224,6 +221,8 @@ public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
     }
 
     void FixedUpdate() {
+        maxVelocity = Mathf.Lerp(maxVelocity, defaultVelocity, Time.deltaTime * 2f);
+
         if(respawnDelay > 0) {
             ship.color = Color.Lerp(ship.color, new Color(ship.color.r, ship.color.g, ship.color.b, 0.25f), Time.deltaTime * 8f);
 
@@ -330,12 +329,9 @@ public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
         }
     }
 
-    void OnTriggerEnter2D(Collider2D collision) {
-        if(collision.gameObject.tag == "SpeedShard") maxVelocity = boostVelocity;
-    }
-    void OnTriggerExit2D(Collider2D collision) {
-        if(collision.gameObject.tag == "SpeedShard") {
-            maxVelocity = defaultVelocity;
+    void OnTriggerStay2D(Collider2D collision) {
+        if(collision.gameObject.tag == "SPEEDSHARD") {
+            maxVelocity = boostVelocity;
             GameManager.DESTROY_SERVER_OBJECT(collision.gameObject);
             Destroy(collision.gameObject);
         }
