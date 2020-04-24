@@ -50,11 +50,8 @@ public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
         private bool ResourceGrabbed = false;
         public GameObject SpeedShart;
         public Vector3 SpeedShartOffset;
-        public GameObject SpawnStarShard;
         public float TimeInterval = 1.1f;
     
-        public float defaultVelocity = 4.0f;
-        public float boostVelocity = 13.0f;
     //
 
     //Rigidbody reference voor physics en movement hoeraaa

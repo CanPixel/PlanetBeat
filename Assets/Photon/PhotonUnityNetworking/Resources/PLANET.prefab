@@ -259,6 +259,7 @@ GameObject:
   - component: {fileID: 9025160195861063301}
   - component: {fileID: 25395895824445274}
   - component: {fileID: 6973405591163161816}
+  - component: {fileID: 7554348876896838668}
   m_Layer: 5
   m_Name: PLANET
   m_TagString: PLAYERPLANET
@@ -273,7 +274,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5336174367327457933}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 2, y: 2, z: 1}
   m_Children:
@@ -467,6 +468,22 @@ MonoBehaviour:
     BeatTime: 3
     afterBeat: 0
     delay: 0
+--- !u!114 &7554348876896838668
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5336174367327457933}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 436047b888c37684a9f7811bb70228a3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rotationCenter: {fileID: 5481396998067066890, guid: 90441284312a81d47ae3e8f361350825,
+    type: 3}
+  rotationRadius: 5
+  angularSpeed: 0.5
 --- !u!1 &5336174368059501567
 GameObject:
   m_ObjectHideFlags: 0
@@ -722,7 +739,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5336174368953841514}
-  m_LocalRotation: {x: 0, y: 0, z: 0.8011542, w: -0.598458}
+  m_LocalRotation: {x: 0, y: 0, z: 0.06556949, w: 0.99784803}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:

@@ -5475,6 +5475,8 @@ MonoBehaviour:
   - {fileID: 1662954744308020737}
   maxVelocity: 4
   acceleration: 20000
+  defaultVelocity: 4
+  boostVelocity: 17
   turningSpeed: 6
   brakingSpeed: 2
   respawningTime: 3
@@ -5484,14 +5486,16 @@ MonoBehaviour:
   SpeedShart: {fileID: 3292680761130205939, guid: 1ac6ff22553644d42b20cc6a216125cb,
     type: 3}
   SpeedShartOffset: {x: 0, y: -1, z: 0}
-  SpawnStarShard: {fileID: 7852350941077473399}
   TimeInterval: 0.5
-  defaultVelocity: 4
-  boostVelocity: 17
   trailingSpeed: 15
   throwingReduction: 0.5
+  SpeedShardPrefab: {fileID: 0}
+  SpeedShardOffset: {x: 0, y: 0, z: 0}
+  SpawnStarShard: {fileID: 7852350941077473399}
+  ShardTimeInterval: 1.1
   playerName: {fileID: 0}
   planet: {fileID: 0}
+  respawnDelay: 0
   trailingObjects: []
 --- !u!50 &1662954744308020766
 Rigidbody2D:

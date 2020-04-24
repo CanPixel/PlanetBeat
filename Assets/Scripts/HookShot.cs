@@ -39,15 +39,6 @@ public class HookShot : MonoBehaviour {
     public GameObject HookCooldownParent;
     public GameObject HookCooldownOn;
     public GameObject HookCooldownOff;
-    
-
-    private bool HookCooldown = false;
-    public float HookCooldownTime = 10.0f;
-    private float timeLeft;
-    
-    public GameObject HookCooldownParent;
-    public GameObject HookCooldownOn;
-    public GameObject HookCooldownOff;
 
     void Start() {
         rope = transform.GetChild(0).GetComponent<RectTransform>();
