@@ -14,5 +14,7 @@ public class HookTip : MonoBehaviour {
 
     void OnTriggerEnter2D(Collider2D col) {
         if(col.gameObject.tag == "Resource" && hookShot.IsShooting()) col.gameObject.GetComponent<Asteroid>().Capture(hookShot);
+
+        if(col.gameObject.tag == "Powerup" && hookShot.IsShooting()) col.gameObject.GetComponent<PickupableObject>().Capture(hookShot);
     }
 }

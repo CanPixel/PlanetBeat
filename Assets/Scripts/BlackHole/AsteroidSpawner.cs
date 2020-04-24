@@ -5,17 +5,18 @@ using Photon.Pun;
 using Photon.Realtime;
 
 public class AsteroidSpawner : MonoBehaviourPun {
-    public List<GameObject> spawnObjects;
+    public GameObject asteroid;
+    public GameObject powerup;
     private int objectToSpawn = 0;
-
-    public int asteroidAmount = 4;
+    public int asteroidAmount = 4, powerupAmount = 2;
 
     public GameObject blackHole;
+    private GameObject[] AsteroidsList, PowerupsList;
 
-    private GameObject[] AsteroidsList;
+    private List<GameObject> spawnQueue = new List<GameObject>();
 
-    public Vector2 asteroidSpawnDelay = new Vector2(2, 5);
-    private float currentSpawnDelay, asteroidSpawnTimer = 0;
+    public Vector2 objectSpawnDelay = new Vector2(2, 5), powerupSpawnDelays = new Vector2(5, 8);
+    private float asteroidSpawnDelay, powerupSpawnDelay, asteroidSpawnTimer = 0, powerupSpawnTimer = 0;
     
     //Delay after black hole opens, for when asteroid actually spawns
     private float spawnAnimationDelay = 1.5f;
@@ -25,12 +26,12 @@ public class AsteroidSpawner : MonoBehaviourPun {
     private bool openBlackHole = false, shake = false;
 
     private ScreenShake mainCamScreenShake;
-
     private int sample = 0;
 
     void Start() {
         mainCamScreenShake = Camera.main.GetComponent<ScreenShake>();
-        currentSpawnDelay = Random.Range(asteroidSpawnDelay.x, asteroidSpawnDelay.y);
+        asteroidSpawnDelay = Random.Range(objectSpawnDelay.x, objectSpawnDelay.y);
+        powerupSpawnDelay = Random.Range(powerupSpawnDelays.x, powerupSpawnDelays.y);
         blackHoleEffect = Camera.main.GetComponent<BlackHoleEffect>();
         baseRadius = blackHoleEffect.radius;
         blackHoleEffect.radius = 0;
@@ -52,10 +53,16 @@ public class AsteroidSpawner : MonoBehaviourPun {
             photonView.RPC("SynchRadius", RpcTarget.All, blackHoleEffect.radius, asteroidSpawnTimer);
         }
 
+        PowerupsList = GameObject.FindGameObjectsWithTag("Powerup");
+        if(PowerupsList.Length < powerupAmount) {
+            powerupSpawnTimer += Time.deltaTime;
+            if(powerupSpawnTimer > powerupSpawnDelay) openBlackHole = true;
+        }
+
         AsteroidsList = GameObject.FindGameObjectsWithTag("Resource");
         if(AsteroidsList.Length < asteroidAmount) {
             asteroidSpawnTimer += Time.deltaTime;
-            if(asteroidSpawnTimer > currentSpawnDelay) openBlackHole = true;
+            if(asteroidSpawnTimer > asteroidSpawnDelay) openBlackHole = true;
         }
     }
 
@@ -68,28 +75,52 @@ public class AsteroidSpawner : MonoBehaviourPun {
 
     public void SpitAsteroidOnBeat() {
         AsteroidsList = GameObject.FindGameObjectsWithTag("Resource");
-        if(asteroidSpawnTimer > currentSpawnDelay + (spawnAnimationDelay / 2f) && !shake) {
+        if(asteroidSpawnTimer > asteroidSpawnDelay + (spawnAnimationDelay / 2f) && !shake) {
             mainCamScreenShake.Shake(1f);
             photonView.RPC("ShakeScreenNetwork", RpcTarget.All);
             shake = true;
         }
 
-        if (AsteroidsList.Length < asteroidAmount && openBlackHole && PhotonNetwork.IsMasterClient) {
-            if(asteroidSpawnTimer > currentSpawnDelay + spawnAnimationDelay) {
-                objectToSpawn = Random.Range(0, spawnObjects.Count);
+        if(PowerupsList.Length < powerupAmount && openBlackHole && PhotonNetwork.IsMasterClient) {
+            if(powerupSpawnTimer > powerupSpawnDelay + spawnAnimationDelay) {
+                SpawnPowerup();
+                powerupSpawnDelay = Random.Range(powerupSpawnDelays.x, powerupSpawnDelays.y);
+                powerupSpawnTimer = 0;
+                openBlackHole = shake = false;
+            }
+        }
+
+        if(AsteroidsList.Length < asteroidAmount && openBlackHole && PhotonNetwork.IsMasterClient) {
+            if(asteroidSpawnTimer > asteroidSpawnDelay + spawnAnimationDelay) {
                 SpawnAsteroid();
-                currentSpawnDelay = Random.Range(asteroidSpawnDelay.x, asteroidSpawnDelay.y);
+                asteroidSpawnDelay = Random.Range(objectSpawnDelay.x, objectSpawnDelay.y);
                 asteroidSpawnTimer = 0;
                 openBlackHole = shake = false;
             }
         }
     }
 
+    protected void SpawnPowerup() {
+        Vector3 center = transform.position;
+        Vector3 pos = RandomCircle(center, Random.Range(8f, 9f), Random.Range(0, 360));
+        Quaternion rot = Quaternion.FromToRotation(Vector2.up, center + pos);
+        GameObject InstancedPrefab = GameManager.SPAWN_SERVER_OBJECT(powerup, blackHole.transform.position, rot);
+
+        int maxSamples = 4;
+        if(sample == 0) AudioManager.PLAY_SOUND("LowSpit", 1f, 1f);
+        else if(sample == 1) AudioManager.PLAY_SOUND("MajorChord", 0.8f, 1f);
+        else if(sample == 2) AudioManager.PLAY_SOUND("LowDrone", 1f, 1f);
+        else AudioManager.PLAY_SOUND("LowHarmony", 1f, 1f);
+        
+        sample++;
+        if(sample > maxSamples) sample = 0;
+    }
+
     protected void SpawnAsteroid() {
         Vector3 center = transform.position;
         Vector3 pos = RandomCircle(center, Random.Range(8f, 9f), Random.Range(0, 360));
         Quaternion rot = Quaternion.FromToRotation(Vector2.up, center + pos);
-        GameObject InstancedPrefab = GameManager.SPAWN_SERVER_OBJECT(spawnObjects[objectToSpawn], blackHole.transform.position, rot);
+        GameObject InstancedPrefab = GameManager.SPAWN_SERVER_OBJECT(asteroid, blackHole.transform.position, rot);
 
         int maxSamples = 4;
         if(sample == 0) AudioManager.PLAY_SOUND("LowSpit", 1f, 1f);

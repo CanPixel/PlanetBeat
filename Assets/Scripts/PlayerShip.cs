@@ -161,8 +161,8 @@ public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
         return trailingObjects.Count < maxAsteroids;
     }
 
-    public void Explode() {
-        if(planet != null) planet.Explode();
+    public void Explode(float exp) {
+        if(planet != null) planet.Explode(exp);
         flicker = 1;
         respawnDelay = respawningTime;
 
@@ -192,7 +192,7 @@ public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
     }
 
     //Lijn aan asteroids/objecten achter de speler
-    [HideInInspector] public List<Asteroid> trailingObjects = new List<Asteroid>();
+    [HideInInspector] public List<PickupableObject> trailingObjects = new List<PickupableObject>();
 
    public static void SetName(string name) {
        PLAYERNAME = name;
@@ -303,9 +303,9 @@ public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
             }
     
         //Grapple Cooldown Code
-        if(trailingObjects.Count > 0) {
+        if(trailingObjects.Count > 0 && trailingObjects[0].dropBoosts) {
             ShardTimeInterval += Time.deltaTime;
-            if (ShardTimeInterval >= 0.5f) {
+            if(ShardTimeInterval >= 0.5f) {
                 ShardTimeInterval = 0;
                 PhotonNetwork.Instantiate("SpeedShard", SpawnStarShard.transform.position, transform.rotation); 
             }    
@@ -353,7 +353,7 @@ public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
     //Voegt object toe aan trail achter player
     public void AddAsteroid(GameObject obj) {
         obj.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
-        var script = obj.GetComponent<Asteroid>();
+        var script = obj.GetComponent<PickupableObject>();
         if(script != null) trailingObjects.Add(script);
     }
 

@@ -62,8 +62,8 @@ public class BlackHoleGravity : MonoBehaviour {
 
             col.GetComponent<Rigidbody2D>().AddForce(orientation * totalForce);
         }
-        if (col.tag == "Resource") {
-            var ast = col.GetComponent<Asteroid>();
+        else if (col.tag == "Resource" || col.tag == "Powerup") {
+            var ast = col.GetComponent<PickupableObject>();
             if(ast.held || !ast.IsDoneSpawning) return; //Influence of sun gravity bij trailingObjects 
 
             float totalForce = -(planetForceResource * (Mass / 2f));
@@ -73,9 +73,9 @@ public class BlackHoleGravity : MonoBehaviour {
     }
 
     void OnCollisionEnter2D(Collision2D collision) {
-        if (collision.collider.tag == "Resource" && killAsteroids) {
-            if(!collision.gameObject.GetComponent<Asteroid>().IsDoneSpawning) return; 
-            collision.gameObject.GetComponent<Asteroid>().DisableTrails();
+        if ((collision.collider.tag == "Resource" || collision.collider.tag == "Powerup") && killAsteroids) {
+            if(!collision.gameObject.GetComponent<PickupableObject>().IsDoneSpawning) return; 
+            if(collision.gameObject.GetComponent<Asteroid>() != null) collision.gameObject.GetComponent<Asteroid>().DisableTrails();
             destroyingObjects.Add(new DyingObject(collision.gameObject));
             AudioManager.PLAY_SOUND("Burn", 0.8f, 1.3f);
         }

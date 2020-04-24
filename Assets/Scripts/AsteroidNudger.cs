@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class AsteroidNudger : MonoBehaviour {
-    public Asteroid asteroid;
+    public PickupableObject asteroid;
 
     public float nudgeForce = 10f;
 

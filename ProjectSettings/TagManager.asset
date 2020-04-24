@@ -25,6 +25,7 @@ TagManager:
   - RoomToggle
   - CENTER
   - SPEEDSHARD
+  - Powerup
   layers:
   - Default
   - TransparentFX

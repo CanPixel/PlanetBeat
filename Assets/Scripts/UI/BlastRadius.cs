@@ -6,6 +6,7 @@ using UnityEngine;
 public class BlastRadius : MonoBehaviour {
     private bool hurt = false;
     public GameObject explodeParticles;
+    public int explodePenalty = 10;
 
     public int segments = 50;
     public float maxRange = 10;
@@ -59,7 +60,7 @@ public class BlastRadius : MonoBehaviour {
         if(hurt && col.gameObject.tag == "PLAYERSHIP" && col.gameObject.GetComponent<PlayerShip>().CanExplode()) {
             var i = Instantiate(explodeParticles, col.transform.position, Quaternion.identity);
             i.transform.localScale /= 2f;
-            col.gameObject.GetComponent<PlayerShip>().Explode();
+            col.gameObject.GetComponent<PlayerShip>().Explode(explodePenalty);
         }
         if(col.gameObject.tag == "Resource") {
             var dir = (col.transform.position - transform.position);

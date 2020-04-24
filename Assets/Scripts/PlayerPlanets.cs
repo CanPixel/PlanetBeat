@@ -22,9 +22,6 @@ public class PlayerPlanets : MonoBehaviourPun {
     private Vector3 baseScale;
     public AnimationCurve orbitScaleReduction;
 
-    [Space(10)]
-    public int explodePenalty = 10;
-
     private PlanetGlow planetGlow;
     private Vector3 basePos;
     private float wiggleOffset, increasePopupBaseSize, increasePopupHideTimer;
@@ -150,18 +147,18 @@ public class PlayerPlanets : MonoBehaviourPun {
         //GetComponent<UIFloat>().SetBaseScale(newScale);
     }
 
-    public void Explode() {
-        photonView.RPC("ExplodeReduce", RpcTarget.All);
+    public void Explode(float penalty) {
+        photonView.RPC("ExplodeReduce", RpcTarget.All, penalty);
     }
 
     [PunRPC]
-    protected void ExplodeReduce() {
+    protected void ExplodeReduce(float penalty) {
         if(playerNumber <= 0 || GameManager.GAME_WON) return;
         planetGlow.Flicker();
-        if(currentScore - explodePenalty >= 0) currentScore -= explodePenalty;
+        if(currentScore - penalty >= 0) currentScore -= penalty;
         else currentScore = 0;
         increasePopupTxt.enabled = true;    
-        increasePopupTxt.text = "-" + explodePenalty.ToString() + "!";
+        increasePopupTxt.text = "-" + penalty.ToString() + "!";
         increasePopupHideTimer = 0.1f;
         increasePopupTxt.transform.localScale = Vector3.one * increasePopupBaseSize;
     }
