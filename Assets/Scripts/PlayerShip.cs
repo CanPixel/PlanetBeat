@@ -11,7 +11,6 @@ public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
     public ParticleSystem exhaust;
 
     [HideInInspector] public GameObject playerLabel;
-
     [HideInInspector] public Collider2D[] colliders;
 
     [Header("PLAYER VALUES")]

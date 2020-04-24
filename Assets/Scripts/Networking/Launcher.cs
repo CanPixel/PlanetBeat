@@ -86,6 +86,7 @@ public class Launcher : MonoBehaviourPunCallbacks, ILobbyCallbacks, IInRoomCallb
     }
 
     protected void TryConnect(bool retry = false) {
+        if(GameManager.GAME_STARTED || connectNow) return;
         if(retry) Debug.Log("Reconnect");
         connectTimer = 0;
         PhotonNetwork.GameVersion = gameVersion;

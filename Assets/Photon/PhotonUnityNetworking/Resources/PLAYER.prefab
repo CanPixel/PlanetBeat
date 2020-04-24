@@ -1,5 +1,35 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1302205286724586313
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1615301141932425475}
+  m_Layer: 0
+  m_Name: AimPos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1615301141932425475
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1302205286724586313}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 209.14078, y: 10609, z: -7.207083}
+  m_LocalScale: {x: 50, y: 50, z: 1}
+  m_Children: []
+  m_Father: {fileID: 3506364950220654662}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1446986110815659416
 GameObject:
   m_ObjectHideFlags: 0
@@ -4865,6 +4895,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hostPlayer: {fileID: 3506364950220654683}
+  aimPos: {fileID: 1302205286724586313}
   playerColliders:
   - {fileID: 7716859393941716483}
   - {fileID: 1662954744308020737}
@@ -5175,13 +5206,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1832470146200991475}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 139, y: 10609, z: -7.207083}
+  m_LocalPosition: {x: 209.14, y: 10609, z: -7.207083}
   m_LocalScale: {x: 50, y: 50, z: 1}
   m_Children:
   - {fileID: 5474564495589676850}
   - {fileID: 180558160550324433}
   m_Father: {fileID: 3506364950220654662}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2450414769214699767
 GameObject:
@@ -5449,7 +5480,6 @@ GameObject:
   - component: {fileID: 8292648904483343033}
   - component: {fileID: 7325083743037304914}
   - component: {fileID: -6912870287241321807}
-  - component: {fileID: 6044432733964394016}
   m_Layer: 10
   m_Name: PLAYER
   m_TagString: PLAYERSHIP
@@ -5473,6 +5503,7 @@ RectTransform:
   - {fileID: 1446986112751458338}
   - {fileID: 1446986110815659417}
   - {fileID: 1484607488769715593}
+  - {fileID: 1615301141932425475}
   - {fileID: 5580252143492821222}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -5713,22 +5744,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!58 &6044432733964394016
-CircleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3506364950220654661}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  serializedVersion: 2
-  m_Radius: 0.5
 --- !u!1 &5365137927936052174
 GameObject:
   m_ObjectHideFlags: 0
