@@ -4,9 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class TextureSwitcher : MonoBehaviour {
-    public TexturePack[] texturePacks;
-
-    [HideInInspector] public int pack = 0;
+    public TexturePack texturePack;
 
     [HideInInspector] public BlackHoleTextures sun;
 
@@ -23,7 +21,7 @@ public class TextureSwitcher : MonoBehaviour {
     }
 
     public static TextureElement GetRandomPlanet() {
-        return instance.texturePacks[instance.pack].planets[Random.Range(0, instance.typeOfPlanets)];
+        return instance.texturePack.planets[Random.Range(0, instance.typeOfPlanets)];
     }
 
     [System.Serializable]
@@ -53,10 +51,8 @@ public class TextureSwitcher : MonoBehaviour {
 
     private static TextureSwitcher instance;
     public static TexturePack GetCurrentTexturePack() {
-        return instance.texturePacks[instance.pack];
+        return instance.texturePack;
     }
-
-    private Dropdown dropdown;
 
     public static void Detach() {
         instance.transform.SetParent(null);
@@ -72,9 +68,6 @@ public class TextureSwitcher : MonoBehaviour {
     void OnEnable() {
         if(instance == null) instance = this;
         playerColors = new Color[typeOfPlanets];
-        if(dropdown == null) dropdown = GetComponent<Dropdown>();
-        instance.pack = PlayerPrefs.GetInt("TexturePack");
-        if(dropdown != null) dropdown.value = PlayerPrefs.GetInt("TexturePack");
     }
 
     public static void ForceUpdateTextures() {
@@ -82,11 +75,11 @@ public class TextureSwitcher : MonoBehaviour {
             var obj = GameObject.FindGameObjectWithTag("TEXTURESWITCHER");
             if(obj != null) instance = obj.GetComponent<TextureSwitcher>();
         }
-        if(instance != null) instance.UpdateTexturePack(PlayerPrefs.GetInt("TexturePack"));
+        if(instance != null) instance.UpdateTexturePack();
     }
 
-    public void UpdateTexturePack(int change) {
-        pack = change;
+    public void UpdateTexturePack() {
+      //  pack = change;
         if(planetsReference == null) planetsReference = GameObject.FindGameObjectWithTag("PLANETS").GetComponentsInChildren<PlanetGlow>();
         if(asteroidReference == null) asteroidReference = GameObject.FindGameObjectWithTag("ASTEROIDBELT");
         if(sunReference == null) {
@@ -101,24 +94,21 @@ public class TextureSwitcher : MonoBehaviour {
         }
         if(backgroundReference == null) backgroundReference = GameObject.FindGameObjectWithTag("BACKGROUND");
 
-        var textPack = texturePacks[change];
-        if(planetsReference != null) for(int i = 0; i < planetsReference.Length; i++) planetsReference[i].SetTexture(textPack.planets[i % typeOfPlanets]);
-        if(sunGlowReference != null) sunGlowReference.sprite = textPack.blackHole.glow;
-        if(sunReference != null) sunReference.sprite = textPack.blackHole.src;
+        if(planetsReference != null) for(int i = 0; i < planetsReference.Length; i++) planetsReference[i].SetTexture(texturePack.planets[i % typeOfPlanets]);
+        if(sunGlowReference != null) sunGlowReference.sprite = texturePack.blackHole.glow;
+        if(sunReference != null) sunReference.sprite = texturePack.blackHole.src;
 
         var bgs = backgroundReference.GetComponent<Background>();
-        bgs.SetTexture(textPack);
+        bgs.SetTexture(texturePack);
 
         if(sun != null) sun.UpdateSize();
 
         if(asteroidReference != null) {
             var asts = asteroidReference.GetComponentsInChildren<Asteroid>();
-            foreach(var i in asts) i.SetTexture(textPack);
+            foreach(var i in asts) i.SetTexture(texturePack);
         }
 
         if(playerColors == null) playerColors = new Color[typeOfPlanets];
         for(int i = 0; i < GetCurrentTexturePack().planets.Length; i++) playerColors[i] = GetCurrentTexturePack().planets[i].tint;
-
-        PlayerPrefs.SetInt("TexturePack", change);
     }
 }
