@@ -19,6 +19,7 @@ public class Planet_Motion : MonoBehaviour
     float rotationRadius = 2f, angularSpeed = 2f;
     
     float posX1, posY1 = 0f;
+    
     float posX2, posY2 = 0f;
     float posX3, posY3 = 0f;
     float posX4, posY4 = 0f;
@@ -26,6 +27,7 @@ public class Planet_Motion : MonoBehaviour
     float posX6, posY6 = 0f;
     
     float angle1 = 0f;
+    
     float angle2 = 1f;
     float angle3 = 2f;
     float angle4 = 3f;
@@ -39,6 +41,23 @@ public class Planet_Motion : MonoBehaviour
     
     void Update()
     {
+    
+        /*
+        for (int i = 0; i < 5; i++)
+        {
+        
+            posX(i) = rotationCenter.position.x + Mathf.Cos (angle(i)) * rotationRadius;
+            posY(i) = rotationCenter.position.y + Mathf.Sin (angle(i)) * rotationRadius / 2;
+            
+            PLANET(i).transform.position = new Vector2 (posX(i), posY(i));
+            
+            angle(i) = angle(i) + Time.deltaTime * angularSpeed;
+            
+            if(angle(i) >= 360f)
+                angle(i) = 0f;
+        }
+        */
+        
         
         posX1 = rotationCenter.position.x + Mathf.Cos (angle1) * rotationRadius;
         posY1 = rotationCenter.position.y + Mathf.Sin (angle1) * rotationRadius / 2;
@@ -86,7 +105,6 @@ public class Planet_Motion : MonoBehaviour
             angle5 = 0f;
         if(angle6 >= 360f)
             angle6 = 0f;
-        //Debug.Log(posX);
-        //Debug.Log(posY);
+        
     }
 }

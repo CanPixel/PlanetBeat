@@ -7,6 +7,12 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class GameManager : MonoBehaviourPunCallbacks {
+    
+    // ----------- Bradley
+    public GameObject EllipseMotion;
+    
+    // ------------
+    
    public bool spectating = false;
 
    public Image muteButton;
@@ -130,6 +136,11 @@ public class GameManager : MonoBehaviourPunCallbacks {
       else startupDelayTimer += Time.deltaTime;
 
       BeatPulse.BEGIN = GAME_STARTED;
+       
+        if(GAME_STARTED == true)
+        {
+            EllipseMotion.SetActive(true);            
+        }
    }
 
    [PunRPC]
