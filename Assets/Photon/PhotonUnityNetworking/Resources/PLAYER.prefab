@@ -5538,12 +5538,12 @@ MonoBehaviour:
   - {fileID: 7716859393941716483}
   - {fileID: 1662954744308020737}
   acceleration: 20000
-  defaultVelocity: 4.5
+  defaultVelocity: 5
   boostVelocity: 14
-  turningSpeed: 7
+  turningSpeed: 6
   brakingSpeed: 2
   respawningTime: 3
-  defaultDrag: 2
+  defaultDrag: 1.65
   stopDrag: 2
   maxAsteroids: 2
   trailingSpeed: 15

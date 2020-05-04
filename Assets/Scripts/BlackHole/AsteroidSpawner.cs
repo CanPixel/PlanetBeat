@@ -63,6 +63,12 @@ public class AsteroidSpawner : MonoBehaviourPun {
         if(AsteroidsList.Length < asteroidAmount) {
             asteroidSpawnTimer += Time.deltaTime;
             if(asteroidSpawnTimer > asteroidSpawnDelay) openBlackHole = true;
+             if(asteroidSpawnTimer > asteroidSpawnDelay + spawnAnimationDelay) {
+                SpawnAsteroid();
+                asteroidSpawnDelay = Random.Range(objectSpawnDelay.x, objectSpawnDelay.y);
+                asteroidSpawnTimer = 0;
+                openBlackHole = shake = false;
+            }
         }
     }
 
@@ -73,6 +79,7 @@ public class AsteroidSpawner : MonoBehaviourPun {
         shake = true;
     }
 
+/* 
     public void SpitAsteroidOnBeat() {
         AsteroidsList = GameObject.FindGameObjectsWithTag("Resource");
         if(asteroidSpawnTimer > asteroidSpawnDelay + (spawnAnimationDelay / 2f) && !shake) {
@@ -99,7 +106,7 @@ public class AsteroidSpawner : MonoBehaviourPun {
             }
         }
     }
-
+*/
     protected void SpawnPowerup() {
         Vector3 center = transform.position;
         Vector3 pos = RandomCircle(center, Random.Range(8f, 9f), Random.Range(0, 360));

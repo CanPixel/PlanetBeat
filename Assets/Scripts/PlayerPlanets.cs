@@ -96,6 +96,11 @@ public class PlayerPlanets : MonoBehaviourPun {
         player.SetHomePlanet(gameObject);
     }
 
+    public Color GetColor() {
+        if(player == null) return Color.black;
+        return player.playerColor;
+    }
+
     public void AssignPlayer(PlayerShip player) {
         this.player = player;
         this.player.planet = this;
@@ -145,6 +150,20 @@ public class PlayerPlanets : MonoBehaviourPun {
         currentScore = amount;
         //var newScale = transform.localScale + new Vector3(amount, amount, 0) / 50f;
         //GetComponent<UIFloat>().SetBaseScale(newScale);
+    }
+
+    public void KillPlanet() {
+        photonView.RPC("KillPlayer", RpcTarget.All, playerNumber);
+    }
+
+    [PunRPC]
+    public void KillPlayer(int ID) {
+        if(ID == playerNumber) {
+            GameManager.DESTROY_SERVER_OBJECT(player.gameObject);
+            //Destroy(player.gameObject);
+            GameManager.DESTROY_SERVER_OBJECT(gameObject);
+            Destroy(gameObject);
+        }
     }
 
     public void Explode(float penalty) {

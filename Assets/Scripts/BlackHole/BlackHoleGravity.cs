@@ -29,8 +29,8 @@ public class BlackHoleGravity : MonoBehaviour {
     private AsteroidSpawner spawner;
 
     public void SpawnOnBeat() {
-        if(spawner == null) spawner = GameObject.FindGameObjectWithTag("CENTER").GetComponent<AsteroidSpawner>();
-        spawner.SpitAsteroidOnBeat();
+       // if(spawner == null) spawner = GameObject.FindGameObjectWithTag("CENTER").GetComponent<AsteroidSpawner>();
+       // spawner.SpitAsteroidOnBeat();
     }
 
     //Eating animation
