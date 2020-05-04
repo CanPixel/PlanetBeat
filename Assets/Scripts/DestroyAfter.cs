@@ -12,6 +12,7 @@ public class DestroyAfter : MonoBehaviour {
     void Update() {
         liveTime -= Time.deltaTime;
         if(liveTime <= 0) {
+            if(this.gameObject == null) return;
             GameManager.DESTROY_SERVER_OBJECT(this.gameObject);
             Destroy(this.gameObject);
         }

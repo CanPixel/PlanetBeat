@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 using UnityEngine.Events;
+using UnityEngine.UI;
 
-public class EliminationTimer : MonoBehaviour {
+public class EliminationTimer : MonoBehaviourPun {
+    public Text eliminationCounter;
     public float timeUntillElimination = 30f;
     private float elimTime;
     public UnityEvent eliminationEvent;
@@ -19,6 +21,8 @@ public class EliminationTimer : MonoBehaviour {
     void Update() {
         if(!PhotonNetwork.IsMasterClient || !GameManager.GAME_STARTED) return;
 
+        if(PhotonNetwork.IsMasterClient) photonView.RPC("SynchTimer", RpcTarget.All, (int)timeUntillElimination);
+
         if(timeUntillElimination > 0) timeUntillElimination -= Time.deltaTime;
         else {
             if(!done) {
@@ -30,5 +34,10 @@ public class EliminationTimer : MonoBehaviour {
                 }
             }
         }
+    }
+
+    [PunRPC]
+    public void SynchTimer(int time) {
+        eliminationCounter.text = "0:" + ((time < 10)? "0" : "") + time.ToString();
     }
 }

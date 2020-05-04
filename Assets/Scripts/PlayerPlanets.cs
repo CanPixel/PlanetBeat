@@ -159,8 +159,8 @@ public class PlayerPlanets : MonoBehaviourPun {
     [PunRPC]
     public void KillPlayer(int ID) {
         if(ID == playerNumber) {
-            GameManager.DESTROY_SERVER_OBJECT(player.gameObject);
-            //Destroy(player.gameObject);
+            if(player != null) GameManager.DESTROY_SERVER_OBJECT(player.gameObject);
+            if(player != null) Destroy(player.gameObject);
             GameManager.DESTROY_SERVER_OBJECT(gameObject);
             Destroy(gameObject);
         }

@@ -21,29 +21,38 @@ public class EliminationPhase : MonoBehaviourPun {
         planetPositioner = GameObject.FindGameObjectWithTag("PLANETS").GetComponent<PlanetPositioner>();
         eliminationBar.gameObject.SetActive(false);
     }
-    
+
     void Update() {
         if(eliminate && PhotonNetwork.IsMasterClient) {
             if(eliminationTimer > 0) eliminationTimer -= Time.deltaTime * eliminationSpeed;
-
             planets = planetPositioner.GetPlanets();
 
             PlayerPlanets lowest = null;
-            foreach(var i in planets) if(lowest == null || i.currentScore < lowest.currentScore) lowest = i;
+            foreach(var i in planets) if((lowest == null || i.currentScore < lowest.currentScore) && i.HasPlayer()) lowest = i;
             var progress = Util.Map(eliminationTimer, 0, eliminationDuration, 0f, 1f);
-            eliminationBar.transform.position = lowest.transform.position;
-            eliminationBar.SetProgress(lowest.GetColor(), progress);   
-            eliminationBar.gameObject.SetActive(true);
+            var color = lowest.GetColor();
+            photonView.RPC("SynchBar", RpcTarget.All, color.r, color.g, color.b, lowest.transform.position, progress);
 
             if(progress <= 0 && lowest != null) {
                 EliminatePlayer(lowest);
-                eliminationBar.gameObject.SetActive(false);
+                photonView.RPC("UnsynchBar", RpcTarget.All);
                 eliminate = false;
             }
         }
     }
 
     [PunRPC]
+    public void UnsynchBar() {
+        eliminationBar.gameObject.SetActive(false);
+    }
+
+    [PunRPC]
+    public void SynchBar(float r, float g, float b, Vector3 pos, float progress) {
+        eliminationBar.transform.position = pos;
+        eliminationBar.SetProgress(new Color(r, g, b), progress);   
+        eliminationBar.gameObject.SetActive(true);
+    }
+
     public void EliminatePlayer(PlayerPlanets lowest) {
         lowest.KillPlanet();
     }
