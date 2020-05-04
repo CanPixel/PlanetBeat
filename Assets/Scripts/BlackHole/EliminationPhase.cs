@@ -14,8 +14,9 @@ public class EliminationPhase : MonoBehaviourPun {
     [Header("ELIMINATION")]
     public float eliminationSpeed = 2;
     public float eliminationDuration = 10f;
+    public float regenSpeed = 1f;
 
-    private float eliminationTimer = 0;
+    private PlayerPlanets eliminationTarget;
 
     void Start() {
         planetPositioner = GameObject.FindGameObjectWithTag("PLANETS").GetComponent<PlanetPositioner>();
@@ -24,17 +25,22 @@ public class EliminationPhase : MonoBehaviourPun {
 
     void Update() {
         if(eliminate && PhotonNetwork.IsMasterClient) {
-            if(eliminationTimer > 0) eliminationTimer -= Time.deltaTime * eliminationSpeed;
-            planets = planetPositioner.GetPlanets();
+            if(eliminationTarget != null && eliminationTarget.eliminationTimer > 0) eliminationTarget.eliminationTimer -= Time.deltaTime * eliminationSpeed;
 
             PlayerPlanets lowest = null;
             foreach(var i in planets) if((lowest == null || i.currentScore < lowest.currentScore) && i.HasPlayer()) lowest = i;
-            var progress = Util.Map(eliminationTimer, 0, eliminationDuration, 0f, 1f);
-            var color = lowest.GetColor();
+            eliminationTarget = lowest;
+            
+            foreach(var i in planets) {
+                if(i.playerNumber != eliminationTarget.playerNumber) i.eliminationTimer = Mathf.Lerp(i.eliminationTimer, eliminationDuration, Time.deltaTime * regenSpeed);
+            }
+            
+            var progress = Util.Map(eliminationTarget.eliminationTimer, 0, eliminationDuration, 0f, 1f);
+            var color = eliminationTarget.GetColor();
             photonView.RPC("SynchBar", RpcTarget.All, color.r, color.g, color.b, lowest.transform.position, progress);
 
-            if(progress <= 0 && lowest != null) {
-                EliminatePlayer(lowest);
+            if(progress <= 0 && eliminationTarget != null) {
+                EliminatePlayer(eliminationTarget);
                 photonView.RPC("UnsynchBar", RpcTarget.All);
                 eliminate = false;
             }
@@ -48,7 +54,7 @@ public class EliminationPhase : MonoBehaviourPun {
 
     [PunRPC]
     public void SynchBar(float r, float g, float b, Vector3 pos, float progress) {
-        eliminationBar.transform.position = pos;
+        eliminationBar.transform.position = Vector3.Lerp(eliminationBar.transform.position, pos, Time.deltaTime * 2f);
         eliminationBar.SetProgress(new Color(r, g, b), progress);   
         eliminationBar.gameObject.SetActive(true);
     }
@@ -58,7 +64,8 @@ public class EliminationPhase : MonoBehaviourPun {
     }
 
     public void StartEliminate() {
+        planets = planetPositioner.GetPlanets();
+        foreach(var i in planets) i.SetElimination(eliminationDuration);
         eliminate = true;
-        eliminationTimer = eliminationDuration;
     }
 }

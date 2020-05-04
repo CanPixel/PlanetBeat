@@ -33,6 +33,14 @@ public class PlayerPlanets : MonoBehaviourPun {
     private bool ScorePoint = false;
     private float lastAmount;
 
+    [HideInInspector] public float eliminationTimer;
+    private bool destructionInit = false;
+    public void SetElimination(float prog) {
+        if(destructionInit) return;
+        eliminationTimer = prog;
+        destructionInit = true;
+    }
+
     public bool HasPlayer() {
         return player != null && playerNumber > 0;
     }
