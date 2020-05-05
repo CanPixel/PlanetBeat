@@ -60,7 +60,7 @@ public class EliminationPhase : MonoBehaviourPun {
     }
 
     public void EliminatePlayer(PlayerPlanets lowest) {
-        lowest.KillPlanet();
+        if(lowest != null) lowest.KillPlanet();
     }
 
     public void StartEliminate() {

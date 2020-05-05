@@ -35,7 +35,7 @@ public class EliminationTimer : MonoBehaviourPun {
                     eliminationEvent.Invoke();
                     done = true;
                     if(resetCount) {
-                        timeUntillElimination = elimTime / elimCount;
+                        timeUntillElimination = elimTime / (elimCount + 1);
                         done = false;
                     }
                 }
