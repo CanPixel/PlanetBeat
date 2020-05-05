@@ -64,8 +64,13 @@ public class EliminationPhase : MonoBehaviourPun {
     }
 
     public void StartEliminate() {
+        if(eliminate) return;
         planets = planetPositioner.GetPlanets();
         foreach(var i in planets) i.SetElimination(eliminationDuration);
         eliminate = true;
+    }
+
+    public bool IsEliminating() {
+        return eliminate;
     }
 }
