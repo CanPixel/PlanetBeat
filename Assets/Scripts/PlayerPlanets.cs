@@ -15,6 +15,7 @@ public class PlayerPlanets : MonoBehaviourPun {
     private Color orbitColor;
     public TrailRenderer orbitTrail; 
     public GameObject orbit;
+    public EliminationBar rechargeBar;
 
     [HideInInspector] public float wiggleSpeed = 10, wiggleRange = 100f;
 
@@ -41,6 +42,18 @@ public class PlayerPlanets : MonoBehaviourPun {
         destructionInit = true;
     }
 
+    public void RechargeElimination(float duration, float speed) {
+        if(player == null) {
+            rechargeBar.SetAlpha(0);
+            return;
+        }
+        eliminationTimer = Mathf.Lerp(eliminationTimer, duration, Time.deltaTime * speed);
+        var progress = Util.Map(eliminationTimer, 0, duration, 0f, 1f);
+
+        rechargeBar.SetAlpha(0.65f);
+        rechargeBar.SetProgress(player.playerColor, progress);
+    }
+
     public bool HasPlayer() {
         return player != null && playerNumber > 0;
     }
@@ -53,6 +66,7 @@ public class PlayerPlanets : MonoBehaviourPun {
         wiggleOffset = Random.Range(0, 10000f);
         basePos = transform.localPosition;
         planetGlow = GetComponent<PlanetGlow>();
+        rechargeBar.SetAlpha(0);
     }
 
     void Start() {
@@ -119,6 +133,8 @@ public class PlayerPlanets : MonoBehaviourPun {
     }
 
     void Update() {
+        rechargeBar.LerpAlpha(0, 4f);
+
         if(increasePopupHideTimer > 0) increasePopupHideTimer += Time.deltaTime;
         increasePopupTxt.transform.rotation = Quaternion.Euler(0, 0, Mathf.Sin(Time.time * 5f) * 10f);
         if(increasePopupHideTimer > 4f) {

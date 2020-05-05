@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 public class EliminationTimer : MonoBehaviourPun {
     public Text eliminationCounter;
-    public EliminationPhase phase;
+    private EliminationPhase phase;
     public float timeUntillElimination = 30f;
     private float elimTime;
     public UnityEvent eliminationEvent;

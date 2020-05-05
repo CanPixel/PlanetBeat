@@ -4355,7 +4355,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 533948573842649025}
-  m_LocalRotation: {x: 0, y: 0, z: 0.9883868, w: 0.15195906}
+  m_LocalRotation: {x: 0, y: 0, z: 0.8681162, w: -0.49636105}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -4448,7 +4448,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 533948573944061022}
-  m_LocalRotation: {x: 0, y: 0, z: 0.42641848, w: -0.904526}
+  m_LocalRotation: {x: 0, y: 0, z: 0.2293622, w: 0.97334117}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -5383,7 +5383,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 533948575062331776}
-  m_LocalRotation: {x: 0, y: 0, z: 0.6786785, w: -0.7344355}
+  m_LocalRotation: {x: 0, y: 0, z: 0.073942736, w: -0.9972625}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -5565,7 +5565,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 533948575445420487}
-  m_LocalRotation: {x: 0, y: 0, z: 0.92213666, w: -0.3868644}
+  m_LocalRotation: {x: 0, y: 0, z: 0.48084304, w: -0.87680674}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -5657,15 +5657,12 @@ MonoBehaviour:
   levelSceneName: Space
   maxPlayers: 8
   controlPanel: {fileID: 1544172659}
-  freeAim: {fileID: 21300000, guid: 1029039a34e21874aacc12d9965ba415, type: 3}
-  lockOn: {fileID: 21300000, guid: 111010d11330a514aa926daa05cea07e, type: 3}
   looker: {fileID: 21300000, guid: 4a033719047f03c4b8cf9ea013979407, type: 3}
   player: {fileID: 21300000, guid: 7a55722a414ec884f8072b034e7da0ad, type: 3}
   playButton: {fileID: 449311569}
   exitButton: {fileID: 1014075000}
   SpectToggle: {fileID: 1389183299}
   SpectIcon: {fileID: 321178477}
-  lockonText: {fileID: 0}
   playText: {fileID: 986803843}
   playersOnline: {fileID: 586045098}
   playersInSpace: {fileID: 597357793}
