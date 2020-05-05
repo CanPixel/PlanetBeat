@@ -34,7 +34,7 @@ public class ShockwaveScript : MonoBehaviour {
             SetIntensity(intens);
 
             if(expandTime > 0) expandTime -= Time.deltaTime;
-            else {
+            else if(gameObject != null) {
                 GameManager.DESTROY_SERVER_OBJECT(gameObject);
                 Destroy(gameObject);
             }

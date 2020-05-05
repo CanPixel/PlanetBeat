@@ -319,7 +319,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   asteroid: {fileID: 145464310536149297}
-  nudgeForce: 3
+  nudgeForce: 0.3
 --- !u!58 &7228890296776165996
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -484,12 +484,12 @@ MonoBehaviour:
   inOrbitTimer: 0
   grabDelay: 0
   infectDelay: 3
-  penalty: 5
-  destroyAfter: 15
-  defaultRbDrag: 0.2
+  penalty: 4
+  destroyAfter: 25
+  defaultRbDrag: 0.27
   inPlayerOrbitRbDrag: 0.6
-  maxInOrbitTime: 5
-  outOrbitForce: 40
+  maxInOrbitTime: 20
+  outOrbitForce: 0
   beginThrust: 0.4
   curve: 0
   swirlDuration: 2

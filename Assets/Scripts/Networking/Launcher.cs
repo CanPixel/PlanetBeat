@@ -27,13 +27,13 @@ public class Launcher : MonoBehaviourPunCallbacks, ILobbyCallbacks, IInRoomCallb
 
     [Header("REFERENCES")]
     [SerializeField] private GameObject controlPanel;
-    public Sprite freeAim, lockOn, looker, player;
+    public Sprite looker, player;
 
     public Button playButton, exitButton;
 
     public Toggle SpectToggle;
     public Image SpectIcon;
-    public Text lockonText, playText, playersOnline, playersInSpace, countOfRooms, title;
+    public Text playText, playersOnline, playersInSpace, countOfRooms, title;
     [Header("ROOM SELECTION")]
     public ToggleGroup roomGroup;
     private List<SpaceRoomToggle> roomList = new List<SpaceRoomToggle>();

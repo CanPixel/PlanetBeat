@@ -337,6 +337,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  eliminationTimer: 0
 --- !u!114 &5336174367327457940
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -721,7 +722,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5336174368953841514}
-  m_LocalRotation: {x: 0, y: 0, z: 0.7284851, w: 0.68506163}
+  m_LocalRotation: {x: 0, y: 0, z: 0.65922093, w: -0.7519493}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -746,8 +747,8 @@ MonoBehaviour:
   planet: {fileID: 5336174367327457939}
   orbitTrailOffset: 750
   planetForcePlayer: 1.4
-  planetForceResource: 1.8
-  planetForcePowerup: 1
+  planetForceResource: 1.6
+  planetForcePowerup: 1.6
   Mass: 1
   PlayerExitVelocityReduction: 1
   ResourceExitVelocityReduction: 1

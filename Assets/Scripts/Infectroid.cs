@@ -213,7 +213,7 @@ public class Infectroid : PickupableObject {
     }
 
     void OnTriggerStay2D(Collider2D col) {
-        if(col.gameObject.tag == "PLAYERPLANET" && col.gameObject != null) {
+        if(col.gameObject.tag == "PLAYERPLANET" && col.gameObject != null && PhotonNetwork.IsMasterClient) {
             playerPlanets = col.gameObject.GetComponent<PlayerPlanets>();
             if(playerPlanets.HasPlayer() && !GameManager.GAME_WON) {
                 inPlanet = true;
@@ -227,7 +227,7 @@ public class Infectroid : PickupableObject {
     }
 
     void OnTriggerExit2D(Collider2D col) {
-        if(col.gameObject.tag == "PLAYERPLANET" && col.gameObject != null) {
+        if(col.gameObject.tag == "PLAYERPLANET" && col.gameObject != null && PhotonNetwork.IsMasterClient) {
             inPlanet = false;
             //infectTime = 0;
         }

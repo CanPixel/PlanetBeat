@@ -5537,10 +5537,10 @@ MonoBehaviour:
   - {fileID: 1662954744308020766}
   - {fileID: 7716859393941716483}
   - {fileID: 1662954744308020737}
-  acceleration: 20000
+  acceleration: 25
   defaultVelocity: 5
   boostVelocity: 14
-  turningSpeed: 6
+  turningSpeed: 7
   brakingSpeed: 2
   respawningTime: 3
   defaultDrag: 1.65

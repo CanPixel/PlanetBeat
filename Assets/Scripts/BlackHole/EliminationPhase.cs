@@ -37,7 +37,7 @@ public class EliminationPhase : MonoBehaviourPun {
             
             var progress = Util.Map(eliminationTarget.eliminationTimer, 0, eliminationDuration, 0f, 1f);
             var color = eliminationTarget.GetColor();
-            photonView.RPC("SynchBar", RpcTarget.All, color.r, color.g, color.b, lowest.transform.position, progress);
+            photonView.RPC("SynchBar", RpcTarget.All, color.r, color.g, color.b, lowest.transform.position + Vector3.down / 1.5f, progress);
 
             if(progress <= 0 && eliminationTarget != null) {
                 EliminatePlayer(eliminationTarget);

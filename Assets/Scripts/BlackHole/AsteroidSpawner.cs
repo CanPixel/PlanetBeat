@@ -57,13 +57,19 @@ public class AsteroidSpawner : MonoBehaviourPun {
         if(PowerupsList.Length < powerupAmount) {
             powerupSpawnTimer += Time.deltaTime;
             if(powerupSpawnTimer > powerupSpawnDelay) openBlackHole = true;
+             if(asteroidSpawnTimer > powerupSpawnDelay + spawnAnimationDelay) {
+                SpawnPowerup();
+                asteroidSpawnDelay = Random.Range(powerupSpawnDelays.x, powerupSpawnDelays.y);
+                asteroidSpawnTimer = 0;
+                openBlackHole = shake = false;
+            }
         }
 
         AsteroidsList = GameObject.FindGameObjectsWithTag("Resource");
         if(AsteroidsList.Length < asteroidAmount) {
             asteroidSpawnTimer += Time.deltaTime;
             if(asteroidSpawnTimer > asteroidSpawnDelay) openBlackHole = true;
-             if(asteroidSpawnTimer > asteroidSpawnDelay + spawnAnimationDelay) {
+            if(asteroidSpawnTimer > asteroidSpawnDelay + spawnAnimationDelay) {
                 SpawnAsteroid();
                 asteroidSpawnDelay = Random.Range(objectSpawnDelay.x, objectSpawnDelay.y);
                 asteroidSpawnTimer = 0;
