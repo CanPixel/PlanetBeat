@@ -8,6 +8,8 @@ public class AudioManager : MonoBehaviour {
 
 	private float OldMusicLevel;
 
+	public static bool MUTE = false;
+
 	public float GetMasterSoundLevel {
 		get {return SoundLevel;}
 	}

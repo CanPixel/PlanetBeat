@@ -49,9 +49,10 @@ public class AudioLayerer : MonoBehaviour {
         else fadeVolume = 1f;
 
         var stem = audioSources[0];
+        stem.volume = fadeVolume * AudioManager.GetMasterMusicVolume();
         for(int i = 1; i < audioSources.Count; i++) {
             audioSources[i].timeSamples = stem.timeSamples;
-            audioSources[i].volume = fadeVolume;
+            audioSources[i].volume = fadeVolume * AudioManager.GetMasterMusicVolume();
         }
     }
 }

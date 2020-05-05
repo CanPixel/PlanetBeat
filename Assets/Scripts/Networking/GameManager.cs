@@ -83,9 +83,10 @@ public class GameManager : MonoBehaviourPunCallbacks {
       planet.AssignPlayer(player);
    }
 
-   public void MuteGame(bool mute) {
-      muteButton.sprite = (mute) ? noSoundIcon : soundIcon;
-      AudioManager.MuteMusic(mute);
+   public void MuteGame() {
+      AudioManager.MUTE = !AudioManager.MUTE;
+      muteButton.sprite = (AudioManager.MUTE) ? noSoundIcon : soundIcon;
+      AudioManager.MuteMusic(AudioManager.MUTE);
    }
 
    public static void ClickSound(float pitch) {
