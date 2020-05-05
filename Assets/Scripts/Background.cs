@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class Background : MonoBehaviour {
     private Image src;
 
-    public bool parallax = false, TURN = true;
+    public bool parallax = false;//, TURN = true;
 
     public float parallaxSpeed = 1f;
 
@@ -26,10 +26,10 @@ public class Background : MonoBehaviour {
     }
 
     void Update() {
-        if(!TURN) return;
+        //if(!TURN) return;
         
-        if(!parallax) transform.Rotate(Vector3.forward * 1 * Time.deltaTime);
-        else transform.Rotate(Vector3.forward * parallaxSpeed * Time.deltaTime);
+        //if(!parallax) transform.Rotate(Vector3.forward * 1 * Time.deltaTime);
+        //else transform.Rotate(Vector3.forward * parallaxSpeed * Time.deltaTime);
     }
 
 

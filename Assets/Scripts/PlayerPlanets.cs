@@ -208,7 +208,7 @@ public class PlayerPlanets : MonoBehaviourPun {
 
     public void AddingResource(float amount) {
         if(playerNumber <= 0 || GameManager.GAME_WON) return;
-        if(currentScore < maxScore) {
+        if(currentScore < maxScore && PhotonNetwork.IsMasterClient) { ////////MASTERCLIENT?
             AudioManager.PLAY_SOUND("Musicalhit", 0.7f, 0.95f);
             lastAmount = amount;
             photonView.RPC("SetResource", RpcTarget.AllBufferedViaServer, currentScore + lastAmount);

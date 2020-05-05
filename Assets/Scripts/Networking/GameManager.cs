@@ -41,7 +41,7 @@ public class GameManager : MonoBehaviourPunCallbacks {
 
    public static PlayerShip LOCAL_PLAYER;
 
-   private bool turnVar;
+   private bool turnVar; /////////////
 
    public static void ClaimPlanet(PlayerShip ship) {
       if(ship.photonView.IsMine) instance.ClaimFreePlanet(ship);
@@ -140,7 +140,7 @@ public class GameManager : MonoBehaviourPunCallbacks {
       this.count = count;
       countdown.text = count.ToString();
       if(count <= 0) {
-         background.TURN = turnVar;
+         //background.TURN = turnVar;
          GAME_STARTED = true;
          countdown.gameObject.SetActive(false);
       }
@@ -154,7 +154,7 @@ public class GameManager : MonoBehaviourPunCallbacks {
       base.OnEnable();
       Random.InitState((int)Time.time * 1000);
 
-      turnVar = background.TURN;
+      //turnVar = background.TURN;
 
       GAME_WON = false;
 
@@ -172,8 +172,8 @@ public class GameManager : MonoBehaviourPunCallbacks {
 
       if(PlayerPrefs.GetInt("Spectate") != 0) AddLocalClient(PlayerShip.PLAYERNAME);
 
-      turnVar = background.TURN;
-      background.TURN = false;
+      //turnVar = background.TURN;
+      //background.TURN = false;
       
       skipCountdown = Launcher.GetSkipCountDown();
       AudioManager.PLAY_SOUND("sizzle", 1f, 1.5f);

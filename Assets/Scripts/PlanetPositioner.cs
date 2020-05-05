@@ -9,6 +9,11 @@ public class PlanetPositioner : MonoBehaviour {
     public float orbitDistance = 2;
     public Vector2 ellipseStretch = new Vector2(0.1f, 0f);
 
+    public bool turn = true;
+    public float turnSpeed = 1f;
+
+    private float move = 0;
+
     void OnValidate() {
         if(orbitDistance < 1) orbitDistance = 1;
         #if (UNITY_EDITOR)
@@ -16,15 +21,22 @@ public class PlanetPositioner : MonoBehaviour {
         #endif
     }
 
-    void Start() {
-        PositionPlanets();
+    //void OnEnable() {
+    //    PositionPlanets();
+    //}
+
+    void Update() {
+        if(GameManager.GAME_STARTED && turn) {
+            move += Time.deltaTime * (turnSpeed / 20f);
+            PositionPlanets();
+        }
     }
 
     protected void PositionPlanets() {
         planets = GetPlanets();
         for(int i = 0; i < planets.Length; i++) {
-            var pos = GetCircle(orbitDistance, i, planets.Length);
-            planets[i].transform.position = pos;
+            var pos = GetCircle(orbitDistance, i + move, planets.Length);
+            planets[i].transform.position = Vector3.Lerp(planets[i].transform.position, pos, Time.deltaTime * 2f);
         }
     }
 
