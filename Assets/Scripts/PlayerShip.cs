@@ -166,6 +166,7 @@ public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
         Destroy(rb);
         foreach(var i in colliders) Destroy(i);
         Destroy(exhaustSound);
+        Destroy(exhaust);
         foreach(Transform t in transform) if(t == transform) Destroy(t.gameObject);
         Destroy(this);
     }
