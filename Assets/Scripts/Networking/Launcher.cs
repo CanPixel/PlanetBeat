@@ -52,6 +52,7 @@ public class Launcher : MonoBehaviourPunCallbacks, ILobbyCallbacks, IInRoomCallb
     private float connectTimer = 0;
 
     void Awake() {
+        connectNow = false;
         connectedToMaster = false;
         roomInit = 0;
         beginZoom = Camera.main.orthographicSize;

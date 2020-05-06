@@ -17,13 +17,22 @@ public class EliminationTimer : MonoBehaviourPun {
     public bool resetCount = false;
     private bool done = false;
 
+    private PlayerPlanets[] planets;
+
     void Start() {
         phase = GetComponent<EliminationPhase>();
         elimTime = timeUntillElimination;
+        planets = GameObject.FindGameObjectWithTag("PLANETS").GetComponentsInChildren<PlayerPlanets>();
     }
 
     void Update() {
-        if(!PhotonNetwork.IsMasterClient || !GameManager.GAME_STARTED) return;
+        bool everyoneHasWealth = true;
+        foreach(var i in planets) if(i.HasPlayer() && i.currentScore <= 0) {
+            everyoneHasWealth = false;
+            break;
+        } 
+
+        if(!PhotonNetwork.IsMasterClient || !GameManager.GAME_STARTED || !everyoneHasWealth) return;
 
         photonView.RPC("SynchTimer", RpcTarget.All, (int)timeUntillElimination);
 

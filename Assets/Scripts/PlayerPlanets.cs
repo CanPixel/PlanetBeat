@@ -16,6 +16,7 @@ public class PlayerPlanets : MonoBehaviourPun {
     public TrailRenderer orbitTrail; 
     public GameObject orbit;
     public EliminationBar rechargeBar;
+    public TrailRenderer trails;
 
     [HideInInspector] public float wiggleSpeed = 10, wiggleRange = 100f;
 
@@ -183,6 +184,8 @@ public class PlayerPlanets : MonoBehaviourPun {
     [PunRPC]
     public void KillPlayer(int ID) {
         if(ID == playerNumber) {
+            trails.Clear();
+            trails.emitting = false;
             if(player != null) GameManager.DESTROY_SERVER_OBJECT(player.gameObject);
             if(player != null) Destroy(player.gameObject);
             GameManager.DESTROY_SERVER_OBJECT(gameObject);

@@ -33,15 +33,17 @@ public class EliminationPhase : MonoBehaviourPun {
             foreach(var i in planets) if((lowest == null || i.currentScore < lowest.currentScore) && i.HasPlayer()) lowest = i;
             eliminationTarget = lowest;
             
-            var progress = Util.Map(eliminationTarget.eliminationTimer, 0, eliminationDuration, 0f, 1f);
-            var color = eliminationTarget.GetColor();
-            
-            photonView.RPC("SynchBar", RpcTarget.All, color.r, color.g, color.b, lowest.transform.position + Vector3.down / 1.5f, progress);
+            if(eliminationTarget != null) {
+                var progress = Util.Map(eliminationTarget.eliminationTimer, 0, eliminationDuration, 0f, 1f);
+                var color = eliminationTarget.GetColor();
+                
+                photonView.RPC("SynchBar", RpcTarget.All, color.r, color.g, color.b, lowest.transform.position + Vector3.down / 1.5f, progress);
 
-            if(progress <= 0 && eliminationTarget != null) {
-                EliminatePlayer(eliminationTarget);
-                photonView.RPC("UnsynchBar", RpcTarget.All);
-                eliminate = false;
+                if(progress <= 0 && eliminationTarget != null) {
+                    EliminatePlayer(eliminationTarget);
+                    photonView.RPC("UnsynchBar", RpcTarget.All);
+                    eliminate = false;
+                }
             }
         }
         if(planets != null) foreach(var i in planets) if(eliminationTarget != null && i.playerNumber != eliminationTarget.playerNumber) i.RechargeElimination(eliminationDuration, regenSpeed);

@@ -319,7 +319,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   asteroid: {fileID: 145464310536149297}
-  nudgeForce: 0.3
+  defaultRbMass: 0.15
+  inOrbitRbMass: 0.1
 --- !u!58 &7228890296776165996
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -686,7 +687,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 34.9, y: 115.6}
+  m_Offset: {x: -4.2, y: 29}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -697,7 +698,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 419.67, y: 460.9}
+  m_Size: {x: 500, y: 480}
   m_EdgeRadius: 0
 --- !u!114 &-3807910649384768265
 MonoBehaviour:

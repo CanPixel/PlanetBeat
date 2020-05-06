@@ -57,10 +57,10 @@ public class AsteroidSpawner : MonoBehaviourPun {
         if(PowerupsList.Length < powerupAmount) {
             powerupSpawnTimer += Time.deltaTime;
             if(powerupSpawnTimer > powerupSpawnDelay) openBlackHole = true;
-             if(asteroidSpawnTimer > powerupSpawnDelay + spawnAnimationDelay) {
+             if(powerupSpawnTimer > powerupSpawnDelay + spawnAnimationDelay) {
                 SpawnPowerup();
-                asteroidSpawnDelay = Random.Range(powerupSpawnDelays.x, powerupSpawnDelays.y);
-                asteroidSpawnTimer = 0;
+                powerupSpawnDelay = Random.Range(powerupSpawnDelays.x, powerupSpawnDelays.y);
+                powerupSpawnTimer = 0;
                 openBlackHole = shake = false;
             }
         }
