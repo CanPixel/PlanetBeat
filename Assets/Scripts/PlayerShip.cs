@@ -161,6 +161,15 @@ public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
         return trailingObjects.Count < maxAsteroids;
     }
 
+    public void Destroy() {
+        Destroy(ship);
+        Destroy(rb);
+        foreach(var i in colliders) Destroy(i);
+        Destroy(exhaustSound);
+        foreach(Transform t in transform) if(t == transform) Destroy(t.gameObject);
+        Destroy(this);
+    }
+
     public void Explode(float exp) {
         if(planet != null) planet.Explode(exp);
         flicker = 1;

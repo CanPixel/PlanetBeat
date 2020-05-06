@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class AsteroidNudger : MonoBehaviour {
     public PickupableObject asteroid;
+    public float nudgeForce = 2;
 
-    public float defaultRbMass = 0.15f, inOrbitRbMass = 0.1f;
+    [HideInInspector] public bool isInOrbit = false;
 
     private Rigidbody2D rb;
 
@@ -14,15 +15,14 @@ public class AsteroidNudger : MonoBehaviour {
     }
 
     void OnTriggerStay2D(Collider2D col) {
-        if(col.tag == "ORBIT") {
-            var orb = col.GetComponent<Orbit>();
-            if(orb == null) return;
-            var orbit = orb.planet;
-            if(asteroid != null && orbit != null) rb.mass = inOrbitRbMass;
-        }
+        if(col.tag == "ORBIT") isInOrbit = true;
+    }
+
+    void OnTriggerEnter2D(Collider2D col) {
+        if(col.tag == "ORBIT") rb.velocity /= nudgeForce;
     }
 
     void OnTriggerExit2D(Collider2D col) {
-        if(col.tag == "ORBIT") rb.mass = defaultRbMass;
+        if(col.tag == "ORBIT") isInOrbit = false;
     }
 }

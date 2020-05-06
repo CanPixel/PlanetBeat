@@ -64,7 +64,9 @@ public class BlackHoleGravity : MonoBehaviour {
         }
         else if (col.tag == "Resource" || col.tag == "Powerup") {
             var ast = col.GetComponent<PickupableObject>();
-            if(ast.held || !ast.IsDoneSpawning) return; //Influence of sun gravity bij trailingObjects 
+            var nudge = col.GetComponent<AsteroidNudger>();
+
+            if(ast.held || !ast.IsDoneSpawning || (nudge != null && col.tag == "Powerup" && nudge.isInOrbit)) return; //Influence of sun gravity bij trailingObjects 
 
             float totalForce = -(planetForceResource * (Mass / 2f));
             var orientation = (col.transform.position - transform.position).normalized;

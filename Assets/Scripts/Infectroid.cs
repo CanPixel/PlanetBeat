@@ -58,11 +58,10 @@ public class Infectroid : PickupableObject {
     private bool inPlanet = false;
     public float destroyAfter = 10;
 
-    [Header("PHYSICS")]
-    public float defaultRbDrag = 0.2f;
-    public float inPlayerOrbitRbDrag = 0.6f;
-    public float maxInOrbitTime = 5;
-    public float outOrbitForce = 40;
+   // [Header("PHYSICS")]
+    //public float defaultRbDrag = 0.2f;
+    //public float maxInOrbitTime = 5;
+    //public float outOrbitForce = 40;
 
     [Header("SPAWN")]
     public float beginThrust = 0.4f;
@@ -97,7 +96,9 @@ public class Infectroid : PickupableObject {
         base.Init();
         network = GetComponent<AsteroidNetwork>();
         rb = GetComponent<Rigidbody2D>();
-        rb.drag = defaultRbDrag - .15f;
+        
+        //rb.drag = defaultRbDrag;// - .15f;
+
         SetTexture(TextureSwitcher.GetCurrentTexturePack());
         rb.AddForce(transform.up * Thrust);
         LinksOfRechts = Random.Range(0, 2);
@@ -213,9 +214,9 @@ public class Infectroid : PickupableObject {
     }
 
     void OnTriggerStay2D(Collider2D col) {
-        if(col.gameObject.tag == "PLAYERPLANET" && col.gameObject != null && PhotonNetwork.IsMasterClient) {
+        if(col.gameObject.tag == "ORBIT" && col.gameObject != null && PhotonNetwork.IsMasterClient) {
             playerPlanets = col.gameObject.GetComponent<PlayerPlanets>();
-            if(playerPlanets.HasPlayer() && !GameManager.GAME_WON) {
+            if(playerPlanets != null && playerPlanets.HasPlayer() && !GameManager.GAME_WON) {
                 inPlanet = true;
                 infectTime += Time.deltaTime;
                 if(infectTime > infectDelay && playerPlanets.currentScore > 0) {
@@ -227,7 +228,7 @@ public class Infectroid : PickupableObject {
     }
 
     void OnTriggerExit2D(Collider2D col) {
-        if(col.gameObject.tag == "PLAYERPLANET" && col.gameObject != null && PhotonNetwork.IsMasterClient) {
+        if(col.gameObject.tag == "ORBIT" && col.gameObject != null && PhotonNetwork.IsMasterClient) {
             inPlanet = false;
             //infectTime = 0;
         }

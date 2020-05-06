@@ -4902,7 +4902,7 @@ MonoBehaviour:
   hookShotCastSpeed: 500
   HookShotReelSpeed: 500
   hookShotRange: 400
-  HookCooldownTime: 3.5
+  HookCooldownTime: 3
   HookCooldownParent: {fileID: 1832470146200991475}
   HookCooldownOn: {fileID: 6447285896565232729}
   HookCooldownOff: {fileID: 5365137927936052174}
@@ -5073,7 +5073,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: -96.98}
   serializedVersion: 2
-  m_Radius: 340
+  m_Radius: 250
 --- !u!50 &1446986112358890863
 Rigidbody2D:
   serializedVersion: 4
@@ -5547,7 +5547,7 @@ MonoBehaviour:
   stopDrag: 1.5
   maxAsteroids: 2
   trailingSpeed: 15
-  throwingReduction: 0.45
+  throwingReduction: 0.35
   SpeedShardPrefab: {fileID: 2844512524737966751, guid: 38879c7c098f8084c8ee2711729647dc,
     type: 3}
   SpeedShardOffset: {x: 0, y: -1, z: 0}

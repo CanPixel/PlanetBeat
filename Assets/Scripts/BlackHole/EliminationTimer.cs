@@ -12,6 +12,8 @@ public class EliminationTimer : MonoBehaviourPun {
     private float elimTime;
     public UnityEvent eliminationEvent;
 
+    public static bool TIMER_START = false;
+
     private int elimCount = 0;
 
     public bool resetCount = false;
@@ -33,6 +35,7 @@ public class EliminationTimer : MonoBehaviourPun {
         } 
 
         if(!PhotonNetwork.IsMasterClient || !GameManager.GAME_STARTED || !everyoneHasWealth) return;
+        TIMER_START = true;
 
         photonView.RPC("SynchTimer", RpcTarget.All, (int)timeUntillElimination);
 

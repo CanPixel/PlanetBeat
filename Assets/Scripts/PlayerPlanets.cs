@@ -7,7 +7,7 @@ using Photon.Realtime;
 
 public class PlayerPlanets : MonoBehaviourPun {
     private PlayerShip player;
-    [HideInInspector] public int playerNumber = 0;
+    public int playerNumber = 0;
     [HideInInspector] public float currentScore;
     public float minScore = 0;
     public float maxScore = 100f;
@@ -186,8 +186,8 @@ public class PlayerPlanets : MonoBehaviourPun {
         if(ID == playerNumber) {
             trails.Clear();
             trails.emitting = false;
-            if(player != null) GameManager.DESTROY_SERVER_OBJECT(player.gameObject);
-            if(player != null) Destroy(player.gameObject);
+           // if(player != null) GameManager.DESTROY_SERVER_OBJECT(player);
+            if(player != null) player.Destroy();
             GameManager.DESTROY_SERVER_OBJECT(gameObject);
             Destroy(gameObject);
         }
@@ -211,7 +211,7 @@ public class PlayerPlanets : MonoBehaviourPun {
 
     public void AddingResource(float amount) {
         if(playerNumber <= 0 || GameManager.GAME_WON) return;
-        if(currentScore < maxScore && PhotonNetwork.IsMasterClient) { ////////MASTERCLIENT?
+        if(currentScore < maxScore) {
             AudioManager.PLAY_SOUND("Musicalhit", 0.7f, 0.95f);
             lastAmount = amount;
             photonView.RPC("SetResource", RpcTarget.AllBufferedViaServer, currentScore + lastAmount);
@@ -220,7 +220,7 @@ public class PlayerPlanets : MonoBehaviourPun {
         ScorePoint = true;
     }
 
-    public void AddOnBeat() {
+    public void AdddOnBeat() {
         if(player == null || playerNumber <= 0 || GameManager.GAME_WON || !ScorePoint) return;
         if(ScorePoint) {
             if (currentScore < maxScore) {

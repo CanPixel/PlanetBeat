@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class AsteroidKill : MonoBehaviour {
     void OnTriggerEnter2D(Collider2D col) {
-        if(col.gameObject.tag == "Resource") {
-            Destroy(col.gameObject);
-        }
+        if(col.gameObject.tag == "Resource" || col.gameObject.tag == "Powerup") Destroy(col.gameObject);
     }
 }
