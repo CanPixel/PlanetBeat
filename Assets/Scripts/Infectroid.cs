@@ -166,11 +166,10 @@ public class Infectroid : PickupableObject {
 
         if(PhotonNetwork.IsMasterClient) {
             spawnTimer += Time.deltaTime;
-            if(inPlanet) infectTime += Time.deltaTime;
 
             if(infectTime > infectDelay && playerPlanets != null && playerPlanets.currentScore > 0) {
                 playerPlanets.Explode(penalty);
-                this.infectTime = 0;
+               // this.infectTime = 0;
             } 
             photonView.RPC("SynchTimer", RpcTarget.All, spawnTimer, timeBombTick);
         }
@@ -224,18 +223,21 @@ public class Infectroid : PickupableObject {
     }
 
     void OnTriggerStay2D(Collider2D col) {
-        if(col.gameObject.tag == "ORBIT" && col.gameObject != null && PhotonNetwork.IsMasterClient) {
-            playerPlanets = col.gameObject.GetComponent<PlayerPlanets>();
-            if(playerPlanets != null && playerPlanets.HasPlayer() && !GameManager.GAME_WON) inPlanet = true;
-        }
+        if(col.gameObject.tag == "ORBIT") {
+            playerPlanets = col.transform.parent.GetComponent<PlayerPlanets>();
+            if(playerPlanets != null && playerPlanets.HasPlayer() && !GameManager.GAME_WON) {
+                infectTime += Time.deltaTime;
+                inPlanet = true;
+            }
+        } else inPlanet = false;
     }
 
-    void OnTriggerExit2D(Collider2D col) {
-        if(col.gameObject.tag == "ORBIT" && col.gameObject != null && PhotonNetwork.IsMasterClient) {
-            inPlanet = false;
+    //void OnTriggerExit2D(Collider2D col) {
+     //   if(col.gameObject.tag == "ORBIT") {
+      //      inPlanet = false;
             //infectTime = 0;
-        }
-    }
+      //  }
+   // }
 
     public void SetTexture(TextureSwitcher.TexturePack elm) {
         src.sprite = elm.asteroid.src;

@@ -55,7 +55,7 @@ public class PlayerTagsManager : MonoBehaviour {
         asteroidTrailRenderer.material.color = ogTrailColor;
         
         src.color = glow.color = Color.white;
-        _asteroid.ForceRelease(true);
+        if(_asteroid != null) _asteroid.ForceRelease(true);
     }
 
     public void TagOn(bool state) {

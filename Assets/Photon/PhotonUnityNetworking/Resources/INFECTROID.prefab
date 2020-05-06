@@ -412,7 +412,6 @@ MonoBehaviour:
   increasePopupTxt: {fileID: 7083921187275832242}
   explodeParticles: {fileID: 1067106092621830195, guid: cd0b03d048d9905489b14408260a7a72,
     type: 3}
-  inOrbit: 0
   giveTag: 0
   inOrbitTimer: 0
   grabDelay: 0
