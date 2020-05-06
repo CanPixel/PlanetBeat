@@ -116,7 +116,7 @@ public class Infectroid : PickupableObject {
     }
 
     [PunRPC]
-    public void SynchTimer(float timer, float timeBombTick) {
+    public void SynchTimer(float timer, float timeBombTick, float infectTime) {
         if(spawnTimer > destroyAfter - 5) {
             increasePopupHideTimer = 0;
             increasePopupTxt.color = new Color(0, 1, 0f);
@@ -124,15 +124,14 @@ public class Infectroid : PickupableObject {
             increasePopupTxt.transform.localScale = Vector3.one * increasePopupBaseSize;
         }
 
+        if(infectTime > infectDelay && playerPlanets.currentScore > 0) {
+            playerPlanets.Explode(penalty);
+            this.infectTime = 0;
+        } else if(!PhotonNetwork.IsMasterClient) this.infectTime = infectTime;
+
         if(PhotonNetwork.IsMasterClient) return;
         this.spawnTimer = timer;
         this.timeBombTick = timeBombTick;
-    }
-
-    [PunRPC]
-    public void SynchTimer(float infectTime) {
-        if(PhotonNetwork.IsMasterClient) return;
-        this.infectTime = infectTime;
     }
 
     void FixedUpdate() {
@@ -154,15 +153,6 @@ public class Infectroid : PickupableObject {
     }
 
     void Update() {
-        if(PhotonNetwork.IsMasterClient && playerPlanets != null) {
-            infectTime += Time.deltaTime;
-            if(infectTime > infectDelay && playerPlanets.currentScore > 0) {
-                playerPlanets.Explode(penalty);
-                infectTime = 0;
-            }
-            photonView.RPC("SynchTimer", RpcTarget.All, infectTime);
-        }
-
         float fade = 1;
         src.color = Color.Lerp(src.color, new Color(src.color.r, src.color.g, src.color.b, fade), Time.deltaTime * 5f);
 
@@ -179,7 +169,9 @@ public class Infectroid : PickupableObject {
 
         if(PhotonNetwork.IsMasterClient) {
             spawnTimer += Time.deltaTime;
-            photonView.RPC("SynchTimer", RpcTarget.All, spawnTimer, timeBombTick);
+            if(playerPlanets != null) infectTime += Time.deltaTime;
+
+            photonView.RPC("SynchTimer", RpcTarget.All, spawnTimer, timeBombTick, infectTime);
         }
         increasePopupHideTimer += Time.deltaTime;
         if(spawnTimer < activateAfterSpawning) return;

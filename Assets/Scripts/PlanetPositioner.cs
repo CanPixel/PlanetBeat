@@ -48,7 +48,7 @@ public class PlanetPositioner : MonoBehaviourPun {
             for(int i = 0; i < planets.Length; i++) if(planets[i] != null) planets[i].trails.emitting = false;
             oldPlanetAmount = planets.Length;
         }
-        planetAmount = Mathf.Lerp(planetAmount, planets.Length, Time.deltaTime * planetReformSpeed);
+        //planetAmount = Mathf.Lerp(planetAmount, planets.Length, Time.deltaTime * planetReformSpeed);
         for(int i = 0; i < planets.Length; i++) planets[i].transform.position = GetCircle(orbitDistance, i + move, planetAmount);
 
         //if(PhotonNetwork.IsMasterClient) photonView.RPC("SynchPositions", RpcTarget.All, move);
