@@ -62,5 +62,6 @@ MonoBehaviour:
   - KillPlayer
   - SynchBar
   - UnsynchBar
+  - SynchPositions
   DisableAutoOpenWizard: 1
   ShowSettings: 1

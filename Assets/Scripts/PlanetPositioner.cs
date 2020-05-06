@@ -1,9 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
 [ExecuteInEditMode]
-public class PlanetPositioner : MonoBehaviour {
+public class PlanetPositioner : MonoBehaviourPun {
     private PlayerPlanets[] planets;
 
     public float orbitDistance = 2, planetReformSpeed = 10f;
@@ -25,6 +26,8 @@ public class PlanetPositioner : MonoBehaviour {
     }
 
     void Update() {
+        if(!PhotonNetwork.IsMasterClient) return;
+        
         if(reformDelay > 0) reformDelay -= Time.deltaTime;
         else for(int i = 0; i < planets.Length; i++) {
             if(planets[i] == null) continue;
@@ -36,7 +39,18 @@ public class PlanetPositioner : MonoBehaviour {
         }
     }
 
+    [PunRPC]
+    public void SynchPositions(Vector3[] pos, float move, float reformDelay) {
+        if(PhotonNetwork.IsMasterClient) return;
+        this.move = move;
+        this.reformDelay = reformDelay;
+        planets = GetPlanets();
+        for(int i = 0; i < pos.Length; i++) planets[i].transform.position = pos[i];
+    }
+
     protected void PositionPlanets() {
+        if(!PhotonNetwork.IsMasterClient) return;
+
         planets = GetPlanets();
         if(planetAmount < 0) planetAmount = oldPlanetAmount = planets.Length;
         if(oldPlanetAmount != planets.Length) {
@@ -47,6 +61,10 @@ public class PlanetPositioner : MonoBehaviour {
         planetAmount = Mathf.Lerp(planetAmount, planets.Length, Time.deltaTime * planetReformSpeed);
 
         for(int i = 0; i < planets.Length; i++) planets[i].transform.position = GetCircle(orbitDistance, i + move, planetAmount);
+
+        Vector3[] pos = new Vector3[planets.Length];
+        for(int i = 0; i < planets.Length; i++) pos[i] = planets[i].transform.position;
+        photonView.RPC("SynchPositions", RpcTarget.All, pos, move, reformDelay);
     }
 
     private Vector3 GetCircle(float radius, float angle, float amountOfPlanets) {
