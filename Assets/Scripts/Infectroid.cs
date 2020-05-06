@@ -169,7 +169,7 @@ public class Infectroid : PickupableObject {
 
             if(infectTime > infectDelay && playerPlanets != null && playerPlanets.currentScore > 0) {
                 playerPlanets.Explode(penalty);
-               // this.infectTime = 0;
+                this.infectTime = 0;
             } 
             photonView.RPC("SynchTimer", RpcTarget.All, spawnTimer, timeBombTick);
         }
@@ -226,7 +226,7 @@ public class Infectroid : PickupableObject {
         if(col.gameObject.tag == "ORBIT") {
             playerPlanets = col.transform.parent.GetComponent<PlayerPlanets>();
             if(playerPlanets != null && playerPlanets.HasPlayer() && !GameManager.GAME_WON) {
-                infectTime += Time.deltaTime;
+                if(PhotonNetwork.IsMasterClient) infectTime += Time.deltaTime;
                 inPlanet = true;
             }
         } else inPlanet = false;
