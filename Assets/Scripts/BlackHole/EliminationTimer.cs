@@ -57,6 +57,7 @@ public class EliminationTimer : MonoBehaviourPun {
 
     [PunRPC]
     public void SynchTimer(int time) {
+        TIMER_START = true;
         eliminationCounter.text = "0:" + ((time < 10)? "0" : "") + time.ToString();
     }
 }

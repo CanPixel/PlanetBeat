@@ -45,7 +45,7 @@ public class Infectroid : PickupableObject {
     public Text increasePopupTxt;
     public GameObject explodeParticles;
 
-    [HideInInspector] public bool inOrbit = false;
+   // [HideInInspector] public bool inOrbit = false;
     [HideInInspector] public bool giveTag = false;
     [HideInInspector] public float inOrbitTimer;
 
@@ -91,8 +91,6 @@ public class Infectroid : PickupableObject {
     private Vector3 standardGlowScale;
     private bool destroy = false;
 
-    private PlayerPlanets leechingPlanet;
-
     void Start() {
         dropBoosts = false;
         base.Init();
@@ -116,19 +114,18 @@ public class Infectroid : PickupableObject {
     }
 
     [PunRPC]
-    public void SynchTimer(float timer, float timeBombTick, float infectTime) {
+    public void SynchTimer(float timer, float timeBombTick) {
         if(spawnTimer > destroyAfter - 5) {
             increasePopupHideTimer = 0;
             increasePopupTxt.color = new Color(0, 1, 0f);
             increasePopupTxt.text = ((int)Mathf.Clamp((destroyAfter - spawnTimer) + 1, 0, 5)).ToString();
             increasePopupTxt.transform.localScale = Vector3.one * increasePopupBaseSize;
         }
-
-        if(infectTime > infectDelay && playerPlanets.currentScore > 0) {
+     /*    if(infectTime > infectDelay && playerPlanets.currentScore > 0) {
             playerPlanets.Explode(penalty);
             this.infectTime = 0;
         } else if(!PhotonNetwork.IsMasterClient) this.infectTime = infectTime;
-
+*/
         if(PhotonNetwork.IsMasterClient) return;
         this.spawnTimer = timer;
         this.timeBombTick = timeBombTick;
@@ -169,9 +166,13 @@ public class Infectroid : PickupableObject {
 
         if(PhotonNetwork.IsMasterClient) {
             spawnTimer += Time.deltaTime;
-            if(playerPlanets != null) infectTime += Time.deltaTime;
+            if(inPlanet) infectTime += Time.deltaTime;
 
-            photonView.RPC("SynchTimer", RpcTarget.All, spawnTimer, timeBombTick, infectTime);
+            if(infectTime > infectDelay && playerPlanets != null && playerPlanets.currentScore > 0) {
+                playerPlanets.Explode(penalty);
+                this.infectTime = 0;
+            } 
+            photonView.RPC("SynchTimer", RpcTarget.All, spawnTimer, timeBombTick);
         }
         increasePopupHideTimer += Time.deltaTime;
         if(spawnTimer < activateAfterSpawning) return;
@@ -225,10 +226,7 @@ public class Infectroid : PickupableObject {
     void OnTriggerStay2D(Collider2D col) {
         if(col.gameObject.tag == "ORBIT" && col.gameObject != null && PhotonNetwork.IsMasterClient) {
             playerPlanets = col.gameObject.GetComponent<PlayerPlanets>();
-            if(playerPlanets != null && playerPlanets.HasPlayer() && !GameManager.GAME_WON) {
-                inPlanet = true;
-                leechingPlanet = playerPlanets;
-            }
+            if(playerPlanets != null && playerPlanets.HasPlayer() && !GameManager.GAME_WON) inPlanet = true;
         }
     }
 
