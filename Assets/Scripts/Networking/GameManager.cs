@@ -218,9 +218,9 @@ public class GameManager : MonoBehaviourPunCallbacks {
    }
 
    public override void OnLeftRoom() {
-      //PhotonNetwork.LeaveLobby();
       PhotonNetwork.Disconnect();
       SceneManager.LoadScene(0);
+      Destroy(gameObject);
    }
 
    public void LeaveRoom() {
