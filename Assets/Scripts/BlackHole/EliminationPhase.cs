@@ -31,11 +31,10 @@ public class EliminationPhase : MonoBehaviourPun {
         //KING CROWN
         PlayerPlanets highest = null;
         foreach(var i in planets) if((highest == null || i.currentScore > highest.currentScore) && i.HasPlayer() && i.currentScore > 0) highest = i;
-        if(highest != null && PhotonNetwork.IsMasterClient) {
+        if(highest != null) {
             kingCrown.transform.rotation = highest.transform.rotation;
             kingCrown.transform.position = Vector3.Lerp(kingCrown.transform.position, highest.transform.position + Vector3.up / 1.5f, Time.deltaTime * 14f);
-        } 
-        if(highest == null) {
+        } else {
             kingCrown.transform.rotation = Quaternion.identity;
             kingCrown.transform.position = Vector3.Lerp(kingCrown.transform.position, new Vector3(0, 50, 0), Time.deltaTime * 14f);
         }

@@ -139,7 +139,7 @@ public class PlayerPlanets : MonoBehaviourPun {
     }
 
     void Update() {
-        foreach(var i in infectionNotifiers) i.color = Color.Lerp(i.color, new Color(i.color.r, i.color.g, i.color.b, (infected) ? 0.8f : 0), Time.deltaTime * 2f);
+        foreach(var i in infectionNotifiers) i.color = Color.Lerp(i.color, new Color(i.color.r, i.color.g, i.color.b, (infected && player != null && player.photonView.IsMine) ? 0.8f : 0), Time.deltaTime * 2f);
 
         rechargeBar.LerpAlpha(0, 4f);
 
