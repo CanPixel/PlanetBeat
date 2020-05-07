@@ -224,20 +224,30 @@ public class Infectroid : PickupableObject {
 
     void OnTriggerStay2D(Collider2D col) {
         if(col.gameObject.tag == "ORBIT") {
-            playerPlanets = col.transform.parent.GetComponent<PlayerPlanets>();
+            var par = col.transform.parent;
+            if(par == null) return;
+            var planet = par.GetComponent<PlayerPlanets>();
+            if(planet != null) playerPlanets = planet;
             if(playerPlanets != null && playerPlanets.HasPlayer() && !GameManager.GAME_WON) {
+                
+                if(playerPlanets.currentScore > 0) playerPlanets.infected = true;
+
                 if(PhotonNetwork.IsMasterClient) infectTime += Time.deltaTime;
                 inPlanet = true;
             }
         } else inPlanet = false;
     }
 
-    //void OnTriggerExit2D(Collider2D col) {
-     //   if(col.gameObject.tag == "ORBIT") {
-      //      inPlanet = false;
+    void OnTriggerExit2D(Collider2D col) {
+        if(col.gameObject.tag == "ORBIT") {
+            var par = col.transform.parent;
+            if(par == null) return;
+            var planet = par.GetComponent<PlayerPlanets>();
+            if(planet != null) planet.infected = false;
+            //inPlanet = false;
             //infectTime = 0;
-      //  }
-   // }
+        }
+    }
 
     public void SetTexture(TextureSwitcher.TexturePack elm) {
         src.sprite = elm.asteroid.src;

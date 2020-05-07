@@ -2,9 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
+using UnityEngine.UI;
 
 public class EliminationPhase : MonoBehaviourPun {
     private bool eliminate = false;
+
+    public Image kingCrown;
 
     private PlanetPositioner planetPositioner;
     private PlayerPlanets[] planets;
@@ -21,9 +24,22 @@ public class EliminationPhase : MonoBehaviourPun {
     void Start() {
         planetPositioner = GameObject.FindGameObjectWithTag("PLANETS").GetComponent<PlanetPositioner>();
         eliminationBar.gameObject.SetActive(false);
+        planets = planetPositioner.GetPlanets();
     }
 
     void Update() {
+        //KING CROWN
+        PlayerPlanets highest = null;
+        foreach(var i in planets) if((highest == null || i.currentScore > highest.currentScore) && i.HasPlayer() && i.currentScore > 0) highest = i;
+        if(highest != null && PhotonNetwork.IsMasterClient) {
+            kingCrown.transform.rotation = highest.transform.rotation;
+            kingCrown.transform.position = Vector3.Lerp(kingCrown.transform.position, highest.transform.position + Vector3.up / 1.5f, Time.deltaTime * 14f);
+        } 
+        if(highest == null) {
+            kingCrown.transform.rotation = Quaternion.identity;
+            kingCrown.transform.position = Vector3.Lerp(kingCrown.transform.position, new Vector3(0, 50, 0), Time.deltaTime * 14f);
+        }
+
         if(eliminate && PhotonNetwork.IsMasterClient) {
             //TIME TICKING FOR ELIMINATION
             if(eliminationTarget != null && eliminationTarget.eliminationTimer > 0) eliminationTarget.eliminationTimer -= Time.deltaTime * eliminationSpeed;
@@ -32,7 +48,7 @@ public class EliminationPhase : MonoBehaviourPun {
             PlayerPlanets lowest = null;
             foreach(var i in planets) if((lowest == null || i.currentScore < lowest.currentScore) && i.HasPlayer()) lowest = i;
             eliminationTarget = lowest;
-            
+
             if(eliminationTarget != null) {
                 var progress = Util.Map(eliminationTarget.eliminationTimer, 0, eliminationDuration, 0f, 1f);
                 var color = eliminationTarget.GetColor();

@@ -17,7 +17,7 @@ public class PlayerPlanets : MonoBehaviourPun {
     public GameObject orbit;
     public EliminationBar rechargeBar;
     public TrailRenderer trails;
-
+    
     [HideInInspector] public float wiggleSpeed = 10, wiggleRange = 100f;
 
     public float maxScale = 4;
@@ -34,6 +34,10 @@ public class PlayerPlanets : MonoBehaviourPun {
 
     private bool ScorePoint = false;
     private float lastAmount;
+
+    [Space(5)]
+    public Image[] infectionNotifiers; 
+    [HideInInspector] public bool infected = false;
 
     [HideInInspector] public float eliminationTimer;
     private bool destructionInit = false;
@@ -64,6 +68,7 @@ public class PlayerPlanets : MonoBehaviourPun {
     }
 
     public void OnEnable() {
+        foreach(var i in infectionNotifiers) i.color = new Color(i.color.r, i.color.g, i.color.b, 0);
         wiggleOffset = Random.Range(0, 10000f);
         basePos = transform.localPosition;
         planetGlow = GetComponent<PlanetGlow>();
@@ -134,6 +139,8 @@ public class PlayerPlanets : MonoBehaviourPun {
     }
 
     void Update() {
+        foreach(var i in infectionNotifiers) i.color = Color.Lerp(i.color, new Color(i.color.r, i.color.g, i.color.b, (infected) ? 0.8f : 0), Time.deltaTime * 2f);
+
         rechargeBar.LerpAlpha(0, 4f);
 
         if(increasePopupHideTimer > 0) increasePopupHideTimer += Time.deltaTime;

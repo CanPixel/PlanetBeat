@@ -29,6 +29,7 @@ public class AsteroidSpawner : MonoBehaviourPun {
     private int sample = 0;
 
     void Start() {
+        Random.InitState(System.DateTime.Now.Millisecond);
         mainCamScreenShake = Camera.main.GetComponent<ScreenShake>();
         asteroidSpawnDelay = Random.Range(objectSpawnDelay.x, objectSpawnDelay.y);
         powerupSpawnDelay = Random.Range(powerupSpawnDelays.x, powerupSpawnDelays.y);
@@ -57,7 +58,7 @@ public class AsteroidSpawner : MonoBehaviourPun {
         if(PowerupsList.Length < powerupAmount) {
             powerupSpawnTimer += Time.deltaTime;
             if(powerupSpawnTimer > powerupSpawnDelay) openBlackHole = true;
-             if(powerupSpawnTimer > powerupSpawnDelay + spawnAnimationDelay) {
+            if(powerupSpawnTimer > powerupSpawnDelay + spawnAnimationDelay) {
                 SpawnPowerup();
                 powerupSpawnDelay = Random.Range(powerupSpawnDelays.x, powerupSpawnDelays.y);
                 powerupSpawnTimer = 0;

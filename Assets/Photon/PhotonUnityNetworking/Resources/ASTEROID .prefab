@@ -513,15 +513,15 @@ MonoBehaviour:
   inOrbitTimer: 0
   timeToScore: 3
   grabDelay: 0
-  baseValue: {x: 3, y: 4}
-  increaseValueDelay: {x: 2, y: 3}
-  increaseRate: {x: 3, y: 5}
+  baseValue: {x: 4, y: 5}
+  increaseValueDelay: {x: 1, y: 2}
+  increaseRate: {x: 1, y: 2}
   explodeParticles: {fileID: 1067106092621830195, guid: cd0b03d048d9905489b14408260a7a72,
     type: 3}
   explosionColor: {r: 0.5529412, g: 0.20392157, b: 1, a: 1}
   UnstableTextColor: {r: 0.9245283, g: 0.45068684, b: 0.33579564, a: 1}
   StablePhase: {x: 7, y: 10}
-  UnstablePhase: {x: 5, y: 6}
+  UnstablePhase: {x: 4, y: 6}
   TimeAfterSizzle: 1
   defaultRbDrag: 0.27
   inPlayerOrbitRbDrag: 0.6

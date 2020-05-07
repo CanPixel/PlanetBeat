@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
+using UnityEngine.UI;
 
 public class HookShot : MonoBehaviour {
     public PlayerShip hostPlayer;
@@ -32,17 +33,16 @@ public class HookShot : MonoBehaviour {
 
     private bool HookCooldown = false;
     public float HookCooldownTime = 10.0f;
-    private float timeLeft;
-    
+    private float HookCooldownDelay;
+    //private float HookCooldownIconScale;
+
+    public Color on, off;
     public GameObject HookCooldownParent;
-    public GameObject HookCooldownOn;
-    public GameObject HookCooldownOff;
+    public Image HookCooldownIcon;
 
     void Start() {
         rope = transform.GetChild(0).GetComponent<RectTransform>();
         tip = rope.transform.GetChild(0).GetComponent<CircleCollider2D>();
-
-        timeLeft = HookCooldownTime;
         if(!hostPlayer.photonView.IsMine) HookCooldownParent.SetActive(false);
     }
 
@@ -75,14 +75,15 @@ public class HookShot : MonoBehaviour {
         if(shootTimer > 0) shootTimer += Time.deltaTime;
         if(shootTimer > 1) didntCatch = true;
 
+        var progress = (HookCooldownDelay / HookCooldownTime);
+        HookCooldownIcon.fillAmount = 1f - progress;
+        HookCooldownIcon.color = Color.Lerp(HookCooldownIcon.color, (HookCooldown) ? off : on, (HookCooldown) ? (1f - progress) : (Time.deltaTime * 2f));
+        //if(progress < 0.5f) HookCooldownIcon.transform.localScale = Vector3.Lerp(HookCooldownIcon.transform.localScale, new Vector3(1.25f, 1.25f, 1.25f) * HookCooldownIconScale, Time.deltaTime * 3f);
+
         //Cooldown
         if(HookCooldown) {
-            timeLeft -= Time.deltaTime;
-            if(timeLeft < 0) {
-                HookCooldownOff.SetActive(true);
-                HookCooldownOn.SetActive(false);
-                HookCooldown = false;
-            }
+            HookCooldownDelay -= Time.deltaTime;
+            if(HookCooldownDelay < 0) HookCooldown = false;
         }
 
     }
@@ -96,10 +97,9 @@ public class HookShot : MonoBehaviour {
         protected void FreeAim() {
             if(Input.GetKey(KeyCode.Space) && !HookCooldown) {
                 triggerHook = true;
-                HookCooldownOff.SetActive(false);
-                HookCooldownOn.SetActive(true);
                 HookCooldown = true;
-                timeLeft = HookCooldownTime;
+                HookCooldownDelay = HookCooldownTime;
+                //HookCooldownIcon.transform.localScale = Vector3.one * (HookCooldownIconScale * 0.5f);
             }
             if(Input.GetKeyUp(KeyCode.Space) && triggerHook && shootTimer <= 0) {
                 if(hostPlayer.IsThisClient()) hostPlayer.photonView.RPC("CastHook", RpcTarget.All, hostPlayer.photonView.ViewID);
