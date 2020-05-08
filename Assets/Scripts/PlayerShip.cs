@@ -13,6 +13,15 @@ public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
     [HideInInspector] public GameObject playerLabel;
     [HideInInspector] public Collider2D[] colliders;
 
+    [Header("BOOST")]
+    public float boostDuration = 0.2f;
+    public float boostVelocity2 = 22f;
+    public float boostCooldownDuration = 3;
+    private float boostCooldownTimer = 0f, boostTimer = 0f;
+    public bool canBoost = true;
+    private bool isBoosting;
+    private bool onCooldown;
+
     [Header("PLAYER VALUES")]
     public Image ship;
     public int playerNumber;
@@ -54,10 +63,10 @@ public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
     [Range(0.1f,10)]
     public float throwingReduction = 1f; 
 
-    public GameObject SpeedShardPrefab;
     public Vector3 SpeedShardOffset;
     public GameObject SpawnStarShard;
     public float ShardTimeInterval = 1.1f;
+    public bool canShard = false;
 
     public static string PLAYERNAME;
 
@@ -216,6 +225,8 @@ public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
   //      var cont = GameObject.FindGameObjectWithTag("CUSTOM CONTROLLER");
     //    if(cont != null) customController = cont.GetComponent<CustomController>();
       //  if(customController != null && customController.useCustomControls) hookShot.customController = customController;
+        maxVelocity = defaultVelocity;
+        boostCooldownTimer = boostCooldownDuration;
     }
 
     void FixedUpdate() {
@@ -260,6 +271,8 @@ public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
     }
 
     void Update() {
+        BoostManager();
+
         if(!GameManager.GAME_STARTED) PositionToPlanet();
         exhaustSound.volume = Mathf.Lerp(exhaustSound.volume, IsThrust() ? 0.05f : 0, Time.deltaTime * 10f);
 
@@ -313,12 +326,48 @@ public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
             }
     
         //Grapple Cooldown Code
-        if(trailingObjects.Count > 0 && trailingObjects[0].dropBoosts) {
+        if(trailingObjects.Count > 0 && trailingObjects[0].dropBoosts && canShard) {
             ShardTimeInterval += Time.deltaTime;
             if(ShardTimeInterval >= 0.5f) {
                 ShardTimeInterval = 0;
                 PhotonNetwork.Instantiate("SpeedShard", SpawnStarShard.transform.position, transform.rotation); 
             }    
+        }
+    }
+
+    protected void BoostManager() {
+        if (Input.GetKeyDown(KeyCode.LeftShift)) BoostPlayer();
+
+        if (isBoosting) {
+            boostTimer += Time.deltaTime;
+
+            if (boostTimer >= boostDuration) {
+                canBoost = false;
+                BoostPlayer();
+                boostTimer = 0f;
+                boostCooldownTimer = 0f;
+                onCooldown = true;
+            }
+        }
+
+        if (onCooldown) {
+            boostCooldownTimer += Time.deltaTime;
+
+            if (boostCooldownTimer >= boostCooldownDuration) {
+                canBoost = true;
+                onCooldown = false;
+            }
+        }
+    }
+
+    private void BoostPlayer() {
+        if (canBoost) {
+            maxVelocity = boostVelocity2;
+            isBoosting = true;
+            //boostcode
+        } else if (!canBoost) {
+            isBoosting = false;
+            maxVelocity = defaultVelocity;
         }
     }
 

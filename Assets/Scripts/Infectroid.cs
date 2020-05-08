@@ -19,6 +19,7 @@ public abstract class PickupableObject : MonoBehaviourPun {
 
     public void Init() {
         asteroidColl = GetComponent<Collider2D>();
+        rb = GetComponent<Rigidbody2D>();
     }
    
     public abstract void Capture(HookShot hookShot);
@@ -37,6 +38,10 @@ public abstract class PickupableObject : MonoBehaviourPun {
             if(!force) photonView.RPC("SetAsteroidOwner", RpcTarget.All, 0, false);
             else photonView.RPC("SetAsteroidOwner", RpcTarget.All, 0, true);
         }
+    }
+
+    void OnCollisionEnter2D(Collision2D col) {
+        if(col.gameObject.tag == "Resource" || col.gameObject.tag == "Powerup") rb.velocity = new Vector2(-col.relativeVelocity.x, col.relativeVelocity.y);
     }
 }
 

@@ -369,7 +369,7 @@ public class Asteroid : PickupableObject {
         canConsume = false;
     }
 
-    public void ForceRelease(bool force = false) {
+    public new void ForceRelease(bool force = false) {
         if(photonView != null && ownerPlayer.photonView != null) {
             if(!force) photonView.RPC("SetAsteroidOwner", RpcTarget.All, 0, false);
             else photonView.RPC("SetAsteroidOwner", RpcTarget.All, 0, true);

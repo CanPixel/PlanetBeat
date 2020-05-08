@@ -415,9 +415,9 @@ MonoBehaviour:
   giveTag: 0
   inOrbitTimer: 0
   grabDelay: 0
-  infectDelay: 1
+  infectDelay: 0.75
   penalty: 1
-  destroyAfter: 25
+  destroyAfter: 20
   beginThrust: 0.4
   curve: 0
   swirlDuration: 2
