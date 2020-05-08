@@ -227,6 +227,7 @@ public class PlayerPlanets : MonoBehaviourPun {
         ScorePoint = true;
     }
 
+/* 
     public void AdddOnBeat() {
         if(player == null || playerNumber <= 0 || GameManager.GAME_WON || !ScorePoint) return;
         if(ScorePoint) {
@@ -241,7 +242,7 @@ public class PlayerPlanets : MonoBehaviourPun {
             AudioManager.PLAY_SOUND("collect", 2.5f);
             ScorePoint = false;
         }
-    }
+    } */
 
     protected void WinGame() {
         GameManager.GAME_WON = true;
