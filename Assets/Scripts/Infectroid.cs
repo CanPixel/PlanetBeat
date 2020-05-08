@@ -41,7 +41,8 @@ public abstract class PickupableObject : MonoBehaviourPun {
     }
 
     void OnCollisionEnter2D(Collision2D col) {
-        if(col.gameObject.tag == "Resource" || col.gameObject.tag == "Powerup") rb.velocity = new Vector2(-col.relativeVelocity.x, col.relativeVelocity.y);
+        if(rb == null) rb = GetComponent<Rigidbody2D>();
+        if(rb != null && (col.gameObject.tag == "Resource" || col.gameObject.tag == "Powerup")) rb.velocity = new Vector2(-col.relativeVelocity.x, col.relativeVelocity.y);
     }
 }
 

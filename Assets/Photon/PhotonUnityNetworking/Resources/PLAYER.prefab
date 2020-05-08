@@ -4902,7 +4902,7 @@ MonoBehaviour:
   hookShotCastSpeed: 500
   HookShotReelSpeed: 500
   hookShotRange: 400
-  HookCooldownTime: 3
+  HookCooldownTime: 2
   on: {r: 0, g: 1, b: 0, a: 0.5882353}
   off: {r: 1, g: 0, b: 0, a: 0.5882353}
   HookCooldownParent: {fileID: 1832470146200991475}

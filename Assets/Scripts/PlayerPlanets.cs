@@ -104,7 +104,8 @@ public class PlayerPlanets : MonoBehaviourPun {
         player = null;
         currentScore = minScore;
         if(scoreText != null) scoreText.enabled = false;
-        GetComponent<UIFloat>().SetBaseScale(baseScale);
+        var fl = GetComponent<UIFloat>();
+        if(fl != null) fl.SetBaseScale(baseScale);
     }
     
     [PunRPC]
