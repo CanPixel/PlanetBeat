@@ -34,16 +34,15 @@ public class HookShot : MonoBehaviour {
     private bool HookCooldown = false;
     public float HookCooldownTime = 10.0f;
     private float HookCooldownDelay;
-    //private float HookCooldownIconScale;
 
     public Color on, off;
-    public GameObject HookCooldownParent;
+    public Image HookCooldownParent;
     public Image HookCooldownIcon;
 
     void Start() {
         rope = transform.GetChild(0).GetComponent<RectTransform>();
         tip = rope.transform.GetChild(0).GetComponent<CircleCollider2D>();
-        if(!hostPlayer.photonView.IsMine) HookCooldownParent.SetActive(false);
+        if(!hostPlayer.photonView.IsMine) HookCooldownParent.gameObject.SetActive(false);
     }
 
     void Update() {
@@ -76,8 +75,12 @@ public class HookShot : MonoBehaviour {
         if(shootTimer > 1) didntCatch = true;
 
         var progress = (HookCooldownDelay / HookCooldownTime);
-        HookCooldownIcon.fillAmount = 1f - progress;
-        HookCooldownIcon.color = Color.Lerp(HookCooldownIcon.color, (HookCooldown) ? off : on, (HookCooldown) ? (1f - progress) : (Time.deltaTime * 2f));
+        HookCooldownParent.fillAmount = 1f - progress;
+        HookCooldownParent.color = Color.Lerp(HookCooldownParent.color, (HookCooldown) ? off : on, (HookCooldown) ? (1f - progress) : (Time.deltaTime * 2f));
+
+        var stateCol = (HookCooldown) ? off : on;
+        var endCol = new Color(stateCol.r, stateCol.g, stateCol.b, (HookCooldown) ? 0.55f : 0.75f);
+        HookCooldownIcon.color = Color.Lerp(HookCooldownIcon.color, endCol, (HookCooldown) ? (1f - progress) : (Time.deltaTime * 4f));
         //if(progress < 0.5f) HookCooldownIcon.transform.localScale = Vector3.Lerp(HookCooldownIcon.transform.localScale, new Vector3(1.25f, 1.25f, 1.25f) * HookCooldownIconScale, Time.deltaTime * 3f);
 
         //Cooldown
@@ -99,7 +102,6 @@ public class HookShot : MonoBehaviour {
                 triggerHook = true;
                 HookCooldown = true;
                 HookCooldownDelay = HookCooldownTime;
-                //HookCooldownIcon.transform.localScale = Vector3.one * (HookCooldownIconScale * 0.5f);
             }
             if(Input.GetKeyUp(KeyCode.Space) && triggerHook && shootTimer <= 0) {
                 if(hostPlayer.IsThisClient()) hostPlayer.photonView.RPC("CastHook", RpcTarget.All, hostPlayer.photonView.ViewID);
