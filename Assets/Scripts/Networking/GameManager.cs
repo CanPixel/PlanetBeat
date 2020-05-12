@@ -49,7 +49,7 @@ public class GameManager : MonoBehaviourPunCallbacks {
    private void ClaimFreePlanet(PlayerShip player) {
       if(player.GetHomePlanet() != null || player.photonView == null) return;
 
-      int playerVal = TextureSwitcher.GetPlayerTintIndex(player.photonView.ViewID);
+      int playerVal = PlanetSwitcher.GetPlayerTintIndex(player.photonView.ViewID);
       if(PhotonNetwork.IsMasterClient) ChoosePlanet(player);
       else photonView.RPC("RequestPlanet", RpcTarget.MasterClient, playerVal, player.photonView.ViewID);
    }
@@ -159,7 +159,7 @@ public class GameManager : MonoBehaviourPunCallbacks {
       startCountdown = false;
       GAME_STARTED = false;
 
-      TextureSwitcher.ForceUpdateTextures();
+      PlanetSwitcher.ForceUpdateTextures();
 
       allPlanets.Clear();
       var plans = GameObject.FindGameObjectsWithTag("PLAYERPLANET");
@@ -172,12 +172,12 @@ public class GameManager : MonoBehaviourPunCallbacks {
    }
 
    protected void AssignPlayerIdentity(int ID) {
-      var playerID = TextureSwitcher.GetPlayerTintIndex(ID);
+      var playerID = PlanetSwitcher.GetPlayerTintIndex(ID);
       var photon = PhotonNetwork.GetPhotonView(ID);
       if(photon == null) return;
       var pl = photon.GetComponent<PlayerShip>();
       if(pl == null) return;
-      pl.playerColor = TextureSwitcher.GetPlayerTint(ID);
+      pl.playerColor = PlanetSwitcher.GetPlayerTint(ID);
       var col = pl.playerColor;
       if(instance != null) instance.photonView.RPC("AssignMasterPlanet", RpcTarget.AllViaServer, ID, col.r, col.g, col.b);
    }
@@ -203,7 +203,7 @@ public class GameManager : MonoBehaviourPunCallbacks {
 
    private void AddLocalClient(string name) {
       if(LOCAL_PLAYER == null) {
-         TextureSwitcher.ForceUpdateTextures();
+         PlanetSwitcher.ForceUpdateTextures();
          var player = PhotonNetwork.Instantiate(playerPrefab.name, Vector3.zero, Quaternion.identity, 0);
          player.transform.localScale = new Vector3(playerScale, playerScale, playerScale);
          var playerShip = player.GetComponent<PlayerShip>();

@@ -151,7 +151,7 @@ public class Launcher : MonoBehaviourPunCallbacks, ILobbyCallbacks, IInRoomCallb
     }
 
     public void Connect() {
-        TextureSwitcher.Detach();
+        PlanetSwitcher.Detach();
 
         if(controlPanel != null) controlPanel.SetActive(false);
         playersInSpace.gameObject.SetActive(false);

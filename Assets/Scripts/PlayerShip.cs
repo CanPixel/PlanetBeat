@@ -100,8 +100,8 @@ public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
         planet = null;
     }
 
-    public void SetTexture(TextureSwitcher.TexturePack pack) {
-        ship.sprite = pack.Ship[TextureSwitcher.GetPlayerTintIndex(photonView.ViewID)].src;
+    public void SetTexture(PlanetSwitcher.TexturePack pack) {
+        ship.sprite = pack.Ship[PlanetSwitcher.GetPlayerTintIndex(photonView.ViewID)].src;
         ship.SetNativeSize();
     }
 
@@ -144,7 +144,7 @@ public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
                 foreach(var i in networkIgnore) if(i != null) DestroyImmediate(i);
             }
 
-            playerColor = TextureSwitcher.GetPlayerTint(photonView.ViewID);
+            playerColor = PlanetSwitcher.GetPlayerTint(photonView.ViewID);
             playerNumber = photonView.ViewID;
             if(playerLabel != null) playerLabel.GetComponent<Text>().color = playerColor;
             ForceColor(playerColor);
@@ -159,11 +159,11 @@ public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
     #endregion
 
     public void PositionToPlanet() {
-        if(planet != null) transform.position = photonView.transform.position = planet.transform.position;
+        if(planet != null) transform.position = photonView.transform.position = new Vector3(planet.transform.position.x, planet.transform.position.y, -10);
     }
     public void LerpToPlanet() {
         if(planet == null) return;
-        transform.position = photonView.transform.position = Vector3.Lerp(transform.position, planet.transform.position, Time.deltaTime);
+        transform.position = photonView.transform.position = Vector3.Lerp(transform.position, new Vector3(planet.transform.position.x, planet.transform.position.y, -10), Time.deltaTime);
     }
 
     public bool CanHold() {
@@ -201,7 +201,7 @@ public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
         var col = new Color(r, g, b);
         playerColor = col;
         if(planet != null) planet.AssignPlayer(this);
-        SetTexture(TextureSwitcher.GetCurrentTexturePack());
+        SetTexture(PlanetSwitcher.GetCurrentTexturePack());
         var settings = exhaust.main;
         settings.startColor = new ParticleSystem.MinMaxGradient(col);
     }

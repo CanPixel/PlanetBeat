@@ -7,7 +7,7 @@ public class BlackHoleTextures : MonoBehaviour {
     	public Image src, glow;
 
 		void Start() {
-			var pack = TextureSwitcher.GetCurrentTexturePack().blackHole;
+			var pack = PlanetSwitcher.GetCurrentTexturePack().blackHole;
 			src.sprite = pack.src;
 			glow.sprite = pack.glow;
 			UpdateSize();

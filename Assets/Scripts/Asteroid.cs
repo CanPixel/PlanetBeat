@@ -90,7 +90,7 @@ public class Asteroid : PickupableObject {
         asteroidColl = GetComponent<Collider2D>();
         playerTagsManager = GetComponent<PlayerTagsManager>();
         rb.drag = defaultRbDrag - .15f;
-        SetTexture(TextureSwitcher.GetCurrentTexturePack());
+        SetTexture(PlanetSwitcher.GetCurrentTexturePack());
         rb.AddForce(transform.up * Thrust);
         LinksOfRechts = Random.Range(0, 2);
 
@@ -316,7 +316,7 @@ public class Asteroid : PickupableObject {
         }     
     }
 
-    public void SetTexture(TextureSwitcher.TexturePack elm) {
+    public void SetTexture(PlanetSwitcher.TexturePack elm) {
         src.sprite = elm.asteroid.src;
         if(elm.asteroid.glow == null) {
             glow.enabled = false;

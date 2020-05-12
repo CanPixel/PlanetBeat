@@ -16,7 +16,7 @@ public class Background : MonoBehaviour {
 
     void Start() {
         src = GetComponent<Image>();
-        if(!parallax) SetTexture(TextureSwitcher.GetCurrentTexturePack());
+        if(!parallax) SetTexture(PlanetSwitcher.GetCurrentTexturePack());
     
         var playerplanets = transform.GetComponentsInChildren<PlayerPlanets>();
         foreach(var i in playerplanets) {
@@ -33,7 +33,7 @@ public class Background : MonoBehaviour {
     }
 
 
-    public void SetTexture(TextureSwitcher.TexturePack elm) {
+    public void SetTexture(PlanetSwitcher.TexturePack elm) {
         if(src == null) src = GetComponent<Image>();
         if(src == null) return;
         src.sprite = elm.Background.src;
