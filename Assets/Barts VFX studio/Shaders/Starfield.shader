@@ -92,7 +92,7 @@
 				//from.xy*=rot2;
 
 				//volumetric rendering
-				fixed s = 0.1,fade = 1.;
+				fixed s = 0.6,fade = 1.;
 				fixed3 v = fixed3(0.,0.,0.);
 				for (int r = 0; r < _Steps; r++)
 				{

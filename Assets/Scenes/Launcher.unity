@@ -3951,6 +3951,7 @@ MonoBehaviour:
   mesh: {fileID: 0}
   render: {fileID: 0}
   planetName: 
+  planetColor: {r: 0, g: 0, b: 0, a: 0}
   lightStage: 0
   randomGen: 1
 --- !u!114 &533948573622426304
@@ -4156,6 +4157,7 @@ MonoBehaviour:
   mesh: {fileID: 0}
   render: {fileID: 0}
   planetName: 
+  planetColor: {r: 0, g: 0, b: 0, a: 0}
   lightStage: 0
   randomGen: 1
 --- !u!114 &533948573819120699
@@ -4677,6 +4679,7 @@ MonoBehaviour:
   mesh: {fileID: 0}
   render: {fileID: 0}
   planetName: 
+  planetColor: {r: 0, g: 0, b: 0, a: 0}
   lightStage: 0
   randomGen: 1
 --- !u!114 &533948574498797984
@@ -4694,6 +4697,7 @@ MonoBehaviour:
   mesh: {fileID: 0}
   render: {fileID: 0}
   planetName: 
+  planetColor: {r: 0, g: 0, b: 0, a: 0}
   lightStage: 0
   randomGen: 1
 --- !u!114 &533948574498797986

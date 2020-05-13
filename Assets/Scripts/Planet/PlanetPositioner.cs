@@ -15,8 +15,10 @@ public class PlanetPositioner : MonoBehaviourPun {
 
     private float move = 0;
     private float planetAmount = -1, oldPlanetAmount;
-
     private float reformDelay = 0;
+
+    protected List<Vector2> planetPos = new List<Vector2>();
+    protected List<float> planetAngle = new List<float>();
 
     void OnValidate() {
         if(orbitDistance < 1) orbitDistance = 1;
@@ -42,6 +44,13 @@ public class PlanetPositioner : MonoBehaviourPun {
 
     protected void PositionPlanets() {
         planets = GetPlanets();
+      /*   if(planetPos.Count <= 0) {
+            for(int i = 0; i < planets.Length; i++) {
+                planetPos.Add(planets[i].transform.position);
+                planetAngle.Add(i);
+            }
+        }*/
+
         if(planetAmount < 0) planetAmount = oldPlanetAmount = planets.Length;
         if(oldPlanetAmount != planets.Length) {
             reformDelay = 0.05f;
@@ -49,12 +58,26 @@ public class PlanetPositioner : MonoBehaviourPun {
             oldPlanetAmount = planets.Length;
         }
         planetAmount = Mathf.Lerp(planetAmount, planets.Length, Time.deltaTime * planetReformSpeed);
+        
         for(int i = 0; i < planets.Length; i++) planets[i].transform.position = GetCircle(orbitDistance, i + move, planetAmount);
+           
+           // float posX1, posY1;
+           // posX1 = Mathf.Cos (Time.time * i) * orbitDistance;
+           // posY1 = Mathf.Sin (Time.time * i) * orbitDistance / 2;
+
+            //var planetPosition = new Vector3(posX1, posY1);
+            //planetPos[i] = planetPosition;
+        //}
+
+//        for(int i = 0; i < planets.Length; i++) {
+  //          planetAngle[i] = planetAngle[i] + Time.deltaTime * (turnSpeed);
+    //        if(planetAngle[i] >= 360f) planetAngle[i] = 0;
+      //  }
 
         //if(PhotonNetwork.IsMasterClient) photonView.RPC("SynchPositions", RpcTarget.All, move);
     }
 
-    private Vector3 GetCircle(float radius, float angle, float amountOfPlanets) {
+     private Vector3 GetCircle(float radius, float angle, float amountOfPlanets) {
         var center = Vector3.zero;
         var ang = angle * (360f / amountOfPlanets);
         Vector3 pos;

@@ -34,7 +34,7 @@ public class EliminationTimer : MonoBehaviourPun {
             break;
         } 
 
-        if(!PhotonNetwork.IsMasterClient || !GameManager.GAME_STARTED || !everyoneHasWealth) return;
+        if((!PhotonNetwork.IsMasterClient || !GameManager.GAME_STARTED || !everyoneHasWealth) && !TIMER_START) return;
         TIMER_START = true;
 
         photonView.RPC("SynchTimer", RpcTarget.All, (int)timeUntillElimination);
@@ -57,6 +57,7 @@ public class EliminationTimer : MonoBehaviourPun {
 
     [PunRPC]
     public void SynchTimer(int time) {
+        eliminationCounter.enabled = !phase.IsEliminating();
         TIMER_START = true;
         eliminationCounter.text = "0:" + ((time < 10)? "0" : "") + time.ToString();
     }

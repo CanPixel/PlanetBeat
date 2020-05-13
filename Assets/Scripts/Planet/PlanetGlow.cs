@@ -11,6 +11,7 @@ public class PlanetGlow : MonoBehaviour {
     public MeshFilter mesh;
     public MeshRenderer render;
     public string planetName;
+    public Color planetColor;
 
     public int lightStage = 0;
     public bool randomGen = false;
@@ -36,7 +37,7 @@ public class PlanetGlow : MonoBehaviour {
     }
 
     void OnEnable() {
-        if(randomGen || PhotonNetwork.IsMasterClient) SetPlanet(PlanetSwitcher.GetRandomPlanet());
+        if(randomGen || PhotonNetwork.IsMasterClient) ;//SetPlanet(PlanetSwitcher.GetRandomPlanet());
     }
 
     public void Flicker() {
@@ -45,6 +46,7 @@ public class PlanetGlow : MonoBehaviour {
     }
 
     public void SetPlanet(PlanetSwitcher.PlanetElement element) {
+        return;
         var newModel = element.model;
         var newRender = element.lightStages[lightStage];
         var ringModel = element.ring;

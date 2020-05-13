@@ -84,9 +84,9 @@ Material:
     - _Smoothness: 0
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
-    - _Speed: 0.01
+    - _Speed: 0
     - _SrcBlend: 1
-    - _StepSize: 0.1
+    - _StepSize: 0.08
     - _Steps: 20
     - _Surface: 0
     - _Tile: 0.85

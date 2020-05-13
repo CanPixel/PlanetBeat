@@ -20,9 +20,9 @@ public class PlanetSwitcher : MonoBehaviour {
         return fin;
     }
 
-    public static PlanetElement GetRandomPlanet() {
-        return instance.texturePack.planets[Random.Range(0, instance.typeOfPlanets)];
-    }
+    //public static PlanetElement GetRandomPlanet() {
+     //   return instance.texturePack.planets[Random.Range(0, instance.typeOfPlanets)];
+   // }
 
     [System.Serializable]
     public class TexturePack {
@@ -112,8 +112,8 @@ public class PlanetSwitcher : MonoBehaviour {
         if(sunGlowReference != null) sunGlowReference.sprite = texturePack.blackHole.glow;
         if(sunReference != null) sunReference.sprite = texturePack.blackHole.src;
 
-        var bgs = backgroundReference.GetComponent<Background>();
-        bgs.SetTexture(texturePack);
+     //   var bgs = backgroundReference.GetComponent<Background>();
+      //  bgs.SetTexture(texturePack);
 
         if(sun != null) sun.UpdateSize();
 

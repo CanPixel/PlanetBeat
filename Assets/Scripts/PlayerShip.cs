@@ -107,11 +107,8 @@ public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
 
     #region IPunObservable implementation
         public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
-            if(stream.IsWriting) {
-                stream.SendNext(respawnDelay);
-            } else {
-                respawnDelay = (float)stream.ReceiveNext();
-            }
+            if(stream.IsWriting) stream.SendNext(respawnDelay);
+            else respawnDelay = (float)stream.ReceiveNext();
         }
 
         public override void OnEnable() {
@@ -140,7 +137,6 @@ public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
                         GameManager.playerLabels.Add(replacementName, playerNameTag);
                     }
                 }*/
-
                 foreach(var i in networkIgnore) if(i != null) DestroyImmediate(i);
             }
 
