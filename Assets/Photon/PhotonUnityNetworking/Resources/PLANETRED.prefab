@@ -388,6 +388,7 @@ MonoBehaviour:
   mesh: {fileID: 5938187727379157761}
   render: {fileID: 95744570482962424}
   planetName: 
+  planetColor: {r: 0.6431373, g: 0.21568628, b: 0.21568628, a: 1}
   lightStage: 0
   randomGen: 0
 --- !u!114 &5336174367327457942
@@ -496,7 +497,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5336174367327457933}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 129877f60eb75d04c9394c38ebf5b899, type: 3}
   m_Name: 
@@ -781,7 +782,7 @@ MonoBehaviour:
   gravityRing: {fileID: 5336174368840663168}
   planet: {fileID: 5336174367327457939}
   orbitTrailOffset: 750
-  planetForcePlayer: 1.4
+  planetForcePlayer: 1.5
   planetForceResource: 1.6
   planetForcePowerup: 0.9
   Mass: 0.8

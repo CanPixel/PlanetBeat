@@ -21,7 +21,7 @@ public class PlayerHighlighter : MonoBehaviour {
         text.color = new Color(1, 1, 1, 1);
 
         string hookString = "Space to shoot grapple";
-        text.text = "THIS IS YOU! \n \n" + "<size=110>< and > to steer\n ^ to thrust \n" + "F to throw \n"+hookString+"</size>";
+        text.text = "THIS IS YOU! \n \n" + "<size=110>< and > to steer\n ^ to thrust \n" + "F to throw \n"+hookString+"\n L Shift to Boost</size>";
     }
 
     void Update() {

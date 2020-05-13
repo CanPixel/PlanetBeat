@@ -22,6 +22,7 @@ public class Asteroid : PickupableObject {
     [Header("VALUE & WORTH")]
     public Vector2Int baseValue = new Vector2Int(4, 6);
     public Vector2 increaseValueDelay = new Vector2(2, 3);
+    public int maxValue = 20;
     private float currentIncreaseDelay = 4;
     public Vector2Int increaseRate = new Vector2Int(3, 5);
     private int currentIncrease;
@@ -227,7 +228,7 @@ public class Asteroid : PickupableObject {
     [PunRPC]
     public void ExplodeAsteroid(int viewID) {
         if(photonView.ViewID == viewID) {
-            Camera.main.GetComponent<ScreenShake>().Turn(1.5f);
+            Camera.main.GetComponent<ScreenShake>().Turn(0.8f);
             AudioManager.PLAY_SOUND("Explode", 1f, Random.Range(0.95f, 1.05f));
             Instantiate(explodeParticles, transform.position, Quaternion.identity);
             PhotonNetwork.InstantiateSceneObject("Shockwave", transform.position, Quaternion.identity);
@@ -244,12 +245,14 @@ public class Asteroid : PickupableObject {
 
     [PunRPC]
     public void SetValue(float value, int increase, float delay) {
+        if(this.value == maxValue) return;
         this.value = value;
         increasePopupTxt.text = "+" + increase.ToString() + "!";
         currentIncrease = increase;
         increasePopupTxt.transform.localScale = Vector3.one * increasePopupBaseSize * 1.5f;
         increasePopupHideTimer = 0;
         currentIncreaseDelay = delay;
+        if(this.value > maxValue) this.value = maxValue;
     }
 
     public void SetColor(float r, float g, float b) {

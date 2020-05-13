@@ -8,10 +8,17 @@ public class PlanetSwitcher : MonoBehaviour {
 
     [HideInInspector] public BlackHoleTextures sun;
 
-    private Color[] playerColors;
-    public static Color GetPlayerTint(int i) {
-        return instance.playerColors[GetPlayerTintIndex(i)];
-    }
+    //private Color[] playerColors;
+    //public static Color GetPlayerTint(int i) {
+    //    return instance.playerColors[GetPlayerTintIndex(i)];
+   // }
+
+   private Dictionary<Color, Sprite> colorPlayerTexture = new Dictionary<Color, Sprite>();
+
+   public static Sprite GetPlayerTexture(Color col) {
+       if(instance == null || !instance.colorPlayerTexture.ContainsKey(col)) return null;
+       return instance.colorPlayerTexture[col];
+   }
 
     public static int GetPlayerTintIndex(int viewID) {
         if(instance == null) instance = GameObject.FindGameObjectWithTag("TEXTURESWITCHER").GetComponent<PlanetSwitcher>();
@@ -44,7 +51,7 @@ public class PlanetSwitcher : MonoBehaviour {
 
         [Range(0, 5)]
         public float scale = 1;
-        public Color tint = Color.white;
+        //public Color tint = Color.white;
     }
 
     [System.Serializable]
@@ -61,7 +68,7 @@ public class PlanetSwitcher : MonoBehaviour {
     private GameObject backgroundReference;
     private PlanetGlow[] planetsReference;
     [Range(1, 10)]
-    public int typeOfPlanets = 4;
+    public int typeOfPlanets = 6;
 
     private static PlanetSwitcher instance;
     public static TexturePack GetCurrentTexturePack() {
@@ -81,7 +88,7 @@ public class PlanetSwitcher : MonoBehaviour {
 
     void OnEnable() {
         if(instance == null) instance = this;
-        playerColors = new Color[typeOfPlanets];
+//        playerColors = new Color[typeOfPlanets];
     }
 
     public static void ForceUpdateTextures() {
@@ -93,6 +100,8 @@ public class PlanetSwitcher : MonoBehaviour {
     }
 
     public void UpdateTexturePack() {
+        colorPlayerTexture.Clear();
+
       //  pack = change;
         if(planetsReference == null) planetsReference = GameObject.FindGameObjectWithTag("PLANETS").GetComponentsInChildren<PlanetGlow>();
         if(asteroidReference == null) asteroidReference = GameObject.FindGameObjectWithTag("ASTEROIDBELT");
@@ -122,7 +131,9 @@ public class PlanetSwitcher : MonoBehaviour {
             foreach(var i in asts) i.SetTexture(texturePack);
         }
 
-        if(playerColors == null) playerColors = new Color[typeOfPlanets];
-        for(int i = 0; i < GetCurrentTexturePack().planets.Length; i++) playerColors[i] = GetCurrentTexturePack().planets[i].tint;
+        for(int i = 0; i < texturePack.Ship.Length; i++) colorPlayerTexture.Add(texturePack.Ship[i].tint, texturePack.Ship[i].src);
+
+        //if(playerColors == null) playerColors = new Color[typeOfPlanets];
+        //for(int i = 0; i < GetCurrentTexturePack().planets.Length; i++) playerColors[i] = GetCurrentTexturePack().planets[i].tint;
     }
 }

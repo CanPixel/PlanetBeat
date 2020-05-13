@@ -114,13 +114,13 @@ public class PlayerPlanets : MonoBehaviourPun {
         var pl = PhotonNetwork.GetPhotonView(playerNumber);
         if(pl != null) player = pl.GetComponent<PlayerShip>();
         if(player == null) return;
-        //planetGlow.SetPlanet(PlanetSwitcher.GetCurrentTexturePack().planets[PlanetSwitcher.GetPlayerTintIndex(playerNumbe)]);
+        planetGlow.SetPlanet(PlanetSwitcher.GetCurrentTexturePack().planets[PlanetSwitcher.GetPlayerTintIndex(playerNumbe)]);
         var col = new Color(r, g, b);
         player.playerColor = col;
-        //orbitColor = player.playerColor;
-        //scoreText.color = player.playerColor;
+        orbitColor = player.playerColor;
+        scoreText.color = player.playerColor;
         scoreText.enabled = true;
-        //orbitTrail.material.color = orbitColor;
+        orbitTrail.material.color = orbitColor;
         currentScore = minScore; 
         player.SetHomePlanet(gameObject);
     }

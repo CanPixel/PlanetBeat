@@ -177,7 +177,7 @@ public class GameManager : MonoBehaviourPunCallbacks {
       if(photon == null) return;
       var pl = photon.GetComponent<PlayerShip>();
       if(pl == null) return;
-      pl.playerColor = PlanetSwitcher.GetPlayerTint(ID);
+//      pl.playerColor = PlanetSwitcher.GetPlayerTint(ID);
       var col = pl.playerColor;
       if(instance != null) instance.photonView.RPC("AssignMasterPlanet", RpcTarget.AllViaServer, ID, col.r, col.g, col.b);
    }
@@ -209,7 +209,6 @@ public class GameManager : MonoBehaviourPunCallbacks {
          var playerShip = player.GetComponent<PlayerShip>();
          LOCAL_PLAYER = playerShip;
          var playerName = Instantiate(PlayerName, player.transform.position, Quaternion.identity);
-
          var pN = playerName.GetComponent<PlayerName>();
          pN.SetHost(player, name);
          playerShip.playerName = pN;

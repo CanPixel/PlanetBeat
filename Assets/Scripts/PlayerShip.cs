@@ -92,6 +92,9 @@ public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
     }
     public void SetHomePlanet(GameObject planet) {
         this.planet = planet.GetComponent<PlayerPlanets>();
+        playerColor = planet.GetComponent<PlanetGlow>().planetColor;
+        if(playerLabel != null) playerLabel.GetComponent<Text>().color = playerColor;
+        ForceColor(playerColor);
     }
 
     [PunRPC]
@@ -100,9 +103,14 @@ public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
         planet = null;
     }
 
-    public void SetTexture(PlanetSwitcher.TexturePack pack) {
-        ship.sprite = pack.Ship[PlanetSwitcher.GetPlayerTintIndex(photonView.ViewID)].src;
-        ship.SetNativeSize();
+    //private void SetTexture(PlanetSwitcher.TexturePack pack) {
+    //    ship.sprite = pack.Ship[PlanetSwitcher.GetPlayerTintIndex(photonView.ViewID)].src;
+    //    ship.SetNativeSize();
+    // }
+
+    public void SetTextureByPlanet(Color col) {
+        ship.sprite = PlanetSwitcher.GetPlayerTexture(col);
+        if(playerLabel != null) playerLabel.GetComponent<Text>().color = playerColor;
     }
 
     #region IPunObservable implementation
@@ -140,10 +148,7 @@ public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
                 foreach(var i in networkIgnore) if(i != null) DestroyImmediate(i);
             }
 
-            playerColor = PlanetSwitcher.GetPlayerTint(photonView.ViewID);
             playerNumber = photonView.ViewID;
-            if(playerLabel != null) playerLabel.GetComponent<Text>().color = playerColor;
-            ForceColor(playerColor);
             GameManager.ClaimPlanet(this);
         }
 
@@ -167,6 +172,17 @@ public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
     }
 
     public void Destroy() {
+        if(trailingObjects.Count > 0) {
+            var asteroid = trailingObjects[0];
+            trailingObjects.RemoveAt(0);
+            if(asteroid.rb != null) {
+                asteroid.rb.constraints = RigidbodyConstraints2D.None;
+                asteroid.rb.velocity = rb.velocity / throwingReduction; 
+            }
+            SetCollision(asteroid.GetCollider2D(), false);
+            asteroid.transform.TransformDirection(new Vector2(transform.forward.x * asteroid.transform.forward.x, transform.forward.y * asteroid.transform.forward.y));
+            asteroid.photonView.RPC("ReleaseAsteroid", RpcTarget.All, true, asteroid.photonView.ViewID); 
+        }
         Destroy(ship);
         Destroy(rb);
         foreach(var i in colliders) Destroy(i);
@@ -197,7 +213,8 @@ public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
         var col = new Color(r, g, b);
         playerColor = col;
         if(planet != null) planet.AssignPlayer(this);
-        SetTexture(PlanetSwitcher.GetCurrentTexturePack());
+        //SetTexture(PlanetSwitcher.GetCurrentTexturePack());
+        SetTextureByPlanet(playerColor);
         var settings = exhaust.main;
         settings.startColor = new ParticleSystem.MinMaxGradient(col);
     }
@@ -367,13 +384,13 @@ public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
         }
     }
 
-    void OnTriggerStay2D(Collider2D collision) {
+    /* void OnTriggerStay2D(Collider2D collision) {
         if(collision.gameObject.tag == "SPEEDSHARD") {
             maxVelocity = boostVelocity;
             GameManager.DESTROY_SERVER_OBJECT(collision.gameObject);
             Destroy(collision.gameObject);
         }
-    }
+    }*/
 
     public bool ReleaseAsteroidKey() {
         return Input.GetKeyDown(KeyCode.F) | Input.GetKeyDown(KeyCode.E) | Input.GetKeyDown(KeyCode.R) | Input.GetKeyDown(KeyCode.C);

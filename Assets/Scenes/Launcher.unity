@@ -719,7 +719,6 @@ MonoBehaviour:
       - {fileID: 2100000, guid: fdf48b9de5e371849876fd591fde406e, type: 2}
       - {fileID: 2100000, guid: 94e69cafade990a42a21d7ecabc37a2b, type: 2}
       scale: 1
-      tint: {r: 0.6431373, g: 0.21568628, b: 0.21568628, a: 1}
     - name: BLUE
       model: {fileID: 2540817853737639666, guid: 325be4b5d315141489361de8b020c504,
         type: 3}
@@ -732,7 +731,6 @@ MonoBehaviour:
       - {fileID: 2100000, guid: 1dd6469a643c1ca44b375a6781f05de3, type: 2}
       - {fileID: 2100000, guid: 3f27b7c84449bc549a7c284f083c0272, type: 2}
       scale: 1
-      tint: {r: 0.29411766, g: 0.25882354, b: 0.7176471, a: 1}
     - name: YELLOW
       model: {fileID: -6976191071164304731, guid: ed43f7ce223801d4f94ce97b976824c3,
         type: 3}
@@ -745,7 +743,6 @@ MonoBehaviour:
       - {fileID: 2100000, guid: e4d6e8a0f70ea504eafadfef722b70e5, type: 2}
       - {fileID: 2100000, guid: 72bee0b8a266ba340986f6e92368dfd5, type: 2}
       scale: 1
-      tint: {r: 0.81960785, g: 0.654902, b: 0.21960784, a: 1}
     - name: GREEN
       model: {fileID: 8850116265518966187, guid: 8cc4f707c54ff2f46af246f1030ae35f,
         type: 3}
@@ -758,7 +755,6 @@ MonoBehaviour:
       - {fileID: 2100000, guid: a45bfb0c23e05124d819a48ad2985964, type: 2}
       - {fileID: 2100000, guid: 985e12ab127ae444c88653f43b1c6f27, type: 2}
       scale: 1
-      tint: {r: 0.25882354, g: 0.69803923, b: 0.27450982, a: 1}
     - name: PINK
       model: {fileID: 4785775068503242349, guid: cc7581bde0d6a3049b2532692a501f4c,
         type: 3}
@@ -771,7 +767,6 @@ MonoBehaviour:
       - {fileID: 2100000, guid: bac609eaf0e2222458d6a58a086da757, type: 2}
       - {fileID: 2100000, guid: 38f0f2100cf1a024589e9f25a46543ad, type: 2}
       scale: 1
-      tint: {r: 0.7529412, g: 0.21176471, b: 0.53333336, a: 1}
     - name: CYAN
       model: {fileID: 5161748241955256188, guid: 8126b528fe5428343b49e62a5a8a3c2d,
         type: 3}
@@ -785,7 +780,6 @@ MonoBehaviour:
       - {fileID: 2100000, guid: 8b561803b444cf1408fa4bd3accbbe52, type: 2}
       - {fileID: 2100000, guid: b7dd0cb51ac83364ea21d2fe87c72dfc, type: 2}
       scale: 1
-      tint: {r: 0.16862746, g: 0.90588236, b: 0.9137255, a: 1}
     asteroid:
       src: {fileID: 21300000, guid: 6783bd6047acf6a44b9f1f9ff703efd2, type: 3}
       glow: {fileID: 21300000, guid: c30589dd8c19386408c8c5369ee81e8e, type: 3}
@@ -5733,7 +5727,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5336174367182160007}
-  m_LocalRotation: {x: 0, y: 0, z: 0.29638234, w: -0.9550694}
+  m_LocalRotation: {x: 0, y: 0, z: 0.63283414, w: 0.7742874}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -5759,11 +5753,11 @@ MonoBehaviour:
   orbitTrailOffset: 750
   planetForcePlayer: 1.4
   planetForceResource: 1.6
-  planetForcePowerup: 0.9
+  planetForcePowerup: 1
   Mass: 0.8
   PlayerExitVelocityReduction: 1
   ResourceExitVelocityReduction: 1
-  PowerupExitVelocityReduction: 1
+  PowerupExitVelocityReduction: 2
 --- !u!1 &5336174367182160007
 GameObject:
   m_ObjectHideFlags: 0
@@ -6035,7 +6029,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5336174367390277197}
-  m_LocalRotation: {x: 0, y: 0, z: 0.29638234, w: -0.9550694}
+  m_LocalRotation: {x: 0, y: 0, z: 0.63283414, w: 0.7742874}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -6061,11 +6055,11 @@ MonoBehaviour:
   orbitTrailOffset: 750
   planetForcePlayer: 1.4
   planetForceResource: 1.6
-  planetForcePowerup: 0.9
+  planetForcePowerup: 1
   Mass: 0.8
   PlayerExitVelocityReduction: 1
   ResourceExitVelocityReduction: 1
-  PowerupExitVelocityReduction: 1
+  PowerupExitVelocityReduction: 2
 --- !u!1 &5336174367655795948
 GameObject:
   m_ObjectHideFlags: 0
@@ -6285,7 +6279,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5336174368176978187}
-  m_LocalRotation: {x: 0, y: 0, z: 0.29638234, w: -0.9550694}
+  m_LocalRotation: {x: 0, y: 0, z: 0.63283414, w: 0.7742874}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -6311,11 +6305,11 @@ MonoBehaviour:
   orbitTrailOffset: 750
   planetForcePlayer: 1.4
   planetForceResource: 1.6
-  planetForcePowerup: 0.9
+  planetForcePowerup: 1
   Mass: 0.8
   PlayerExitVelocityReduction: 1
   ResourceExitVelocityReduction: 1
-  PowerupExitVelocityReduction: 1
+  PowerupExitVelocityReduction: 2
 --- !u!1 &5336174368176978187
 GameObject:
   m_ObjectHideFlags: 0
@@ -6461,11 +6455,11 @@ MonoBehaviour:
   orbitTrailOffset: 750
   planetForcePlayer: 1.4
   planetForceResource: 1.6
-  planetForcePowerup: 0.9
+  planetForcePowerup: 1
   Mass: 0.8
   PlayerExitVelocityReduction: 1
   ResourceExitVelocityReduction: 1
-  PowerupExitVelocityReduction: 1
+  PowerupExitVelocityReduction: 2
 --- !u!4 &5336174368862905789
 Transform:
   m_ObjectHideFlags: 0
@@ -6473,7 +6467,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5336174368862905790}
-  m_LocalRotation: {x: 0, y: 0, z: 0.29638234, w: -0.9550694}
+  m_LocalRotation: {x: 0, y: 0, z: 0.63283414, w: 0.7742874}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:

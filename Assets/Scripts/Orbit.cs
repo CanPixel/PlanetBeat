@@ -37,8 +37,7 @@ public class Orbit : MonoBehaviour {
     }
 
     void FixedUpdate() {
-        //transform.localRotation = Quaternion.Euler(0, 0, transform.localEulerAngles.z + 7);
-        transform.Rotate(0, 0, 300f * Time.deltaTime);
+        transform.rotation = Quaternion.Euler(0, 0, 300f * Time.time);
     }
 
     void OnTriggerStay2D(Collider2D col) {

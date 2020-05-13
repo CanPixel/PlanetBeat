@@ -12,6 +12,8 @@ public class EliminationTimer : MonoBehaviourPun {
     private float elimTime;
     public UnityEvent eliminationEvent;
 
+    public PlanetRotator backgroundRotate;
+
     public static bool TIMER_START = false;
 
     private int elimCount = 0;
@@ -22,6 +24,7 @@ public class EliminationTimer : MonoBehaviourPun {
     private PlayerPlanets[] planets;
 
     void Start() {
+        backgroundRotate.enabled = false;
         phase = GetComponent<EliminationPhase>();
         elimTime = timeUntillElimination;
         planets = GameObject.FindGameObjectWithTag("PLANETS").GetComponentsInChildren<PlayerPlanets>();
@@ -35,7 +38,7 @@ public class EliminationTimer : MonoBehaviourPun {
         } 
 
         if((!PhotonNetwork.IsMasterClient || !GameManager.GAME_STARTED || !everyoneHasWealth) && !TIMER_START) return;
-        TIMER_START = true;
+        TIMER_START = backgroundRotate.enabled = true;
 
         photonView.RPC("SynchTimer", RpcTarget.All, (int)timeUntillElimination);
 
