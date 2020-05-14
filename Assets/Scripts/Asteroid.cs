@@ -9,6 +9,8 @@ public class Asteroid : PickupableObject {
     public Image src, glow;
     public Text scoreText, increasePopupTxt;
 
+    public Animator animator;
+
     public bool canScoreWithoutDropping = false;
 
   //  [HideInInspector] public bool held = false;
@@ -104,6 +106,7 @@ public class Asteroid : PickupableObject {
 
     void OnEnable() {
         transform.SetParent(GameObject.FindGameObjectWithTag("ASTEROIDBELT").transform, true);
+        animator.SetBool("res-low", true);
 
         baseScale = transform.localScale;
         if(PhotonNetwork.IsMasterClient) {
@@ -173,6 +176,7 @@ public class Asteroid : PickupableObject {
         increasePopupHideTimer += Time.deltaTime;
         if(spawnTimer < activateAfterSpawning) return;
 
+        //ANIMATION -- MEDIUM VALUE && HIGH VALUE 
         //Explosion phase
         if(spawnTimer > stablePhaseTime) {
             scoreText.CrossFadeColor(UnstableTextColor, 0.5f, false, false);
@@ -180,7 +184,7 @@ public class Asteroid : PickupableObject {
             bombTimer += Time.deltaTime;
             timeBombTick += Time.deltaTime;
             var tickBomb = spawnTimer - stablePhaseTime;
-            src.transform.localPosition = glow.transform.localPosition = scoreText.transform.localPosition = Vector3.Lerp(src.transform.localPosition, new Vector3(Mathf.Sin(Time.time * tickBomb * 4f) * 10f * tickBomb, Mathf.Sin(Time.time * tickBomb * 4f) * 10f * tickBomb, 0), tickBomb * Time.deltaTime * 4f);
+           // src.transform.localPosition = glow.transform.localPosition = scoreText.transform.localPosition = Vector3.Lerp(src.transform.localPosition, new Vector3(Mathf.Sin(Time.time * tickBomb * 4f) * 10f * tickBomb, Mathf.Sin(Time.time * tickBomb * 4f) * 10f * tickBomb, 0), tickBomb * Time.deltaTime * 4f);
 
             glow.fillAmount = Mathf.Sin(Time.time * tickBomb);
             src.color = glow.color = Color.Lerp(src.color, explosionColor, tickBomb * Time.deltaTime);
@@ -191,18 +195,32 @@ public class Asteroid : PickupableObject {
             }
             if(bombTimer > 1f / tickBomb) {
                 explosionExpand = new Vector3(1.2f, 1.2f, 1.2f) * Mathf.Sin(Time.time * tickBomb) / 20f;
-                transform.localScale = Vector3.Lerp(transform.localScale, baseScale + explosionExpand, Time.deltaTime * tickBomb);
+               // transform.localScale = Vector3.Lerp(transform.localScale, baseScale + explosionExpand, Time.deltaTime * tickBomb);
                 distortionFX.SetIntensity(tickBomb / 1000f);
             }
             if(bombTimer > unstablePhaseTime / 2f) distortionFX.gameObject.SetActive(true); 
 
             //Actual explosion
             if(bombTimer > unstablePhaseTime) {
+                animator.SetBool("res-unstable", false);
+                animator.SetBool("res-explode", true);    
+
                 if(!nearExplode) {
                     AudioManager.PLAY_SOUND("sizzle21", 2f, Random.Range(1f, 1.05f));
                     nearExplode = true;
                 }
                 if(bombTimer > unstablePhaseTime + TimeAfterSizzle && !destroy) photonView.RPC("ExplodeAsteroid", RpcTarget.All, photonView.ViewID);
+            } else {
+                animator.SetBool("res-high", false);
+                animator.SetBool("res-unstable", true);
+            }
+        } else {
+            if(value < maxValue / 2f) {
+                animator.SetBool("res-low", false);
+                animator.SetBool("res-med", true);
+            } else {
+                animator.SetBool("res-med", false);
+                animator.SetBool("res-high", true);
             }
         }
 
@@ -216,13 +234,13 @@ public class Asteroid : PickupableObject {
             }
         }
 
-        if(scaleBack) transform.localScale = Vector3.Lerp(transform.localScale, baseScale, Time.deltaTime * 2f);
+        //if(scaleBack) transform.localScale = Vector3.Lerp(transform.localScale, baseScale, Time.deltaTime * 2f);
 
         if(held) ReleaseAsteroid(false, photonView.ViewID);
         else ReleasedTimer();  
 
         float maxScale = 0.8f;
-        transform.localScale = new Vector3(Mathf.Clamp(transform.localScale.x, 0, maxScale), Mathf.Clamp(transform.localScale.y, 0, maxScale), Mathf.Clamp(transform.localScale.z, 0, maxScale));
+        //transform.localScale = new Vector3(Mathf.Clamp(transform.localScale.x, 0, maxScale), Mathf.Clamp(transform.localScale.y, 0, maxScale), Mathf.Clamp(transform.localScale.z, 0, maxScale));
     }
     
     [PunRPC]

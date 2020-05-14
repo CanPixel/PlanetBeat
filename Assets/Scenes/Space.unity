@@ -97,7 +97,7 @@ LightmapSettings:
     m_ShowResolutionOverlay: 1
     m_ExportTrainingData: 0
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 1
+  m_UseShadowmask: 0
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -2286,10 +2286,10 @@ MonoBehaviour:
   asteroid: {fileID: 8069275902880659580, guid: d0585bb223369e6458f8c3db972d5bc8,
     type: 3}
   powerup: {fileID: 8069275902880659580, guid: 7b6b88afab4aba24da93c6831e440dc3, type: 3}
-  asteroidAmount: 2
+  asteroidAmount: 7
   powerupAmount: 1
   blackHole: {fileID: 58724069}
-  objectSpawnDelay: {x: 10, y: 14}
+  objectSpawnDelay: {x: 1, y: 2}
   powerupSpawnDelays: {x: 6, y: 12}
 --- !u!1001 &1177378517
 PrefabInstance:

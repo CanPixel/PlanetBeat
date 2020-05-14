@@ -9,18 +9,24 @@ public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
     public PlayerHighlighter playerHighlighter;
     public HookShot hookShot;
     public ParticleSystem exhaust;
+    public Image fuelBar, fuelFilling;
 
     [HideInInspector] public GameObject playerLabel;
     [HideInInspector] public Collider2D[] colliders;
 
     [Header("BOOST")]
     public float boostDuration = 0.2f;
-    public float boostVelocity2 = 22f;
+    public float boostVelocity = 7.5f, boostVelocity2 = 23;
     public float boostCooldownDuration = 3;
     private float boostCooldownTimer = 0f, boostTimer = 0f;
-    public bool canBoost = true;
+    private bool canBoost = true;
+    private float fuelMeter = 0.8f;
+    public float maxFuel = 0.8f, minFuel = 0f;
+    public bool boost1 = true, boost2 = false;
     private bool isBoosting;
     private bool onCooldown;
+    private float waitForCooldown;
+    public float cooldownPenalty; 
 
     [Header("PLAYER VALUES")]
     public Image ship;
@@ -37,7 +43,6 @@ public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
         public float acceleration = 0.1f;
 
         public float defaultVelocity = 4.0f;
-        public float boostVelocity = 13.0f;
 
         [Range(1, 20)]
         public float turningSpeed = 2.5f;
@@ -284,7 +289,8 @@ public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
     }
 
     void Update() {
-        BoostManager();
+        if(boost1) BoostManager();
+        else if(boost2) BoostManager2();
 
         if(!GameManager.GAME_STARTED) PositionToPlanet();
         exhaustSound.volume = Mathf.Lerp(exhaustSound.volume, IsThrust() ? 0.05f : 0, Time.deltaTime * 10f);
@@ -348,37 +354,98 @@ public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
         }
     }
 
-    protected void BoostManager() {
-        if (Input.GetKeyDown(KeyCode.LeftShift)) BoostPlayer();
+    [PunRPC]
+    public void SynchBoost(int viewID) {
+        fuelBar.enabled = fuelFilling.enabled != (photonView.IsMine || viewID == photonView.ViewID); 
+    }
 
-        if (isBoosting) {
+    protected void BoostManager() {
+        photonView.RPC("SynchBoost", RpcTarget.All, photonView.ViewID);
+        fuelFilling.fillAmount = fuelMeter / maxFuel;
+
+        if (Input.GetKey(KeyCode.LeftShift) && canBoost) BoostPlayer(true);
+        else StartCoroutine("BoostRecharge");
+
+        if((Input.GetKeyUp(KeyCode.LeftShift) || fuelMeter < 0) && isBoosting) {
+            if(fuelMeter <= 0) {
+                fuelBar.color = new Color(255, 0, 0);
+                waitForCooldown = cooldownPenalty;
+            }
+            BoostPlayer(false);
+        }
+    }
+
+    private void BoostPlayer(bool boosting) {
+        fuelFilling.fillAmount = fuelMeter / maxFuel;
+        if (boosting) {
+            maxVelocity = boostVelocity;
+            fuelMeter -= Time.deltaTime;
+            isBoosting = true;
+        } else {
+            canBoost = false;
+            maxVelocity = defaultVelocity;
+            StartCoroutine("BoostRecharge");
+        }
+    }
+
+    IEnumerator BoostRecharge() {
+        isBoosting = false;
+        maxVelocity = defaultVelocity;
+
+        if(fuelMeter < maxFuel) {
+            yield return new WaitForSeconds(waitForCooldown);
+
+            fuelBar.color = Color.white;
+            fuelMeter += Time.deltaTime;
+            canBoost = true;
+            waitForCooldown = 1f;
+        } else StopCoroutine("BoostRecharge");
+    }
+
+    protected void BoostManager2()
+    {
+        fuelBar.fillAmount = boostDuration / boostTimer; 
+        if (Input.GetKeyDown(KeyCode.LeftShift)) BoostPlayer2();
+
+        if (isBoosting)
+        {
             boostTimer += Time.deltaTime;
 
-            if (boostTimer >= boostDuration) {
+            if (boostTimer >= boostDuration)
+            {
                 canBoost = false;
-                BoostPlayer();
+                BoostPlayer2();
                 boostTimer = 0f;
                 boostCooldownTimer = 0f;
+                fuelBar.color = Color.red;
                 onCooldown = true;
             }
         }
 
-        if (onCooldown) {
+        if (onCooldown)
+        {
             boostCooldownTimer += Time.deltaTime;
+            fuelBar.color = Color.white; 
 
-            if (boostCooldownTimer >= boostCooldownDuration) {
+            if (boostCooldownTimer >= boostCooldownDuration)
+            {
                 canBoost = true;
                 onCooldown = false;
+                fuelBar.color = playerColor; 
             }
         }
     }
 
-    private void BoostPlayer() {
-        if (canBoost) {
+    private void BoostPlayer2()
+    {
+        if (canBoost)
+        {
             maxVelocity = boostVelocity2;
             isBoosting = true;
             //boostcode
-        } else if (!canBoost) {
+        }
+        else if (!canBoost)
+        {
             isBoosting = false;
             maxVelocity = defaultVelocity;
         }

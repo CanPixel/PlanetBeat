@@ -6,6 +6,8 @@ public class AsteroidNudger : MonoBehaviour {
     public PickupableObject asteroid;
     public float nudgeForce = 2;
 
+    public bool isInfectroid = false;
+
     [HideInInspector] public bool isInOrbit = false;
 
     private Rigidbody2D rb;
@@ -15,14 +17,26 @@ public class AsteroidNudger : MonoBehaviour {
     }
 
     void OnTriggerStay2D(Collider2D col) {
-        if(col.tag == "ORBIT") isInOrbit = true;
+        if(col.tag == "ORBIT") {
+            // var planet = col.transform.parent.GetComponent<PlayerPlanets>();
+            //if(isInfectroid || (!isInfectroid && planet != null && planet.HasPlayer())) isInOrbit = true;
+            isInOrbit = true;
+        }
     }
 
     void OnTriggerEnter2D(Collider2D col) {
-        if(col.tag == "ORBIT") rb.velocity /= nudgeForce;
+        if(col.tag == "ORBIT") {
+            //var planet = col.transform.parent.GetComponent<PlayerPlanets>();
+            //if(isInfectroid || (!isInfectroid && planet != null && planet.HasPlayer())) rb.velocity /= nudgeForce;
+            rb.velocity /= nudgeForce;
+        }
     }
 
     void OnTriggerExit2D(Collider2D col) {
-        if(col.tag == "ORBIT") isInOrbit = false;
+        if(col.tag == "ORBIT") {
+          //  var planet = col.transform.parent.GetComponent<PlayerPlanets>();
+           //  if(isInfectroid || (!isInfectroid && planet != null && planet.HasPlayer())) isInOrbit = false;
+            isInOrbit = false;
+        }
     }
 }
