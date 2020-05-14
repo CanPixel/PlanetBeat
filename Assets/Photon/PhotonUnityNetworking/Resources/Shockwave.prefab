@@ -333,7 +333,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03b2c34f699d61f48b15227d428d4125, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  expandSpeed: 5
+  expandSpeed: 8
   blastRadius: {fileID: 2737845490263930765}
   forExplosion: 1
 --- !u!114 &-2122985349770358416

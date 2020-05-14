@@ -25,7 +25,7 @@ public class PlanetPositioner : MonoBehaviourPun {
         #endif
     }
 
-    void Update() {
+    void FixedUpdate() {
         if(reformDelay > 0) reformDelay -= Time.deltaTime;
         else if(planets != null) {
             for(int i = 0; i < planets.Length; i++) {

@@ -28,7 +28,7 @@ public class GameManager : MonoBehaviourPunCallbacks {
    public static bool GAME_STARTED = false, GAME_WON = false;
    private bool startCountdown = false;
    private float countdownTimer, startupDelayTimer;
-   private int count = 3;
+   public int count = 3;
 
    public static GameManager instance;
    [Space(10)]
@@ -154,7 +154,7 @@ public class GameManager : MonoBehaviourPunCallbacks {
       GAME_WON = false;
 
       startupDelayTimer = 0;
-      count = 3;
+      //count = 6;
       countdownTimer = 0;
       startCountdown = false;
       GAME_STARTED = false;

@@ -63,5 +63,6 @@ MonoBehaviour:
   - SynchBar
   - UnsynchBar
   - SynchPositions
+  - SynchBoost
   DisableAutoOpenWizard: 1
   ShowSettings: 1

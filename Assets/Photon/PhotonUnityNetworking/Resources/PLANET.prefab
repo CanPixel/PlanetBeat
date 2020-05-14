@@ -282,7 +282,6 @@ GameObject:
   - component: {fileID: 5336174367327457942}
   - component: {fileID: 5336174367327457938}
   - component: {fileID: 9025160195861063301}
-  - component: {fileID: 25395895824445274}
   - component: {fileID: 6973405591163161816}
   m_Layer: 5
   m_Name: PLANET
@@ -333,7 +332,7 @@ MonoBehaviour:
   playerNumber: 0
   currentScore: 100
   minScore: 0
-  maxScore: 20000
+  maxScore: 100
   scoreText: {fileID: 5336174368059501565}
   increasePopupTxt: {fileID: 7336624222899132335}
   orbitTrail: {fileID: 5336174368840663174}
@@ -394,7 +393,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5336174367327457933}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 772a455a39b3206489ffbac9b000398f, type: 3}
   m_Name: 
@@ -443,28 +442,13 @@ MonoBehaviour:
   ObservedComponentsFoldoutOpen: 1
   Group: 0
   prefixField: -1
-  Synchronization: 2
+  Synchronization: 0
   OwnershipTransfer: 0
   ObservedComponents:
-  - {fileID: 25395895824445274}
+  - {fileID: 0}
   viewIdField: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
---- !u!114 &25395895824445274
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5336174367327457933}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SynchronizePosition: 1
-  m_SynchronizeRotation: 0
-  m_SynchronizeScale: 0
 --- !u!114 &6973405591163161816
 MonoBehaviour:
   m_ObjectHideFlags: 0

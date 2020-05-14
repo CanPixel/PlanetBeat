@@ -26,6 +26,7 @@ public class Asteroid : PickupableObject {
     public Vector2Int increaseRate = new Vector2Int(3, 5);
     private int currentIncrease;
     private float value, increaseValueTimer;
+    public int maxValue = 20; 
 
     //EXPLOSION
     public GameObject explodeParticles;
@@ -227,7 +228,7 @@ public class Asteroid : PickupableObject {
     [PunRPC]
     public void ExplodeAsteroid(int viewID) {
         if(photonView.ViewID == viewID) {
-            Camera.main.GetComponent<ScreenShake>().Turn(1.5f);
+            Camera.main.GetComponent<ScreenShake>().Turn(.7f);
             AudioManager.PLAY_SOUND("Explode", 1f, Random.Range(0.95f, 1.05f));
             Instantiate(explodeParticles, transform.position, Quaternion.identity);
             PhotonNetwork.InstantiateSceneObject("Shockwave", transform.position, Quaternion.identity);
@@ -244,12 +245,14 @@ public class Asteroid : PickupableObject {
 
     [PunRPC]
     public void SetValue(float value, int increase, float delay) {
+        if (this.value == maxValue) return; 
         this.value = value;
         increasePopupTxt.text = "+" + increase.ToString() + "!";
         currentIncrease = increase;
         increasePopupTxt.transform.localScale = Vector3.one * increasePopupBaseSize * 1.5f;
         increasePopupHideTimer = 0;
         currentIncreaseDelay = delay;
+        if (this.value > maxValue) this.value = maxValue; 
     }
 
     public void SetColor(float r, float g, float b) {
@@ -331,7 +334,7 @@ public class Asteroid : PickupableObject {
     void OrbitAroundPlanet() {
         if(inOrbit) {
             if(playerTagsManager != null && playerTagsManager.tagNum != 0) {
-                if(ownerPlayer.playerNumber == playerTagsManager.tagNum) {
+                if(ownerPlayer.playerNumber == playerPlanets.playerNumber) {
                     inOrbitTimer += Time.deltaTime;
                     rb.drag = inPlayerOrbitRbDrag;
 

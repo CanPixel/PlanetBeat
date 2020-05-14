@@ -15,12 +15,31 @@ public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
 
     [Header("BOOST")]
     public float boostDuration = 0.2f;
-    public float boostVelocity2 = 22f;
+    public float boostVelocity = 22f;
+    public float boostVelocity2 = 22f; 
     public float boostCooldownDuration = 3;
     private float boostCooldownTimer = 0f, boostTimer = 0f;
     public bool canBoost = true;
-    private bool isBoosting;
+    public bool isBoosting;
     private bool onCooldown;
+  
+    
+    public float fuelMeter;
+    public float maxFuel;
+    public float minFuel;
+    public float waitForCooldown;
+    public float cooldownPenalty; 
+
+    public bool hitBottem;
+
+    public Image fuelBar;
+    public Image fuelBarBackground;
+
+    public bool boost1;
+    public bool boost2; 
+
+        
+
 
     [Header("PLAYER VALUES")]
     public Image ship;
@@ -37,7 +56,7 @@ public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
         public float acceleration = 0.1f;
 
         public float defaultVelocity = 4.0f;
-        public float boostVelocity = 13.0f;
+        
 
         [Range(1, 20)]
         public float turningSpeed = 2.5f;
@@ -222,11 +241,18 @@ public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
         baseVelocity = maxVelocity;
         baseStopDrag = stopDrag;
         baseDefaultDrag = defaultDrag;
+
+        fuelBar = GameObject.Find("FuelBar").GetComponent<Image>(); 
+        fuelBarBackground = GameObject.Find("FuelBarBackground").GetComponent<Image>(); 
+      
+
   //      var cont = GameObject.FindGameObjectWithTag("CUSTOM CONTROLLER");
     //    if(cont != null) customController = cont.GetComponent<CustomController>();
       //  if(customController != null && customController.useCustomControls) hookShot.customController = customController;
         maxVelocity = defaultVelocity;
         boostCooldownTimer = boostCooldownDuration;
+
+        fuelBar.color = playerColor; 
     }
 
     void FixedUpdate() {
@@ -271,7 +297,8 @@ public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
     }
 
     void Update() {
-        BoostManager();
+        if(boost1) BoostManager();
+        else if(boost2) BoostManager2(); 
 
         if(!GameManager.GAME_STARTED) PositionToPlanet();
         exhaustSound.volume = Mathf.Lerp(exhaustSound.volume, IsThrust() ? 0.05f : 0, Time.deltaTime * 10f);
@@ -335,41 +362,125 @@ public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
         }
     }
 
-    protected void BoostManager() {
-        if (Input.GetKeyDown(KeyCode.LeftShift)) BoostPlayer();
+    [PunRPC]
+    public void SynchBoost(int viewID)
+    {
+        fuelBar.enabled = fuelBarBackground.enabled != (photonView.IsMine || viewID == photonView.ViewID); 
+    }
+    protected void BoostManager()
+    {
+        photonView.RPC("SynchBoost", RpcTarget.All, photonView.ViewID); 
+        //fuelBar.enabled = fuelBarBackground.enabled = (photonView.IsMine); 
 
-        if (isBoosting) {
+        // fuelBar.transform.localScale = new Vector3(fuelMeter / maxFuel, .15f);    
+        fuelBar.fillAmount = fuelMeter / maxFuel;
+
+
+        if (Input.GetKey(KeyCode.LeftShift) && canBoost) BoostPlayer(true); // Start boost
+        else StartCoroutine("BoostRecharge");
+
+        if ((Input.GetKeyUp(KeyCode.LeftShift) || fuelMeter < 0) && isBoosting)
+        {
+            if (fuelMeter <= 0) //Fuel meter gets completely drained 
+            {
+                fuelBarBackground.GetComponent<Image>().color = new Color(255, 0, 0);
+                waitForCooldown = cooldownPenalty;
+            }
+            BoostPlayer(false);
+        }
+    }
+
+    
+    private void BoostPlayer(bool boosting)
+    {
+        fuelBar.fillAmount = fuelMeter / maxFuel;
+        if (boosting)
+        {
+            maxVelocity = boostVelocity;
+            fuelMeter -= Time.deltaTime; //take fuel away       
+            isBoosting = true;
+
+        }
+        else
+        {
+            canBoost = false;
+            maxVelocity = defaultVelocity;
+            StartCoroutine("BoostRecharge");
+        }
+    }
+
+    IEnumerator BoostRecharge()
+    {
+        isBoosting = false;
+        maxVelocity = defaultVelocity;
+
+        if (fuelMeter < maxFuel)
+        {
+            yield return new WaitForSeconds(waitForCooldown);
+
+            fuelBarBackground.GetComponent<Image>().color = new Color(255, 255, 255);
+            fuelMeter += Time.deltaTime;
+            canBoost = true;
+            waitForCooldown = 1f;
+        }
+        else StopCoroutine("BoostRecharge");
+    }
+
+
+
+    protected void BoostManager2()
+    {
+        //fuelBar.fillAmount = boostDuration / boostTimer; 
+       
+        if (Input.GetKeyDown(KeyCode.LeftShift)) BoostPlayer2();
+
+        if (isBoosting)
+        {
             boostTimer += Time.deltaTime;
 
-            if (boostTimer >= boostDuration) {
+            if (boostTimer >= boostDuration)
+            {
                 canBoost = false;
-                BoostPlayer();
+                BoostPlayer2();
                 boostTimer = 0f;
                 boostCooldownTimer = 0f;
                 onCooldown = true;
             }
         }
 
-        if (onCooldown) {
+        if (onCooldown)
+        {
             boostCooldownTimer += Time.deltaTime;
+            // fuelBar.color = Color.white;
+            var settings = exhaust.main;
+            var switchcol = Color.white; 
+            settings.startColor = new ParticleSystem.MinMaxGradient(switchcol);
 
-            if (boostCooldownTimer >= boostCooldownDuration) {
+            if (boostCooldownTimer >= boostCooldownDuration)
+            {
                 canBoost = true;
                 onCooldown = false;
+                // fuelBar.color = playerColor; 
+                settings.startColor = new ParticleSystem.MinMaxGradient(playerColor);
             }
         }
     }
 
-    private void BoostPlayer() {
-        if (canBoost) {
+    private void BoostPlayer2()
+    {
+        if (canBoost)
+        {
             maxVelocity = boostVelocity2;
             isBoosting = true;
             //boostcode
-        } else if (!canBoost) {
+        }
+        else if (!canBoost)
+        {
             isBoosting = false;
             maxVelocity = defaultVelocity;
         }
     }
+
 
     void OnTriggerStay2D(Collider2D collision) {
         if(collision.gameObject.tag == "SPEEDSHARD") {
@@ -379,7 +490,7 @@ public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
         }
     }
 
-    public bool ReleaseAsteroidKey() {
+public bool ReleaseAsteroidKey() {
         return Input.GetKeyDown(KeyCode.F) | Input.GetKeyDown(KeyCode.E) | Input.GetKeyDown(KeyCode.R) | Input.GetKeyDown(KeyCode.C);
     }
 
@@ -431,13 +542,16 @@ public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
     }
 
     public bool CanCastHook() {
+ 
         return respawnDelay <= 0 && GameManager.GAME_STARTED;
+        
     }
 
     [PunRPC]
     public void CastHook(int viewID) {
         if(!CanCastHook()) return;
         if(photonView.ViewID == viewID) hookShot.CastHook();
+    
     }
 
     #region MOVEMENT_INPUTS

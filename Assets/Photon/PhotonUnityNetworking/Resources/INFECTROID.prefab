@@ -415,9 +415,9 @@ MonoBehaviour:
   giveTag: 0
   inOrbitTimer: 0
   grabDelay: 0
-  infectDelay: 0.75
+  infectDelay: 1
   penalty: 1
-  destroyAfter: 20
+  destroyAfter: 22
   beginThrust: 0.4
   curve: 0
   swirlDuration: 2
@@ -674,4 +674,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   asteroid: {fileID: 145464310536149297}
   nudgeForce: 3
+  isInfectroid: 1
   isInOrbit: 0

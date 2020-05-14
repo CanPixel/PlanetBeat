@@ -456,6 +456,9 @@ GameObject:
   - component: {fileID: 6939874188628489544}
   - component: {fileID: 6494571473289735761}
   - component: {fileID: -3807910649384768265}
+  - component: {fileID: 8910757163778171414}
+  - component: {fileID: -7940139028359559699}
+  - component: {fileID: -6342129432858320425}
   m_Layer: 8
   m_Name: 'ASTEROID '
   m_TagString: Resource
@@ -511,11 +514,12 @@ MonoBehaviour:
   inOrbit: 0
   giveTag: 0
   inOrbitTimer: 0
-  timeToScore: 3
+  timeToScore: 5
   grabDelay: 0
-  baseValue: {x: 4, y: 5}
-  increaseValueDelay: {x: 1, y: 2}
-  increaseRate: {x: 1, y: 2}
+  baseValue: {x: 10, y: 10}
+  increaseValueDelay: {x: 3, y: 3}
+  increaseRate: {x: 2, y: 2}
+  maxValue: 20
   explodeParticles: {fileID: 1067106092621830195, guid: cd0b03d048d9905489b14408260a7a72,
     type: 3}
   explosionColor: {r: 0.5529412, g: 0.20392157, b: 1, a: 1}
@@ -523,8 +527,8 @@ MonoBehaviour:
   StablePhase: {x: 7, y: 10}
   UnstablePhase: {x: 4, y: 6}
   TimeAfterSizzle: 1
-  defaultRbDrag: 0.27
-  inPlayerOrbitRbDrag: 0.6
+  defaultRbDrag: 0.3
+  inPlayerOrbitRbDrag: 3
   maxInOrbitTime: 5
   outOrbitForce: 40
   beginThrust: 0.4
@@ -725,7 +729,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tagNum: 0
   tagTimer: 0
-  tagDuration: 3
+  tagDuration: 5
   runTagTimer: 0
   ogTrailColor: {r: 0.8584906, g: 0.8584906, b: 0.8584906, a: 1}
 --- !u!61 &6494571473289735761
@@ -735,7 +739,7 @@ BoxCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8069275902880659580}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
@@ -752,7 +756,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 500, y: 480}
+  m_Size: {x: 400, y: 400}
   m_EdgeRadius: 0
 --- !u!114 &-3807910649384768265
 MonoBehaviour:
@@ -787,3 +791,51 @@ MonoBehaviour:
     InterpolateOption: 0
     InterpolateMoveTowardsSpeed: 1
     InterpolateLerpSpeed: 0
+--- !u!114 &8910757163778171414
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8069275902880659580}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 396dd5a1d533f2043bbaf678a912ed5d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  asteroid: {fileID: -6427339903121868966}
+  nudgeForce: 1.5
+  isInfectroid: 0
+  isInOrbit: 0
+--- !u!58 &-7940139028359559699
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8069275902880659580}
+  m_Enabled: 0
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 213.4
+--- !u!70 &-6342129432858320425
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8069275902880659580}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.8, y: 99.96}
+  m_Size: {x: 55.9, y: 510.9}
+  m_Direction: 1
