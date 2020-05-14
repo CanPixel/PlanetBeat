@@ -5543,8 +5543,8 @@ MonoBehaviour:
   waitForCooldown: 0
   cooldownPenalty: 3.5
   hitBottem: 0
-  fuelBar: {fileID: 0}
-  fuelBarBackground: {fileID: 0}
+  fuelBar: {fileID: 754101861813795399}
+  fuelBarBackground: {fileID: 7055851597372766654}
   boost1: 0
   boost2: 1
   ship: {fileID: 1446986112751458336}
