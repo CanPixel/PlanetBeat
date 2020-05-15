@@ -136,10 +136,10 @@ public class AsteroidSpawner : MonoBehaviourPun {
         Quaternion rot = Quaternion.FromToRotation(Vector2.up, center + pos);
         GameObject InstancedPrefab = GameManager.SPAWN_SERVER_OBJECT(asteroid, new Vector3(blackHole.transform.position.x, blackHole.transform.position.y, -9), rot);
 
-        int maxSamples = 4;
+        int maxSamples = 3;
         if(sample == 0) AudioManager.PLAY_SOUND("LowSpit", 1f, 1f);
-        else if(sample == 1) AudioManager.PLAY_SOUND("MajorChord", 0.8f, 1f);
-        else if(sample == 2) AudioManager.PLAY_SOUND("LowDrone", 1f, 1f);
+        //else if(sample == 1) AudioManager.PLAY_SOUND("MajorChord", 0.8f, 1f);
+        else if(sample == 1) AudioManager.PLAY_SOUND("LowDrone", 1f, 1f);
         else AudioManager.PLAY_SOUND("LowHarmony", 1f, 1f);
         
         sample++;

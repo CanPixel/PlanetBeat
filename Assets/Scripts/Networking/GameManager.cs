@@ -20,7 +20,7 @@ public class GameManager : MonoBehaviourPunCallbacks {
 
    public Text countdown;
    [Header("Start Game")]
-   public int playerCount = 4;
+   private int playerCount = 4;
    private bool skipCountdown = false;  
 
    public static Dictionary<string, GameObject> playerLabels = new Dictionary<string, GameObject>();
@@ -28,7 +28,7 @@ public class GameManager : MonoBehaviourPunCallbacks {
    public static bool GAME_STARTED = false, GAME_WON = false;
    private bool startCountdown = false;
    private float countdownTimer, startupDelayTimer;
-   private int count = 3;
+   public int count = 6;
 
    public static GameManager instance;
    [Space(10)]
@@ -154,7 +154,6 @@ public class GameManager : MonoBehaviourPunCallbacks {
       GAME_WON = false;
 
       startupDelayTimer = 0;
-      count = 3;
       countdownTimer = 0;
       startCountdown = false;
       GAME_STARTED = false;
@@ -167,28 +166,30 @@ public class GameManager : MonoBehaviourPunCallbacks {
 
       if(PlayerPrefs.GetInt("Spectate") != 0) AddLocalClient(PlayerShip.PLAYERNAME);
 
+      if(PhotonNetwork.IsMasterClient) playerCount = PlayerPrefs.GetInt("PlayerCount");
+
       skipCountdown = Launcher.GetSkipCountDown();
       AudioManager.PLAY_SOUND("sizzle", 1f, 1.5f);
    }
 
-   protected void AssignPlayerIdentity(int ID) {
+  /*  protected void AssignPlayerIdentity(int ID) {
       var playerID = PlanetSwitcher.GetPlayerTintIndex(ID);
       var photon = PhotonNetwork.GetPhotonView(ID);
       if(photon == null) return;
       var pl = photon.GetComponent<PlayerShip>();
       if(pl == null) return;
-//      pl.playerColor = PlanetSwitcher.GetPlayerTint(ID);
-      var col = pl.playerColor;
-      if(instance != null) instance.photonView.RPC("AssignMasterPlanet", RpcTarget.AllViaServer, ID, col.r, col.g, col.b);
-   }
+      //if(instance != null) instance.photonView.RPC("AssignMasterPlanet", RpcTarget.AllViaServer, ID);
+   }*/
 
+/* 
    [PunRPC]
-   public void AssignMasterPlanet(int playerNum, float r, float g, float b) {
+   public void AssignMasterPlanet(int playerNum) {
       var play = PhotonNetwork.GetPhotonView(playerNum);
       if(play == null) return;
       var pl = play.GetComponent<PlayerShip>();
-      pl.ForceColor(r, g, b);
-   }
+      //pl.ForceColor(r, g, b);
+
+   }*/
 
    public static GameObject SPAWN_SERVER_OBJECT(GameObject obj, Vector3 pos, Quaternion rot) {
       if(instance == null) return null;
@@ -208,11 +209,11 @@ public class GameManager : MonoBehaviourPunCallbacks {
          player.transform.localScale = new Vector3(playerScale, playerScale, playerScale);
          var playerShip = player.GetComponent<PlayerShip>();
          LOCAL_PLAYER = playerShip;
-         var playerName = Instantiate(PlayerName, player.transform.position, Quaternion.identity);
-         var pN = playerName.GetComponent<PlayerName>();
-         pN.SetHost(player, name);
-         playerShip.playerName = pN;
-         AssignPlayerIdentity(playerShip.photonView.ViewID);
+        // var playerName = Instantiate(PlayerName, player.transform.position, Quaternion.identity);
+         //playerShip.playerName = pN;
+        // playerShip.SetLabel(playerName.GetComponent<PlayerName>(), name);
+         //pN.SetHost(player, name);
+         //AssignPlayerIdentity(playerShip.photonView.ViewID);
       }
    }
 
@@ -224,7 +225,7 @@ public class GameManager : MonoBehaviourPunCallbacks {
 
    public void LeaveRoom() {
       GAME_STARTED = false;
-      playerLabels.Clear();
+  //    playerLabels.Clear();
       PhotonNetwork.LeaveRoom();
    }
 

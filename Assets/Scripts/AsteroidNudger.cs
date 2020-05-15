@@ -18,25 +18,36 @@ public class AsteroidNudger : MonoBehaviour {
 
     void OnTriggerStay2D(Collider2D col) {
         if(col.tag == "ORBIT") {
-            // var planet = col.transform.parent.GetComponent<PlayerPlanets>();
-            //if(isInfectroid || (!isInfectroid && planet != null && planet.HasPlayer())) isInOrbit = true;
-            isInOrbit = true;
+            if(isInfectroid) isInOrbit = true;
+            var orbit = col.transform.GetComponent<Orbit>();
+            if(orbit != null) {
+                var planet = orbit.planet;
+                if(!isInfectroid && planet != null && asteroid.ownerPlayer != null && asteroid.ownerPlayer.playerNumber == planet.playerNumber) {
+                    isInOrbit = true;
+                }
+            }
         }
     }
 
     void OnTriggerEnter2D(Collider2D col) {
         if(col.tag == "ORBIT") {
-            //var planet = col.transform.parent.GetComponent<PlayerPlanets>();
-            //if(isInfectroid || (!isInfectroid && planet != null && planet.HasPlayer())) rb.velocity /= nudgeForce;
-            rb.velocity /= nudgeForce;
+            if(isInfectroid) rb.velocity /= nudgeForce;
+            var orbit = col.transform.GetComponent<Orbit>();
+            if(orbit != null) {
+                var planet = orbit.planet;
+                if(!isInfectroid && planet != null && asteroid.ownerPlayer != null && asteroid.ownerPlayer.playerNumber == planet.playerNumber) rb.velocity /= nudgeForce;
+            }
         }
     }
 
     void OnTriggerExit2D(Collider2D col) {
         if(col.tag == "ORBIT") {
-          //  var planet = col.transform.parent.GetComponent<PlayerPlanets>();
-           //  if(isInfectroid || (!isInfectroid && planet != null && planet.HasPlayer())) isInOrbit = false;
-            isInOrbit = false;
+            if(isInfectroid) isInOrbit = false;
+            var orbit = col.transform.GetComponent<Orbit>();
+            if(orbit != null) {
+                var planet = orbit.planet;
+                if(!isInfectroid && planet != null && asteroid.ownerPlayer != null && asteroid.ownerPlayer.playerNumber == planet.playerNumber) isInOrbit = false;
+            }
         }
     }
 }

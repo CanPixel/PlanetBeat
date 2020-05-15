@@ -88,43 +88,35 @@ public class HookShot : MonoBehaviour {
             HookCooldownDelay -= Time.deltaTime;
             if(HookCooldownDelay < 0) HookCooldown = false;
         }
-
     }
 
-    #region AIMING_TYPES_LOGIC
-        public void FireLockOn(GameObject target) {
-            lockOnAimTarget = target;
+    protected void FreeAim() {
+        if(Input.GetKey(KeyCode.Space) && !HookCooldown && !HasObject()) {
+            triggerHook = true;
+            HookCooldown = true;
+            HookCooldownDelay = HookCooldownTime;
+        }
+        if(Input.GetKeyUp(KeyCode.Space) && triggerHook && shootTimer <= 0) {
             if(hostPlayer.IsThisClient()) hostPlayer.photonView.RPC("CastHook", RpcTarget.All, hostPlayer.photonView.ViewID);
         }
 
-        protected void FreeAim() {
-            if(Input.GetKey(KeyCode.Space) && !HookCooldown) {
-                triggerHook = true;
-                HookCooldown = true;
-                HookCooldownDelay = HookCooldownTime;
-            }
-            if(Input.GetKeyUp(KeyCode.Space) && triggerHook && shootTimer <= 0) {
-                if(hostPlayer.IsThisClient()) hostPlayer.photonView.RPC("CastHook", RpcTarget.All, hostPlayer.photonView.ViewID);
+        if(IsShooting()) {
+            if(rope.sizeDelta.y < hookShotRange * 10f && !didntCatch) {
+                if(!hitObject) rope.sizeDelta = new Vector2(rope.sizeDelta.x, rope.sizeDelta.y + hookShotCastSpeed);
+                else if(rope.sizeDelta.y > 0) rope.sizeDelta = new Vector2(rope.sizeDelta.x, rope.sizeDelta.y - HookShotReelSpeed);
             }
 
-            if(IsShooting()) {
-                if(rope.sizeDelta.y < hookShotRange * 10f && !didntCatch) {
-                    if(!hitObject) rope.sizeDelta = new Vector2(rope.sizeDelta.x, rope.sizeDelta.y + hookShotCastSpeed);
-                    else if(rope.sizeDelta.y > 0) rope.sizeDelta = new Vector2(rope.sizeDelta.x, rope.sizeDelta.y - HookShotReelSpeed);
+            if(didntCatch) {
+                if(!reelback) {
+                    AudioManager.PLAY_SOUND("reel");
+                    reelback = true;
                 }
 
-                if(didntCatch) {
-                    if(!reelback) {
-                        AudioManager.PLAY_SOUND("reel");
-                        reelback = true;
-                    }
-
-                    if(rope.sizeDelta.y > 0) rope.sizeDelta = new Vector2(rope.sizeDelta.x, rope.sizeDelta.y - HookShotReelSpeed);
-                    else ResetHook();
-                }
+                if(rope.sizeDelta.y > 0) rope.sizeDelta = new Vector2(rope.sizeDelta.x, rope.sizeDelta.y - HookShotReelSpeed);
+                else ResetHook();
             }
         }
-    #endregion
+    }
 
     #region CUSTOM_INTERACTION_CONTROLLER
       /*   protected void ReelIn(int newData) {
@@ -167,6 +159,10 @@ public class HookShot : MonoBehaviour {
         grabbedObj = obj;
         var photon = obj.GetComponent<PhotonView>();
         if(photon != null && hostPlayer.photonView != null) photon.TransferOwnership(hostPlayer.photonView.Controller.ActorNumber);
+    }
+
+    public bool HasObject() {
+        return grabbedObj != null;
     }
 
     public bool CanHold() {
