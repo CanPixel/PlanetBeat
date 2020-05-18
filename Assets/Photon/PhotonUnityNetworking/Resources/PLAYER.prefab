@@ -5603,10 +5603,7 @@ MonoBehaviour:
   maxAsteroids: 1
   trailingSpeed: 15
   throwingReduction: 0.4
-  SpeedShardOffset: {x: 0, y: -1, z: 0}
-  SpawnStarShard: {fileID: 7119629028292468671}
-  ShardTimeInterval: 0.5
-  canShard: 0
+  heldResourceScaleFactor: 0.09
   playerName: {fileID: 0}
   planet: {fileID: 0}
   respawnDelay: 0

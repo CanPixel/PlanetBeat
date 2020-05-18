@@ -22,11 +22,13 @@ public class PlanetStages : MonoBehaviour {
 
             if(moonsToSpawn > 0) {
                 for(int i = 0; i < moonsToSpawn; i++) {
+                    Random.InitState((int)Time.time);
                     var moonOBJ = Instantiate(prefab);
                     moonOBJ.name = "Moon";
                     moonOBJ.transform.SetParent(root.transform);
                     moonOBJ.transform.localScale = Vector3.one * 100f;
-                    moonOBJ.transform.localPosition = new Vector3(0, 0, -200 * (i + 1));
+                    moonOBJ.transform.localPosition = new Vector3(0, 0, -Random.Range(400, 600));
+                    moonOBJ.GetComponent<Moon>().orbitSpeed = Random.Range(20, 50) * ((Random.Range(0, 2) == 0) ? -1f : 1f);
                 }
             }
         }
@@ -38,6 +40,7 @@ public class PlanetStages : MonoBehaviour {
     protected LightStage curStage;
 
     public void SetLightStage(int i) {
+        if(i > lightStageAmount - 1) return;
         currentLightStage = i;
         curStage = lightStages[i];
         meshRenderer.material = curStage.material;

@@ -19,10 +19,10 @@ public class Background : MonoBehaviour {
         if(!parallax) SetTexture(PlanetSwitcher.GetCurrentTexturePack());
     
         var playerplanets = transform.GetComponentsInChildren<PlayerPlanets>();
-        foreach(var i in playerplanets) {
-            i.wiggleSpeed = wiggleSpeed;
-            i.wiggleRange = wiggleRange;
-        }
+//        foreach(var i in playerplanets) {
+//            i.wiggleSpeed = wiggleSpeed;
+//            i.wiggleRange = wiggleRange;
+//        }
     }
 
     void Update() {

@@ -19,7 +19,7 @@ public class PlayerPlanets : MonoBehaviourPun {
     public EliminationBar rechargeBar;
     public TrailRenderer trails;
 
-    [HideInInspector] public float wiggleSpeed = 10, wiggleRange = 100f;
+    //[HideInInspector] public float wiggleSpeed = 10, wiggleRange = 100f;
 
     public float maxScale = 4;
     private Vector3 baseScale;
@@ -27,7 +27,7 @@ public class PlayerPlanets : MonoBehaviourPun {
 
     private PlanetGlow planetGlow;
     private Vector3 basePos;
-    private float wiggleOffset, increasePopupBaseSize, increasePopupHideTimer;
+    private float increasePopupBaseSize, increasePopupHideTimer;
     
     private Outline textOutline;
     private Vector2 outlineBase;
@@ -68,7 +68,7 @@ public class PlayerPlanets : MonoBehaviourPun {
     public void OnEnable() {
         stages = GetComponent<PlanetStages>();
         foreach(var i in infectionNotifiers) i.color = new Color(i.color.r, i.color.g, i.color.b, 0);
-        wiggleOffset = Random.Range(0, 10000f);
+        //wiggleOffset = Random.Range(0, 10000f);
         basePos = transform.localPosition;
         planetGlow = GetComponent<PlanetGlow>();
         rechargeBar.SetAlpha(0);
@@ -153,10 +153,10 @@ public class PlayerPlanets : MonoBehaviourPun {
             }
         }
 
-        if(currentScore >= maxScore && player != null && GameManager.GAME_STARTED && !GameManager.GAME_WON) {
-            WinGame();
-            SynchWin(player.photonView.ViewID);
-        }
+        //if(currentScore > maxScore && player != null && GameManager.GAME_STARTED && !GameManager.GAME_WON) {
+        //    WinGame();
+            //SynchWin(player.photonView.ViewID);
+        //}
 
         orbit.transform.localScale = Vector3.Lerp(orbit.transform.localScale, transform.localScale / orbitScaleReduction.Evaluate(currentScore / maxScore), Time.deltaTime * 2f);
         transform.localScale = Vector3.Lerp(transform.localScale, new Vector3(Mathf.Clamp(transform.localScale.x, 0, maxScale), Mathf.Clamp(transform.localScale.y, 0, maxScale), Mathf.Clamp(transform.localScale.z, 0, maxScale)), Time.deltaTime * 2f);
@@ -183,8 +183,10 @@ public class PlayerPlanets : MonoBehaviourPun {
         float amount = Mathf.Clamp(i, minScore, maxScore);
         currentScore = amount;
 
-        var curStage = Mathf.RoundToInt((i / maxScore) * PlanetStages.lightStageAmount);
+        var curStage = Mathf.RoundToInt((i / maxScore) * (float)PlanetStages.lightStageAmount);
         stages.SetLightStage((int)curStage);
+
+        if(currentScore >= maxScore) WinGame();
 
         //var newScale = transform.localScale + new Vector3(amount, amount, 0) / 50f;
         //GetComponent<UIFloat>().SetBaseScale(newScale);
@@ -224,13 +226,11 @@ public class PlayerPlanets : MonoBehaviourPun {
     }
 
     public void AddingResource(float amount) {
-        if(playerNumber <= 0 || GameManager.GAME_WON) return;
-        if(currentScore + amount < maxScore) {
-            AudioManager.PLAY_SOUND("Musicalhit", 0.7f, 0.95f);
-            currentScore += amount;
-            photonView.RPC("SetResource", RpcTarget.AllBufferedViaServer, currentScore);
-        }  
-       // if (currentScore <= minScore) currentScore = minScore;
+        if(playerNumber <= 0) return;
+        AudioManager.PLAY_SOUND("Musicalhit", 0.7f, 0.95f);
+        currentScore += amount;
+        if(currentScore > maxScore) currentScore = maxScore;
+        photonView.RPC("SetResource", RpcTarget.AllBufferedViaServer, currentScore);
     }
 
 /* 
@@ -251,7 +251,6 @@ public class PlayerPlanets : MonoBehaviourPun {
     } */
 
     protected void WinGame() {
-        GameManager.GAME_WON = true;
         photonView.RPC("SynchWin", RpcTarget.AllViaServer, player.photonView.ViewID);
     }
 
