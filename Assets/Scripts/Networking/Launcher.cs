@@ -15,6 +15,8 @@ public class Launcher : MonoBehaviourPunCallbacks, ILobbyCallbacks, IInRoomCallb
     public SpaceRoom[] rooms = new SpaceRoom[3];
     public Vector2 roomLabelSize = new Vector2(225, 50);
 
+    public InputField playerCount;
+
     string gameVersion = "1";
 
     [Space(15)]
@@ -84,6 +86,13 @@ public class Launcher : MonoBehaviourPunCallbacks, ILobbyCallbacks, IInRoomCallb
         #if UNITY_WEBGL || UNITY_EDITOR
             exitButton.gameObject.SetActive(false);
         #endif
+
+        SetPlayerCount(playerCount.text);
+    }
+
+    public void SetPlayerCount(string i) {
+        var count = int.Parse(i);
+        PlayerPrefs.SetInt("PlayerCount", count);
     }
 
     protected void TryConnect(bool retry = false) {

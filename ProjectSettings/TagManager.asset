@@ -26,6 +26,7 @@ TagManager:
   - CENTER
   - SPEEDSHARD
   - Powerup
+  - MOON
   layers:
   - Default
   - TransparentFX

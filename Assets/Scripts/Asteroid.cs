@@ -5,7 +5,6 @@ using Photon.Pun;
 using UnityEngine.UI;
 
 public class Asteroid : PickupableObject {
- //   [HideInInspector] public Rigidbody2D rb;
     public Image src, glow;
     public Text scoreText, increasePopupTxt;
 
@@ -13,7 +12,6 @@ public class Asteroid : PickupableObject {
 
     public bool canScoreWithoutDropping = false;
 
-  //  [HideInInspector] public bool held = false;
     [HideInInspector] public bool inOrbit = false;
     [HideInInspector] public bool giveTag = false;
     [HideInInspector] public float inOrbitTimer;
@@ -45,6 +43,7 @@ public class Asteroid : PickupableObject {
     public float inPlayerOrbitRbDrag = 0.6f;
     public float maxInOrbitTime = 5;
     public float outOrbitForce = 40;
+    public float heldScaleReduction = 1.6f;
 
     [Header("SPAWN")]
     public float beginThrust = 0.4f;
@@ -57,17 +56,11 @@ public class Asteroid : PickupableObject {
     public float speedRotate = 7;
     public float timeRotate = -70;
     private int LinksOfRechts = 0;
-    //private float thrustDelay = 0, spawnTimer = 0;
-    //public bool IsDoneSpawning {
-     //   get {return spawnTimer > activateAfterSpawning;}
-    //}
 
     private bool canConsume = false;
     private float collectTimer, releaseTimer = 0;
     private bool canScore = false;
-   // private Collider2D asteroidColl;
     [HideInInspector] public PlayerPlanets playerPlanets;
-    //[HideInInspector] public PlayerShip ownerPlayer;
     [HideInInspector] public PlayerTagsManager playerTagsManager;
     [HideInInspector] public GameObject playerOrbit;
 
@@ -78,8 +71,8 @@ public class Asteroid : PickupableObject {
     private bool scaleBack = false;
     private float timeBombTick = 0;
 
- //   private const float activateAfterSpawning = 1.25f;
     private Vector3 standardGlowScale;
+    private Vector3 standardScale;
 
     private bool destroy = false;
 
@@ -93,6 +86,7 @@ public class Asteroid : PickupableObject {
         asteroidColl = GetComponent<Collider2D>();
         playerTagsManager = GetComponent<PlayerTagsManager>();
         rb.drag = defaultRbDrag - .15f;
+        standardScale = transform.localScale;
         SetTexture(PlanetSwitcher.GetCurrentTexturePack());
         rb.AddForce(transform.up * Thrust);
         LinksOfRechts = Random.Range(0, 2);
@@ -239,7 +233,7 @@ public class Asteroid : PickupableObject {
         if(held) ReleaseAsteroid(false, photonView.ViewID);
         else ReleasedTimer();  
 
-        float maxScale = 0.8f;
+        transform.localScale = Vector3.Lerp(transform.localScale, (held) ? standardScale / heldScaleReduction : standardScale, Time.deltaTime * 4f);
         //transform.localScale = new Vector3(Mathf.Clamp(transform.localScale.x, 0, maxScale), Mathf.Clamp(transform.localScale.y, 0, maxScale), Mathf.Clamp(transform.localScale.z, 0, maxScale));
     }
     

@@ -39,6 +39,8 @@ public class HookShot : MonoBehaviour {
     public Image HookCooldownParent;
     public Image HookCooldownIcon;
 
+    private float shootDelay = 0;
+
     void Start() {
         rope = transform.GetChild(0).GetComponent<RectTransform>();
         tip = rope.transform.GetChild(0).GetComponent<CircleCollider2D>();
@@ -46,6 +48,8 @@ public class HookShot : MonoBehaviour {
     }
 
     void Update() {
+        if(shootDelay > 0) shootDelay -= Time.deltaTime;
+
         if(grabbedObj != null) grabbedObj.transform.position = tip.transform.position;
 
         float hookScale = Mathf.Lerp(rope.transform.localScale.x, (IsShooting() ? 1 : 0.1f), Time.deltaTime * 2f);
@@ -88,43 +92,39 @@ public class HookShot : MonoBehaviour {
             HookCooldownDelay -= Time.deltaTime;
             if(HookCooldownDelay < 0) HookCooldown = false;
         }
-
     }
 
-    #region AIMING_TYPES_LOGIC
-        public void FireLockOn(GameObject target) {
-            lockOnAimTarget = target;
+    protected void FreeAim() {
+        if(Input.GetKey(KeyCode.Space) && !HookCooldown && !HasObject()) {
+            triggerHook = true;
+            HookCooldown = true;
+            HookCooldownDelay = HookCooldownTime;
+        }
+        if(Input.GetKeyUp(KeyCode.Space) && triggerHook && shootTimer <= 0) {
             if(hostPlayer.IsThisClient()) hostPlayer.photonView.RPC("CastHook", RpcTarget.All, hostPlayer.photonView.ViewID);
         }
 
-        protected void FreeAim() {
-            if(Input.GetKey(KeyCode.Space) && !HookCooldown) {
-                triggerHook = true;
-                HookCooldown = true;
-                HookCooldownDelay = HookCooldownTime;
-            }
-            if(Input.GetKeyUp(KeyCode.Space) && triggerHook && shootTimer <= 0) {
-                if(hostPlayer.IsThisClient()) hostPlayer.photonView.RPC("CastHook", RpcTarget.All, hostPlayer.photonView.ViewID);
+        if(IsShooting()) {
+            if(rope.sizeDelta.y < hookShotRange * 10f && !didntCatch) {
+                if(!hitObject) rope.sizeDelta = new Vector2(rope.sizeDelta.x, rope.sizeDelta.y + hookShotCastSpeed);
+                else if(rope.sizeDelta.y > 0) rope.sizeDelta = new Vector2(rope.sizeDelta.x, rope.sizeDelta.y - HookShotReelSpeed);
             }
 
-            if(IsShooting()) {
-                if(rope.sizeDelta.y < hookShotRange * 10f && !didntCatch) {
-                    if(!hitObject) rope.sizeDelta = new Vector2(rope.sizeDelta.x, rope.sizeDelta.y + hookShotCastSpeed);
-                    else if(rope.sizeDelta.y > 0) rope.sizeDelta = new Vector2(rope.sizeDelta.x, rope.sizeDelta.y - HookShotReelSpeed);
+            if(didntCatch) {
+                if(!reelback) {
+                    AudioManager.PLAY_SOUND("reel");
+                    reelback = true;
                 }
 
-                if(didntCatch) {
-                    if(!reelback) {
-                        AudioManager.PLAY_SOUND("reel");
-                        reelback = true;
-                    }
-
-                    if(rope.sizeDelta.y > 0) rope.sizeDelta = new Vector2(rope.sizeDelta.x, rope.sizeDelta.y - HookShotReelSpeed);
-                    else ResetHook();
-                }
+                if(rope.sizeDelta.y > 0) rope.sizeDelta = new Vector2(rope.sizeDelta.x, rope.sizeDelta.y - HookShotReelSpeed);
+                else ResetHook();
             }
         }
-    #endregion
+    }
+
+    public void DelayHook() {
+        shootTimer = 0.1f;
+    }
 
     #region CUSTOM_INTERACTION_CONTROLLER
       /*   protected void ReelIn(int newData) {
@@ -142,12 +142,12 @@ public class HookShot : MonoBehaviour {
     #endregion
 
     public void CastHook() {
-        if(!hostPlayer.CanCastHook()) return;
+        if(!hostPlayer.CanCastHook() || IsDelayingHook()) return;
         AudioManager.PLAY_SOUND("Kick", 1f, 0.9f);
         AudioManager.PLAY_SOUND("CastHook", 0.8f, Random.Range(0.9f, 1f));
         isShootingHook = true;
         triggerHook = false;
-        shootTimer = 0.1f;
+        DelayHook();
     }
 
     protected void ResetHook() {
@@ -169,11 +169,23 @@ public class HookShot : MonoBehaviour {
         if(photon != null && hostPlayer.photonView != null) photon.TransferOwnership(hostPlayer.photonView.Controller.ActorNumber);
     }
 
+    public bool HasObject() {
+        return grabbedObj != null;
+    }
+
     public bool CanHold() {
         return grabbedObj == null && hostPlayer.CanHold();
     }
 
     public bool IsShooting() {
         return isShootingHook;
+    }
+
+    public bool IsDelayingHook() {
+        return shootDelay > 0;
+    }
+
+    public void DelayShoot() {
+        shootDelay = 0.5f;
     }
 }

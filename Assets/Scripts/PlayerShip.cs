@@ -98,8 +98,7 @@ public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
     public void SetHomePlanet(GameObject planet) {
         this.planet = planet.GetComponent<PlayerPlanets>();
         playerColor = planet.GetComponent<PlanetGlow>().planetColor;
-        if(playerLabel != null) playerLabel.GetComponent<Text>().color = playerColor;
-        ForceColor(playerColor);
+        ForceColor(playerColor.r, playerColor.g, playerColor.b);
     }
 
     [PunRPC]
@@ -108,14 +107,9 @@ public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
         planet = null;
     }
 
-    //private void SetTexture(PlanetSwitcher.TexturePack pack) {
-    //    ship.sprite = pack.Ship[PlanetSwitcher.GetPlayerTintIndex(photonView.ViewID)].src;
-    //    ship.SetNativeSize();
-    // }
-
     public void SetTextureByPlanet(Color col) {
         ship.sprite = PlanetSwitcher.GetPlayerTexture(col);
-        if(playerLabel != null) playerLabel.GetComponent<Text>().color = playerColor;
+        if(playerLabel != null) playerLabel.GetComponent<Text>().color = col;
     }
 
     #region IPunObservable implementation
@@ -131,30 +125,22 @@ public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
             exhaustSound = GetComponent<AudioSource>();
             transform.SetParent(GameObject.FindGameObjectWithTag("GAMEFIELD").transform, false);
 
+            var playerNameTag = Instantiate(Resources.Load("PlayerName"), transform.position, Quaternion.identity) as GameObject;
+            playerName = playerNameTag.GetComponent<PlayerName>();
+            if(playerName != null && photonView.Owner != null) playerName.SetHost(gameObject, photonView.Owner.NickName);
+            if(photonView.Owner != null) PLAYERNAME = photonView.Owner.NickName;
+            playerLabel = playerNameTag;
+
             //REMOTE PLAYERS (Non-controllable from client)
             if(!photonView.IsMine) {
                 exLastPos = transform.position; //For movement/exhaust particles
-                var playerNameTag = Instantiate(Resources.Load("PlayerName"), transform.position, Quaternion.identity) as GameObject;
-                playerName = playerNameTag.GetComponent<PlayerName>();
-                if(playerName != null && photonView.Owner != null) playerName.SetHost(gameObject, photonView.Owner.NickName);
-                if(photonView.Owner != null) PLAYERNAME = photonView.Owner.NickName;
-                playerLabel = playerNameTag;
-
-                //Name tag replacement
-                /* if(playerNameTag != null) {
-                    if(!GameManager.playerLabels.ContainsKey(PLAYERNAME)) GameManager.playerLabels.Add(PLAYERNAME, playerNameTag);
-                    else {
-                        string replacementName = PLAYERNAME + Random.Range(0, 1000);
-                        photonView.Owner.NickName = replacementName;
-                        playerName.Rename(replacementName);
-                        GameManager.playerLabels.Add(replacementName, playerNameTag);
-                    }
-                }*/
                 foreach(var i in networkIgnore) if(i != null) DestroyImmediate(i);
             }
 
             playerNumber = photonView.ViewID;
             GameManager.ClaimPlanet(this);
+
+            if(playerName != null) playerName.SetHost(gameObject, photonView.Owner.NickName);
         }
 
         public override void OnDisable() {
@@ -211,17 +197,18 @@ public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
         ///////////////KATALYSATOR CODE HERE
     }
 
-    public void ForceColor(Color col) {
-        ForceColor(col.r, col.g, col.b);
+    public void SetLabel(PlayerName name, string nameTag) {
+        this.playerName = name;
+        this.playerName.SetHost(gameObject, nameTag);
     }
+
     public void ForceColor(float r, float g, float b) {
         var col = new Color(r, g, b);
         playerColor = col;
-        if(planet != null) planet.AssignPlayer(this);
-        //SetTexture(PlanetSwitcher.GetCurrentTexturePack());
         SetTextureByPlanet(playerColor);
         var settings = exhaust.main;
         settings.startColor = new ParticleSystem.MinMaxGradient(col);
+        if(playerName != null) playerName.SetHost(gameObject, photonView.Owner.NickName);
     }
 
     public void SetCollision(Collider2D asteroid, bool state) {
@@ -305,6 +292,7 @@ public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
         if(ReleaseAsteroidKey() && trailingObjects.Count > 0 && respawnDelay <= 0) {
             AudioManager.PLAY_SOUND("collect");
             dropAsteroid = true;
+            hookShot.DelayShoot();
         }
 
         //Particles emitten wanneer movement
@@ -345,13 +333,13 @@ public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
             }
     
         //Grapple Cooldown Code
-        if(trailingObjects.Count > 0 && trailingObjects[0].dropBoosts && canShard) {
+      /*   if(trailingObjects.Count > 0 && trailingObjects[0].dropBoosts && canShard) {
             ShardTimeInterval += Time.deltaTime;
             if(ShardTimeInterval >= 0.5f) {
                 ShardTimeInterval = 0;
                 PhotonNetwork.Instantiate("SpeedShard", SpawnStarShard.transform.position, transform.rotation); 
             }    
-        }
+        } */
     }
 
     [PunRPC]
@@ -374,7 +362,6 @@ public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
             BoostPlayer(false);
         }
     }
-
     private void BoostPlayer(bool boosting) {
         fuelFilling.fillAmount = fuelMeter / maxFuel;
         if (boosting) {
@@ -387,7 +374,6 @@ public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
             StartCoroutine("BoostRecharge");
         }
     }
-
     IEnumerator BoostRecharge() {
         isBoosting = false;
         maxVelocity = defaultVelocity;
@@ -401,9 +387,7 @@ public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
             waitForCooldown = 1f;
         } else StopCoroutine("BoostRecharge");
     }
-
-    protected void BoostManager2()
-    {
+    protected void BoostManager2() {
         fuelBar.fillAmount = boostDuration / boostTimer; 
         if (Input.GetKeyDown(KeyCode.LeftShift)) BoostPlayer2();
 
@@ -435,11 +419,8 @@ public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
             }
         }
     }
-
-    private void BoostPlayer2()
-    {
-        if (canBoost)
-        {
+    private void BoostPlayer2() {
+        if (canBoost) {
             maxVelocity = boostVelocity2;
             isBoosting = true;
             //boostcode
@@ -460,7 +441,7 @@ public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
     }*/
 
     public bool ReleaseAsteroidKey() {
-        return Input.GetKeyDown(KeyCode.F) | Input.GetKeyDown(KeyCode.E) | Input.GetKeyDown(KeyCode.R) | Input.GetKeyDown(KeyCode.C);
+        return Input.GetKeyDown(KeyCode.Space);
     }
 
     void ProcessInputs() {
@@ -511,12 +492,12 @@ public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
     }
 
     public bool CanCastHook() {
-        return respawnDelay <= 0 && GameManager.GAME_STARTED;
+        return respawnDelay <= 0 && GameManager.GAME_STARTED && !hookShot.HasObject();
     }
 
     [PunRPC]
     public void CastHook(int viewID) {
-        if(!CanCastHook()) return;
+        if(!CanCastHook() && !hookShot.IsDelayingHook()) return;
         if(photonView.ViewID == viewID) hookShot.CastHook();
     }
 

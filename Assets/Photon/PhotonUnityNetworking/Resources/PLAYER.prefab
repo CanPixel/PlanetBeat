@@ -5600,7 +5600,7 @@ MonoBehaviour:
   respawningTime: 3
   defaultDrag: 2
   stopDrag: 1.5
-  maxAsteroids: 2
+  maxAsteroids: 1
   trailingSpeed: 15
   throwingReduction: 0.4
   SpeedShardOffset: {x: 0, y: -1, z: 0}

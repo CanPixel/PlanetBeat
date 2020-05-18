@@ -5,7 +5,6 @@ using UnityEngine.UI;
 using Photon.Pun;
 
 public class PlanetGlow : MonoBehaviour {
-    //public Image glow, src;
     private float glowOffset;
     private PlayerPlanets playerPlanets;
     public MeshFilter mesh;
@@ -13,7 +12,6 @@ public class PlanetGlow : MonoBehaviour {
     public string planetName;
     public Color planetColor;
 
-    public int lightStage = 0;
     public bool randomGen = false;
 
     private float flicker = 0, subFlicker = 0;
@@ -24,8 +22,6 @@ public class PlanetGlow : MonoBehaviour {
     }
 
     void Update() {
-        //glow.color = Color.Lerp(glow.color, glow.color + new Color(0, 0, 0, Mathf.Sin(Time.time * 1.5f + glowOffset * 10) - 0.1f), Time.deltaTime * 1f);
-
         if(flicker > 0) {
             flicker -= Time.deltaTime;
             subFlicker += Time.deltaTime;
@@ -36,19 +32,19 @@ public class PlanetGlow : MonoBehaviour {
         } else render.enabled = true;
     }
 
-    void OnEnable() {
-        if(randomGen || PhotonNetwork.IsMasterClient) ;//SetPlanet(PlanetSwitcher.GetRandomPlanet());
-    }
+   // void OnEnable() {
+    //    if(randomGen || PhotonNetwork.IsMasterClient) ;//SetPlanet(PlanetSwitcher.GetRandomPlanet());
+   // }
 
     public void Flicker() {
         flicker = 1;
         subFlicker = 0;
     }
 
-    public void SetPlanet(PlanetSwitcher.PlanetElement element) {
+    public void SetsPlanet(PlanetSwitcher.PlanetElement element) {
         return;
-        var newModel = element.model;
-        var newRender = element.lightStages[lightStage];
+        /* var newModel = element.model;
+        var newRender = element.lightStages[0];
         var ringModel = element.ring;
         var ringMat = element.ringMaterial;
 
@@ -62,7 +58,7 @@ public class PlanetGlow : MonoBehaviour {
         }        
         mesh.mesh = newModel;
         render.material = newRender;
-        planetName = element.name;
+        planetName = element.name; */
 
         //if(src != null && element != null) src.sprite = element.src;
         /* if(element.glow == null) {

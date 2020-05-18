@@ -6,8 +6,9 @@ using Photon.Pun;
 using Photon.Realtime;
 
 public class PlayerPlanets : MonoBehaviourPun {
+    private PlanetStages stages;
     private PlayerShip player;
-    public int playerNumber = 0;
+    [HideInInspector] public int playerNumber = 0;
     [HideInInspector] public float currentScore;
     public float minScore = 0;
     public float maxScore = 100f;
@@ -31,9 +32,6 @@ public class PlayerPlanets : MonoBehaviourPun {
     private Outline textOutline;
     private Vector2 outlineBase;
     private Vector2 scoreBaseScale;
-
-    private bool ScorePoint = false;
-    private float lastAmount;
 
     [Space(5)]
     public Image[] infectionNotifiers; 
@@ -68,6 +66,7 @@ public class PlayerPlanets : MonoBehaviourPun {
     }
 
     public void OnEnable() {
+        stages = GetComponent<PlanetStages>();
         foreach(var i in infectionNotifiers) i.color = new Color(i.color.r, i.color.g, i.color.b, 0);
         wiggleOffset = Random.Range(0, 10000f);
         basePos = transform.localPosition;
@@ -114,7 +113,7 @@ public class PlayerPlanets : MonoBehaviourPun {
         var pl = PhotonNetwork.GetPhotonView(playerNumber);
         if(pl != null) player = pl.GetComponent<PlayerShip>();
         if(player == null) return;
-        planetGlow.SetPlanet(PlanetSwitcher.GetCurrentTexturePack().planets[PlanetSwitcher.GetPlayerTintIndex(playerNumbe)]);
+//        planetGlow.SetPlanet(PlanetSwitcher.GetCurrentTexturePack().planets[PlanetSwitcher.GetPlayerTintIndex(playerNumbe)]);
         var col = new Color(r, g, b);
         player.playerColor = col;
         orbitColor = player.playerColor;
@@ -170,7 +169,7 @@ public class PlayerPlanets : MonoBehaviourPun {
             scoreText.transform.localScale = Vector2.Lerp(scoreText.transform.localScale, scoreBaseScale, Time.deltaTime * 1f);
             textOutline.effectDistance = Vector2.Lerp(textOutline.effectDistance, outlineBase, Time.deltaTime * 1.2f);
 
-            scoreText.text = currentScore.ToString("F0");
+            scoreText.text = currentScore.ToString();
             if(player != null) {
                 orbitColor = player.playerColor;
                 scoreText.color = orbitColor;
@@ -181,8 +180,12 @@ public class PlayerPlanets : MonoBehaviourPun {
 
     [PunRPC]
     public void SetResource(float i) {
-        float amount = Mathf.Clamp(i, 0, maxScore);
+        float amount = Mathf.Clamp(i, minScore, maxScore);
         currentScore = amount;
+
+        var curStage = Mathf.RoundToInt((i / maxScore) * PlanetStages.lightStageAmount);
+        stages.SetLightStage((int)curStage);
+
         //var newScale = transform.localScale + new Vector3(amount, amount, 0) / 50f;
         //GetComponent<UIFloat>().SetBaseScale(newScale);
     }
@@ -222,13 +225,12 @@ public class PlayerPlanets : MonoBehaviourPun {
 
     public void AddingResource(float amount) {
         if(playerNumber <= 0 || GameManager.GAME_WON) return;
-        if(currentScore < maxScore) {
+        if(currentScore + amount < maxScore) {
             AudioManager.PLAY_SOUND("Musicalhit", 0.7f, 0.95f);
-            lastAmount = amount;
-            photonView.RPC("SetResource", RpcTarget.AllBufferedViaServer, currentScore + lastAmount);
+            currentScore += amount;
+            photonView.RPC("SetResource", RpcTarget.AllBufferedViaServer, currentScore);
         }  
-        if (currentScore <= minScore) currentScore = minScore;
-        ScorePoint = true;
+       // if (currentScore <= minScore) currentScore = minScore;
     }
 
 /* 
