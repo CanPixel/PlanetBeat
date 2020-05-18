@@ -6,8 +6,9 @@ using Photon.Pun;
 using Photon.Realtime;
 
 public class PlayerPlanets : MonoBehaviourPun {
+    private PlanetStages stages;
     private PlayerShip player;
-    public int playerNumber = 0;
+    [HideInInspector] public int playerNumber = 0;
     [HideInInspector] public float currentScore;
     public float minScore = 0;
     public float maxScore = 100f;
@@ -65,6 +66,7 @@ public class PlayerPlanets : MonoBehaviourPun {
     }
 
     public void OnEnable() {
+        stages = GetComponent<PlanetStages>();
         foreach(var i in infectionNotifiers) i.color = new Color(i.color.r, i.color.g, i.color.b, 0);
         wiggleOffset = Random.Range(0, 10000f);
         basePos = transform.localPosition;
@@ -111,7 +113,7 @@ public class PlayerPlanets : MonoBehaviourPun {
         var pl = PhotonNetwork.GetPhotonView(playerNumber);
         if(pl != null) player = pl.GetComponent<PlayerShip>();
         if(player == null) return;
-        planetGlow.SetPlanet(PlanetSwitcher.GetCurrentTexturePack().planets[PlanetSwitcher.GetPlayerTintIndex(playerNumbe)]);
+//        planetGlow.SetPlanet(PlanetSwitcher.GetCurrentTexturePack().planets[PlanetSwitcher.GetPlayerTintIndex(playerNumbe)]);
         var col = new Color(r, g, b);
         player.playerColor = col;
         orbitColor = player.playerColor;
@@ -180,6 +182,10 @@ public class PlayerPlanets : MonoBehaviourPun {
     public void SetResource(float i) {
         float amount = Mathf.Clamp(i, minScore, maxScore);
         currentScore = amount;
+
+        var curStage = Mathf.RoundToInt((i / maxScore) * PlanetStages.lightStageAmount);
+        stages.SetLightStage((int)curStage);
+
         //var newScale = transform.localScale + new Vector3(amount, amount, 0) / 50f;
         //GetComponent<UIFloat>().SetBaseScale(newScale);
     }

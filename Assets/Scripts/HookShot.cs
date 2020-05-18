@@ -39,6 +39,8 @@ public class HookShot : MonoBehaviour {
     public Image HookCooldownParent;
     public Image HookCooldownIcon;
 
+    private float shootDelay = 0;
+
     void Start() {
         rope = transform.GetChild(0).GetComponent<RectTransform>();
         tip = rope.transform.GetChild(0).GetComponent<CircleCollider2D>();
@@ -46,6 +48,8 @@ public class HookShot : MonoBehaviour {
     }
 
     void Update() {
+        if(shootDelay > 0) shootDelay -= Time.deltaTime;
+
         if(grabbedObj != null) grabbedObj.transform.position = tip.transform.position;
 
         float hookScale = Mathf.Lerp(rope.transform.localScale.x, (IsShooting() ? 1 : 0.1f), Time.deltaTime * 2f);
@@ -118,6 +122,10 @@ public class HookShot : MonoBehaviour {
         }
     }
 
+    public void DelayHook() {
+        shootTimer = 0.1f;
+    }
+
     #region CUSTOM_INTERACTION_CONTROLLER
       /*   protected void ReelIn(int newData) {
             hengelData = newData;
@@ -134,12 +142,12 @@ public class HookShot : MonoBehaviour {
     #endregion
 
     public void CastHook() {
-        if(!hostPlayer.CanCastHook()) return;
+        if(!hostPlayer.CanCastHook() || IsDelayingHook()) return;
         AudioManager.PLAY_SOUND("Kick", 1f, 0.9f);
         AudioManager.PLAY_SOUND("CastHook", 0.8f, Random.Range(0.9f, 1f));
         isShootingHook = true;
         triggerHook = false;
-        shootTimer = 0.1f;
+        DelayHook();
     }
 
     protected void ResetHook() {
@@ -171,5 +179,13 @@ public class HookShot : MonoBehaviour {
 
     public bool IsShooting() {
         return isShootingHook;
+    }
+
+    public bool IsDelayingHook() {
+        return shootDelay > 0;
+    }
+
+    public void DelayShoot() {
+        shootDelay = 0.5f;
     }
 }

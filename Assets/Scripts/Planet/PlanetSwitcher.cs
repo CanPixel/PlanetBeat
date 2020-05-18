@@ -111,7 +111,7 @@ public class PlanetSwitcher : MonoBehaviour {
         }
         if(backgroundReference == null) backgroundReference = GameObject.FindGameObjectWithTag("BACKGROUND");
 
-        if(planetsReference != null) for(int i = 0; i < planetsReference.Length; i++) planetsReference[i].SetPlanet(texturePack.planets[i % typeOfPlanets]);
+//        if(planetsReference != null) for(int i = 0; i < planetsReference.Length; i++) planetsReference[i].SetPlanet(texturePack.planets[i % typeOfPlanets]);
         if(sunGlowReference != null) sunGlowReference.sprite = texturePack.blackHole.glow;
         if(sunReference != null) sunReference.sprite = texturePack.blackHole.src;
 

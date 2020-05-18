@@ -292,6 +292,7 @@ public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
         if(ReleaseAsteroidKey() && trailingObjects.Count > 0 && respawnDelay <= 0) {
             AudioManager.PLAY_SOUND("collect");
             dropAsteroid = true;
+            hookShot.DelayShoot();
         }
 
         //Particles emitten wanneer movement
@@ -332,13 +333,13 @@ public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
             }
     
         //Grapple Cooldown Code
-        if(trailingObjects.Count > 0 && trailingObjects[0].dropBoosts && canShard) {
+      /*   if(trailingObjects.Count > 0 && trailingObjects[0].dropBoosts && canShard) {
             ShardTimeInterval += Time.deltaTime;
             if(ShardTimeInterval >= 0.5f) {
                 ShardTimeInterval = 0;
                 PhotonNetwork.Instantiate("SpeedShard", SpawnStarShard.transform.position, transform.rotation); 
             }    
-        }
+        } */
     }
 
     [PunRPC]
@@ -496,7 +497,7 @@ public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
 
     [PunRPC]
     public void CastHook(int viewID) {
-        if(!CanCastHook()) return;
+        if(!CanCastHook() && !hookShot.IsDelayingHook()) return;
         if(photonView.ViewID == viewID) hookShot.CastHook();
     }
 
