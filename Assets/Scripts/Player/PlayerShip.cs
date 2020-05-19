@@ -9,7 +9,7 @@ public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
     public PlayerHighlighter playerHighlighter;
     public HookShot hookShot;
     public ParticleSystem exhaust;
-    public Image fuelBar, fuelFilling;
+    //public Image fuelBar, fuelFilling;
 
     [HideInInspector] public GameObject playerLabel;
     [HideInInspector] public Collider2D[] colliders;
@@ -108,8 +108,14 @@ public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
     public void SetTextureByPlanet(Color col) {
         //ship.sprite = PlanetSwitcher.GetPlayerTexture(col);
         var playerElm = PlanetSwitcher.GetPlayerTexture(col);
-        model = playerElm.model;
-        
+
+        Destroy(model);
+        model = Instantiate(playerElm.model);
+        model.transform.SetParent(transform);
+        model.transform.localPosition = Vector3.zero;
+        model.transform.localScale = Vector3.one * 8f;
+        model.transform.localRotation = Quaternion.Euler(0, 0, -90);
+
         if(playerLabel != null) playerLabel.GetComponent<Text>().color = col;
     }
 
@@ -177,7 +183,6 @@ public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
             asteroid.transform.TransformDirection(new Vector2(transform.forward.x * asteroid.transform.forward.x, transform.forward.y * asteroid.transform.forward.y));
             asteroid.photonView.RPC("ReleaseAsteroid", RpcTarget.All, true, asteroid.photonView.ViewID); 
         }
-        //Destroy(ship);
         Destroy(model);
         Destroy(rb);
         foreach(var i in colliders) Destroy(i);
@@ -251,13 +256,10 @@ public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
 
             flicker += Time.deltaTime;
             if(flicker > 0.2f) {
-    //            ship.enabled = !ship.enabled;
+                model.SetActive(!model.activeSelf);
                 flicker = 0;
             }
-        } else {
-  //          ship.color = Color.Lerp(ship.color, new Color(ship.color.r, ship.color.g, ship.color.b, 1), Time.deltaTime * 4f);
-  //          ship.enabled = true;
-        }
+        } else model.SetActive(true);
 
         if(IsThisClient() && respawnDelay <= 0) {
             ProcessInputs();
@@ -342,7 +344,7 @@ public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
 
     [PunRPC]
     public void SynchBoost(int viewID) {
-        fuelBar.enabled = fuelFilling.enabled != (photonView.IsMine || viewID == photonView.ViewID); 
+        //fuelBar.enabled = fuelFilling.enabled != (photonView.IsMine || viewID == photonView.ViewID); 
     }
 
     IEnumerator BoostRecharge() {
@@ -352,7 +354,7 @@ public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
         if(fuelMeter < maxFuel) {
             yield return new WaitForSeconds(waitForCooldown);
 
-            fuelBar.color = Color.white;
+            //fuelBar.color = Color.white;
             fuelMeter += Time.deltaTime;
             canBoost = true;
             waitForCooldown = 1f;

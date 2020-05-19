@@ -97,7 +97,7 @@ LightmapSettings:
     m_ShowResolutionOverlay: 1
     m_ExportTrainingData: 0
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 0
+  m_UseShadowmask: 1
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -821,32 +821,32 @@ MonoBehaviour:
       scale: 1
       tint: {r: 1, g: 1, b: 1, a: 1}
     Ship:
-    - model: {fileID: -927199367670048503, guid: ae88128a0b570414e90ac172f37cca25,
+    - model: {fileID: 261404581390707986, guid: 7c22f292af52adf4a879581ca629f6ff,
         type: 3}
       ship: {fileID: 2100000, guid: 281b90cc82e3e96409a283c49cc01bf8, type: 2}
       tail: {fileID: 2100000, guid: c672e20b8aa883a428fea5b709e83a5f, type: 2}
       tint: {r: 0.6431373, g: 0.21568628, b: 0.21568628, a: 1}
-    - model: {fileID: -927199367670048503, guid: e182b84f4d2bda644bdd5d4d8b91821d,
+    - model: {fileID: 6533487463123243897, guid: 87efed4e15800334f8eeb2c944566ae3,
         type: 3}
       ship: {fileID: 2100000, guid: a240873b934eec74eb86ff022aaf7a9c, type: 2}
       tail: {fileID: 2100000, guid: c8d28598c906386498f392832c69bf08, type: 2}
       tint: {r: 0.29411766, g: 0.25882354, b: 0.7176471, a: 1}
-    - model: {fileID: -927199367670048503, guid: 918902c21adc0ae4fadf846b9c4d8432,
+    - model: {fileID: 5695991116479600173, guid: 886f8fe7c67838546a41db64cc15a646,
         type: 3}
       ship: {fileID: 2100000, guid: c9e5ce950c486b942a803dae8b34e4c2, type: 2}
       tail: {fileID: 2100000, guid: b7d6f508c09960645ae819d8211886b3, type: 2}
       tint: {r: 0.81960785, g: 0.654902, b: 0.21960784, a: 1}
-    - model: {fileID: -927199367670048503, guid: e0488c0df90e6744585e06c0e858e069,
+    - model: {fileID: 2475017951151737019, guid: 32284d64898bada4f9073dc5ae1445a8,
         type: 3}
       ship: {fileID: 2100000, guid: 912b5df403f17234cb1c5b2764826512, type: 2}
       tail: {fileID: 2100000, guid: 40a35a5647af99d46ae04d8e21ad3437, type: 2}
       tint: {r: 0.25882354, g: 0.69803923, b: 0.27450982, a: 1}
-    - model: {fileID: -927199367670048503, guid: 2494b5fa7b3897745aa0c731d0887804,
+    - model: {fileID: 2467773516945796119, guid: aaa6ae709da5a9649a1c04a21260439e,
         type: 3}
       ship: {fileID: 2100000, guid: 9ea0fbb1de34a6446af6c5fcb437ce43, type: 2}
       tail: {fileID: 2100000, guid: 982737c26220f374dbdd6be29d7c2d26, type: 2}
       tint: {r: 0.754717, g: 0.21003917, b: 0.5329471, a: 1}
-    - model: {fileID: -927199367670048503, guid: 1e63bb83f9594a049a3d86b3f748aa23,
+    - model: {fileID: 4089548645669116044, guid: de7cd0f459f1c644b8c59b25f9fc2269,
         type: 3}
       ship: {fileID: 2100000, guid: b58ae13cc3956fc42b677f3c888275ee, type: 2}
       tail: {fileID: 2100000, guid: 1ab7dcf6b396e8d4380ecb223e0f1212, type: 2}
@@ -2043,7 +2043,7 @@ RectTransform:
   m_GameObject: {fileID: 964552070}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.6, y: 0.6, z: 1}
+  m_LocalScale: {x: 0.6, y: 0.6, z: 0.6}
   m_Children:
   - {fileID: 470184004}
   m_Father: {fileID: 975042796}
