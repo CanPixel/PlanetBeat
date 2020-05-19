@@ -55,31 +55,31 @@ Material:
     - _Cull: 2
     - _Cutoff: 0.5
     - _DarkMatter: 0.52
-    - _DistFading: 0.95
+    - _DistFading: -1.2
     - _DstBlend: 0
     - _EnvironmentReflections: 1
-    - _Formuparam: 0.73
+    - _Formuparam: 0.62
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0
-    - _Iterations: 24.09
+    - _Iterations: 17.9
     - _Metallic: 0
     - _OcclusionStrength: 1
     - _QueueOffset: 0
     - _ReceiveShadows: 1
-    - _Saturation: 0.95
+    - _Saturation: 1
     - _Smoothness: 0.5
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
-    - _Speed: 0.0000001
+    - _Speed: 0.0005
     - _SrcBlend: 1
-    - _StepSize: 0.089
-    - _Steps: 12
+    - _StepSize: 35.22
+    - _Steps: 1
     - _Surface: 0
-    - _Tile: 0.15
+    - _Tile: -0.3
     - _WorkflowMode: 1
     - _ZWrite: 1
-    - _Zoom: 1.5
+    - _Zoom: 2.75
     - _timeReduce: 2
     m_Colors:
     - _BaseColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}

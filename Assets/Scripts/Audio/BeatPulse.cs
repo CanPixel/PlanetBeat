@@ -12,6 +12,8 @@ public class BeatPulse : MonoBehaviour {
 
     public static bool BEGIN = false;
 
+    public static bool AudioPhaseSwitcher = false;
+
     private void BeatDetection() {
         _beatFull = false;
         _beatTime = 60 / _bpm;
