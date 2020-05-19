@@ -97,7 +97,7 @@ LightmapSettings:
     m_ShowResolutionOverlay: 1
     m_ExportTrainingData: 0
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 1
+  m_UseShadowmask: 0
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -488,6 +488,31 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _bpm: 130
+  PulseEvent:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  PulseMaat1:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  PulseMaat2:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  PulseMaat3:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  PulseMaat4:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
 --- !u!1 &200320304
 GameObject:
   m_ObjectHideFlags: 0
@@ -796,29 +821,35 @@ MonoBehaviour:
       scale: 1
       tint: {r: 1, g: 1, b: 1, a: 1}
     Ship:
-    - src: {fileID: 21300000, guid: 0d7ff319cb32d7741844431094f94363, type: 3}
-      glow: {fileID: 0}
-      scale: 1
+    - model: {fileID: -927199367670048503, guid: ae88128a0b570414e90ac172f37cca25,
+        type: 3}
+      ship: {fileID: 2100000, guid: 281b90cc82e3e96409a283c49cc01bf8, type: 2}
+      tail: {fileID: 2100000, guid: c672e20b8aa883a428fea5b709e83a5f, type: 2}
       tint: {r: 0.6431373, g: 0.21568628, b: 0.21568628, a: 1}
-    - src: {fileID: 21300000, guid: 3692f18999b932b49af9f875068f6793, type: 3}
-      glow: {fileID: 0}
-      scale: 1
+    - model: {fileID: -927199367670048503, guid: e182b84f4d2bda644bdd5d4d8b91821d,
+        type: 3}
+      ship: {fileID: 2100000, guid: a240873b934eec74eb86ff022aaf7a9c, type: 2}
+      tail: {fileID: 2100000, guid: c8d28598c906386498f392832c69bf08, type: 2}
       tint: {r: 0.29411766, g: 0.25882354, b: 0.7176471, a: 1}
-    - src: {fileID: 21300000, guid: 511a6f49f98ad724e9688691b5e60c28, type: 3}
-      glow: {fileID: 0}
-      scale: 1
+    - model: {fileID: -927199367670048503, guid: 918902c21adc0ae4fadf846b9c4d8432,
+        type: 3}
+      ship: {fileID: 2100000, guid: c9e5ce950c486b942a803dae8b34e4c2, type: 2}
+      tail: {fileID: 2100000, guid: b7d6f508c09960645ae819d8211886b3, type: 2}
       tint: {r: 0.81960785, g: 0.654902, b: 0.21960784, a: 1}
-    - src: {fileID: 21300000, guid: 8001bc3219f52364a872790a15725e1d, type: 3}
-      glow: {fileID: 0}
-      scale: 1
+    - model: {fileID: -927199367670048503, guid: e0488c0df90e6744585e06c0e858e069,
+        type: 3}
+      ship: {fileID: 2100000, guid: 912b5df403f17234cb1c5b2764826512, type: 2}
+      tail: {fileID: 2100000, guid: 40a35a5647af99d46ae04d8e21ad3437, type: 2}
       tint: {r: 0.25882354, g: 0.69803923, b: 0.27450982, a: 1}
-    - src: {fileID: 21300000, guid: b296abde5f9308f4f91d07510ab22b2b, type: 3}
-      glow: {fileID: 0}
-      scale: 1
+    - model: {fileID: -927199367670048503, guid: 2494b5fa7b3897745aa0c731d0887804,
+        type: 3}
+      ship: {fileID: 2100000, guid: 9ea0fbb1de34a6446af6c5fcb437ce43, type: 2}
+      tail: {fileID: 2100000, guid: 982737c26220f374dbdd6be29d7c2d26, type: 2}
       tint: {r: 0.754717, g: 0.21003917, b: 0.5329471, a: 1}
-    - src: {fileID: 21300000, guid: 12ee2e48e898b5a468ef5a24eec42f1c, type: 3}
-      glow: {fileID: 0}
-      scale: 1
+    - model: {fileID: -927199367670048503, guid: 1e63bb83f9594a049a3d86b3f748aa23,
+        type: 3}
+      ship: {fileID: 2100000, guid: b58ae13cc3956fc42b677f3c888275ee, type: 2}
+      tail: {fileID: 2100000, guid: 1ab7dcf6b396e8d4380ecb223e0f1212, type: 2}
       tint: {r: 0.16834284, g: 0.90778226, b: 0.9150943, a: 1}
   sun: {fileID: 0}
   typeOfPlanets: 6
@@ -4360,7 +4391,6 @@ MonoBehaviour:
   render: {fileID: 0}
   planetName: 
   planetColor: {r: 0, g: 0, b: 0, a: 0}
-  lightStage: 0
   randomGen: 1
 --- !u!114 &533948573622426304
 MonoBehaviour:
@@ -4566,7 +4596,6 @@ MonoBehaviour:
   render: {fileID: 0}
   planetName: 
   planetColor: {r: 0, g: 0, b: 0, a: 0}
-  lightStage: 0
   randomGen: 1
 --- !u!114 &533948573819120699
 MonoBehaviour:
@@ -5088,7 +5117,6 @@ MonoBehaviour:
   render: {fileID: 0}
   planetName: 
   planetColor: {r: 0, g: 0, b: 0, a: 0}
-  lightStage: 0
   randomGen: 1
 --- !u!114 &533948574498797984
 MonoBehaviour:
@@ -5106,7 +5134,6 @@ MonoBehaviour:
   render: {fileID: 0}
   planetName: 
   planetColor: {r: 0, g: 0, b: 0, a: 0}
-  lightStage: 0
   randomGen: 1
 --- !u!114 &533948574498797986
 MonoBehaviour:

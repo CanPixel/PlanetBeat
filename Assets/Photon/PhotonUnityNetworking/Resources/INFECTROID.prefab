@@ -417,7 +417,7 @@ MonoBehaviour:
   grabDelay: 0
   infectDelay: 0.75
   penalty: 1
-  destroyAfter: 20
+  destroyAfter: 22
   beginThrust: 0.4
   curve: 0
   swirlDuration: 2

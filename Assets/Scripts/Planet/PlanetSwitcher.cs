@@ -8,9 +8,9 @@ public class PlanetSwitcher : MonoBehaviour {
 
     [HideInInspector] public BlackHoleTextures sun;
 
-   private Dictionary<Color32, Sprite> colorPlayerTexture = new Dictionary<Color32, Sprite>();
+   private Dictionary<Color32, PlayerElement> colorPlayerTexture = new Dictionary<Color32, PlayerElement>();
 
-   public static Sprite GetPlayerTexture(Color col) {
+   public static PlayerElement GetPlayerTexture(Color col) {
        if(instance == null) return null;
        return instance.colorPlayerTexture[col];
    }
@@ -29,7 +29,7 @@ public class PlanetSwitcher : MonoBehaviour {
         public TextureElement asteroid;
         public TextureElement blackHole;
         public TextureElement Background;
-        public TextureElement[] Ship;
+        public PlayerElement[] Ship;
     }
 
     [System.Serializable]
@@ -43,6 +43,15 @@ public class PlanetSwitcher : MonoBehaviour {
         [Range(0, 5)]
         public float scale = 1;
         //public Color tint = Color.white;
+    }
+
+    [System.Serializable]
+    public class PlayerElement {
+        public GameObject model;
+        public Material ship, tail;
+        //[Range(0, 5)]
+        //public float scale = 1;
+        public Color tint = Color.white;
     }
 
     [System.Serializable]
@@ -123,7 +132,7 @@ public class PlanetSwitcher : MonoBehaviour {
         }
 
         if(colorPlayerTexture.Count <= 0) {
-            for(int i = 0; i < texturePack.Ship.Length; i++) colorPlayerTexture.Add(texturePack.Ship[i].tint, texturePack.Ship[i].src);
+            for(int i = 0; i < texturePack.Ship.Length; i++) colorPlayerTexture.Add(texturePack.Ship[i].tint, texturePack.Ship[i]);
         }
     }
 }

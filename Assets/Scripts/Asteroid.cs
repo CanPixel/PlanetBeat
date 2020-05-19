@@ -40,7 +40,6 @@ public class Asteroid : PickupableObject {
 
     [Header("PHYSICS")]
     public float defaultRbDrag = 0.2f;
-    public float inPlayerOrbitRbDrag = 0.6f;
     public float maxInOrbitTime = 5;
     public float outOrbitForce = 40;
     public float heldScaleReduction = 1.6f;
@@ -240,7 +239,7 @@ public class Asteroid : PickupableObject {
     [PunRPC]
     public void ExplodeAsteroid(int viewID) {
         if(photonView.ViewID == viewID) {
-            Camera.main.GetComponent<ScreenShake>().Turn(0.8f);
+            Camera.main.GetComponent<ScreenShake>().Turn(0.7f);
             AudioManager.PLAY_SOUND("Explode", 1f, Random.Range(0.95f, 1.05f));
             Instantiate(explodeParticles, transform.position, Quaternion.identity);
             PhotonNetwork.InstantiateSceneObject("Shockwave", transform.position, Quaternion.identity);
@@ -348,12 +347,10 @@ public class Asteroid : PickupableObject {
             if(playerTagsManager != null && playerTagsManager.tagNum != 0) {
                 if(ownerPlayer.playerNumber == playerTagsManager.tagNum) {
                     inOrbitTimer += Time.deltaTime;
-                    rb.drag = inPlayerOrbitRbDrag;
 
                     if(inOrbitTimer >= maxInOrbitTime) canConsume = true;
                 } else {
                     inOrbitTimer = 0;
-                    rb.drag = defaultRbDrag;
                 }
             } if(playerPlanets != null && playerTagsManager.tagNum != playerPlanets.playerNumber) {
                 //Throw the resource out of the orbit
