@@ -131,9 +131,7 @@ GameObject:
   - component: {fileID: 5336174367327457932}
   - component: {fileID: 5336174367327457939}
   - component: {fileID: 5336174367327457940}
-  - component: {fileID: 5336174367327457942}
   - component: {fileID: 5336174367327457938}
-  - component: {fileID: 6973405591163161816}
   - component: {fileID: 6779712837694326453}
   - component: {fileID: -3640689715881509520}
   - component: {fileID: 9101083135672933921}
@@ -192,8 +190,6 @@ MonoBehaviour:
   orbit: {fileID: 5336174368953841514}
   rechargeBar: {fileID: 270711317900668934}
   trails: {fileID: 5336174368840663174}
-  wiggleSpeed: 0
-  wiggleRange: 500
   maxScale: 2.2
   orbitScaleReduction:
     serializedVersion: 2
@@ -241,31 +237,6 @@ MonoBehaviour:
   planetName: 
   planetColor: {r: 0.6431373, g: 0.21568628, b: 0.21568628, a: 1}
   randomGen: 0
---- !u!114 &5336174367327457942
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5336174367327457933}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 772a455a39b3206489ffbac9b000398f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  scaleSpeed: 0.5
-  translateSpeed: 0.7
-  rotateSpeed: 0.5
-  posDir: {x: 1, y: 3, z: 0}
-  scaleDir: {x: 0, y: 0, z: 0}
-  rotDir: {x: 0, y: 0, z: 1}
-  posFreq: 5
-  scaleFreq: 0
-  posAmp: 2
-  scaleAmp: 1
-  rotFreq: 2
-  rotAmp: 15
-  scaleOffset: {x: 0, y: 0, z: 0}
 --- !u!58 &5336174367327457938
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -282,42 +253,6 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 200
---- !u!114 &6973405591163161816
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5336174367327457933}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ecab13549aed208489fcd1cc90964c90, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  beatSection: 0
-  _audioMixer: {fileID: 0}
-  beatEvents:
-  - name: Add Score On Beat
-    Event:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 5336174367327457939}
-          m_MethodName: AddOnBeat
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-      m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null
-    src: {fileID: 0}
-    BeatTime: 3
-    afterBeat: 0
-    delay: 0
 --- !u!114 &6779712837694326453
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -374,16 +309,16 @@ MonoBehaviour:
     moons: 0
     material: {fileID: 2100000, guid: 79bc63e8908e39c45a59efde220ed91c, type: 2}
   - lightIntensity: 0.25
-    moons: 1
+    moons: 0
     material: {fileID: 2100000, guid: 2c3c14a350ace224ea9560608851994a, type: 2}
   - lightIntensity: 0.5
-    moons: 2
+    moons: 1
     material: {fileID: 2100000, guid: 759c5a1db6f6a584bb49b221ccc119e9, type: 2}
   - lightIntensity: 0.75
-    moons: 3
+    moons: 2
     material: {fileID: 2100000, guid: fdf48b9de5e371849876fd591fde406e, type: 2}
   - lightIntensity: 1
-    moons: 4
+    moons: 3
     material: {fileID: 2100000, guid: 94e69cafade990a42a21d7ecabc37a2b, type: 2}
 --- !u!1 &5336174368059501567
 GameObject:
@@ -1051,16 +986,6 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 6061447726823252456, guid: f3469c6a1e99fd544b899569b8f579c8,
-        type: 3}
-      propertyPath: m_FillAmount
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6061447726823252456, guid: f3469c6a1e99fd544b899569b8f579c8,
-        type: 3}
-      propertyPath: m_Color.a
-      value: 0.6156863
-      objectReference: {fileID: 0}
     - target: {fileID: 6061447726823252457, guid: f3469c6a1e99fd544b899569b8f579c8,
         type: 3}
       propertyPath: m_SizeDelta.y
@@ -1076,8 +1001,24 @@ PrefabInstance:
       propertyPath: m_Color.a
       value: 0.5921569
       objectReference: {fileID: 0}
+    - target: {fileID: 6061447726823252456, guid: f3469c6a1e99fd544b899569b8f579c8,
+        type: 3}
+      propertyPath: m_FillAmount
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6061447726823252456, guid: f3469c6a1e99fd544b899569b8f579c8,
+        type: 3}
+      propertyPath: m_Color.a
+      value: 0.6156863
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f3469c6a1e99fd544b899569b8f579c8, type: 3}
+--- !u!1 &270711317900668954 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6061447726742359388, guid: f3469c6a1e99fd544b899569b8f579c8,
+    type: 3}
+  m_PrefabInstance: {fileID: 6331872053854371142}
+  m_PrefabAsset: {fileID: 0}
 --- !u!224 &270711317900668933 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6061447726742359363, guid: f3469c6a1e99fd544b899569b8f579c8,
@@ -1096,12 +1037,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf304c508eb07314c97190c101aee50c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &270711317900668954 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6061447726742359388, guid: f3469c6a1e99fd544b899569b8f579c8,
-    type: 3}
-  m_PrefabInstance: {fileID: 6331872053854371142}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &7658683664461611565
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1202,15 +1137,15 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 7658683664461611565}
   m_PrefabAsset: {fileID: 0}
---- !u!23 &95744570482962424 stripped
-MeshRenderer:
-  m_CorrespondingSourceObject: {fileID: -1504981713932161579, guid: a318da0dbbd934d4d8b7646a21e36f63,
-    type: 3}
-  m_PrefabInstance: {fileID: 7658683664461611565}
-  m_PrefabAsset: {fileID: 0}
 --- !u!33 &5938187727379157761 stripped
 MeshFilter:
   m_CorrespondingSourceObject: {fileID: -5178661895559278292, guid: a318da0dbbd934d4d8b7646a21e36f63,
+    type: 3}
+  m_PrefabInstance: {fileID: 7658683664461611565}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &95744570482962424 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -1504981713932161579, guid: a318da0dbbd934d4d8b7646a21e36f63,
     type: 3}
   m_PrefabInstance: {fileID: 7658683664461611565}
   m_PrefabAsset: {fileID: 0}
