@@ -15,11 +15,11 @@ public class PlayerPlanets : MonoBehaviourPun {
     public Text scoreText, increasePopupTxt;
     private Color orbitColor;
     public TrailRenderer orbitTrail; 
-    public GameObject orbit;
+    public Orbit orbit;
     public EliminationBar rechargeBar;
     public TrailRenderer trails;
 
-    //[HideInInspector] public float wiggleSpeed = 10, wiggleRange = 100f;
+    public Color greenIncrease, redDecrease;
 
     public float maxScale = 4;
     private Vector3 baseScale;
@@ -33,8 +33,9 @@ public class PlayerPlanets : MonoBehaviourPun {
     private Vector2 outlineBase;
     private Vector2 scoreBaseScale;
 
-    [Space(5)]
-    public Image[] infectionNotifiers; 
+    private float baseWarningScale;
+
+    public Image warningSign, warningArrow;
     [HideInInspector] public bool infected = false;
 
     [HideInInspector] public float eliminationTimer;
@@ -67,11 +68,10 @@ public class PlayerPlanets : MonoBehaviourPun {
 
     public void OnEnable() {
         stages = GetComponent<PlanetStages>();
-        foreach(var i in infectionNotifiers) i.color = new Color(i.color.r, i.color.g, i.color.b, 0);
-        //wiggleOffset = Random.Range(0, 10000f);
         basePos = transform.localPosition;
         planetGlow = GetComponent<PlanetGlow>();
         rechargeBar.SetAlpha(0);
+        baseWarningScale = warningSign.transform.localScale.x;
     }
 
     void Start() {
@@ -139,7 +139,16 @@ public class PlayerPlanets : MonoBehaviourPun {
     }
 
     void Update() {
-        foreach(var i in infectionNotifiers) i.color = Color.Lerp(i.color, new Color(i.color.r, i.color.g, i.color.b, (infected && player != null && player.photonView.IsMine) ? 0.8f : 0), Time.deltaTime * 2f);
+        if(player != null && player.photonView.IsMine) {
+            if(infected) {
+                warningSign.transform.position = Vector3.Lerp(warningSign.transform.position, player.transform.position + Vector3.up / 1.5f, Time.deltaTime * 4f);
+                warningSign.transform.localScale = Vector3.Lerp(warningSign.transform.localScale, Vector3.one * baseWarningScale + (new Vector3(1.2f, 1.2f, 1.2f) * Mathf.Sin(Time.time * 10f) * 0.02f), Time.deltaTime * 4f);
+                warningArrow.transform.position = Vector3.Lerp(warningArrow.transform.position, transform.position + (new Vector3(1, 0, 0) * Mathf.Sin(Time.time * 10f) * 0.2f) + Vector3.right * 1.5f, Time.deltaTime * 4f);
+            } else {
+                warningSign.transform.position = Vector3.Lerp(warningSign.transform.position, new Vector3(0, 10, 0), Time.deltaTime * 8f);
+                warningArrow.transform.position = Vector3.Lerp(warningArrow.transform.position, new Vector3(0, 10, 0), Time.deltaTime * 8f);
+            }
+        }
 
         rechargeBar.LerpAlpha(0, 4f);
 
@@ -160,7 +169,6 @@ public class PlayerPlanets : MonoBehaviourPun {
 
         orbit.transform.localScale = Vector3.Lerp(orbit.transform.localScale, transform.localScale / orbitScaleReduction.Evaluate(currentScore / maxScore), Time.deltaTime * 2f);
         transform.localScale = Vector3.Lerp(transform.localScale, new Vector3(Mathf.Clamp(transform.localScale.x, 0, maxScale), Mathf.Clamp(transform.localScale.y, 0, maxScale), Mathf.Clamp(transform.localScale.z, 0, maxScale)), Time.deltaTime * 2f);
-        //transform.localPosition = Vector3.Lerp(transform.localPosition, new Vector3(basePos.x + Mathf.Sin(Time.time * wiggleSpeed + wiggleOffset) * wiggleRange, basePos.y + Mathf.Sin(Time.time * wiggleSpeed + wiggleOffset) * wiggleRange, basePos.z), Time.deltaTime * 2f);
 
         if(scoreText != null) {
             scoreText.transform.position = transform.position - new Vector3(0, 0.05f, 1);
@@ -201,10 +209,7 @@ public class PlayerPlanets : MonoBehaviourPun {
         if(ID == playerNumber) {
             trails.Clear();
             trails.emitting = false;
-           // if(player != null) GameManager.DESTROY_SERVER_OBJECT(player);
             if(player != null) player.Destroy();
-            //GameManager.DESTROY_SERVER_OBJECT(gameObject);
-            //PhotonNetwork.Destroy(gameObject);
             Destroy(gameObject);
         }
     }
@@ -220,6 +225,7 @@ public class PlayerPlanets : MonoBehaviourPun {
         if(currentScore - penalty >= 0) currentScore -= penalty;
         else currentScore = 0;
         increasePopupTxt.enabled = true;    
+        increasePopupTxt.color = redDecrease;
         increasePopupTxt.text = "-" + penalty.ToString() + "!";
         increasePopupHideTimer = 0.1f;
         increasePopupTxt.transform.localScale = Vector3.one * increasePopupBaseSize;
@@ -231,24 +237,13 @@ public class PlayerPlanets : MonoBehaviourPun {
         currentScore += amount;
         if(currentScore > maxScore) currentScore = maxScore;
         photonView.RPC("SetResource", RpcTarget.AllBufferedViaServer, currentScore);
-    }
 
-/* 
-    public void AdddOnBeat() {
-        if(player == null || playerNumber <= 0 || GameManager.GAME_WON || !ScorePoint) return;
-        if(ScorePoint) {
-            if (currentScore < maxScore) {
-                AudioManager.PLAY_SOUND("Musicalhit", 3.5f);
-                var newScale = transform.localScale + new Vector3(lastAmount, lastAmount, 0) / 150f;
-                newScale = new Vector3(Mathf.Clamp(newScale.x, 0, maxScale), Mathf.Clamp(newScale.y, 0, maxScale), Mathf.Clamp(newScale.z, 0, maxScale));
-                textOutline.effectDistance *= 2.25f;
-                scoreText.transform.localScale *= 1.2f;
-                GetComponent<UIFloat>().SetBaseScale(newScale);
-            }  
-            AudioManager.PLAY_SOUND("collect", 2.5f);
-            ScorePoint = false;
-        }
-    } */
+        increasePopupTxt.enabled = true;    
+        increasePopupTxt.color = greenIncrease;
+        increasePopupTxt.text = "+" + amount.ToString() + "!";
+        increasePopupHideTimer = 0.1f;
+        increasePopupTxt.transform.localScale = Vector3.one * increasePopupBaseSize;
+    }
 
     protected void WinGame() {
         photonView.RPC("SynchWin", RpcTarget.AllViaServer, player.photonView.ViewID);

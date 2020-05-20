@@ -28,6 +28,8 @@ public class EliminationPhase : MonoBehaviourPun {
     }
 
     void Update() {
+        if(!GameManager.GAME_STARTED) return; 
+
         //KING CROWN
         PlayerPlanets highest = null;
         foreach(var i in planets) if((highest == null || i.currentScore > highest.currentScore) && i.HasPlayer() && i.currentScore > 0) highest = i;

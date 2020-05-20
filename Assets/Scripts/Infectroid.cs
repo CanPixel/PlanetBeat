@@ -51,7 +51,6 @@ public class Infectroid : PickupableObject {
     public Text increasePopupTxt;
     public GameObject explodeParticles;
 
-   // [HideInInspector] public bool inOrbit = false;
     [HideInInspector] public bool giveTag = false;
     [HideInInspector] public float inOrbitTimer;
 
@@ -63,11 +62,6 @@ public class Infectroid : PickupableObject {
     public int penalty = 2;
     private bool inPlanet = false;
     public float destroyAfter = 10;
-
-   // [Header("PHYSICS")]
-    //public float defaultRbDrag = 0.2f;
-    //public float maxInOrbitTime = 5;
-    //public float outOrbitForce = 40;
 
     [Header("SPAWN")]
     public float beginThrust = 0.4f;
@@ -103,8 +97,6 @@ public class Infectroid : PickupableObject {
         network = GetComponent<AsteroidNetwork>();
         rb = GetComponent<Rigidbody2D>();
         
-        //rb.drag = defaultRbDrag;// - .15f;
-
         SetTexture(PlanetSwitcher.GetCurrentTexturePack());
         rb.AddForce(transform.up * Thrust);
         LinksOfRechts = Random.Range(0, 2);
@@ -127,11 +119,6 @@ public class Infectroid : PickupableObject {
             increasePopupTxt.text = ((int)Mathf.Clamp((destroyAfter - spawnTimer) + 1, 0, 5)).ToString();
             increasePopupTxt.transform.localScale = Vector3.one * increasePopupBaseSize;
         }
-     /*    if(infectTime > infectDelay && playerPlanets.currentScore > 0) {
-            playerPlanets.Explode(penalty);
-            this.infectTime = 0;
-        } else if(!PhotonNetwork.IsMasterClient) this.infectTime = infectTime;
-*/
         if(PhotonNetwork.IsMasterClient) return;
         this.spawnTimer = timer;
         this.timeBombTick = timeBombTick;
@@ -170,7 +157,7 @@ public class Infectroid : PickupableObject {
             return;
         }
 
-        if(PhotonNetwork.IsMasterClient) {
+        if(PhotonNetwork.IsMasterClient && photonView.ViewID > 0) {
             spawnTimer += Time.deltaTime;
 
             if(infectTime > infectDelay && playerPlanets != null && playerPlanets.currentScore > 0) {
@@ -202,8 +189,14 @@ public class Infectroid : PickupableObject {
             FetchAsteroid(hookShot.hostPlayer);
             hookShot.CatchObject(gameObject);
             collectTimer = grabDelay; 
-            photonView.RPC("SynchCollectTimer", RpcTarget.All, collectTimer);
-            photonView.RPC("SetAsteroidOwner", RpcTarget.AllBufferedViaServer, ownerPlayer.photonView.ViewID, false);
+
+            if(photonView.ViewID > 0) {
+                photonView.RPC("SynchCollectTimer", RpcTarget.All, collectTimer);
+                photonView.RPC("SetAsteroidOwner", RpcTarget.AllBufferedViaServer, ownerPlayer.photonView.ViewID, false);
+            } else {
+                SynchCollectTimer(collectTimer);
+                SetAsteroidOwner(ownerPlayer.photonView.ViewID, false);
+            }
         }
     }
 
@@ -250,8 +243,8 @@ public class Infectroid : PickupableObject {
             if(par == null) return;
             var planet = par.GetComponent<PlayerPlanets>();
             if(planet != null) planet.infected = false;
-            //inPlanet = false;
-            //infectTime = 0;
+
+            if(gameObject.tag == "InfectroidTutorial" && held) PlayerTutorial.tutorialStepsByName["Infectroid"].completed = true;
         }
     }
 

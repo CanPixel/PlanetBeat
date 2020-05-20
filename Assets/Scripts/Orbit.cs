@@ -47,25 +47,25 @@ public class Orbit : MonoBehaviour {
             var orientation = (col.transform.position - transform.position).normalized;
             col.GetComponent<Rigidbody2D>().AddForce(orientation * totalForce);
 
-        } else if(col.tag == "Resource" || col.tag == "Powerup") {
+        } else if(col.tag == "Resource" || col.tag == "Powerup" || col.tag == "InfectroidTutorial") {
             if(col.GetComponent<PickupableObject>().held) return; //Influence of gravity bij trailingObjects 
             var dist = Vector3.Distance(col.transform.position, transform.position);
             float totalForce = -(planetForceResource * (Mass / 2f)); 
-            if(col.tag == "Powerup") totalForce = -(planetForcePowerup * (Mass / 2f)); 
+            if(col.tag == "Powerup" || col.tag == "InfectroidTutorial") totalForce = -(planetForcePowerup * (Mass / 2f)); 
             var orientation = (col.transform.position - transform.position).normalized;
             col.GetComponent<Rigidbody2D>().AddForce(orientation * totalForce);
-        }
+        } 
     }
 
     void OnTriggerExit2D(Collider2D col) {
         if(col.tag == "PLAYERSHIP") {
             var ship = col.GetComponent<PlayerShip>();
             if(ship != null) ship.NeutralizeForce(PlayerExitVelocityReduction);
-        } else if(col.tag == "Resource" || col.tag == "Powerup") {
+        } else if(col.tag == "Resource" || col.tag == "Powerup" || col.tag == "InfectroidTutorial") {
             var rb = col.GetComponent<Rigidbody2D>();
             if(rb != null) {
                 if(col.tag == "Resource") rb.velocity /= ResourceExitVelocityReduction;
-                else if(col.tag == "Powerup") rb.velocity /= PowerupExitVelocityReduction;
+                else if(col.tag == "Powerup" || col.tag == "InfectroidTutorial") rb.velocity /= PowerupExitVelocityReduction;
             }
         }
     } 

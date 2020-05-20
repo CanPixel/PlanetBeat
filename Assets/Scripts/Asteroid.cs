@@ -26,7 +26,8 @@ public class Asteroid : PickupableObject {
     private float currentIncreaseDelay = 4;
     public Vector2Int increaseRate = new Vector2Int(3, 5);
     private int currentIncrease;
-    private float value, increaseValueTimer;
+    [HideInInspector] public float value;
+    private float increaseValueTimer;
 
     //EXPLOSION
     public GameObject explodeParticles;
@@ -67,7 +68,6 @@ public class Asteroid : PickupableObject {
 
     private Vector3 baseScale, explosionExpand = Vector3.zero;
     private float baseTextScale, increasePopupBaseSize, increasePopupHideTimer;
-    private bool scaleBack = false;
     private float timeBombTick = 0;
 
     private Vector3 standardGlowScale;
@@ -102,7 +102,8 @@ public class Asteroid : PickupableObject {
         animator.SetBool("res-low", true);
 
         baseScale = transform.localScale;
-        if(PhotonNetwork.IsMasterClient) {
+        
+        if(PhotonNetwork.IsMasterClient && photonView.ViewID > 0) {
             stablePhaseTime = Random.Range(StablePhase.x, StablePhase.y);
             unstablePhaseTime = Random.Range(UnstablePhase.x, UnstablePhase.y);
             currentIncreaseDelay = Random.Range(increaseValueDelay.x, increaseValueDelay.y);
@@ -148,6 +149,8 @@ public class Asteroid : PickupableObject {
     }
 
     void Update() {
+        if(gameObject.tag == "ResourceTutorial" && held) PlayerTutorial.tutorialStepsByName["GrabResource"].completed = true;
+
         float fade = (collectTimer <= 0f) ? 1 : 0.4f;
         src.color = glow.color = Color.Lerp(src.color, new Color(src.color.r, src.color.g, src.color.b, fade), Time.deltaTime * 5f);
         scoreText.color = Color.Lerp(scoreText.color, new Color(scoreText.color.r, scoreText.color.g, scoreText.color.b, fade), Time.deltaTime * 5f);
@@ -162,7 +165,7 @@ public class Asteroid : PickupableObject {
         scoreText.text = value.ToString();
         scoreText.transform.rotation = Quaternion.identity;
         
-        if(PhotonNetwork.IsMasterClient) {
+        if(PhotonNetwork.IsMasterClient && photonView.ViewID > 0) {
             spawnTimer += Time.deltaTime;
             photonView.RPC("SynchTimer", RpcTarget.All, spawnTimer, timeBombTick);
         }
@@ -188,7 +191,6 @@ public class Asteroid : PickupableObject {
             }
             if(bombTimer > 1f / tickBomb) {
                 explosionExpand = new Vector3(1.2f, 1.2f, 1.2f) * Mathf.Sin(Time.time * tickBomb) / 20f;
-               // transform.localScale = Vector3.Lerp(transform.localScale, baseScale + explosionExpand, Time.deltaTime * tickBomb);
                 distortionFX.SetIntensity(tickBomb / 1000f);
             }
             if(bombTimer > unstablePhaseTime / 2f) distortionFX.gameObject.SetActive(true); 
@@ -226,8 +228,6 @@ public class Asteroid : PickupableObject {
                 increaseValueTimer = 0;
             }
         }
-
-        //if(scaleBack) transform.localScale = Vector3.Lerp(transform.localScale, baseScale, Time.deltaTime * 2f);
 
         if(held) ReleaseAsteroid(false, photonView.ViewID);
         else ReleasedTimer();  
@@ -275,14 +275,19 @@ public class Asteroid : PickupableObject {
         AudioManager.PLAY_SOUND("kickVerb", 1, Random.Range(1f, 1.1f));
         AudioManager.PLAY_SOUND("Reel");
         if((!held || (held && ownerPlayer != null && ownerPlayer.photonView.ViewID != hookShot.hostPlayer.photonView.ViewID))) {
-            scaleBack = false;
             transform.position = hookShot.transform.position;
             ownerPlayer = hookShot.hostPlayer;
             FetchAsteroid(hookShot.hostPlayer);
             hookShot.CatchObject(gameObject);
             collectTimer = grabDelay; 
-            photonView.RPC("SynchCollectTimer", RpcTarget.All, collectTimer);
-            photonView.RPC("SetAsteroidOwner", RpcTarget.AllBufferedViaServer, ownerPlayer.photonView.ViewID, false);
+
+            if(photonView.ViewID > 0) {
+                photonView.RPC("SynchCollectTimer", RpcTarget.All, collectTimer);
+                photonView.RPC("SetAsteroidOwner", RpcTarget.AllBufferedViaServer, ownerPlayer.photonView.ViewID, false);
+            } else {
+                SynchCollectTimer(collectTimer);
+                SetAsteroidOwner(ownerPlayer.photonView.ViewID, false);
+            }
         }
     }
 
@@ -321,6 +326,12 @@ public class Asteroid : PickupableObject {
             inOrbit = true;
             if(!held) OrbitAroundPlanet();
         }
+
+        //Tutorial resource orbit
+/*         if(gameObject.tag == "ResourceTutorial" && col.gameObject.tag == "ORBIT") {
+            inOrbit = true;
+            if(!held) OrbitAroundPlanet();
+        } */
     }
 
     void OnTriggerExit2D(Collider2D col) {
@@ -374,9 +385,12 @@ public class Asteroid : PickupableObject {
     }
 
     public void ConsumeResource() {
+        if(gameObject.tag == "ResourceTutorial" && held) value = 10;
         playerPlanets.AddingResource(value);
         GameManager.DESTROY_SERVER_OBJECT(gameObject);
-        if(photonView != null) photonView.RPC("DestroyAsteroid", RpcTarget.All, photonView.ViewID);
+        if(photonView != null && photonView.ViewID > 0) {
+            photonView.RPC("DestroyAsteroid", RpcTarget.All, photonView.ViewID);
+        }
         Destroy(gameObject);
         canConsume = false;
     }
@@ -396,7 +410,7 @@ public class Asteroid : PickupableObject {
                 playerTagsManager.runTagTimer = true;
                 held = false;
                 canScore = true;
-                scaleBack = true;
+                //scaleBack = true;
                 ReleasedTimer();
                 ForceRelease();
             } else {

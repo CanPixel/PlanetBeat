@@ -5271,7 +5271,7 @@ GameObject:
   - component: {fileID: 1322858586633076828}
   - component: {fileID: 3388065898890626638}
   m_Layer: 10
-  m_Name: MoveIcon
+  m_Name: Icon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5286,14 +5286,14 @@ RectTransform:
   m_GameObject: {fileID: 2450414769214699767}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2, y: 2, z: 1}
+  m_LocalScale: {x: 2.5, y: 2.5, z: 1}
   m_Children: []
   m_Father: {fileID: 2964717202730641097}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 977, y: -18.9}
+  m_AnchoredPosition: {x: 977, y: -19}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1322858586633076828
@@ -5345,7 +5345,7 @@ GameObject:
   - component: {fileID: 1495154344142073387}
   - component: {fileID: 1405711072344230296}
   m_Layer: 10
-  m_Name: PlayerHighlighter
+  m_Name: PlayerTutorial
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5383,12 +5383,122 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9f8ccfc462efb549bbca75739c724d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  resourcePrefab: {fileID: 8069275902880659580, guid: d0585bb223369e6458f8c3db972d5bc8,
+    type: 3}
+  infectroidPrefab: {fileID: 8069275902880659580, guid: 7b6b88afab4aba24da93c6831e440dc3,
+    type: 3}
+  icon: {fileID: 3388065898890626638}
   segments: 50
+  resourceOrbitSpeed: 0.1
   host: {fileID: 3506364950220654683}
   images:
   - {fileID: 6420104764764734143}
   - {fileID: 8764189009916023868}
   - {fileID: 3388065898890626638}
+  tutorialSteps:
+  - tutorialName: THIS IS YOUR PLANET!
+    text: THIS IS YOUR PLANET!
+    image: {fileID: 21300000, guid: 7a55722a414ec884f8072b034e7da0ad, type: 3}
+    imagePos: {x: 977, y: -19, z: 0}
+    textPos: {x: 0, y: 0, z: 0}
+    duration: 3
+    completeAfterDuration: 1
+    completed: 0
+    tutorialEvent:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+  - tutorialName: GrabResource
+    text: Press <color='#FF00FF'>space</color> to grab objects <br> <color='#FF00FF'><
+      ></color> keys to rotate ship
+    image: {fileID: 21300000, guid: 55426068ebf08964aa117576335130af, type: 3}
+    imagePos: {x: 1200, y: 20, z: 0}
+    textPos: {x: 0, y: 0, z: 0}
+    duration: 2
+    completeAfterDuration: 0
+    completed: 0
+    tutorialEvent:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1495154344142073387}
+          m_MethodName: SpawnTutorialResource
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+      m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+  - tutorialName: Collecting
+    text: Collect these to make your planet grow!
+    image: {fileID: 0}
+    imagePos: {x: 3000, y: -19, z: 0}
+    textPos: {x: 3000, y: 0, z: 0}
+    duration: 5
+    completeAfterDuration: 1
+    completed: 0
+    tutorialEvent:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+  - tutorialName: Infectroid
+    text: Keep this object away from your planet!
+    image: {fileID: 0}
+    imagePos: {x: 3000, y: -19, z: 0}
+    textPos: {x: 0, y: 0, z: 0}
+    duration: 3
+    completeAfterDuration: 0
+    completed: 0
+    tutorialEvent:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1495154344142073387}
+          m_MethodName: SpawnTutorialInfectroid
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+      m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+  - tutorialName: Recap
+    text: Waiting for other players... <br> <br> <color='#ff00ff'>L Shift</color>
+      to Boost <br> <color='#ff00ff'>< and ></color> to steer <br> <color='#ff00ff'>^</color>
+      to thrust <br>  <color='#ff00ff'>Space</color> to throw <br> <color='#ff00ff'>Space</color>
+      to shoot grapple
+    image: {fileID: 0}
+    imagePos: {x: 3000, y: -19, z: 0}
+    textPos: {x: 0, y: 0, z: 0}
+    duration: 5
+    completeAfterDuration: 0
+    completed: 0
+    tutorialEvent:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1495154344142073387}
+          m_MethodName: ResetOrbitColor
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+      m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+  tutorialProgress: 0
 --- !u!120 &1405711072344230296
 LineRenderer:
   m_ObjectHideFlags: 0
@@ -5570,7 +5680,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1556da50f9294094188d543941f9cb99, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerHighlighter: {fileID: 1495154344142073387}
+  playerTutorial: {fileID: 1495154344142073387}
   hookShot: {fileID: 1446986111338685776}
   exhaust: {fileID: 1446986110815659415}
   exhaustLight: {fileID: 9118803508655691075}
@@ -5597,6 +5707,7 @@ MonoBehaviour:
   stopDrag: 1.5
   maxAsteroids: 1
   trailingSpeed: 15
+  throwForce: 34
   throwingReduction: 0.4
   heldResourceScaleFactor: 0.09
   playerName: {fileID: 0}
@@ -5958,7 +6069,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2092540698933821552
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6161,7 +6272,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -90}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 20000, y: 0}
+  m_AnchoredPosition: {x: 20000, y: -500}
   m_SizeDelta: {x: 2500, y: 2000}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8979932784077228415

@@ -27,6 +27,8 @@ TagManager:
   - SPEEDSHARD
   - Powerup
   - MOON
+  - ResourceTutorial
+  - InfectroidTutorial
   layers:
   - Default
   - TransparentFX

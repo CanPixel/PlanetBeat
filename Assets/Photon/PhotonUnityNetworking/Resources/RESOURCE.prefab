@@ -519,6 +519,7 @@ MonoBehaviour:
   increaseValueDelay: {x: 3, y: 3}
   maxValue: 20
   increaseRate: {x: 2, y: 2}
+  value: 0
   explodeParticles: {fileID: 1067106092621830195, guid: cd0b03d048d9905489b14408260a7a72,
     type: 3}
   explosionColor: {r: 0.5529412, g: 0.20392157, b: 1, a: 1}
@@ -848,17 +849,17 @@ PrefabInstance:
     - target: {fileID: 4513744255575208676, guid: f142e1716466ae2488cd108860534300,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 3000
+      value: 4000
       objectReference: {fileID: 0}
     - target: {fileID: 4513744255575208676, guid: f142e1716466ae2488cd108860534300,
         type: 3}
       propertyPath: m_LocalScale.y
-      value: 3000
+      value: 4000
       objectReference: {fileID: 0}
     - target: {fileID: 4513744255575208676, guid: f142e1716466ae2488cd108860534300,
         type: 3}
       propertyPath: m_LocalScale.z
-      value: 3000
+      value: 4000
       objectReference: {fileID: 0}
     - target: {fileID: 4513744255575208679, guid: f142e1716466ae2488cd108860534300,
         type: 3}

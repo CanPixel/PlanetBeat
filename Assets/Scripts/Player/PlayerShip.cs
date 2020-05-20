@@ -6,11 +6,10 @@ using Photon.Realtime;
 using UnityEngine.UI;
 
 public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
-    public PlayerHighlighter playerHighlighter;
+    public PlayerTutorial playerTutorial;
     public HookShot hookShot;
     public ParticleSystem exhaust;
     public Light exhaustLight;
-    //public Image fuelBar, fuelFilling;
 
     [HideInInspector] public GameObject playerLabel;
     [HideInInspector] public Collider2D[] colliders;
@@ -29,12 +28,10 @@ public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
     public float cooldownPenalty; 
 
     [Header("PLAYER VALUES")]
-    //public Image ship;
     public GameObject model;
     public int playerNumber;
     public Color playerColor;
     [Space(10)]
-//    private CustomController customController;
     public Component[] networkIgnore;
 
     #region MOVEMENT
@@ -65,6 +62,7 @@ public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
     private float velocity, turn;
     [Header("GRAPPLE")]
     public float trailingSpeed = 8f;
+    public float throwForce = 34;
 
     [Range(0.1f,10)]
     public float throwingReduction = 1f; 
@@ -166,6 +164,11 @@ public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
         transform.position = photonView.transform.position = Vector3.Lerp(transform.position, new Vector3(planet.transform.position.x, planet.transform.position.y, -1.1f), Time.deltaTime);
     }
 
+    [PunRPC]
+    public void ReadyPlayer(int viewID) {
+        if(viewID == photonView.ViewID) GameManager.ReadyNewPlayer();
+    }
+
     public bool CanHold() {
         return trailingObjects.Count < maxAsteroids;
     }
@@ -246,10 +249,6 @@ public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
         maxVelocity = Mathf.Lerp(maxVelocity, defaultVelocity, Time.deltaTime * 2f);
 
         if(respawnDelay > 0) {
-            /////////// TRANSPARANCY MODELS
-
-//            ship.color = Color.Lerp(ship.color, new Color(ship.color.r, ship.color.g, ship.color.b, 0.25f), Time.deltaTime * 8f);
-
             LerpToPlanet();
             respawnDelay -= Time.deltaTime;
 
@@ -273,7 +272,10 @@ public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
             trailingObjects.RemoveAt(0);
             if(asteroid.rb != null) {
                 asteroid.rb.constraints = RigidbodyConstraints2D.None;
-                asteroid.rb.velocity = rb.velocity / throwingReduction; 
+                
+                //asteroid.rb.velocity = rb.velocity / throwingReduction; 
+            
+                asteroid.rb.AddForce(transform.up * throwForce);
             }
             SetCollision(asteroid.GetCollider2D(), false);
             asteroid.transform.TransformDirection(new Vector2(transform.forward.x * asteroid.transform.forward.x, transform.forward.y * asteroid.transform.forward.y));
@@ -283,19 +285,12 @@ public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
     }
 
     void Update() {
-        if(Input.GetKeyDown(KeyCode.R) && planet != null) planet.AddingResource(5); ///////////////////////////////////////////////////////////////////////////////////////// 
+        if(Input.GetKeyDown(KeyCode.R) && planet != null) planet.AddingResource(5); /////////////////////////////////////////////////////////////////////////////////////////  DEBUG
 
         BoostManager();
 
         if(!GameManager.GAME_STARTED) PositionToPlanet();
         exhaustSound.volume = Mathf.Lerp(exhaustSound.volume, IsThrust() ? 0.05f : 0, Time.deltaTime * 10f);
-
-        //Soft borders
-        var DistFromCenter = Vector2.Distance(Camera.main.WorldToScreenPoint(transform.position), new Vector2(Screen.width, Screen.height) / 2f);
-        DistFromCenter /= 200f;
-        //maxVelocity = Mathf.Lerp(maxVelocity, baseVelocity * Mathf.Clamp(1.75f - DistFromCenter, 0.2f, 1), Time.deltaTime * 4f);
-        //stopDrag = Mathf.Lerp(stopDrag, baseStopDrag * Mathf.Clamp(4f - DistFromCenter, 0.1f, 1), Time.deltaTime * 4f);
-        //defaultDrag = Mathf.Lerp(defaultDrag, baseDefaultDrag * Mathf.Clamp(4f - DistFromCenter, 0.1f, 1), Time.deltaTime * 4f);
 
         if(ReleaseAsteroidKey() && trailingObjects.Count > 0 && respawnDelay <= 0) {
             AudioManager.PLAY_SOUND("collect");
@@ -303,7 +298,7 @@ public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
             hookShot.DelayShoot();
         }
 
-        //Particles emitten wanneer movement
+        //Particles emitten wanneer movement   ||   Exhaust
         if(IsThisClient()) {
             var emitting = exhaust.emission;
             emitting.enabled = IsThrust();
@@ -330,7 +325,6 @@ public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
 
         //Removes asteroids owned by other players
         for(int i = 0; i < trailingObjects.Count; i++) if(!trailingObjects[i].IsOwnedBy(this)) {
-            //trailingObjects[i].ReleaseAsteroid(true);
             trailingObjects.RemoveAt(i);
             i--;
         }
@@ -343,10 +337,10 @@ public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
             }
     }
 
-    [PunRPC]
-    public void SynchBoost(int viewID) {
+ //   [PunRPC]
+//    public void SynchBoost(int viewID) {
         //fuelBar.enabled = fuelFilling.enabled != (photonView.IsMine || viewID == photonView.ViewID); 
-    }
+//    }
 
     IEnumerator BoostRecharge() {
         isBoosting = false;
@@ -362,16 +356,12 @@ public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
         } else StopCoroutine("BoostRecharge");
     }
     protected void BoostManager() {
-         //fuelBar.fillAmount = boostDuration / boostTimer; 
-
         if (Input.GetKeyDown(KeyCode.LeftShift)) BoostPlayer();
 
-        if (isBoosting)
-        {
+        if (isBoosting) {
             boostTimer += Time.deltaTime;
 
-            if (boostTimer >= boostDuration)
-            {
+            if (boostTimer >= boostDuration) {
                 canBoost = false;
                 BoostPlayer();
                 boostTimer = 0f;
@@ -380,19 +370,15 @@ public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
             }
         }
 
-        if (onCooldown)
-        {
+        if (onCooldown) {
             boostCooldownTimer += Time.deltaTime;
-            // fuelBar.color = Color.white;
             var settings = exhaust.main;
             var switchcol = Color.white; 
             settings.startColor = new ParticleSystem.MinMaxGradient(switchcol);
 
-            if (boostCooldownTimer >= boostCooldownDuration)
-            {
+            if (boostCooldownTimer >= boostCooldownDuration) {
                 canBoost = true;
                 onCooldown = false;
-                // fuelBar.color = playerColor; 
                 settings.startColor = new ParticleSystem.MinMaxGradient(playerColor);
             }
         }
@@ -461,7 +447,7 @@ public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
     }
 
     public bool CanCastHook() {
-        return respawnDelay <= 0 && GameManager.GAME_STARTED && !hookShot.HasObject();
+        return respawnDelay <= 0 /* && GameManager.GAME_STARTED*/ && !hookShot.HasObject();
     }
 
     [PunRPC]

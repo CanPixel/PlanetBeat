@@ -44,13 +44,6 @@ public class PlanetPositioner : MonoBehaviourPun {
 
     protected void PositionPlanets() {
         planets = GetPlanets();
-      /*   if(planetPos.Count <= 0) {
-            for(int i = 0; i < planets.Length; i++) {
-                planetPos.Add(planets[i].transform.position);
-                planetAngle.Add(i);
-            }
-        }*/
-
         if(planetAmount < 0) planetAmount = oldPlanetAmount = planets.Length;
         if(oldPlanetAmount != planets.Length) {
             reformDelay = 0.05f;
@@ -60,21 +53,6 @@ public class PlanetPositioner : MonoBehaviourPun {
         //planetAmount = Mathf.Lerp(planetAmount, planets.Length, Time.deltaTime * planetReformSpeed);
         
         for(int i = 0; i < planets.Length; i++) planets[i].transform.position = GetCircle(orbitDistance, i + move, planetAmount);
-           
-           // float posX1, posY1;
-           // posX1 = Mathf.Cos (Time.time * i) * orbitDistance;
-           // posY1 = Mathf.Sin (Time.time * i) * orbitDistance / 2;
-
-            //var planetPosition = new Vector3(posX1, posY1);
-            //planetPos[i] = planetPosition;
-        //}
-
-//        for(int i = 0; i < planets.Length; i++) {
-  //          planetAngle[i] = planetAngle[i] + Time.deltaTime * (turnSpeed);
-    //        if(planetAngle[i] >= 360f) planetAngle[i] = 0;
-      //  }
-
-        //if(PhotonNetwork.IsMasterClient) photonView.RPC("SynchPositions", RpcTarget.All, move);
     }
 
      private Vector3 GetCircle(float radius, float angle, float amountOfPlanets) {

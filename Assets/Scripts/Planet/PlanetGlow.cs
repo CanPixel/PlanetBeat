@@ -32,10 +32,6 @@ public class PlanetGlow : MonoBehaviour {
         } else render.enabled = true;
     }
 
-   // void OnEnable() {
-    //    if(randomGen || PhotonNetwork.IsMasterClient) ;//SetPlanet(PlanetSwitcher.GetRandomPlanet());
-   // }
-
     public void Flicker() {
         flicker = 1;
         subFlicker = 0;

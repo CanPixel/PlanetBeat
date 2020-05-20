@@ -21,6 +21,7 @@ public class GameManager : MonoBehaviourPunCallbacks {
    public Text countdown;
    [Header("Start Game")]
    private int playerCount = 4;
+   public int playerReadyCount = 0;
    private bool skipCountdown = false;  
 
    public static Dictionary<string, GameObject> playerLabels = new Dictionary<string, GameObject>();
@@ -40,6 +41,42 @@ public class GameManager : MonoBehaviourPunCallbacks {
    private static List<PlayerPlanets> allPlanets = new List<PlayerPlanets>();
 
    public static PlayerShip LOCAL_PLAYER;
+
+   public override void OnEnable() {
+      if(instance == null) instance = this;
+      gameFieldScale = gameField.transform.localScale.x;
+      gameField.transform.localScale = Vector3.one * gameFieldStartScale;
+
+      base.OnEnable();
+      Random.InitState((int)Time.time * 1000);
+
+      GAME_WON = false;
+
+      startupDelayTimer = 0;
+      countdownTimer = 0;
+      startCountdown = false;
+      GAME_STARTED = false;
+
+      PlanetSwitcher.ForceUpdateTextures();
+
+      allPlanets.Clear();
+      var plans = GameObject.FindGameObjectsWithTag("PLAYERPLANET");
+      foreach(var i in plans) allPlanets.Add(i.GetComponent<PlayerPlanets>());
+
+      if(PlayerPrefs.GetInt("Spectate") != 0) AddLocalClient(PlayerShip.PLAYERNAME);
+      if(PhotonNetwork.IsMasterClient) playerCount = PlayerPrefs.GetInt("PlayerCount");
+
+      skipCountdown = Launcher.GetSkipCountDown();
+      AudioManager.PLAY_SOUND("sizzle", 1f, 1.5f);
+   }
+
+   public static bool SkipCountdown() {
+      return instance.skipCountdown;
+   }
+
+   public static void ReadyNewPlayer() {
+      if(PhotonNetwork.IsMasterClient) instance.playerReadyCount++;
+   }
 
    public static void ClaimPlanet(PlayerShip ship) {
       if(ship.photonView.IsMine) instance.ClaimFreePlanet(ship);
@@ -106,7 +143,9 @@ public class GameManager : MonoBehaviourPunCallbacks {
 
      if(PhotonNetwork.IsMasterClient && !GAME_STARTED) {
          var plays = GameObject.FindGameObjectsWithTag("PLAYERSHIP");
-         if(plays.Length >= playerCount && !startCountdown) {
+
+         bool everyoneReady = (playerReadyCount >= playerCount);
+         if(plays.Length >= playerCount && everyoneReady && !startCountdown) {
             photonView.RPC("EnableCountdown", RpcTarget.All, count);
             startCountdown = true;
          }
@@ -143,54 +182,6 @@ public class GameManager : MonoBehaviourPunCallbacks {
       }
    }
 
-   public override void OnEnable() {
-      if(instance == null) instance = this;
-      gameFieldScale = gameField.transform.localScale.x;
-      gameField.transform.localScale = Vector3.one * gameFieldStartScale;
-
-      base.OnEnable();
-      Random.InitState((int)Time.time * 1000);
-
-      GAME_WON = false;
-
-      startupDelayTimer = 0;
-      countdownTimer = 0;
-      startCountdown = false;
-      GAME_STARTED = false;
-
-      PlanetSwitcher.ForceUpdateTextures();
-
-      allPlanets.Clear();
-      var plans = GameObject.FindGameObjectsWithTag("PLAYERPLANET");
-      foreach(var i in plans) allPlanets.Add(i.GetComponent<PlayerPlanets>());
-
-      if(PlayerPrefs.GetInt("Spectate") != 0) AddLocalClient(PlayerShip.PLAYERNAME);
-
-      if(PhotonNetwork.IsMasterClient) playerCount = PlayerPrefs.GetInt("PlayerCount");
-
-      skipCountdown = Launcher.GetSkipCountDown();
-      AudioManager.PLAY_SOUND("sizzle", 1f, 1.5f);
-   }
-
-  /*  protected void AssignPlayerIdentity(int ID) {
-      var playerID = PlanetSwitcher.GetPlayerTintIndex(ID);
-      var photon = PhotonNetwork.GetPhotonView(ID);
-      if(photon == null) return;
-      var pl = photon.GetComponent<PlayerShip>();
-      if(pl == null) return;
-      //if(instance != null) instance.photonView.RPC("AssignMasterPlanet", RpcTarget.AllViaServer, ID);
-   }*/
-
-/* 
-   [PunRPC]
-   public void AssignMasterPlanet(int playerNum) {
-      var play = PhotonNetwork.GetPhotonView(playerNum);
-      if(play == null) return;
-      var pl = play.GetComponent<PlayerShip>();
-      //pl.ForceColor(r, g, b);
-
-   }*/
-
    public static GameObject SPAWN_SERVER_OBJECT(GameObject obj, Vector3 pos, Quaternion rot) {
       if(instance == null) return null;
       var objF = PhotonNetwork.InstantiateSceneObject(obj.name, pos, rot, 0, null);
@@ -209,11 +200,6 @@ public class GameManager : MonoBehaviourPunCallbacks {
          player.transform.localScale = new Vector3(playerScale, playerScale, playerScale);
          var playerShip = player.GetComponent<PlayerShip>();
          LOCAL_PLAYER = playerShip;
-        // var playerName = Instantiate(PlayerName, player.transform.position, Quaternion.identity);
-         //playerShip.playerName = pN;
-        // playerShip.SetLabel(playerName.GetComponent<PlayerName>(), name);
-         //pN.SetHost(player, name);
-         //AssignPlayerIdentity(playerShip.photonView.ViewID);
       }
    }
 
