@@ -163,7 +163,7 @@ public class PlayerPlanets : MonoBehaviourPun {
         //transform.localPosition = Vector3.Lerp(transform.localPosition, new Vector3(basePos.x + Mathf.Sin(Time.time * wiggleSpeed + wiggleOffset) * wiggleRange, basePos.y + Mathf.Sin(Time.time * wiggleSpeed + wiggleOffset) * wiggleRange, basePos.z), Time.deltaTime * 2f);
 
         if(scoreText != null) {
-            scoreText.transform.position = transform.position - new Vector3(0, 0.05f, 10);
+            scoreText.transform.position = transform.position - new Vector3(0, 0.05f, 1);
             scoreText.transform.rotation = Quaternion.identity;
 
             scoreText.transform.localScale = Vector2.Lerp(scoreText.transform.localScale, scoreBaseScale, Time.deltaTime * 1f);

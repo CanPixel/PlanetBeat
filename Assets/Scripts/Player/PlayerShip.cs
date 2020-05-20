@@ -9,6 +9,7 @@ public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
     public PlayerHighlighter playerHighlighter;
     public HookShot hookShot;
     public ParticleSystem exhaust;
+    public Light exhaustLight;
     //public Image fuelBar, fuelFilling;
 
     [HideInInspector] public GameObject playerLabel;
@@ -98,7 +99,6 @@ public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
         playerColor = planet.GetComponent<PlanetGlow>().planetColor;
         ForceColor(playerColor.r, playerColor.g, playerColor.b);
     }
-
     [PunRPC]
     public void ClearHomePlanet() {
         if(planet != null && photonView != null) planet.ResetPlanet();
@@ -106,7 +106,6 @@ public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
     }
 
     public void SetTextureByPlanet(Color col) {
-        //ship.sprite = PlanetSwitcher.GetPlayerTexture(col);
         var playerElm = PlanetSwitcher.GetPlayerTexture(col);
 
         Destroy(model);
@@ -160,11 +159,11 @@ public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
     #endregion
 
     public void PositionToPlanet() {
-        if(planet != null) transform.position = photonView.transform.position = new Vector3(planet.transform.position.x, planet.transform.position.y, -10);
+        if(planet != null) transform.position = photonView.transform.position = new Vector3(planet.transform.position.x, planet.transform.position.y, -1.1f);
     }
     public void LerpToPlanet() {
         if(planet == null) return;
-        transform.position = photonView.transform.position = Vector3.Lerp(transform.position, new Vector3(planet.transform.position.x, planet.transform.position.y, -10), Time.deltaTime);
+        transform.position = photonView.transform.position = Vector3.Lerp(transform.position, new Vector3(planet.transform.position.x, planet.transform.position.y, -1.1f), Time.deltaTime);
     }
 
     public bool CanHold() {
@@ -318,6 +317,8 @@ public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
             bool shouldEmit = Mathf.Abs(Vector3.Distance(exLastPos, transform.position)) > 0.04f;
             emitting.enabled = shouldEmit;
         }
+        exhaustLight.color = exhaust.main.startColor.color;
+        exhaustLight.enabled = exhaust.emission.enabled;
 
         if(!photonView.IsMine && PhotonNetwork.IsConnected) return;
 
