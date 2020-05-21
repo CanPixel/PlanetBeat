@@ -5617,6 +5617,7 @@ MonoBehaviour:
   colliders: []
   boostDuration: 0.2
   boostVelocity: 23
+  boostForce: 230
   boostCooldownDuration: 3.5
   maxFuel: 0.8
   cooldownPenalty: 3.5

@@ -17,6 +17,7 @@ public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
     [Header("BOOST")]
     public float boostDuration = 0.2f;
     public float boostVelocity = 23;
+    public float boostForce = 230;
     public float boostCooldownDuration = 3;
     private float boostCooldownTimer = 0f, boostTimer = 0f;
     private bool canBoost = true;
@@ -360,34 +361,34 @@ public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
             if (boostTimer >= boostDuration) {
                 canBoost = false;
                 BoostPlayer();
-                boostTimer = 0f;
+
                 boostCooldownTimer = 0f;
-                onCooldown = true;
+                boostTimer = 0f;
             }
-        }
-
-        if (onCooldown) {
-            boostCooldownTimer += Time.deltaTime;
-            var settings = exhaust.main;
-            var switchcol = Color.white; 
-            settings.startColor = new ParticleSystem.MinMaxGradient(switchcol);
-
-            if (boostCooldownTimer >= boostCooldownDuration) {
-                canBoost = true;
-                onCooldown = false;
-                settings.startColor = new ParticleSystem.MinMaxGradient(playerColor);
-            }
-        }
+        } 
+        else if (!canBoost) BoostCooldown();
     }
-    private void BoostPlayer() {
-        if (canBoost) {
-            maxVelocity = boostVelocity;
+    private void BoostPlayer()
+    {
+        if (canBoost)
+        {
+            rb.AddForce(transform.up * boostForce);
             isBoosting = true;
-            //boostcode
         }
-        else if (!canBoost) {
-            isBoosting = false;
-            maxVelocity = defaultVelocity;
+        else if (!canBoost) isBoosting = false;
+    }
+
+    private void BoostCooldown()
+    {
+        boostCooldownTimer += Time.deltaTime;
+        var settings = exhaust.main;
+        var switchcol = Color.white;
+        settings.startColor = new ParticleSystem.MinMaxGradient(switchcol);
+
+        if (boostCooldownTimer >= boostCooldownDuration)
+        {
+            canBoost = true;
+            settings.startColor = new ParticleSystem.MinMaxGradient(playerColor);
         }
     }
 
