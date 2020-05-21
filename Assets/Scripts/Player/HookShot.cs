@@ -9,10 +9,12 @@ public class HookShot : MonoBehaviour {
     private RectTransform rope;
     private CircleCollider2D tip;
     public GameObject aimPos;
+    public Animator animateHand;
+    public SkinnedMeshRenderer handRenderer;
+    public ParticleSystem handParticles;
 
     public Collider2D[] playerColliders;
 
-//    [HideInInspector] public CustomController customController;
     private int hengelData;
 
     [Header("PHYSICS")]
@@ -39,40 +41,33 @@ public class HookShot : MonoBehaviour {
     public Image HookCooldownParent;
     public Image HookCooldownIcon;
 
+    private Vector3 baseHandScale;
+    private bool scaleTo = false, scaleBack = false;
+
     private float shootDelay = 0;
 
     void Start() {
+        baseHandScale = animateHand.transform.localScale;
         rope = transform.GetChild(0).GetComponent<RectTransform>();
         tip = rope.transform.GetChild(0).GetComponent<CircleCollider2D>();
         if(!hostPlayer.photonView.IsMine) HookCooldownParent.gameObject.SetActive(false);
+        
+        handRenderer.material.SetColor("_EmissionColor", hostPlayer.playerColor * 2f);
+        var set = handParticles.main;
+        set.startColor = new ParticleSystem.MinMaxGradient(hostPlayer.playerColor * 2f);
+
+        var em = handParticles.emission;
+        em.enabled = false;
     }
 
     void Update() {
         if(shootDelay > 0) shootDelay -= Time.deltaTime;
-
         if(grabbedObj != null) grabbedObj.transform.position = tip.transform.position;
 
-        float hookScale = Mathf.Lerp(rope.transform.localScale.x, (IsShooting() ? 1 : 0.1f), Time.deltaTime * 2f);
+        float hookScale = Mathf.Lerp(rope.transform.localScale.x, (IsShooting() ? 1 : 0.1f), Time.deltaTime * 8f);
         rope.transform.localScale = new Vector3(hookScale, hookScale, hookScale);
 
         HookCooldownParent.transform.position = Vector3.Lerp(HookCooldownParent.transform.position, aimPos.transform.position, Time.deltaTime * 2f);
-
-        //Spelen op custom controls
-    /*     if (customController != null) {
-            var newData = customController.GetData();
-            if (hengelData < newData) ReelOut(newData);
-            else if (hengelData > newData) ReelIn(newData);
-
-            if(IsShooting()) {
-                if(rope.sizeDelta.y + hookShotSpeed < hookShotRange * 1000f && !didntCatch) {
-                    if(!hitObject) rope.sizeDelta = new Vector2(rope.sizeDelta.x, rope.sizeDelta.y + hookShotSpeed);
-                    else if(rope.sizeDelta.y > 0) rope.sizeDelta = new Vector2(rope.sizeDelta.x, rope.sizeDelta.y - hookShotSpeed);
-                }
-
-                if(didntCatch) {
-                }
-            }
-        }*/
 
         FreeAim();
         if(shootTimer > 0) shootTimer += Time.deltaTime;
@@ -85,7 +80,6 @@ public class HookShot : MonoBehaviour {
         var stateCol = (HookCooldown) ? off : on;
         var endCol = new Color(stateCol.r, stateCol.g, stateCol.b, (HookCooldown) ? 0.55f : 0.75f);
         HookCooldownIcon.color = Color.Lerp(HookCooldownIcon.color, endCol, (HookCooldown) ? (1f - progress) : (Time.deltaTime * 4f));
-        //if(progress < 0.5f) HookCooldownIcon.transform.localScale = Vector3.Lerp(HookCooldownIcon.transform.localScale, new Vector3(1.25f, 1.25f, 1.25f) * HookCooldownIconScale, Time.deltaTime * 3f);
 
         //Cooldown
         if(HookCooldown) {
@@ -126,28 +120,17 @@ public class HookShot : MonoBehaviour {
         shootTimer = 0.1f;
     }
 
-    #region CUSTOM_INTERACTION_CONTROLLER
-      /*   protected void ReelIn(int newData) {
-            hengelData = newData;
-        }
-
-        protected void ReelOut(int newData) {
-            if (Mathf.Abs(newData - hengelData) > customController.sensitivity && shootTimer <= 0) {
-                triggerHook = true;
-                if (hostPlayer.IsThisClient()) hostPlayer.photonView.RPC("CastHook", RpcTarget.All, hostPlayer.photonView.ViewID);
-                else if (hostPlayer.isSinglePlayer) CastHook();
-            }
-            hengelData = newData;
-        } */
-    #endregion
-
     public void CastHook() {
         if(!hostPlayer.CanCastHook() || IsDelayingHook()) return;
         AudioManager.PLAY_SOUND("Kick", 1f, 0.9f);
         AudioManager.PLAY_SOUND("CastHook", 0.8f, Random.Range(0.9f, 1f));
         isShootingHook = true;
         triggerHook = false;
+        animateHand.SetBool("Travel", true);
         DelayHook();
+        scaleTo = true;
+        var em = handParticles.emission;
+        em.enabled = true;
     }
 
     protected void ResetHook() {
@@ -160,6 +143,10 @@ public class HookShot : MonoBehaviour {
         if(grabbedObj != null) hostPlayer.AddAsteroid(grabbedObj);
         grabbedObj = null; 
         didntCatch = false;
+        animateHand.SetBool("Travel", false);
+        animateHand.SetBool("Fetch", false);
+        var em = handParticles.emission;
+        em.enabled = false;
     }
 
     public void CatchObject(GameObject obj) {
@@ -167,6 +154,8 @@ public class HookShot : MonoBehaviour {
         grabbedObj = obj;
         var photon = obj.GetComponent<PhotonView>();
         if(photon != null && hostPlayer.photonView != null) photon.TransferOwnership(hostPlayer.photonView.Controller.ActorNumber);
+        animateHand.SetBool("Fetch", true);
+        scaleBack = true;
     }
 
     public bool HasObject() {

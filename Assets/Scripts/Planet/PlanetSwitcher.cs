@@ -49,8 +49,6 @@ public class PlanetSwitcher : MonoBehaviour {
     public class PlayerElement {
         public GameObject model;
         public Material ship, tail;
-        //[Range(0, 5)]
-        //public float scale = 1;
         public Color tint = Color.white;
     }
 

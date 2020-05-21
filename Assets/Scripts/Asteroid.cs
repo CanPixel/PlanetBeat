@@ -57,6 +57,7 @@ public class Asteroid : PickupableObject {
     public float timeRotate = -70;
     private int LinksOfRechts = 0;
 
+    private float consumeTimer = 0;
     private bool canConsume = false;
     private float collectTimer, releaseTimer = 0;
     private bool canScore = false;
@@ -151,6 +152,8 @@ public class Asteroid : PickupableObject {
     void Update() {
         if(gameObject.tag == "ResourceTutorial" && held) PlayerTutorial.tutorialStepsByName["GrabResource"].completed = true;
 
+        if(consumeTimer > 0) consumeTimer -= Time.deltaTime;
+
         float fade = (collectTimer <= 0f) ? 1 : 0.4f;
         src.color = glow.color = Color.Lerp(src.color, new Color(src.color.r, src.color.g, src.color.b, fade), Time.deltaTime * 5f);
         scoreText.color = Color.Lerp(scoreText.color, new Color(scoreText.color.r, scoreText.color.g, scoreText.color.b, fade), Time.deltaTime * 5f);
@@ -233,7 +236,6 @@ public class Asteroid : PickupableObject {
         else ReleasedTimer();  
 
         transform.localScale = Vector3.Lerp(transform.localScale, (held) ? standardScale / heldScaleReduction : standardScale, Time.deltaTime * 4f);
-        //transform.localScale = new Vector3(Mathf.Clamp(transform.localScale.x, 0, maxScale), Mathf.Clamp(transform.localScale.y, 0, maxScale), Mathf.Clamp(transform.localScale.z, 0, maxScale));
     }
     
     [PunRPC]
@@ -280,6 +282,7 @@ public class Asteroid : PickupableObject {
             FetchAsteroid(hookShot.hostPlayer);
             hookShot.CatchObject(gameObject);
             collectTimer = grabDelay; 
+            consumeTimer = 1.25f;
 
             if(photonView.ViewID > 0) {
                 photonView.RPC("SynchCollectTimer", RpcTarget.All, collectTimer);
@@ -326,12 +329,6 @@ public class Asteroid : PickupableObject {
             inOrbit = true;
             if(!held) OrbitAroundPlanet();
         }
-
-        //Tutorial resource orbit
-/*         if(gameObject.tag == "ResourceTutorial" && col.gameObject.tag == "ORBIT") {
-            inOrbit = true;
-            if(!held) OrbitAroundPlanet();
-        } */
     }
 
     void OnTriggerExit2D(Collider2D col) {
@@ -386,6 +383,8 @@ public class Asteroid : PickupableObject {
 
     public void ConsumeResource() {
         if(gameObject.tag == "ResourceTutorial" && held) value = 10;
+        if(consumeTimer > 0) return;
+
         playerPlanets.AddingResource(value);
         GameManager.DESTROY_SERVER_OBJECT(gameObject);
         if(photonView != null && photonView.ViewID > 0) {
@@ -403,7 +402,7 @@ public class Asteroid : PickupableObject {
     }
 
     [PunRPC]
-    public void ReleaseAsteroid(bool released, int viewID) {
+    public new void ReleaseAsteroid(bool released, int viewID) {
         if(photonView.ViewID == viewID) {
             if(released) {
                 playerTagsManager.TagOn(true);

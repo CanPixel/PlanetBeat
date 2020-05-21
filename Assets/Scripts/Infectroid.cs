@@ -17,6 +17,10 @@ public abstract class PickupableObject : MonoBehaviourPun {
         get {return spawnTimer > activateAfterSpawning;}
     }
 
+    [HideInInspector] public bool throwed = false;
+
+    public void ReleaseAsteroid(bool released, int viewID) {}
+
     public void Init() {
         asteroidColl = GetComponent<Collider2D>();
         rb = GetComponent<Rigidbody2D>();
@@ -278,7 +282,7 @@ public class Infectroid : PickupableObject {
     }
 
     [PunRPC]
-    public void ReleaseAsteroid(bool released, int viewID) {
+    public new void ReleaseAsteroid(bool released, int viewID) {
         if(photonView.ViewID == viewID) {
             if(released) {
                 held = false;

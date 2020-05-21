@@ -504,6 +504,7 @@ MonoBehaviour:
   ownerPlayer: {fileID: 0}
   rb: {fileID: 0}
   held: 0
+  throwed: 0
   src: {fileID: 6313916151511072288}
   glow: {fileID: 7942915855959860691}
   scoreText: {fileID: 1658768576256901087}

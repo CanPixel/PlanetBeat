@@ -52,6 +52,7 @@ public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
         public float defaultDrag;
         public float stopDrag;
         private float baseStopDrag, baseDefaultDrag;
+        private float hookDelay;
 
         [Range(1, 10)]
         public int maxAsteroids = 2;
@@ -267,19 +268,18 @@ public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
             }
         }
 
-        if(dropAsteroid && trailingObjects.Count > 0 && respawnDelay <= 0) {
+        if(dropAsteroid && trailingObjects.Count > 0 && respawnDelay <= 0 && hookDelay <= 0) {
             var asteroid = trailingObjects[0];
             trailingObjects.RemoveAt(0);
             if(asteroid.rb != null) {
                 asteroid.rb.constraints = RigidbodyConstraints2D.None;
-                
-                //asteroid.rb.velocity = rb.velocity / throwingReduction; 
-            
+                asteroid.throwed = true;
                 asteroid.rb.AddForce(transform.up * throwForce);
             }
             SetCollision(asteroid.GetCollider2D(), false);
             asteroid.transform.TransformDirection(new Vector2(transform.forward.x * asteroid.transform.forward.x, transform.forward.y * asteroid.transform.forward.y));
-            asteroid.photonView.RPC("ReleaseAsteroid", RpcTarget.All, true, asteroid.photonView.ViewID); 
+            if(asteroid.photonView.ViewID > 0) asteroid.photonView.RPC("ReleaseAsteroid", RpcTarget.All, true, asteroid.photonView.ViewID); 
+            else asteroid.ReleaseAsteroid(true, asteroid.photonView.ViewID);
             dropAsteroid = false;
         }
     }
@@ -292,6 +292,7 @@ public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
         if(!GameManager.GAME_STARTED) PositionToPlanet();
         exhaustSound.volume = Mathf.Lerp(exhaustSound.volume, IsThrust() ? 0.05f : 0, Time.deltaTime * 10f);
 
+        if(hookDelay > 0) hookDelay -= Time.deltaTime;
         if(ReleaseAsteroidKey() && trailingObjects.Count > 0 && respawnDelay <= 0) {
             AudioManager.PLAY_SOUND("collect");
             dropAsteroid = true;
@@ -336,11 +337,6 @@ public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
                 trailingObjects[i].transform.position = Vector3.Lerp(trailingObjects[i].transform.position, (transform.position - (transform.up * (i + 1) * 0.5f)), Time.deltaTime * trailingSpeed);
             }
     }
-
- //   [PunRPC]
-//    public void SynchBoost(int viewID) {
-        //fuelBar.enabled = fuelFilling.enabled != (photonView.IsMine || viewID == photonView.ViewID); 
-//    }
 
     IEnumerator BoostRecharge() {
         isBoosting = false;
@@ -431,7 +427,6 @@ public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
         var script = obj.GetComponent<PickupableObject>();
         if(script != null) trailingObjects.Add(script);
     }
-
     public void RemoveAsteroid(GameObject obj) {
         for(int i = 0; i < trailingObjects.Count; i++) {
             if(trailingObjects[i] == obj) {
@@ -449,11 +444,11 @@ public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
     public bool CanCastHook() {
         return respawnDelay <= 0 /* && GameManager.GAME_STARTED*/ && !hookShot.HasObject();
     }
-
     [PunRPC]
     public void CastHook(int viewID) {
         if(!CanCastHook() && !hookShot.IsDelayingHook()) return;
         if(photonView.ViewID == viewID) hookShot.CastHook();
+        hookDelay = 0.5f;
     }
 
     #region MOVEMENT_INPUTS
