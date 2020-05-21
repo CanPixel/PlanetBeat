@@ -190,7 +190,9 @@ public class GameManager : MonoBehaviourPunCallbacks {
    public static void DESTROY_SERVER_OBJECT(GameObject obj) {
       if(instance == null) return;
       if(!PhotonNetwork.IsMasterClient) Destroy(obj);
-      else if(LOCAL_PLAYER.photonView.IsMine) PhotonNetwork.Destroy(obj);
+      else if(LOCAL_PLAYER.photonView.IsMine) {
+         if(obj.GetPhotonView() != null) PhotonNetwork.Destroy(obj);
+      }
    }
 
    private void AddLocalClient(string name) {

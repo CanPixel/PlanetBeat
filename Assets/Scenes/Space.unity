@@ -3908,6 +3908,7 @@ MonoBehaviour:
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
   backgroundRotate: {fileID: 187771059}
+  COUNT: 0
   resetCount: 1
 --- !u!114 &7556721353495335923
 MonoBehaviour:
@@ -3947,6 +3948,7 @@ MonoBehaviour:
   gameFieldStartScale: 0
   winText: {fileID: 1899496248}
   countdown: {fileID: 552401904}
+  playerReadyCount: 0
   count: 6
   playerPrefab: {fileID: 3506364950220654661, guid: 0d28bdd659df51e43a630a02f1a77fab,
     type: 3}

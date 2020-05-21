@@ -386,7 +386,7 @@ public class Asteroid : PickupableObject {
         if(consumeTimer > 0) return;
 
         playerPlanets.AddingResource(value);
-        GameManager.DESTROY_SERVER_OBJECT(gameObject);
+        //GameManager.DESTROY_SERVER_OBJECT(gameObject);
         if(photonView != null && photonView.ViewID > 0) {
             photonView.RPC("DestroyAsteroid", RpcTarget.All, photonView.ViewID);
         }

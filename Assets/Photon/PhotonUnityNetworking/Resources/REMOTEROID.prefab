@@ -220,6 +220,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   asteroid: {fileID: 0}
   nudgeForce: 3
+  isInfectroid: 0
+  isInOrbit: 0
 --- !u!58 &7228890296776165996
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -369,10 +371,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64b0a1a0f57742241b1f298bc7753758, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxBounceVelocity: 4
+  bounceMultiplier: 2
   dropBoosts: 0
   ownerPlayer: {fileID: 0}
   rb: {fileID: 0}
   held: 0
+  throwed: 0
   src: {fileID: 6313916151511072288}
   glow: {fileID: 7942915855959860691}
   explodeParticles: {fileID: 1067106092621830195, guid: cd0b03d048d9905489b14408260a7a72,
