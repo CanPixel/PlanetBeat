@@ -3643,11 +3643,6 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
-    - target: {fileID: 6779712837694326453, guid: 51299799d9767174ea6e1c99b072de4b,
-        type: 3}
-      propertyPath: viewIdField
-      value: 13
-      objectReference: {fileID: 0}
     - target: {fileID: 5336174367327457940, guid: 51299799d9767174ea6e1c99b072de4b,
         type: 3}
       propertyPath: planetColor.a
@@ -3668,6 +3663,24 @@ PrefabInstance:
       propertyPath: planetColor.b
       value: 0.21568628
       objectReference: {fileID: 0}
+<<<<<<< Updated upstream
+=======
+    - target: {fileID: 5336174367327457939, guid: 51299799d9767174ea6e1c99b072de4b,
+        type: 3}
+      propertyPath: warningArrow
+      value: 
+      objectReference: {fileID: 1516893952}
+    - target: {fileID: 5336174367327457939, guid: 51299799d9767174ea6e1c99b072de4b,
+        type: 3}
+      propertyPath: warningSign
+      value: 
+      objectReference: {fileID: 53269890}
+    - target: {fileID: 6779712837694326453, guid: 51299799d9767174ea6e1c99b072de4b,
+        type: 3}
+      propertyPath: viewIdField
+      value: 13
+      objectReference: {fileID: 0}
+>>>>>>> Stashed changes
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 51299799d9767174ea6e1c99b072de4b, type: 3}
 --- !u!224 &2045571494 stripped
@@ -4519,6 +4532,7 @@ MonoBehaviour:
   gameFieldStartScale: 0
   winText: {fileID: 1899496248}
   countdown: {fileID: 552401904}
+  playerReadyCount: 0
   count: 6
   playerPrefab: {fileID: 3506364950220654661, guid: 0d28bdd659df51e43a630a02f1a77fab,
     type: 3}

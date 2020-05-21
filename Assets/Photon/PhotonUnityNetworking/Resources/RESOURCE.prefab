@@ -781,6 +781,7 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8069275902880659583}
     m_Modifications:
+<<<<<<< Updated upstream
     - target: {fileID: 4513744255575208674, guid: f142e1716466ae2488cd108860534300,
         type: 3}
       propertyPath: m_Name
@@ -791,6 +792,8 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+=======
+>>>>>>> Stashed changes
     - target: {fileID: 4513744255575208676, guid: f142e1716466ae2488cd108860534300,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -860,6 +863,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalScale.z
       value: 3000
+      objectReference: {fileID: 0}
+    - target: {fileID: 4513744255575208674, guid: f142e1716466ae2488cd108860534300,
+        type: 3}
+      propertyPath: m_Name
+      value: Resource
+      objectReference: {fileID: 0}
+    - target: {fileID: 4513744255575208674, guid: f142e1716466ae2488cd108860534300,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4513744255575208679, guid: f142e1716466ae2488cd108860534300,
         type: 3}
