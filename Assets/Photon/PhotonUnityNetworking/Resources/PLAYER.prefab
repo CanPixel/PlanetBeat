@@ -5332,6 +5332,7 @@ MonoBehaviour:
     imagePos: {x: 977, y: -19, z: 0}
     textPos: {x: 0, y: 0, z: 0}
     duration: 3
+    afterDuration: 0
     completeAfterDuration: 1
     completed: 0
     tutorialEvent:
@@ -5346,6 +5347,7 @@ MonoBehaviour:
     imagePos: {x: 1200, y: 20, z: 0}
     textPos: {x: 0, y: 0, z: 0}
     duration: 2
+    afterDuration: 1
     completeAfterDuration: 0
     completed: 0
     tutorialEvent:
@@ -5370,6 +5372,7 @@ MonoBehaviour:
     imagePos: {x: 3000, y: -19, z: 0}
     textPos: {x: 3000, y: 0, z: 0}
     duration: 5
+    afterDuration: 0
     completeAfterDuration: 1
     completed: 0
     tutorialEvent:
@@ -5383,6 +5386,7 @@ MonoBehaviour:
     imagePos: {x: 3000, y: -19, z: 0}
     textPos: {x: 0, y: 0, z: 0}
     duration: 3
+    afterDuration: 1
     completeAfterDuration: 0
     completed: 0
     tutorialEvent:
@@ -5410,6 +5414,7 @@ MonoBehaviour:
     imagePos: {x: 3000, y: -19, z: 0}
     textPos: {x: 0, y: 0, z: 0}
     duration: 5
+    afterDuration: 0
     completeAfterDuration: 0
     completed: 0
     tutorialEvent:

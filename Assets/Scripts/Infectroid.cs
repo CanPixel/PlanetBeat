@@ -247,8 +247,6 @@ public class Infectroid : PickupableObject {
             if(par == null) return;
             var planet = par.GetComponent<PlayerPlanets>();
             if(planet != null) planet.infected = false;
-
-            if(gameObject.tag == "InfectroidTutorial" && held) PlayerTutorial.tutorialStepsByName["Infectroid"].completed = true;
         }
     }
 

@@ -10,8 +10,7 @@ public class PlayerReady : MonoBehaviourPun {
     [PunRPC]
     public void Set(string name, Vector3 pos, float r, float g, float b) {
         if(text == null) text = GetComponent<Text>();
-        text.text = "Player <color='#"+ColorUtility.ToHtmlStringRGB(new Color(r, g, b))+"'>" + name + "</color> ready";
-
-        this.transform.localPosition = pos / 1.5f;
+        text.text = "<color='#"+ColorUtility.ToHtmlStringRGB(new Color(r, g, b))+"'>READY</color>";
+        this.transform.localPosition = pos + Vector3.down * 100f;
     }
 }

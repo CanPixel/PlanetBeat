@@ -273,6 +273,7 @@ public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
             var asteroid = trailingObjects[0];
             trailingObjects.RemoveAt(0);
             if(asteroid.rb != null) {
+                if(asteroid.tag == "InfectroidTutorial") PlayerTutorial.tutorialStepsByName["Infectroid"].completed = true;
                 asteroid.rb.constraints = RigidbodyConstraints2D.None;
                 asteroid.throwed = true;
                 asteroid.rb.AddForce(transform.up * throwForce);

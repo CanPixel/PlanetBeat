@@ -409,7 +409,6 @@ public class Asteroid : PickupableObject {
                 playerTagsManager.runTagTimer = true;
                 held = false;
                 canScore = true;
-                //scaleBack = true;
                 ReleasedTimer();
                 ForceRelease();
             } else {

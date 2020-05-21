@@ -32,6 +32,7 @@ public class PlayerTutorial : MonoBehaviour {
 
         [Header("TIMING")]
         public float duration = 3;
+        public float afterDuration = 0;
         public bool completeAfterDuration = false;
         [HideInInspector] public bool completed = false;
     
@@ -41,7 +42,7 @@ public class PlayerTutorial : MonoBehaviour {
     [Space(10)]
     public TutorialPiece[] tutorialSteps;
     public int tutorialProgress = 0;
-    private float tutorialTimer = 0;
+    private float tutorialTimer = 0, tutorialWait = 0;
 
     private float resourceTick = 0, infectroidTick = 0;
 
@@ -59,7 +60,8 @@ public class PlayerTutorial : MonoBehaviour {
 
         if(Launcher.GetSkipCountDown()) icon.enabled = text.enabled = false;
 
-        foreach(var i in tutorialSteps) if(!tutorialStepsByName.ContainsKey(i.tutorialName)) tutorialStepsByName.Add(i.tutorialName, i);
+        tutorialStepsByName.Clear();
+        foreach(var i in tutorialSteps) tutorialStepsByName.Add(i.tutorialName, i);
     }
 
     void Update() {
@@ -86,6 +88,12 @@ public class PlayerTutorial : MonoBehaviour {
         }
     }
 
+    private void IncrementTutorial() {
+        tutorialProgress++;
+        if(tutorialProgress < tutorialSteps.Length) tutorialSteps[tutorialProgress].tutorialEvent.Invoke();
+        tutorialTimer = tutorialWait = 0;
+    }
+
     private void TutorialTick() {
         if(tutorialProgress < tutorialSteps.Length) {
             var curTutorial = tutorialSteps[tutorialProgress];
@@ -98,9 +106,10 @@ public class PlayerTutorial : MonoBehaviour {
 
             tutorialTimer += Time.deltaTime;
             if(tutorialTimer > curTutorial.duration && (curTutorial.completeAfterDuration || curTutorial.completed)) {
-                tutorialProgress++;
-                if(tutorialProgress < tutorialSteps.Length) tutorialSteps[tutorialProgress].tutorialEvent.Invoke();
-                tutorialTimer = 0;
+                if(curTutorial.afterDuration > 0) {
+                    tutorialWait += Time.deltaTime;
+                    if(tutorialWait > curTutorial.afterDuration) IncrementTutorial();
+                } else IncrementTutorial();
             }
         }
 
