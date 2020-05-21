@@ -150,7 +150,7 @@ public class Asteroid : PickupableObject {
     }
 
     void Update() {
-        if(gameObject.tag == "ResourceTutorial" && held) PlayerTutorial.tutorialStepsByName["GrabResource"].completed = true;
+        if(gameObject.tag == "ResourceTutorial" && held && ownerPlayer != null) ownerPlayer.playerTutorial.tutorialStepsByName["GrabResource"].completed = true;
 
         if(consumeTimer > 0) consumeTimer -= Time.deltaTime;
 

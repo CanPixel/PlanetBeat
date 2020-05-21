@@ -34,11 +34,12 @@ public class PlayerTutorial : MonoBehaviour {
         public float duration = 3;
         public float afterDuration = 0;
         public bool completeAfterDuration = false;
-        [HideInInspector] public bool completed = false;
+        public bool completed = false;
     
         [Header("EVENTS")]
         public UnityEvent tutorialEvent;
     }
+    
     [Space(10)]
     public TutorialPiece[] tutorialSteps;
     public int tutorialProgress = 0;
@@ -50,7 +51,7 @@ public class PlayerTutorial : MonoBehaviour {
     private Infectroid tutorialInfectroid;
     private Vector3 textPos;
 
-    public static Dictionary<string, TutorialPiece> tutorialStepsByName = new Dictionary<string, TutorialPiece>();
+    public Dictionary<string, TutorialPiece> tutorialStepsByName = new Dictionary<string, TutorialPiece>();
 
     void Start() {
         text = GetComponentInChildren<Text>();

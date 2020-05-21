@@ -51,16 +51,17 @@ public class HookShot : MonoBehaviour {
         rope = transform.GetChild(0).GetComponent<RectTransform>();
         tip = rope.transform.GetChild(0).GetComponent<CircleCollider2D>();
         if(!hostPlayer.photonView.IsMine) HookCooldownParent.gameObject.SetActive(false);
-        
-        handRenderer.material.SetColor("_EmissionColor", hostPlayer.playerColor * 2f);
-        var set = handParticles.main;
-        set.startColor = new ParticleSystem.MinMaxGradient(hostPlayer.playerColor * 2f);
 
         var em = handParticles.emission;
         em.enabled = false;
     }
 
     void Update() {
+        //Playercolor Rayman hand + particles 
+        handRenderer.material.SetColor("_EmissionColor", hostPlayer.playerColor * 2f);
+        var set = handParticles.main;
+        set.startColor = new ParticleSystem.MinMaxGradient(hostPlayer.playerColor * 2f);
+
         if(shootDelay > 0) shootDelay -= Time.deltaTime;
         if(grabbedObj != null) grabbedObj.transform.position = tip.transform.position;
 

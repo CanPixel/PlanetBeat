@@ -5340,15 +5340,14 @@ MonoBehaviour:
         m_Calls: []
       m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
-  - tutorialName: GrabResource
-    text: Press <color='#FF00FF'>space</color> to grab objects <br> <color='#FF00FF'><
-      ></color> keys to rotate ship
+  - tutorialName: Collecting
+    text: Collect these to make your planet grow!
     image: {fileID: 21300000, guid: 55426068ebf08964aa117576335130af, type: 3}
-    imagePos: {x: 1200, y: 20, z: 0}
+    imagePos: {x: 1600, y: 20, z: 0}
     textPos: {x: 0, y: 0, z: 0}
-    duration: 2
-    afterDuration: 1
-    completeAfterDuration: 0
+    duration: 5
+    afterDuration: 0
+    completeAfterDuration: 1
     completed: 0
     tutorialEvent:
       m_PersistentCalls:
@@ -5366,14 +5365,15 @@ MonoBehaviour:
           m_CallState: 2
       m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
-  - tutorialName: Collecting
-    text: Collect these to make your planet grow!
+  - tutorialName: GrabResource
+    text: 'Press <color=''#FF00FF''>space</color> to grab objects <br> <color=''#FF00FF''><
+      ></color> keys to rotate ship   '
     image: {fileID: 0}
     imagePos: {x: 3000, y: -19, z: 0}
     textPos: {x: 3000, y: 0, z: 0}
-    duration: 5
-    afterDuration: 0
-    completeAfterDuration: 1
+    duration: 3
+    afterDuration: 1
+    completeAfterDuration: 0
     completed: 0
     tutorialEvent:
       m_PersistentCalls:
@@ -5381,7 +5381,8 @@ MonoBehaviour:
       m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
   - tutorialName: Infectroid
-    text: Keep this object away from your planet!
+    text: Keep this object away from your planet! <br> Press <color='#ff00ff'>Space</color>
+      to throw grabbed objects
     image: {fileID: 0}
     imagePos: {x: 3000, y: -19, z: 0}
     textPos: {x: 0, y: 0, z: 0}

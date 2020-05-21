@@ -273,7 +273,7 @@ public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
             var asteroid = trailingObjects[0];
             trailingObjects.RemoveAt(0);
             if(asteroid.rb != null) {
-                if(asteroid.tag == "InfectroidTutorial") PlayerTutorial.tutorialStepsByName["Infectroid"].completed = true;
+                if(asteroid.tag == "InfectroidTutorial") playerTutorial.tutorialStepsByName["Infectroid"].completed = true;
                 asteroid.rb.constraints = RigidbodyConstraints2D.None;
                 asteroid.throwed = true;
                 asteroid.rb.AddForce(transform.up * throwForce);
@@ -340,19 +340,6 @@ public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
             }
     }
 
-    IEnumerator BoostRecharge() {
-        isBoosting = false;
-        maxVelocity = defaultVelocity;
-
-        if(fuelMeter < maxFuel) {
-            yield return new WaitForSeconds(waitForCooldown);
-
-            //fuelBar.color = Color.white;
-            fuelMeter += Time.deltaTime;
-            canBoost = true;
-            waitForCooldown = 1f;
-        } else StopCoroutine("BoostRecharge");
-    }
     protected void BoostManager() {
         if (Input.GetKeyDown(KeyCode.LeftShift)) BoostPlayer();
 
@@ -369,18 +356,15 @@ public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
         } 
         else if (!canBoost) BoostCooldown();
     }
-    private void BoostPlayer()
-    {
-        if (canBoost)
-        {
-            rb.AddForce(transform.up * boostForce);
+    private void BoostPlayer() {
+        if (canBoost) {
+            if(rb != null) rb.AddForce(transform.up * boostForce);
             isBoosting = true;
         }
         else if (!canBoost) isBoosting = false;
     }
 
-    private void BoostCooldown()
-    {
+    private void BoostCooldown() {
         boostCooldownTimer += Time.deltaTime;
         var settings = exhaust.main;
         var switchcol = Color.white;

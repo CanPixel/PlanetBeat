@@ -13,4 +13,11 @@ public class PlayerReady : MonoBehaviourPun {
         text.text = "<color='#"+ColorUtility.ToHtmlStringRGB(new Color(r, g, b))+"'>READY</color>";
         this.transform.localPosition = pos + Vector3.down * 100f;
     }
+
+    void Update() {
+        if(GameManager.GAME_STARTED) {
+            GameManager.DESTROY_SERVER_OBJECT(gameObject);
+            Destroy(gameObject);
+        }
+    }
 }
