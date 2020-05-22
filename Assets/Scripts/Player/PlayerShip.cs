@@ -236,6 +236,7 @@ public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
    }
 
     void Start() {
+        GameManager.LIVE_PLAYER_COUNT++;
         rb = GetComponent<Rigidbody2D>();
         baseVelocity = maxVelocity;
         baseStopDrag = stopDrag;

@@ -7,6 +7,7 @@ using Photon.Realtime;
 public class AsteroidSpawner : MonoBehaviourPun {
     public GameObject asteroid;
     public GameObject powerup;
+    public GameObject remoteroid;
     private int objectToSpawn = 0;
     public int asteroidAmount = 4, powerupAmount = 2;
 
@@ -23,7 +24,7 @@ public class AsteroidSpawner : MonoBehaviourPun {
 
     private BlackHoleEffect blackHoleEffect;
     private float baseRadius;
-    private bool openBlackHole = false, shake = false;
+    private bool openBlackHole = false, shake = false, enableRemoteroid = false, enableInfectroid = false;
 
     private ScreenShake mainCamScreenShake;
     private int sample = 0;
@@ -55,7 +56,7 @@ public class AsteroidSpawner : MonoBehaviourPun {
         }
 
         PowerupsList = GameObject.FindGameObjectsWithTag("Powerup");
-        if(PowerupsList.Length < powerupAmount) {
+        if(PowerupsList.Length < powerupAmount && enableInfectroid) {
             powerupSpawnTimer += Time.deltaTime;
             if(powerupSpawnTimer > powerupSpawnDelay) openBlackHole = true;
             if(powerupSpawnTimer > powerupSpawnDelay + spawnAnimationDelay) {
@@ -84,6 +85,13 @@ public class AsteroidSpawner : MonoBehaviourPun {
         if(PhotonNetwork.IsMasterClient) return;
         mainCamScreenShake.Shake(1f);
         shake = true;
+    }
+
+    public void EnableInfectroidPowerup() {
+        enableInfectroid = true;
+    }
+    public void EnableRemoteroid() {
+        enableRemoteroid = true;
     }
 
 /* 
@@ -118,7 +126,10 @@ public class AsteroidSpawner : MonoBehaviourPun {
         Vector3 center = transform.position;
         Vector3 pos = RandomCircle(center, Random.Range(8f, 9f), Random.Range(0, 360));
         Quaternion rot = Quaternion.FromToRotation(Vector2.up, center + pos);
-        GameObject InstancedPrefab = GameManager.SPAWN_SERVER_OBJECT(powerup, new Vector3(blackHole.transform.position.x, blackHole.transform.position.y, -9), rot);
+
+        var power = powerup;
+        if(enableRemoteroid) power = Random.Range(0, 2) == 1? remoteroid : powerup;
+        GameObject InstancedPrefab = GameManager.SPAWN_SERVER_OBJECT(power, new Vector3(blackHole.transform.position.x, blackHole.transform.position.y, -9), rot);
 
         int maxSamples = 3;
         if(sample == 0) AudioManager.PLAY_SOUND("LowSpit", 1f, 1f);

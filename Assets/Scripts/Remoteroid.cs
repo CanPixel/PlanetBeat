@@ -114,7 +114,7 @@ public class Remoteroid : PickupableObject {
 
         if(ownerPlayer != null && ownerPlayer.photonView.IsMine) {
             scoreText.gameObject.SetActive(true);
-            scoreText.text = "F";
+            scoreText.text = "Space";
             if(ownerPlayer.ReleaseAsteroidKey()) {
                 pressDetonate++;
                 if(pressDetonate > 1) photonView.RPC("ExplodeAsteroid", RpcTarget.All, photonView.ViewID);

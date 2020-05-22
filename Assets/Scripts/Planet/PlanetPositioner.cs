@@ -10,7 +10,7 @@ public class PlanetPositioner : MonoBehaviourPun {
     public float orbitDistance = 2, planetReformSpeed = 10f;
     public Vector2 ellipseStretch = new Vector2(0.1f, 0f);
 
-    public bool turn = true;
+    public static bool turn = false;
     public float turnSpeed = 1f;
 
     private float move = 0;
@@ -36,7 +36,7 @@ public class PlanetPositioner : MonoBehaviourPun {
             }
         }
 
-        if(GameManager.GAME_STARTED && turn && Application.isPlaying && EliminationTimer.TIMER_START) {
+        if(GameManager.GAME_STARTED && turn && Application.isPlaying) {
             move += Time.deltaTime * (turnSpeed / 20f);
             PositionPlanets();
         }

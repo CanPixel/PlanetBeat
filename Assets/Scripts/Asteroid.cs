@@ -43,7 +43,6 @@ public class Asteroid : PickupableObject {
     public float defaultRbDrag = 0.2f;
     public float maxInOrbitTime = 5;
     public float outOrbitForce = 40;
-    public float heldScaleReduction = 1.6f;
 
     [Header("SPAWN")]
     public float beginThrust = 0.4f;
@@ -234,8 +233,6 @@ public class Asteroid : PickupableObject {
 
         if(held) ReleaseAsteroid(false, photonView.ViewID);
         else ReleasedTimer();  
-
-        transform.localScale = Vector3.Lerp(transform.localScale, (held) ? standardScale / heldScaleReduction : standardScale, Time.deltaTime * 4f);
     }
     
     [PunRPC]

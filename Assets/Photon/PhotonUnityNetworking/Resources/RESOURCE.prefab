@@ -532,7 +532,6 @@ MonoBehaviour:
   defaultRbDrag: 0.3
   maxInOrbitTime: 5
   outOrbitForce: 40
-  heldScaleReduction: 1.6
   beginThrust: 0.4
   curve: 0
   swirlDuration: 2

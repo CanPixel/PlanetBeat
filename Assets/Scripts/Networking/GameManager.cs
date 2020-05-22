@@ -26,6 +26,8 @@ public class GameManager : MonoBehaviourPunCallbacks {
 
    public static Dictionary<string, GameObject> playerLabels = new Dictionary<string, GameObject>();
 
+   public static float LIVE_PLAYER_COUNT = 0;
+
    public static bool GAME_STARTED = false, GAME_WON = false;
    private bool startCountdown = false;
    private float countdownTimer, startupDelayTimer;
