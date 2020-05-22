@@ -1,0 +1,105 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-9149669276936540392
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Music
+  m_EditorClassIdentifier: 
+  Path: event:/Music
+  guid: e1a532fd455f3842bb99309bf24c5f56
+  Banks:
+  - {fileID: 2225030645141049914}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 0
+  Parameters: []
+  MinDistance: 0
+  MaxDistance: 0
+  Length: 18466
+--- !u!114 &-7428768914813062684
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: par
+  m_EditorClassIdentifier: 
+  Name: par
+  Min: 1
+  Max: 6
+  Default: 1
+  Exists: 1
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d32cf7c32a3ed8347bac48ef5ed56d82, type: 3}
+  m_Name: FMODStudioCache
+  m_EditorClassIdentifier: 
+  EditorBanks:
+  - {fileID: 5120798839539729131}
+  - {fileID: 2225030645141049914}
+  EditorEvents:
+  - {fileID: -9149669276936540392}
+  EditorParameters:
+  - {fileID: -7428768914813062684}
+  MasterBanks:
+  - {fileID: 2225030645141049914}
+  StringsBanks:
+  - {fileID: 5120798839539729131}
+  stringsBankWriteTime: 637254182030000000
+  cacheVersion: 3
+--- !u!114 &2225030645141049914
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/Master.bank
+  m_EditorClassIdentifier: 
+  Path: VoorbeeldMusicINteractief/VoorbeeldInteractieveMuziek/Build/Desktop/Master.bank
+  SubDir: 
+  lastModified: 637254182030000000
+  LoadResult: 0
+  FileSizes: []
+  Exists: 1
+--- !u!114 &5120798839539729131
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/Master.strings.bank
+  m_EditorClassIdentifier: 
+  Path: VoorbeeldMusicINteractief/VoorbeeldInteractieveMuziek/Build/Desktop/Master.strings.bank
+  SubDir: 
+  lastModified: 637254182030000000
+  LoadResult: 0
+  FileSizes:
+  - Name: Desktop
+    Value: 788
+  Exists: 1

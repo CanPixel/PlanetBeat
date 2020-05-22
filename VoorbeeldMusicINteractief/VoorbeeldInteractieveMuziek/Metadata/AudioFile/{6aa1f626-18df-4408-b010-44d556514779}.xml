@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.01.00">
+	<object class="AudioFile" id="{6aa1f626-18df-4408-b010-44d556514779}">
+		<property name="assetPath">
+			<value>PlanetBeat_Opbouw+NewPhase.ogg</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>44.0999985</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>3.6923129251700679</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{2aa189aa-2b15-4400-8911-0bc3e274fc7a}</destination>
+		</relationship>
+	</object>
+</objects>
