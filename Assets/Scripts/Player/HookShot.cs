@@ -156,6 +156,9 @@ public class HookShot : MonoBehaviour {
         var photon = obj.GetComponent<PhotonView>();
         if(photon != null && hostPlayer.photonView != null) photon.TransferOwnership(hostPlayer.photonView.Controller.ActorNumber);
         animateHand.SetBool("Fetch", true);
+
+        if(obj.tag == "InfectroidTutorial") hostPlayer.playerTutorial.tutorialStepsByName["Infectroid"].completed = true;
+
         scaleBack = true;
     }
 

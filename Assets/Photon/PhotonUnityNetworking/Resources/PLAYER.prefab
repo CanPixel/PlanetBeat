@@ -5345,7 +5345,7 @@ MonoBehaviour:
     image: {fileID: 21300000, guid: 55426068ebf08964aa117576335130af, type: 3}
     imagePos: {x: 1600, y: 20, z: 0}
     textPos: {x: 0, y: 0, z: 0}
-    duration: 5
+    duration: 3
     afterDuration: 0
     completeAfterDuration: 1
     completed: 0
@@ -5381,8 +5381,7 @@ MonoBehaviour:
       m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
   - tutorialName: Infectroid
-    text: Keep this object away from your planet! <br> Press <color='#ff00ff'>Space</color>
-      to throw grabbed objects
+    text: Keep this object away from your planet!
     image: {fileID: 0}
     imagePos: {x: 3000, y: -19, z: 0}
     textPos: {x: 0, y: 0, z: 0}
@@ -5404,6 +5403,20 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+      m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+  - tutorialName: InfectroidThrow
+    text: Press <color='#ff00ff'>Space</color> to throw grabbed objects
+    image: {fileID: 0}
+    imagePos: {x: 3000, y: -19, z: 0}
+    textPos: {x: 0, y: 0, z: 0}
+    duration: 3
+    afterDuration: 0
+    completeAfterDuration: 0
+    completed: 0
+    tutorialEvent:
+      m_PersistentCalls:
+        m_Calls: []
       m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
   - tutorialName: Recap
@@ -11196,6 +11209,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: handjegrabhook
       objectReference: {fileID: 0}
+    - target: {fileID: -3681983302351433809, guid: f9dd89dbf83db6e46a4ba7671872fd60,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 4827a250d32a40a4b817a51e379c4265, type: 2}
     - target: {fileID: -6057140222963153312, guid: f9dd89dbf83db6e46a4ba7671872fd60,
         type: 3}
       propertyPath: m_Controller
@@ -11204,11 +11222,6 @@ PrefabInstance:
     - target: {fileID: -6057140222963153312, guid: f9dd89dbf83db6e46a4ba7671872fd60,
         type: 3}
       propertyPath: m_ApplyRootMotion
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -4433838772595260602, guid: f9dd89dbf83db6e46a4ba7671872fd60,
-        type: 3}
-      propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: f9dd89dbf83db6e46a4ba7671872fd60,
@@ -11281,11 +11294,6 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 5
       objectReference: {fileID: 0}
-    - target: {fileID: -3681983302351433809, guid: f9dd89dbf83db6e46a4ba7671872fd60,
-        type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: 4827a250d32a40a4b817a51e379c4265, type: 2}
     - target: {fileID: -2968649131645477063, guid: f9dd89dbf83db6e46a4ba7671872fd60,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -11311,10 +11319,25 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 2185019806740295035, guid: f9dd89dbf83db6e46a4ba7671872fd60,
+    - target: {fileID: 8304519780522744556, guid: f9dd89dbf83db6e46a4ba7671872fd60,
         type: 3}
-      propertyPath: m_LocalScale.z
-      value: 1
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8304519780522744556, guid: f9dd89dbf83db6e46a4ba7671872fd60,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8304519780522744556, guid: f9dd89dbf83db6e46a4ba7671872fd60,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -4433838772595260602, guid: f9dd89dbf83db6e46a4ba7671872fd60,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4560416852423371491, guid: f9dd89dbf83db6e46a4ba7671872fd60,
         type: 3}
@@ -11361,20 +11384,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: -90
       objectReference: {fileID: 0}
-    - target: {fileID: 8304519780522744556, guid: f9dd89dbf83db6e46a4ba7671872fd60,
+    - target: {fileID: 2185019806740295035, guid: f9dd89dbf83db6e46a4ba7671872fd60,
         type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8304519780522744556, guid: f9dd89dbf83db6e46a4ba7671872fd60,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8304519780522744556, guid: f9dd89dbf83db6e46a4ba7671872fd60,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
+      propertyPath: m_LocalScale.z
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f9dd89dbf83db6e46a4ba7671872fd60, type: 3}

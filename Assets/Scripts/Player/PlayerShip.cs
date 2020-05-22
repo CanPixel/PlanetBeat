@@ -271,9 +271,12 @@ public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
 
         if(dropAsteroid && trailingObjects.Count > 0 && respawnDelay <= 0 && hookDelay <= 0) {
             var asteroid = trailingObjects[0];
+
+            if(asteroid.tag == "ResourceTutorial") return;
+
             trailingObjects.RemoveAt(0);
             if(asteroid.rb != null) {
-                if(asteroid.tag == "InfectroidTutorial") playerTutorial.tutorialStepsByName["Infectroid"].completed = true;
+                if(asteroid.tag == "InfectroidTutorial") playerTutorial.tutorialStepsByName["InfectroidThrow"].completed = true;
                 asteroid.rb.constraints = RigidbodyConstraints2D.None;
                 asteroid.throwed = true;
                 asteroid.rb.AddForce(transform.up * throwForce);
@@ -363,7 +366,6 @@ public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
         }
         else if (!canBoost) isBoosting = false;
     }
-
     private void BoostCooldown() {
         boostCooldownTimer += Time.deltaTime;
         var settings = exhaust.main;
@@ -434,7 +436,7 @@ public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
     public void CastHook(int viewID) {
         if(!CanCastHook() && !hookShot.IsDelayingHook()) return;
         if(photonView.ViewID == viewID) hookShot.CastHook();
-        hookDelay = 0.5f;
+        hookDelay = 1f;
     }
 
     #region MOVEMENT_INPUTS
