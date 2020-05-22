@@ -1,0 +1,68 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!78 &1
+TagManager:
+  serializedVersion: 2
+  tags:
+  - PlanetTerrain
+  - ORBIT
+  - PLANET
+  - PLAYERSHIP
+  - HOOKSHOT
+  - PLAYERPLANET
+  - Bullet
+  - Resource
+  - GAMEFIELD
+  - PLAYERNAME
+  - ASTEROIDBELT
+  - CUSTOM CONTROLLER
+  - PLANETS
+  - SUN
+  - BACKGROUND
+  - TEXTURESWITCHER
+  - GAMEMANAGER
+  - LAUNCHER
+  - RoomToggle
+  - CENTER
+  - SPEEDSHARD
+  - Powerup
+  - MOON
+  - ResourceTutorial
+  - InfectroidTutorial
+  layers:
+  - Default
+  - TransparentFX
+  - Ignore Raycast
+  - 
+  - Water
+  - UI
+  - 
+  - 
+  - ASTEROID
+  - BOUNDS
+  - PLAYER
+  - HOOK
+  - POSTPROCESS
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  m_SortingLayers:
+  - name: Default
+    uniqueID: 0
+    locked: 0
