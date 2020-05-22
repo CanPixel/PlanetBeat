@@ -500,8 +500,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2976ffdb207e7214ba6018ec06d31a78, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxBounceVelocity: 4
-  bounceMultiplier: 2
+  bounceMultiplier: 0.35
   dropBoosts: 0
   ownerPlayer: {fileID: 0}
   rb: {fileID: 0}

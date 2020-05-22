@@ -5,7 +5,7 @@ using Photon.Pun;
 using UnityEngine.UI;
 
 public abstract class PickupableObject : MonoBehaviourPun {
-    public float maxBounceVelocity = 2f, bounceMultiplier = 2f;
+    public float bounceMultiplier = 0.35f;
 
     public bool dropBoosts = false;
 
@@ -49,9 +49,7 @@ public abstract class PickupableObject : MonoBehaviourPun {
     void OnCollisionEnter2D(Collision2D col) {
         if(rb == null) rb = GetComponent<Rigidbody2D>();
         if(rb != null && (col.gameObject.tag == "Resource" || col.gameObject.tag == "Powerup")) {
-            col.gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(-Mathf.Clamp(rb.velocity.x * bounceMultiplier, 0, maxBounceVelocity), Mathf.Clamp(rb.velocity.y * bounceMultiplier, 0, maxBounceVelocity));
-            
-            rb.velocity = new Vector2(-Mathf.Clamp(col.relativeVelocity.x * bounceMultiplier, 0, maxBounceVelocity), Mathf.Clamp(col.relativeVelocity.y * bounceMultiplier, 0, maxBounceVelocity));
+            rb.velocity = new Vector2(-col.relativeVelocity.x * bounceMultiplier, col.relativeVelocity.y * bounceMultiplier);
         }
     }
 }
