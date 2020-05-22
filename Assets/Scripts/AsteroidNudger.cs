@@ -36,7 +36,7 @@ public class AsteroidNudger : MonoBehaviour {
             var orbit = col.transform.GetComponent<Orbit>();
             if(orbit != null) {
                 var planet = orbit.planet;
-                if(!isInfectroid && planet != null && asteroid.ownerPlayer != null && asteroid.ownerPlayer.playerNumber == planet.playerNumber) rb.velocity /= 1.5f;
+                if (!isInfectroid && planet != null && asteroid.ownerPlayer != null && asteroid.ownerPlayer.playerNumber == planet.playerNumber) ; //rb.velocity /= 1.5f;
             }
         }
     }

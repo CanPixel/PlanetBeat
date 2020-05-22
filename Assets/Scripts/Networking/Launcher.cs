@@ -91,7 +91,8 @@ public class Launcher : MonoBehaviourPunCallbacks, ILobbyCallbacks, IInRoomCallb
     }
 
     public void SetPlayerCount(string i) {
-        var count = int.Parse(i);
+        if(i.Trim().Length <= 0) return;
+        var count = int.Parse(i.Trim());
         PlayerPrefs.SetInt("PlayerCount", count);
     }
 

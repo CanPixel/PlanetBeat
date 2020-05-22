@@ -32,16 +32,18 @@ public class PlayerTutorial : MonoBehaviour {
 
         [Header("TIMING")]
         public float duration = 3;
+        public float afterDuration = 0;
         public bool completeAfterDuration = false;
-        [HideInInspector] public bool completed = false;
+        public bool completed = false;
     
         [Header("EVENTS")]
         public UnityEvent tutorialEvent;
     }
+    
     [Space(10)]
     public TutorialPiece[] tutorialSteps;
     public int tutorialProgress = 0;
-    private float tutorialTimer = 0;
+    private float tutorialTimer = 0, tutorialWait = 0;
 
     private float resourceTick = 0, infectroidTick = 0;
 
@@ -49,7 +51,7 @@ public class PlayerTutorial : MonoBehaviour {
     private Infectroid tutorialInfectroid;
     private Vector3 textPos;
 
-    public static Dictionary<string, TutorialPiece> tutorialStepsByName = new Dictionary<string, TutorialPiece>();
+    public Dictionary<string, TutorialPiece> tutorialStepsByName = new Dictionary<string, TutorialPiece>();
 
     void Start() {
         text = GetComponentInChildren<Text>();
@@ -57,15 +59,20 @@ public class PlayerTutorial : MonoBehaviour {
         line.positionCount = segments + 1;
         text.color = new Color(1, 1, 1, 1);
 
+        if(Launcher.GetSkipCountDown()) icon.enabled = text.enabled = false;
+
+        tutorialStepsByName.Clear();
         foreach(var i in tutorialSteps) tutorialStepsByName.Add(i.tutorialName, i);
     }
 
     void Update() {
         TutorialTick();
 
+        float offset = 2.75f;
         var sine = Mathf.Sin(Time.time * 7f);
         text.transform.rotation = Quaternion.identity;
-        text.transform.position = new Vector3(transform.position.x + textPos.x + 2.75f + sine / 7f, transform.position.y + textPos.y + 0.5f, 0);
+        if(transform.position.x > 1) offset = -3f;
+        text.transform.position = new Vector3(transform.position.x + textPos.x + offset + sine / 7f, transform.position.y + textPos.y, 0);
 
         var targetCol = new Color(1, 1, 1, radius / 100f);
         foreach(var i in images) i.color = targetCol;
@@ -82,6 +89,12 @@ public class PlayerTutorial : MonoBehaviour {
         }
     }
 
+    private void IncrementTutorial() {
+        tutorialProgress++;
+        if(tutorialProgress < tutorialSteps.Length) tutorialSteps[tutorialProgress].tutorialEvent.Invoke();
+        tutorialTimer = tutorialWait = 0;
+    }
+
     private void TutorialTick() {
         if(tutorialProgress < tutorialSteps.Length) {
             var curTutorial = tutorialSteps[tutorialProgress];
@@ -94,9 +107,10 @@ public class PlayerTutorial : MonoBehaviour {
 
             tutorialTimer += Time.deltaTime;
             if(tutorialTimer > curTutorial.duration && (curTutorial.completeAfterDuration || curTutorial.completed)) {
-                tutorialProgress++;
-                if(tutorialProgress < tutorialSteps.Length) tutorialSteps[tutorialProgress].tutorialEvent.Invoke();
-                tutorialTimer = 0;
+                if(curTutorial.afterDuration > 0) {
+                    tutorialWait += Time.deltaTime;
+                    if(tutorialWait > curTutorial.afterDuration) IncrementTutorial();
+                } else IncrementTutorial();
             }
         }
 
@@ -105,7 +119,7 @@ public class PlayerTutorial : MonoBehaviour {
             resourceTick += Time.deltaTime;    
             tutorialResource.transform.position = GetOrbit(host.planet.transform.position, Mathf.Clamp(resourceTick, 0, 1), resourceTick * resourceOrbitSpeed);
         }
-        if(tutorialInfectroid != null && !tutorialInfectroid.held) {
+        if(tutorialInfectroid != null && !tutorialInfectroid.throwed && !tutorialInfectroid.held) {
             infectroidTick += Time.deltaTime;    
             tutorialInfectroid.transform.position = GetOrbit(host.planet.transform.position, Mathf.Clamp(infectroidTick, 0, 0.9f), infectroidTick * resourceOrbitSpeed);
         }
@@ -125,7 +139,7 @@ public class PlayerTutorial : MonoBehaviour {
     }
 
     public void SpawnTutorialResource() {
-        if(GameManager.SkipCountdown()) return;
+        if(GameManager.SkipCountdown() || !host.photonView.IsMine) return;
 
         var obj = Instantiate(resourcePrefab);
         tutorialResource = obj.GetComponent<Asteroid>();
@@ -133,9 +147,8 @@ public class PlayerTutorial : MonoBehaviour {
         tutorialResource.tag = "ResourceTutorial";
         tutorialResource.value = 10;
     }
-
     public void SpawnTutorialInfectroid() {
-        if(GameManager.SkipCountdown()) return;
+        if(GameManager.SkipCountdown() || !host.photonView.IsMine) return;
 
         var obj = Instantiate(infectroidPrefab);
         tutorialInfectroid = obj.GetComponent<Infectroid>();
@@ -143,11 +156,19 @@ public class PlayerTutorial : MonoBehaviour {
         tutorialInfectroid.tag = "InfectroidTutorial";
         host.planet.currentScore = 10;
         line.startColor = line.endColor = host.playerColor;
+
+        host.planet.Explode(10);
     }
 
     public void ResetOrbitColor() {
         line.startColor = line.endColor = Color.white;
+        Destroy(tutorialInfectroid.gameObject);
+        host.planet.currentScore = 0;
         host.photonView.RPC("ReadyPlayer", RpcTarget.MasterClient, host.photonView.ViewID);
+        text.enabled = icon.enabled = false;
+        
+        var obj = PhotonNetwork.Instantiate("PLAYERREADY", transform.position + Vector3.up / 2f, Quaternion.identity) as GameObject;
+        obj.GetPhotonView().RPC("Set", RpcTarget.All, PlayerShip.PLAYERNAME, host.transform.localPosition, host.playerColor.r, host.playerColor.g, host.playerColor.b);
     }
 
     private Vector3 GetOrbit(Vector3 center, float radius, float angle) {

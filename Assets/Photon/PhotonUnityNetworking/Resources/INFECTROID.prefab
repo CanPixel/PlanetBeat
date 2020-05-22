@@ -403,10 +403,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 85c50a4472fe8ea40b4d2d1aba3c09bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxBounceVelocity: 4
+  bounceMultiplier: 2
   dropBoosts: 0
   ownerPlayer: {fileID: 0}
   rb: {fileID: 0}
   held: 0
+  throwed: 0
   src: {fileID: 6313916151511072288}
   glow: {fileID: 7942915855959860691}
   increasePopupTxt: {fileID: 7083921187275832242}

@@ -67,5 +67,6 @@ MonoBehaviour:
   - SetsResource
   - SetRessource
   - ReadyPlayer
+  - Set
   DisableAutoOpenWizard: 1
   ShowSettings: 1

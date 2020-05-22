@@ -5,6 +5,8 @@ using Photon.Pun;
 using UnityEngine.UI;
 
 public abstract class PickupableObject : MonoBehaviourPun {
+    public float maxBounceVelocity = 2f, bounceMultiplier = 2f;
+
     public bool dropBoosts = false;
 
     [HideInInspector] public PlayerShip ownerPlayer;
@@ -16,6 +18,10 @@ public abstract class PickupableObject : MonoBehaviourPun {
     public bool IsDoneSpawning {
         get {return spawnTimer > activateAfterSpawning;}
     }
+
+    [HideInInspector] public bool throwed = false;
+
+    public void ReleaseAsteroid(bool released, int viewID) {}
 
     public void Init() {
         asteroidColl = GetComponent<Collider2D>();
@@ -42,7 +48,11 @@ public abstract class PickupableObject : MonoBehaviourPun {
 
     void OnCollisionEnter2D(Collision2D col) {
         if(rb == null) rb = GetComponent<Rigidbody2D>();
-        if(rb != null && (col.gameObject.tag == "Resource" || col.gameObject.tag == "Powerup")) rb.velocity = new Vector2(-col.relativeVelocity.x, col.relativeVelocity.y);
+        if(rb != null && (col.gameObject.tag == "Resource" || col.gameObject.tag == "Powerup")) {
+            col.gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(-Mathf.Clamp(rb.velocity.x * bounceMultiplier, 0, maxBounceVelocity), Mathf.Clamp(rb.velocity.y * bounceMultiplier, 0, maxBounceVelocity));
+            
+            rb.velocity = new Vector2(-Mathf.Clamp(col.relativeVelocity.x * bounceMultiplier, 0, maxBounceVelocity), Mathf.Clamp(col.relativeVelocity.y * bounceMultiplier, 0, maxBounceVelocity));
+        }
     }
 }
 
@@ -243,8 +253,6 @@ public class Infectroid : PickupableObject {
             if(par == null) return;
             var planet = par.GetComponent<PlayerPlanets>();
             if(planet != null) planet.infected = false;
-
-            if(gameObject.tag == "InfectroidTutorial" && held) PlayerTutorial.tutorialStepsByName["Infectroid"].completed = true;
         }
     }
 
@@ -278,7 +286,7 @@ public class Infectroid : PickupableObject {
     }
 
     [PunRPC]
-    public void ReleaseAsteroid(bool released, int viewID) {
+    public new void ReleaseAsteroid(bool released, int viewID) {
         if(photonView.ViewID == viewID) {
             if(released) {
                 held = false;

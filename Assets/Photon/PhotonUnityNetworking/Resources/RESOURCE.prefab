@@ -500,10 +500,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2976ffdb207e7214ba6018ec06d31a78, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxBounceVelocity: 4
+  bounceMultiplier: 2
   dropBoosts: 0
   ownerPlayer: {fileID: 0}
   rb: {fileID: 0}
   held: 0
+  throwed: 0
   src: {fileID: 6313916151511072288}
   glow: {fileID: 7942915855959860691}
   scoreText: {fileID: 1658768576256901087}
@@ -524,7 +527,7 @@ MonoBehaviour:
     type: 3}
   explosionColor: {r: 0.5529412, g: 0.20392157, b: 1, a: 1}
   UnstableTextColor: {r: 0.9245283, g: 0.45068684, b: 0.33579564, a: 1}
-  StablePhase: {x: 7, y: 10}
+  StablePhase: {x: 10, y: 12}
   UnstablePhase: {x: 4, y: 6}
   TimeAfterSizzle: 1
   defaultRbDrag: 0.3
@@ -771,7 +774,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   asteroid: {fileID: -6427339903121868966}
-  nudgeForce: 1.3
+  nudgeForce: 1.15
   isInfectroid: 0
   isInOrbit: 0
 --- !u!1001 &1374422895155449711

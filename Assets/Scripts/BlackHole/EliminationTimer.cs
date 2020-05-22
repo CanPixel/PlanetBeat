@@ -6,6 +6,8 @@ using UnityEngine.Events;
 using UnityEngine.UI;
 
 public class EliminationTimer : MonoBehaviourPun {
+    public bool COUNT = true;
+
     public Text eliminationCounter;
     private EliminationPhase phase;
     public float timeUntillElimination = 30f;
@@ -39,6 +41,8 @@ public class EliminationTimer : MonoBehaviourPun {
 
         if((!PhotonNetwork.IsMasterClient || !GameManager.GAME_STARTED || !everyoneHasWealth) && !TIMER_START) return;
         TIMER_START = backgroundRotate.enabled = true;
+
+        if(!COUNT) return;
 
         photonView.RPC("SynchTimer", RpcTarget.All, (int)timeUntillElimination);
 
