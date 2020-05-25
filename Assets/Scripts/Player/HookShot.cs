@@ -107,7 +107,7 @@ public class HookShot : MonoBehaviour {
 
             if(didntCatch) {
                 if(!reelback) {
-                    AudioManager.PLAY_SOUND("reel");
+                    SoundManager.PLAY_SOUND("ReelIn");
                     reelback = true;
                 }
 
@@ -123,8 +123,9 @@ public class HookShot : MonoBehaviour {
 
     public void CastHook() {
         if(!hostPlayer.CanCastHook() || IsDelayingHook()) return;
-        AudioManager.PLAY_SOUND("Kick", 1f, 0.9f);
-        AudioManager.PLAY_SOUND("CastHook", 0.8f, Random.Range(0.9f, 1f));
+
+        SoundManager.PLAY_SOUND("ReelOut");
+
         isShootingHook = true;
         triggerHook = false;
         animateHand.SetBool("Travel", true);

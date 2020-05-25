@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.01.00">
+	<object class="MixerReturn" id="{2d117ec7-05ae-4ace-8fe3-b4b72b416a09}">
+		<property name="overridingInputFormat">
+			<value>2</value>
+		</property>
+		<property name="name">
+			<value>Reverb</value>
+		</property>
+		<relationship name="effectChain">
+			<destination>{9ea780ff-3b21-42c8-b59f-843844cc4962}</destination>
+		</relationship>
+		<relationship name="panner">
+			<destination>{bec39762-631e-46a6-aca1-270e216dfc22}</destination>
+		</relationship>
+		<relationship name="output">
+			<destination>{4177d60e-7406-4bff-b8e0-8338d9cb0372}</destination>
+		</relationship>
+	</object>
+	<object class="MixerBusEffectChain" id="{9ea780ff-3b21-42c8-b59f-843844cc4962}">
+		<relationship name="effects">
+			<destination>{d65487df-3642-44ef-bf6d-197242482144}</destination>
+			<destination>{88bf42e4-b896-42a9-a33e-1747a81054d9}</destination>
+		</relationship>
+	</object>
+	<object class="MixerBusPanner" id="{bec39762-631e-46a6-aca1-270e216dfc22}" />
+	<object class="DelayEffect" id="{d65487df-3642-44ef-bf6d-197242482144}">
+		<property name="delay">
+			<value>461</value>
+		</property>
+		<property name="feedback">
+			<value>71.5</value>
+		</property>
+		<property name="dryLevel">
+			<value>-80</value>
+		</property>
+	</object>
+	<object class="MixerBusFader" id="{88bf42e4-b896-42a9-a33e-1747a81054d9}" />
+</objects>

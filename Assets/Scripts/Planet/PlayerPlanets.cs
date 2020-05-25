@@ -34,6 +34,7 @@ public class PlayerPlanets : MonoBehaviourPun {
     private Vector2 scoreBaseScale;
 
     private float baseWarningScale;
+    private Vector3 scoreTextBasePos;
 
     public Image warningSign, warningArrow;
     [HideInInspector] public bool infected = false;
@@ -45,7 +46,6 @@ public class PlayerPlanets : MonoBehaviourPun {
         eliminationTimer = prog;
         destructionInit = true;
     }
-
     public void RechargeElimination(float duration, float speed) {
         if(player == null) {
             rechargeBar.SetAlpha(0);
@@ -75,6 +75,7 @@ public class PlayerPlanets : MonoBehaviourPun {
     }
 
     void Start() {
+        scoreTextBasePos = scoreText.transform.position;
         scoreBaseScale = scoreText.transform.localScale;
         textOutline = scoreText.GetComponent<Outline>();
         outlineBase = textOutline.effectDistance;
@@ -140,6 +141,9 @@ public class PlayerPlanets : MonoBehaviourPun {
 
     void Update() {
         if(player != null && player.photonView.IsMine) {
+            //scoreText.transform.position = transform.position - new Vector3(0, 0.05f, 1);
+            scoreText.transform.position = Vector3.Lerp(scoreText.transform.position, (GameManager.GAME_STARTED) ? scoreTextBasePos : new Vector3(0, -1, 0), Time.deltaTime * 2f);
+
             if(infected) {
                 warningSign.transform.position = Vector3.Lerp(warningSign.transform.position, player.transform.position + Vector3.up / 1.5f, Time.deltaTime * 4f);
                 warningSign.transform.localScale = Vector3.Lerp(warningSign.transform.localScale, Vector3.one * baseWarningScale + (new Vector3(1.2f, 1.2f, 1.2f) * Mathf.Sin(Time.time * 10f) * 0.02f), Time.deltaTime * 4f);
@@ -171,7 +175,6 @@ public class PlayerPlanets : MonoBehaviourPun {
         transform.localScale = Vector3.Lerp(transform.localScale, new Vector3(Mathf.Clamp(transform.localScale.x, 0, maxScale), Mathf.Clamp(transform.localScale.y, 0, maxScale), Mathf.Clamp(transform.localScale.z, 0, maxScale)), Time.deltaTime * 2f);
 
         if(scoreText != null) {
-            scoreText.transform.position = transform.position - new Vector3(0, 0.05f, 1);
             scoreText.transform.rotation = Quaternion.identity;
 
             scoreText.transform.localScale = Vector2.Lerp(scoreText.transform.localScale, scoreBaseScale, Time.deltaTime * 1f);
@@ -224,6 +227,7 @@ public class PlayerPlanets : MonoBehaviourPun {
         planetGlow.Flicker();
         if(currentScore - penalty >= 0) currentScore -= penalty;
         else currentScore = 0;
+        SoundManager.PLAY_SOUND("ScoreDecrease");
         increasePopupTxt.enabled = true;    
         increasePopupTxt.color = redDecrease;
         increasePopupTxt.text = "-" + penalty.ToString() + "!";
@@ -233,7 +237,9 @@ public class PlayerPlanets : MonoBehaviourPun {
 
     public void AddingResource(float amount) {
         if(playerNumber <= 0) return;
-        AudioManager.PLAY_SOUND("Musicalhit", 0.7f, 0.95f);
+        
+        SoundManager.PLAY_SOUND("ScoreIncrease");
+
         currentScore += amount;
         if(currentScore > maxScore) currentScore = maxScore;
         photonView.RPC("SetResource", RpcTarget.AllBufferedViaServer, currentScore);

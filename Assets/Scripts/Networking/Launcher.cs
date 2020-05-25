@@ -153,7 +153,7 @@ public class Launcher : MonoBehaviourPunCallbacks, ILobbyCallbacks, IInRoomCallb
     }
 
     public void ClickSound(float pitch) {
-        AudioManager.PLAY_SOUND("click", 1, pitch);
+        SoundManager.PLAY_SOUND("UIClick");
     }
 
     public void Quit() {

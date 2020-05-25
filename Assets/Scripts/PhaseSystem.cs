@@ -24,9 +24,12 @@ public class PhaseSystem : MonoBehaviour {
 
     void Start() {
         planets = GameObject.FindGameObjectWithTag("PLANETS").GetComponentsInChildren<PlayerPlanets>();
+        text.enabled = false;
     }
 
     void Update() {
+        if(GameManager.GAME_STARTED) text.enabled = true;
+        
         //Phase Logic
         float currentRatio = 0;
         phaseIndex = 0;
@@ -36,12 +39,10 @@ public class PhaseSystem : MonoBehaviour {
             foreach(var planet in planets) if(planet.HasPlayer() && planet.currentScore >= currentPhase.minScore) playerWealth++;
 
             currentRatio = (playerWealth / GameManager.LIVE_PLAYER_COUNT);
-            Debug.LogError(currentRatio);
 
             if(currentRatio >= currentPhase.ratioOfPlayersWithScore) phaseIndex = i;
             else break;
         }
-//        Debug.LogError(currentRatio + " || " + gamePhases[phaseIndex].ratioOfPlayersWithScore);
         text.text = "[" + phaseIndex + "] " + gamePhases[phaseIndex].phaseName.ToUpper();
 
         //Phase Events

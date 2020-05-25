@@ -188,7 +188,11 @@ public class Asteroid : PickupableObject {
             src.color = glow.color = Color.Lerp(src.color, explosionColor, tickBomb * Time.deltaTime);
 
             if(timeBombTick > 1f / tickBomb) {
-                AudioManager.PLAY_SOUND("timebombtick", 2f, Random.Range(0.5f, 0.55f) + tickBomb / 3f);
+                
+                //
+                SoundManager.PLAY_SOUND("HotPotatoTicking");
+                //
+
                 timeBombTick = 0;
             }
             if(bombTimer > 1f / tickBomb) {
@@ -203,7 +207,7 @@ public class Asteroid : PickupableObject {
                 animator.SetBool("res-explode", true);    
 
                 if(!nearExplode) {
-                    AudioManager.PLAY_SOUND("sizzle21", 2f, Random.Range(1f, 1.05f));
+                    SoundManager.PLAY_SOUND("HotPotatoSizzle");
                     nearExplode = true;
                 }
                 if(bombTimer > unstablePhaseTime + TimeAfterSizzle && !destroy) photonView.RPC("ExplodeAsteroid", RpcTarget.All, photonView.ViewID);
@@ -239,7 +243,9 @@ public class Asteroid : PickupableObject {
     public void ExplodeAsteroid(int viewID) {
         if(photonView.ViewID == viewID) {
             Camera.main.GetComponent<ScreenShake>().Turn(0.7f);
-            AudioManager.PLAY_SOUND("Explode", 1f, Random.Range(0.95f, 1.05f));
+
+            SoundManager.PLAY_SOUND("HotPotatoExplosion");
+
             Instantiate(explodeParticles, transform.position, Quaternion.identity);
             PhotonNetwork.InstantiateSceneObject("Shockwave", transform.position, Quaternion.identity);
 
@@ -271,8 +277,9 @@ public class Asteroid : PickupableObject {
 
     public override void Capture(HookShot hookShot) {
         if(!hookShot.CanHold() || collectTimer > 0) return;
-        AudioManager.PLAY_SOUND("kickVerb", 1, Random.Range(1f, 1.1f));
-        AudioManager.PLAY_SOUND("Reel");
+
+        SoundManager.PLAY_SOUND("CatchObject");
+
         if((!held || (held && ownerPlayer != null && ownerPlayer.photonView.ViewID != hookShot.hostPlayer.photonView.ViewID))) {
             transform.position = hookShot.transform.position;
             ownerPlayer = hookShot.hostPlayer;

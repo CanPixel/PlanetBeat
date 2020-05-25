@@ -69,7 +69,8 @@ public class GameManager : MonoBehaviourPunCallbacks {
       if(PhotonNetwork.IsMasterClient) playerCount = PlayerPrefs.GetInt("PlayerCount");
 
       skipCountdown = Launcher.GetSkipCountDown();
-      AudioManager.PLAY_SOUND("sizzle", 1f, 1.5f);
+      
+      SoundManager.PLAY_SOUND("StartGame");
    }
 
    public static bool SkipCountdown() {
@@ -120,17 +121,11 @@ public class GameManager : MonoBehaviourPunCallbacks {
       planet.AssignPlayer(player);
    }
 
-   public void MuteGame() {
-      AudioManager.MUTE = !AudioManager.MUTE;
-      muteButton.sprite = (AudioManager.MUTE) ? noSoundIcon : soundIcon;
-      AudioManager.MuteMusic(AudioManager.MUTE);
-   }
-
    public static void ClickSound(float pitch) {
-      AudioManager.PLAY_SOUND("click", 1, pitch);
+      SoundManager.PLAY_SOUND("UIClick");
    }
    public void Click(float pitch) {
-      AudioManager.PLAY_SOUND("click", 1, pitch);
+      SoundManager.PLAY_SOUND("UIClick");
    }
 
    void OnValidate() {
@@ -158,7 +153,7 @@ public class GameManager : MonoBehaviourPunCallbacks {
          if(countdownTimer > 1) {
             if(count > 0) {
                count--;
-               AudioManager.PLAY_SOUND("click");
+               SoundManager.PLAY_SOUND("Countdown");
             }
             else GAME_STARTED = true;
             photonView.RPC("EnableCountdown", RpcTarget.All, count);
@@ -169,7 +164,7 @@ public class GameManager : MonoBehaviourPunCallbacks {
       if(startupDelayTimer > 0.8f && skipCountdown) GAME_STARTED = true;
       else startupDelayTimer += Time.deltaTime;
 
-      BeatPulse.BEGIN = GAME_STARTED;
+      //BeatPulse.BEGIN = GAME_STARTED;
    }
 
    [PunRPC]

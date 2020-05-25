@@ -300,7 +300,9 @@ public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
 
         if(hookDelay > 0) hookDelay -= Time.deltaTime;
         if(ReleaseAsteroidKey() && trailingObjects.Count > 0 && respawnDelay <= 0) {
-            AudioManager.PLAY_SOUND("collect");
+            
+            //SoundManager.PLAY_SOUND("Collect");
+            
             dropAsteroid = true;
             hookShot.DelayShoot();
         }

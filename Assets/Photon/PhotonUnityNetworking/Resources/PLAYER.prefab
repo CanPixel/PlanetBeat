@@ -5410,7 +5410,7 @@ MonoBehaviour:
     image: {fileID: 0}
     imagePos: {x: 3000, y: -19, z: 0}
     textPos: {x: 0, y: 0, z: 0}
-    duration: 3
+    duration: 1.5
     afterDuration: 0
     completeAfterDuration: 0
     completed: 0

@@ -18,7 +18,9 @@ public class ScreenShake : MonoBehaviour {
     }
 
     public void Shake(float intensity) {
-        AudioManager.PLAY_SOUND("Leap", 1.3f, 0.3f);
+        
+        //AudioManager.PLAY_SOUND("Leap", 1.3f, 0.3f);
+
         basePos = transform.localPosition;
         this.intensity = intensity;
         turn = false;

@@ -124,8 +124,9 @@ public class Remoteroid : PickupableObject {
 
     public override void Capture(HookShot hookShot) {
         if(!hookShot.CanHold() || collectTimer > 0) return;
-        AudioManager.PLAY_SOUND("kickVerb", 1, Random.Range(1f, 1.1f));
-        AudioManager.PLAY_SOUND("Reel");
+
+        SoundManager.PLAY_SOUND("CatchObject");
+        
         if((!held || (held && ownerPlayer != null && ownerPlayer.photonView.ViewID != hookShot.hostPlayer.photonView.ViewID))) {
             scaleBack = false;
             transform.position = hookShot.transform.position;
@@ -142,7 +143,9 @@ public class Remoteroid : PickupableObject {
     public void ExplodeAsteroid(int viewID) {
         if(photonView.ViewID == viewID) {
             Camera.main.GetComponent<ScreenShake>().Turn(1.5f);
-            AudioManager.PLAY_SOUND("Explode", 1f, Random.Range(0.95f, 1.05f));
+            
+            SoundManager.PLAY_SOUND("ResourceExplosion");
+
             Instantiate(explodeParticles, transform.position, Quaternion.identity);
             PhotonNetwork.InstantiateSceneObject("Shockwave", transform.position, Quaternion.identity);
 
@@ -194,7 +197,8 @@ public class Remoteroid : PickupableObject {
     }
 
     public void DestroyDefinite() {
-        AudioManager.PLAY_SOUND("Explode", 1f, Random.Range(0.95f, 1.05f));
+        SoundManager.PLAY_SOUND("ResourceExplosion");
+        
         Instantiate(explodeParticles, transform.position, Quaternion.identity);
         GameManager.DESTROY_SERVER_OBJECT(gameObject);
         if(photonView != null) photonView.RPC("DestroyAsteroid", RpcTarget.All, photonView.ViewID);

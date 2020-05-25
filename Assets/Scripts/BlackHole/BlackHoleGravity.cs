@@ -79,7 +79,8 @@ public class BlackHoleGravity : MonoBehaviour {
             if(!collision.gameObject.GetComponent<PickupableObject>().IsDoneSpawning) return; 
             if(collision.gameObject.GetComponent<Asteroid>() != null) collision.gameObject.GetComponent<Asteroid>().DisableTrails();
             destroyingObjects.Add(new DyingObject(collision.gameObject));
-            AudioManager.PLAY_SOUND("Burn", 0.8f, 1.3f);
+            
+            //SoundManager.PLAY_SOUND("Burn", 0.8f, 1.3f);
         }
     }
 }
