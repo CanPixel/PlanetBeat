@@ -69,6 +69,29 @@ MonoBehaviour:
   MinDistance: 0
   MaxDistance: 0
   Length: 2137
+--- !u!114 &-8259912739363674573
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/SFX/hot_patato
+  m_EditorClassIdentifier: 
+  Path: event:/SFX/hot_patato
+  guid: 08aad5bfabd16e45b3413fe1261586f0
+  Banks:
+  - {fileID: 1620966471833687850}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 0
+  MaxDistance: 0
+  Length: 4354
 --- !u!114 &-8231781696369298934
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -110,6 +133,29 @@ MonoBehaviour:
   MinDistance: 0
   MaxDistance: 0
   Length: 1548
+--- !u!114 &-6983498306470370060
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/SFX/score_eraf
+  m_EditorClassIdentifier: 
+  Path: event:/SFX/score_eraf
+  guid: d975fa7944db594d89de0f95271f53b0
+  Banks:
+  - {fileID: 1620966471833687850}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 0
+  MaxDistance: 0
+  Length: 984
 --- !u!114 &-6832811212002349731
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -225,6 +271,29 @@ MonoBehaviour:
   MinDistance: 0
   MaxDistance: 0
   Length: 0
+--- !u!114 &-4484867598895188397
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Space_ships/thruts_vliegen
+  m_EditorClassIdentifier: 
+  Path: event:/Space_ships/thruts_vliegen
+  guid: 536a2f8e4de5f543bbe638eef94eb6b8
+  Banks:
+  - {fileID: 1620966471833687850}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 0
+  MaxDistance: 0
+  Length: 0
 --- !u!114 &-4232127834166101801
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -303,6 +372,52 @@ MonoBehaviour:
   Max: 6
   Default: 1
   Exists: 1
+--- !u!114 &-2476700855449114489
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Music
+  m_EditorClassIdentifier: 
+  Path: event:/Music
+  guid: e1a532fd455f3842bb99309bf24c5f56
+  Banks:
+  - {fileID: 1620966471833687850}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 0
+  Parameters: []
+  MinDistance: 0
+  MaxDistance: 0
+  Length: 18466
+--- !u!114 &-2002814431394309183
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/SFX/resource_spawn
+  m_EditorClassIdentifier: 
+  Path: event:/SFX/resource_spawn
+  guid: 287aa4c64f3f0949afbad65ec881092e
+  Banks:
+  - {fileID: 1620966471833687850}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 0
+  MaxDistance: 0
+  Length: 1360
 --- !u!114 &-1492310772228274929
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -343,6 +458,29 @@ MonoBehaviour:
   Max: 6
   Default: 1
   Exists: 1
+--- !u!114 &-311996326791493656
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/SFX/infectroid_explosion
+  m_EditorClassIdentifier: 
+  Path: event:/SFX/infectroid_explosion
+  guid: cd0a11b8c98d104bbff6cd5aefd527ce
+  Banks:
+  - {fileID: 1620966471833687850}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 0
+  MaxDistance: 0
+  Length: 1562
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -356,26 +494,26 @@ MonoBehaviour:
   m_Name: FMODStudioCache
   m_EditorClassIdentifier: 
   EditorBanks:
-  - {fileID: 6789370209306509812}
-  - {fileID: -4232127834166101801}
+  - {fileID: 8406078464662799278}
+  - {fileID: 1620966471833687850}
   EditorEvents:
-  - {fileID: -6792658668412345544}
-  - {fileID: -6783877242970631835}
-  - {fileID: 8142924819811834380}
-  - {fileID: -2754043283664352078}
-  - {fileID: -5086355274448245477}
-  - {fileID: -7309081069039735710}
-  - {fileID: -8592761601980986665}
-  - {fileID: 6406325263963335601}
-  - {fileID: 7081136160671628090}
-  - {fileID: 3783269412792659351}
-  - {fileID: 6687651906455994211}
+  - {fileID: -8259912739363674573}
+  - {fileID: 6992929517751267980}
+  - {fileID: -2002814431394309183}
+  - {fileID: 2527403837033758816}
+  - {fileID: -4484867598895188397}
+  - {fileID: 2141710367921304538}
+  - {fileID: -311996326791493656}
+  - {fileID: -6983498306470370060}
+  - {fileID: 8634505732723415505}
+  - {fileID: -2476700855449114489}
+  - {fileID: 2923365563153268621}
   EditorParameters:
-  - {fileID: -2536921117820524917}
+  - {fileID: 5252705375221064252}
   MasterBanks:
-  - {fileID: -4232127834166101801}
+  - {fileID: 1620966471833687850}
   StringsBanks:
-  - {fileID: 6789370209306509812}
+  - {fileID: 8406078464662799278}
   stringsBankWriteTime: 659221914700000000
   cacheVersion: 3
 --- !u!114 &99111093974494254
@@ -401,6 +539,93 @@ MonoBehaviour:
   MinDistance: 0
   MaxDistance: 0
   Length: 1360
+--- !u!114 &1620966471833687850
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/Master.bank
+  m_EditorClassIdentifier: 
+  Path: Assets/Audio/Build/Desktop/Master.bank
+  SubDir: 
+  lastModified: 659221914700000000
+  LoadResult: 0
+  FileSizes: []
+  Exists: 1
+--- !u!114 &2141710367921304538
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/SFX/infectroid_spawn
+  m_EditorClassIdentifier: 
+  Path: event:/SFX/infectroid_spawn
+  guid: ab94fa96f309cc4ab55b11ebd137e798
+  Banks:
+  - {fileID: 1620966471833687850}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 0
+  MaxDistance: 0
+  Length: 1548
+--- !u!114 &2527403837033758816
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/SFX/score_erbij
+  m_EditorClassIdentifier: 
+  Path: event:/SFX/score_erbij
+  guid: 47b08459f7f865408d4ab0415ff4c0f0
+  Banks:
+  - {fileID: 1620966471833687850}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 0
+  MaxDistance: 0
+  Length: 2137
+--- !u!114 &2923365563153268621
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/UI/count_down
+  m_EditorClassIdentifier: 
+  Path: event:/UI/count_down
+  guid: ed7337959489af4c90af647b0562939f
+  Banks:
+  - {fileID: 1620966471833687850}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 0
+  MaxDistance: 0
+  Length: 0
 --- !u!114 &3762964020255133729
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -470,6 +695,23 @@ MonoBehaviour:
   MinDistance: 0
   MaxDistance: 0
   Length: 0
+--- !u!114 &5252705375221064252
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: par
+  m_EditorClassIdentifier: 
+  Name: par
+  Min: 1
+  Max: 6
+  Default: 1
+  Exists: 1
 --- !u!114 &5463973675056786447
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -582,6 +824,29 @@ MonoBehaviour:
   - Name: Desktop
     Value: 1292
   Exists: 1
+--- !u!114 &6992929517751267980
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Space_ships/reel_out
+  m_EditorClassIdentifier: 
+  Path: event:/Space_ships/reel_out
+  guid: 185e427e73f6ff4cb1e7e033dc3ff00c
+  Banks:
+  - {fileID: 1620966471833687850}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 0
+  MaxDistance: 0
+  Length: 541
 --- !u!114 &7081136160671628090
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -651,3 +916,46 @@ MonoBehaviour:
   MinDistance: 0
   MaxDistance: 0
   Length: 1360
+--- !u!114 &8406078464662799278
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/Master.strings.bank
+  m_EditorClassIdentifier: 
+  Path: Assets/Audio/Build/Desktop/Master.strings.bank
+  SubDir: 
+  lastModified: 659221914700000000
+  LoadResult: 0
+  FileSizes:
+  - Name: Desktop
+    Value: 1292
+  Exists: 1
+--- !u!114 &8634505732723415505
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/SFX/black_hole
+  m_EditorClassIdentifier: 
+  Path: event:/SFX/black_hole
+  guid: da79172cabc14e43a1a80e69898b02df
+  Banks:
+  - {fileID: 1620966471833687850}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 0
+  MaxDistance: 0
+  Length: 3299

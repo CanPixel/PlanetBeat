@@ -1884,7 +1884,7 @@ GameObject:
   - component: {fileID: 742433453}
   - component: {fileID: 742433454}
   m_Layer: 0
-  m_Name: FMOD Audio
+  m_Name: FMOD Loop
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
