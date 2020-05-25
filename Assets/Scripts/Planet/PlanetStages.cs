@@ -26,7 +26,7 @@ public class PlanetStages : MonoBehaviour {
                     moonOBJ.name = "Moon";
                     moonOBJ.transform.SetParent(root.transform);
                     moonOBJ.transform.localPosition = new Vector3(0, 0, -Random.Range(400, 600));
-                    moonOBJ.GetComponent<Moon>().Init(Random.Range(20, 50) * ((Random.Range(0, 2) == 1) ? -1f : 1f), (Random.Range(0, 2) == 1), Random.Range(0.25f, 0.8f));
+                    moonOBJ.GetComponent<Moon>().Init(Random.Range(20, 50) * ((Random.Range(0, 2) == 1) ? -1f : 1f), (Random.Range(0, 2) == 1), Random.Range(0.25f, 0.7f));
                 }
             }
         }

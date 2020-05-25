@@ -87,13 +87,14 @@ public class Launcher : MonoBehaviourPunCallbacks, ILobbyCallbacks, IInRoomCallb
             exitButton.gameObject.SetActive(false);
         #endif
 
-        SetPlayerCount(playerCount.text);
+        SetPlayerCount(PlayerPrefs.GetInt("PlayerCount").ToString());
     }
 
     public void SetPlayerCount(string i) {
         if(i.Trim().Length <= 0) return;
         var count = int.Parse(i.Trim());
         PlayerPrefs.SetInt("PlayerCount", count);
+        playerCount.text = count.ToString();
     }
 
     protected void TryConnect(bool retry = false) {

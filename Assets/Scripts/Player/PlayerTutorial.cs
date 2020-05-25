@@ -149,6 +149,7 @@ public class PlayerTutorial : MonoBehaviour {
         tutorialResource.transform.position = transform.position;
         tutorialResource.tag = "ResourceTutorial";
         tutorialResource.value = 10;
+        host.planet.tutorial = true;
     }
     public void SpawnTutorialInfectroid() {
         if(GameManager.SkipCountdown() || !host.photonView.IsMine) return;
@@ -168,13 +169,15 @@ public class PlayerTutorial : MonoBehaviour {
         line.startColor = line.endColor = Color.white;
         Destroy(tutorialInfectroid.gameObject);
 
-        host.planet.photonView.RPC("SetResource", RpcTarget.All, 0);
+        host.planet.photonView.RPC("SetResource", RpcTarget.All, 0f);
 
         host.photonView.RPC("ReadyPlayer", RpcTarget.MasterClient, host.photonView.ViewID);
         text.enabled = icon.enabled = false;
         
         var obj = PhotonNetwork.Instantiate("PLAYERREADY", transform.position + Vector3.up / 3f, Quaternion.identity) as GameObject;
         obj.GetPhotonView().RPC("Set", RpcTarget.All, PlayerShip.PLAYERNAME, host.transform.localPosition, host.playerColor.r, host.playerColor.g, host.playerColor.b);
+
+        host.planet.tutorial = false;
     }
 
     private Vector3 GetOrbit(Vector3 center, float radius, float angle) {

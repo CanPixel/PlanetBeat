@@ -150,7 +150,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5336174367327457933}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -50}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_Children:
   - {fileID: 5336174368953841513}
@@ -215,9 +215,8 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  infectionNotifiers:
-  - {fileID: 0}
-  - {fileID: 0}
+  warningSign: {fileID: 0}
+  warningArrow: {fileID: 0}
   infected: 0
   eliminationTimer: 0
 --- !u!114 &5336174367327457940
@@ -754,16 +753,6 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 6061447726823252456, guid: f3469c6a1e99fd544b899569b8f579c8,
-        type: 3}
-      propertyPath: m_FillAmount
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6061447726823252456, guid: f3469c6a1e99fd544b899569b8f579c8,
-        type: 3}
-      propertyPath: m_Color.a
-      value: 0.6156863
-      objectReference: {fileID: 0}
     - target: {fileID: 6061447726823252457, guid: f3469c6a1e99fd544b899569b8f579c8,
         type: 3}
       propertyPath: m_SizeDelta.y
@@ -778,6 +767,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Color.a
       value: 0.5921569
+      objectReference: {fileID: 0}
+    - target: {fileID: 6061447726823252456, guid: f3469c6a1e99fd544b899569b8f579c8,
+        type: 3}
+      propertyPath: m_FillAmount
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6061447726823252456, guid: f3469c6a1e99fd544b899569b8f579c8,
+        type: 3}
+      propertyPath: m_Color.a
+      value: 0.6156863
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f3469c6a1e99fd544b899569b8f579c8, type: 3}

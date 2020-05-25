@@ -309,7 +309,7 @@ MonoBehaviour:
     fmodPath: event:/SFX/score_eraf
   - labelName: ScoreIncrease
     fmodPath: event:/SFX/score_erbij
-  - labelName: CastHook
+  - labelName: Reelout
     fmodPath: event:/Space_ships/reel_out
   - labelName: Exhaust
     fmodPath: event:/Space_ships/thruts_vliegen

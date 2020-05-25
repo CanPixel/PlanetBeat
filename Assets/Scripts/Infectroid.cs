@@ -165,14 +165,14 @@ public class Infectroid : PickupableObject {
             return;
         }
 
-        if(PhotonNetwork.IsMasterClient && photonView.ViewID > 0) {
+        if(PhotonNetwork.IsMasterClient) {
             spawnTimer += Time.deltaTime;
 
             if(infectTime > infectDelay && playerPlanets != null && playerPlanets.currentScore > 0) {
                 playerPlanets.Explode(penalty);
                 this.infectTime = 0;
             } 
-            photonView.RPC("SynchTimer", RpcTarget.All, spawnTimer, timeBombTick);
+            if(photonView.ViewID > 0) photonView.RPC("SynchTimer", RpcTarget.All, spawnTimer, timeBombTick);
         }
         increasePopupHideTimer += Time.deltaTime;
         if(spawnTimer < activateAfterSpawning) return;
