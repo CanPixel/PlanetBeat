@@ -26,13 +26,6 @@ public class BlackHoleGravity : MonoBehaviour {
         }
     }
 
-    private AsteroidSpawner spawner;
-
-    public void SpawnOnBeat() {
-       // if(spawner == null) spawner = GameObject.FindGameObjectWithTag("CENTER").GetComponent<AsteroidSpawner>();
-       // spawner.SpitAsteroidOnBeat();
-    }
-
     //Eating animation
     void Update() {
         for(int i = 0; i < destroyingObjects.Count; i++) {

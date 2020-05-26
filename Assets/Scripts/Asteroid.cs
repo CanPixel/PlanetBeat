@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class Asteroid : PickupableObject {
     public Image src, glow;
     public Text scoreText, increasePopupTxt;
-
+    
     public Animator animator;
 
     public bool canScoreWithoutDropping = false;
@@ -203,8 +203,8 @@ public class Asteroid : PickupableObject {
 
             //Actual explosion
             if(bombTimer > unstablePhaseTime) {
-                animator.SetBool("res-unstable", false);
-                animator.SetBool("res-explode", true);    
+          //      animator.SetBool("res-unstable", false);
+            //    animator.SetBool("res-explode", true);    
 
                 if(!nearExplode) {
                     SoundManager.PLAY_SOUND("HotPotatoSizzle");
@@ -212,17 +212,23 @@ public class Asteroid : PickupableObject {
                 }
                 if(bombTimer > unstablePhaseTime + TimeAfterSizzle && !destroy) photonView.RPC("ExplodeAsteroid", RpcTarget.All, photonView.ViewID);
             } else {
-                animator.SetBool("res-high", false);
-                animator.SetBool("res-unstable", true);
+              //  animator.SetBool("res-high", false);
+                //animator.SetBool("res-unstable", true);
             }
         } else {
-            if(value < maxValue / 2f) {
-                animator.SetBool("res-low", false);
-                animator.SetBool("res-med", true);
-            } else {
-                animator.SetBool("res-med", false);
-                animator.SetBool("res-high", true);
-            }
+        }
+
+        //animation
+        if(timeBombTick > 1 && timeBombTick <= 2) {
+            animator.SetBool("res-low", false);
+            animator.SetBool("res-ned", true);
+        } else if(timeBombTick > 2 && timeBombTick < 4) {
+            animator.SetBool("res-ned", false);
+            animator.SetBool("res-high", true);
+        }
+        if(bombTimer > 2.1f) {
+            animator.SetBool("res-high", false);
+            animator.SetBool("res-unstable", true);
         }
 
         increaseValueTimer += Time.deltaTime;
@@ -409,7 +415,7 @@ public class Asteroid : PickupableObject {
     public new void ReleaseAsteroid(bool released, int viewID) {
         if(photonView.ViewID == viewID) {
             if(released) {
-                playerTagsManager.TagOn(true);
+                //playerTagsManager.TagOn(true);
                 playerTagsManager.runTagTimer = true;
                 held = false;
                 canScore = true;

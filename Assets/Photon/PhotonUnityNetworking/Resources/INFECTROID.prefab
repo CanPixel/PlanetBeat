@@ -416,6 +416,7 @@ MonoBehaviour:
     type: 3}
   giveTag: 0
   inOrbitTimer: 0
+  inOrbit: 0
   grabDelay: 0
   infectDelay: 0.75
   penalty: 1

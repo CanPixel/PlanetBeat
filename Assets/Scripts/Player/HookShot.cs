@@ -31,8 +31,6 @@ public class HookShot : MonoBehaviour {
 
     private bool reelback = false;
 
-    private GameObject lockOnAimTarget;
-
     private bool HookCooldown = false;
     public float HookCooldownTime = 10.0f;
     private float HookCooldownDelay;
@@ -137,7 +135,6 @@ public class HookShot : MonoBehaviour {
 
     protected void ResetHook() {
         reelback = false;
-        lockOnAimTarget = null;
         transform.localRotation = Quaternion.Euler(0, 0, 0);
         triggerHook = hitObject = isShootingHook = false;
         rope.sizeDelta = new Vector2(rope.sizeDelta.x, 0);

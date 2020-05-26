@@ -9,10 +9,10 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviourPunCallbacks {
    public bool spectating = false;
 
-   public Image muteButton;
+   //public Image muteButton;
    public Sprite soundIcon, noSoundIcon;
 
-   public Background background;
+   //public Background background;
    public GameObject gameField;
    private float gameFieldScale;
    public float gameFieldStartScale;
@@ -21,7 +21,7 @@ public class GameManager : MonoBehaviourPunCallbacks {
    public Text countdown;
    [Header("Start Game")]
    private int playerCount = 4;
-   public int playerReadyCount = 0;
+   [HideInInspector] public int playerReadyCount = 0;
    private bool skipCountdown = false;  
 
    public static Dictionary<string, GameObject> playerLabels = new Dictionary<string, GameObject>();
@@ -163,8 +163,6 @@ public class GameManager : MonoBehaviourPunCallbacks {
 
       if(startupDelayTimer > 0.8f && skipCountdown) GAME_STARTED = true;
       else startupDelayTimer += Time.deltaTime;
-
-      //BeatPulse.BEGIN = GAME_STARTED;
    }
 
    [PunRPC]

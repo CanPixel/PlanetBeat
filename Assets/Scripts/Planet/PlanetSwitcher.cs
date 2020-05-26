@@ -106,23 +106,10 @@ public class PlanetSwitcher : MonoBehaviour {
     public void UpdateTexturePack() {
         if(planetsReference == null) planetsReference = GameObject.FindGameObjectWithTag("PLANETS").GetComponentsInChildren<PlanetGlow>();
         if(asteroidReference == null) asteroidReference = GameObject.FindGameObjectWithTag("ASTEROIDBELT");
-        if(sunReference == null) {
-            var sunObj = GameObject.FindGameObjectWithTag("SUN");
-            if(sunObj != null) {
-                sun = sunObj.GetComponent<BlackHoleTextures>();
-                if(sun != null) {
-                    sunReference = sun.src;
-                    sunGlowReference = sun.glow;
-                }
-            }
-        }
         if(backgroundReference == null) backgroundReference = GameObject.FindGameObjectWithTag("BACKGROUND");
 
-//        if(planetsReference != null) for(int i = 0; i < planetsReference.Length; i++) planetsReference[i].SetPlanet(texturePack.planets[i % typeOfPlanets]);
         if(sunGlowReference != null) sunGlowReference.sprite = texturePack.blackHole.glow;
         if(sunReference != null) sunReference.sprite = texturePack.blackHole.src;
-
-        if(sun != null) sun.UpdateSize();
 
         if(asteroidReference != null) {
             var asts = asteroidReference.GetComponentsInChildren<Asteroid>();

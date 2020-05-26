@@ -62,13 +62,14 @@ public class Infectroid : PickupableObject {
     [HideInInspector] public bool giveTag = false;
     [HideInInspector] public float inOrbitTimer;
 
+    public bool inOrbit = false;
+
     public float grabDelay = 0; 
     
     [Header("INFECT")]
     public float infectDelay = 1;
     private float infectTime = 0;
     public int penalty = 2;
-    private bool inPlanet = false;
     public float destroyAfter = 10;
 
     [Header("SPAWN")]
@@ -97,7 +98,6 @@ public class Infectroid : PickupableObject {
     private float timeBombTick = 0;
 
     private Vector3 standardGlowScale;
-    private bool destroy = false;
 
     void Start() {
         dropBoosts = false;
@@ -189,7 +189,6 @@ public class Infectroid : PickupableObject {
     public override void Capture(HookShot hookShot) {
         if(!hookShot.CanHold() || collectTimer > 0) return;
         
-        //AudioManager.PLAY_SOUND("kickVerb", 1, Random.Range(1f, 1.1f));
         SoundManager.PLAY_SOUND("CatchObject");
 
         if((!held || (held && ownerPlayer != null && ownerPlayer.photonView.ViewID != hookShot.hostPlayer.photonView.ViewID))) {
@@ -236,15 +235,15 @@ public class Infectroid : PickupableObject {
             var par = col.transform.parent;
             if(par == null) return;
             var planet = par.GetComponent<PlayerPlanets>();
-            if(planet != null) playerPlanets = planet;
-            if(playerPlanets != null && playerPlanets.HasPlayer() && !GameManager.GAME_WON) {
-                
-                if(playerPlanets.currentScore > 0) playerPlanets.infected = true;
-
-                if(PhotonNetwork.IsMasterClient) infectTime += Time.deltaTime;
-                inPlanet = true;
+            if(planet != null) {
+                playerPlanets = planet;
+                inOrbit = true;
             }
-        } else inPlanet = false;
+            if(playerPlanets != null && playerPlanets.HasPlayer() && !GameManager.GAME_WON) {
+                if(playerPlanets.currentScore > 0) playerPlanets.infected = true;
+                if(PhotonNetwork.IsMasterClient) infectTime += Time.deltaTime;
+            }
+        }
     }
 
     void OnTriggerExit2D(Collider2D col) {
@@ -252,7 +251,10 @@ public class Infectroid : PickupableObject {
             var par = col.transform.parent;
             if(par == null) return;
             var planet = par.GetComponent<PlayerPlanets>();
-            if(planet != null) planet.infected = false;
+            if(planet != null) {
+                planet.infected = false;
+                inOrbit = false;
+            }
         }
     }
 
@@ -277,7 +279,6 @@ public class Infectroid : PickupableObject {
     }
 
     public void DestroyDefinite() {
-        
         SoundManager.PLAY_SOUND("InfectroidExplosion");
 
         Instantiate(explodeParticles, transform.position, Quaternion.identity);

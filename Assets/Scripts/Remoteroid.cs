@@ -46,7 +46,6 @@ public class Remoteroid : PickupableObject {
 
     private Vector3 baseScale, explosionExpand = Vector3.zero;
     private float baseTextScale;
-    private bool scaleBack = false;
     private float timeBombTick = 0;
 
     private Vector3 standardGlowScale;
@@ -128,7 +127,6 @@ public class Remoteroid : PickupableObject {
         SoundManager.PLAY_SOUND("CatchObject");
         
         if((!held || (held && ownerPlayer != null && ownerPlayer.photonView.ViewID != hookShot.hostPlayer.photonView.ViewID))) {
-            scaleBack = false;
             transform.position = hookShot.transform.position;
             ownerPlayer = hookShot.hostPlayer;
             FetchAsteroid(hookShot.hostPlayer);
@@ -207,12 +205,11 @@ public class Remoteroid : PickupableObject {
     }
 
     [PunRPC]
-    public void ReleaseAsteroid(bool released, int viewID) {
+    public new void ReleaseAsteroid(bool released, int viewID) {
         if(photonView.ViewID == viewID) {
             if(released) {
                 held = false;
                 canScore = true;
-                scaleBack = true;
                 ReleasedTimer();
                 ForceRelease();
             } else held = true;

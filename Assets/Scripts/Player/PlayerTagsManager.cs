@@ -21,8 +21,8 @@ public class PlayerTagsManager : MonoBehaviour {
     void Start() {
         asteroidColl = GetComponent<Collider2D>();
         _asteroid = GetComponent<Asteroid>();
-        src = _asteroid.src;
-        glow = _asteroid.glow;
+        //src = _asteroid.src;
+        //glow = _asteroid.glow;
         asteroidTrailRenderer = GetComponent<TrailRenderer>();
         asteroidTrailRenderer.material.color = ogTrailColor; 
         
@@ -42,7 +42,7 @@ public class PlayerTagsManager : MonoBehaviour {
     public void GiveTag() {
         tagNum = _asteroid.ownerPlayer.playerNumber;
         asteroidTrailRenderer.material.color = _asteroid.ownerPlayer.playerColor;
-        TagOn(false);
+      //  TagOn(false);
         src.color = glow.color = _asteroid.ownerPlayer.playerColor * 1.7f;
     }
 
@@ -56,10 +56,6 @@ public class PlayerTagsManager : MonoBehaviour {
         
         src.color = glow.color = Color.white;
         if(_asteroid != null) _asteroid.ForceRelease(true);
-    }
-
-    public void TagOn(bool state) {
-        //if(asteroidTrailRenderer != null) asteroidTrailRenderer.enabled = state;
     }
 
     public void StartTagTimer() {
