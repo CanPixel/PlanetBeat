@@ -2,7 +2,7 @@
 <objects serializationModel="Studio.02.01.00">
 	<object class="Event" id="{79fa75d9-db44-4d59-89de-0f95271f53b0}">
 		<property name="name">
-			<value>score_eraf</value>
+			<value>ScoreIncrease</value>
 		</property>
 		<property name="outputFormat">
 			<value>1</value>
@@ -60,7 +60,7 @@
 	<object class="MarkerTrack" id="{e4dacb6f-5551-44d4-8228-144d172e24de}" />
 	<object class="GroupTrack" id="{9d9d23ed-8528-4655-bbc2-1d04f28792eb}">
 		<relationship name="modules">
-			<destination>{d910195f-6fdf-451c-92c4-76a8ba7fc4a3}</destination>
+			<destination>{0f9900d5-c1d3-4310-9d70-2a184a506eea}</destination>
 		</relationship>
 		<relationship name="mixerGroup">
 			<destination>{6492f677-93bb-439a-98b4-825f3b09996a}</destination>
@@ -68,10 +68,13 @@
 	</object>
 	<object class="Timeline" id="{ab0534f0-298a-4af0-b90e-cd75ae2de091}">
 		<relationship name="modules">
-			<destination>{d910195f-6fdf-451c-92c4-76a8ba7fc4a3}</destination>
+			<destination>{0f9900d5-c1d3-4310-9d70-2a184a506eea}</destination>
 		</relationship>
 	</object>
 	<object class="EventMixerMaster" id="{e0a548df-39ef-414e-9db1-1b9b57e5143a}">
+		<property name="volume">
+			<value>-3</value>
+		</property>
 		<relationship name="effectChain">
 			<destination>{39bf5692-19be-42b6-8501-88ab6f30027d}</destination>
 		</relationship>
@@ -88,12 +91,12 @@
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{83f706d9-12d8-4813-89f5-1592b49ac8fb}" />
-	<object class="SingleSound" id="{d910195f-6fdf-451c-92c4-76a8ba7fc4a3}">
+	<object class="SingleSound" id="{0f9900d5-c1d3-4310-9d70-2a184a506eea}">
 		<property name="length">
-			<value>0.98477083333333337</value>
+			<value>2.7047291666666666</value>
 		</property>
 		<relationship name="audioFile">
-			<destination>{216bc128-5044-484f-993b-ea9cdbdc7242}</destination>
+			<destination>{02f33d67-d384-493e-99ae-3a9c8c096679}</destination>
 		</relationship>
 	</object>
 	<object class="EventMixerGroup" id="{6492f677-93bb-439a-98b4-825f3b09996a}">

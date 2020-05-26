@@ -2,7 +2,7 @@
 <objects serializationModel="Studio.02.01.00">
 	<object class="Event" id="{2c1779da-c1ab-434e-a1a8-0e69898b02df}">
 		<property name="name">
-			<value>black_hole</value>
+			<value>BlackHoleOpen</value>
 		</property>
 		<property name="outputFormat">
 			<value>1</value>

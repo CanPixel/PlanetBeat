@@ -1,8 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <objects serializationModel="Studio.02.01.00">
 	<object class="Event" id="{96fa94ab-09f3-4acc-b55b-11ebd137e798}">
+		<property name="note">
+			<value>Moet onheilspellender Klnken, tegenovergestelde van een Resource Spawn
+</value>
+		</property>
+		<property name="color">
+			<value>Magenta</value>
+		</property>
 		<property name="name">
-			<value>infectroid_spawn</value>
+			<value>InfectroidSpawn</value>
 		</property>
 		<property name="outputFormat">
 			<value>1</value>
@@ -60,7 +67,7 @@
 	<object class="MarkerTrack" id="{96029390-fe72-464f-8288-d58ea58baf82}" />
 	<object class="GroupTrack" id="{de94a61e-8bc0-42ba-a123-ee3acefc99cd}">
 		<relationship name="modules">
-			<destination>{85be83bd-fa9f-414f-a86e-0d4e1c8e27d4}</destination>
+			<destination>{6f80fb5b-13cf-49d1-b222-6062ec9392d7}</destination>
 		</relationship>
 		<relationship name="mixerGroup">
 			<destination>{0d0fd3e8-8a02-4106-8939-ce59991d0ec6}</destination>
@@ -68,7 +75,7 @@
 	</object>
 	<object class="Timeline" id="{b56d6455-6cb1-4f0f-a00e-6fc358ff24d9}">
 		<relationship name="modules">
-			<destination>{85be83bd-fa9f-414f-a86e-0d4e1c8e27d4}</destination>
+			<destination>{6f80fb5b-13cf-49d1-b222-6062ec9392d7}</destination>
 		</relationship>
 	</object>
 	<object class="EventMixerMaster" id="{f47350b4-85bd-495f-8542-d761dc708604}">
@@ -88,12 +95,12 @@
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{b978b9d1-e846-42e3-a364-c5aef9b14ade}" />
-	<object class="SingleSound" id="{85be83bd-fa9f-414f-a86e-0d4e1c8e27d4}">
+	<object class="SingleSound" id="{6f80fb5b-13cf-49d1-b222-6062ec9392d7}">
 		<property name="length">
-			<value>1.5484791666666666</value>
+			<value>2.9774791666666665</value>
 		</property>
 		<relationship name="audioFile">
-			<destination>{89c19c22-ee1a-4821-a470-5dd26cdea1bb}</destination>
+			<destination>{e5cc76ab-e556-4726-9014-b57de855d855}</destination>
 		</relationship>
 	</object>
 	<object class="EventMixerGroup" id="{0d0fd3e8-8a02-4106-8939-ce59991d0ec6}">

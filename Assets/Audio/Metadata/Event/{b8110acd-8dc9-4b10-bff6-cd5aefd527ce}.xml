@@ -2,7 +2,7 @@
 <objects serializationModel="Studio.02.01.00">
 	<object class="Event" id="{b8110acd-8dc9-4b10-bff6-cd5aefd527ce}">
 		<property name="name">
-			<value>infectroid_explosion</value>
+			<value>infectroidExplosion</value>
 		</property>
 		<property name="outputFormat">
 			<value>1</value>
@@ -90,7 +90,7 @@
 	<object class="MixerBusPanner" id="{7de51660-9346-440d-bd5e-2dc4c00e3702}" />
 	<object class="SingleSound" id="{bb48e94b-d18a-43e1-a098-88b35c523020}">
 		<property name="length">
-			<value>1.5625</value>
+			<value>1.5</value>
 		</property>
 		<relationship name="fadeOutCurve">
 			<destination>{6fc4eac7-f583-4b09-979b-10f314628041}</destination>
@@ -137,7 +137,7 @@
 	<object class="MixerBusFader" id="{edb8e351-0292-4e9b-99aa-51e6fb17963a}" />
 	<object class="AutomationPoint" id="{8902b7ce-d377-45d6-a35c-ea24190c0bed}">
 		<property name="position">
-			<value>0.625</value>
+			<value>1.0625</value>
 		</property>
 		<property name="value">
 			<value>1</value>
@@ -148,7 +148,7 @@
 	</object>
 	<object class="AutomationPoint" id="{10ee3fc7-d750-48a9-81bd-23f03f17bb6d}">
 		<property name="position">
-			<value>1.5625</value>
+			<value>1.5</value>
 		</property>
 		<property name="value">
 			<value>0</value>

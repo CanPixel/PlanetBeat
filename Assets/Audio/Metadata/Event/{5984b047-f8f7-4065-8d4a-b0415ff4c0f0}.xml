@@ -2,7 +2,7 @@
 <objects serializationModel="Studio.02.01.00">
 	<object class="Event" id="{5984b047-f8f7-4065-8d4a-b0415ff4c0f0}">
 		<property name="name">
-			<value>score_erbij</value>
+			<value>ScoreDecrease</value>
 		</property>
 		<property name="outputFormat">
 			<value>1</value>
@@ -60,7 +60,7 @@
 	<object class="MarkerTrack" id="{a90c8e75-63ec-4b91-b203-8e8138313631}" />
 	<object class="GroupTrack" id="{25970047-4150-42a3-81da-f511cf058573}">
 		<relationship name="modules">
-			<destination>{dcb36ab2-a667-4061-a2f9-c58d9e1d583d}</destination>
+			<destination>{830d5f6c-9e23-47ad-a3cc-0fc0c48ebd7e}</destination>
 		</relationship>
 		<relationship name="mixerGroup">
 			<destination>{6d5d3fd5-3742-4667-8796-79aecb98efe5}</destination>
@@ -68,7 +68,7 @@
 	</object>
 	<object class="Timeline" id="{9c87a375-3c8d-4631-9a43-9e97302aafbc}">
 		<relationship name="modules">
-			<destination>{dcb36ab2-a667-4061-a2f9-c58d9e1d583d}</destination>
+			<destination>{830d5f6c-9e23-47ad-a3cc-0fc0c48ebd7e}</destination>
 		</relationship>
 	</object>
 	<object class="EventMixerMaster" id="{f4501380-0b82-4daf-afeb-2fccacebfccd}">
@@ -88,12 +88,12 @@
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{6a9c85ca-fabe-4ba0-aaac-cb4869518a6e}" />
-	<object class="SingleSound" id="{dcb36ab2-a667-4061-a2f9-c58d9e1d583d}">
+	<object class="SingleSound" id="{830d5f6c-9e23-47ad-a3cc-0fc0c48ebd7e}">
 		<property name="length">
-			<value>2.1370416666666667</value>
+			<value>1.4318124999999999</value>
 		</property>
 		<relationship name="audioFile">
-			<destination>{beaec1c3-5f1e-445a-a873-9b7c55401725}</destination>
+			<destination>{0c540c55-59d4-4c54-b838-716777866623}</destination>
 		</relationship>
 	</object>
 	<object class="EventMixerGroup" id="{6d5d3fd5-3742-4667-8796-79aecb98efe5}">

@@ -2,7 +2,7 @@
 <objects serializationModel="Studio.02.01.00">
 	<object class="Event" id="{953773ed-8994-4caf-90af-647b0562939f}">
 		<property name="name">
-			<value>count_down</value>
+			<value>CountDown</value>
 		</property>
 		<property name="outputFormat">
 			<value>0</value>
