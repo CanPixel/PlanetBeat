@@ -56,7 +56,7 @@ MonoBehaviour:
   Path: event:/SFX/CatchObject
   guid: c227e6fb95f73e45b03fdf8d6a99b8cc
   Banks:
-  - {fileID: 8063401600156018687}
+  - {fileID: -2201595733066128368}
   IsStream: 0
   Is3D: 0
   IsOneShot: 1
@@ -64,6 +64,24 @@ MonoBehaviour:
   MinDistance: 0
   MaxDistance: 0
   Length: 1522
+--- !u!114 &-8755008122756156582
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/Master.bank
+  m_EditorClassIdentifier: 
+  Path: Assets/Audio/Build/Desktop/Master.bank
+  SubDir: 
+  lastModified: 637260999780000000
+  LoadResult: 0
+  FileSizes: []
+  Exists: 0
 --- !u!114 &-8715436696944206596
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -79,7 +97,7 @@ MonoBehaviour:
   Path: event:/SFX/InfectroidExplosion
   guid: cd0a11b8c98d104bbff6cd5aefd527ce
   Banks:
-  - {fileID: 8063401600156018687}
+  - {fileID: -2201595733066128368}
   IsStream: 0
   Is3D: 0
   IsOneShot: 1
@@ -87,6 +105,23 @@ MonoBehaviour:
   MinDistance: 0
   MaxDistance: 0
   Length: 1500
+--- !u!114 &-8651493134368669649
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: par
+  m_EditorClassIdentifier: 
+  Name: par
+  Min: 1
+  Max: 6
+  Default: 1
+  Exists: 0
 --- !u!114 &-8592761601980986665
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -361,7 +396,7 @@ MonoBehaviour:
   Min: 1
   Max: 6
   Default: 1
-  Exists: 0
+  Exists: 1
 --- !u!114 &-6422062588859048180
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -399,7 +434,7 @@ MonoBehaviour:
   Path: event:/SFX/HotPatatoSissing
   guid: 797018b3bacae142b0c13d8906d683a9
   Banks:
-  - {fileID: 8063401600156018687}
+  - {fileID: -2201595733066128368}
   IsStream: 0
   Is3D: 0
   IsOneShot: 1
@@ -442,7 +477,7 @@ MonoBehaviour:
   lastModified: 637260990240000000
   LoadResult: 0
   FileSizes: []
-  Exists: 0
+  Exists: 1
 --- !u!114 &-6090542125468475221
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -477,6 +512,24 @@ MonoBehaviour:
   Min: 1
   Max: 6
   Default: 1
+  Exists: 0
+--- !u!114 &-5337911922900469780
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/Master.bank
+  m_EditorClassIdentifier: 
+  Path: Assets/Audio/Build/Desktop/Master.bank
+  SubDir: 
+  lastModified: 637260999890000000
+  LoadResult: 0
+  FileSizes: []
   Exists: 0
 --- !u!114 &-5307544836172032780
 MonoBehaviour:
@@ -627,7 +680,7 @@ MonoBehaviour:
   Path: event:/SFX/ScoreIncrease
   guid: d975fa7944db594d89de0f95271f53b0
   Banks:
-  - {fileID: 8063401600156018687}
+  - {fileID: -2201595733066128368}
   IsStream: 0
   Is3D: 0
   IsOneShot: 1
@@ -670,7 +723,7 @@ MonoBehaviour:
   Path: event:/SFX/HotPatatoExplosion
   guid: 08aad5bfabd16e45b3413fe1261586f0
   Banks:
-  - {fileID: 8063401600156018687}
+  - {fileID: -2201595733066128368}
   IsStream: 0
   Is3D: 0
   IsOneShot: 1
@@ -678,6 +731,24 @@ MonoBehaviour:
   MinDistance: 0
   MaxDistance: 0
   Length: 3439
+--- !u!114 &-3784636572900134263
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/Master.bank
+  m_EditorClassIdentifier: 
+  Path: Assets/Audio/Build/Desktop/Master.bank
+  SubDir: 
+  lastModified: 637260994530000000
+  LoadResult: 0
+  FileSizes: []
+  Exists: 0
 --- !u!114 &-3383979047861659070
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -750,7 +821,7 @@ MonoBehaviour:
   Path: event:/Music
   guid: e1a532fd455f3842bb99309bf24c5f56
   Banks:
-  - {fileID: 8063401600156018687}
+  - {fileID: -2201595733066128368}
   IsStream: 0
   Is3D: 0
   IsOneShot: 0
@@ -775,6 +846,41 @@ MonoBehaviour:
   Max: 6
   Default: 1
   Exists: 0
+--- !u!114 &-2201595733066128368
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/Master.bank
+  m_EditorClassIdentifier: 
+  Path: Assets/Audio/Build/Desktop/Master.bank
+  SubDir: 
+  lastModified: 637261004390000000
+  LoadResult: 0
+  FileSizes: []
+  Exists: 1
+--- !u!114 &-2016128647566197467
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: par
+  m_EditorClassIdentifier: 
+  Name: par
+  Min: 1
+  Max: 6
+  Default: 1
+  Exists: 1
 --- !u!114 &-2002814431394309183
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -812,7 +918,7 @@ MonoBehaviour:
   Path: event:/SFX/HotPatatoTicking
   guid: b4caa144bfb4764ba4be64758ebdde6f
   Banks:
-  - {fileID: 8063401600156018687}
+  - {fileID: -2201595733066128368}
   IsStream: 0
   Is3D: 0
   IsOneShot: 1
@@ -968,7 +1074,7 @@ MonoBehaviour:
   Path: event:/SFX/ScoreDecrease
   guid: 47b08459f7f865408d4ab0415ff4c0f0
   Banks:
-  - {fileID: 8063401600156018687}
+  - {fileID: -2201595733066128368}
   IsStream: 0
   Is3D: 0
   IsOneShot: 1
@@ -1049,7 +1155,7 @@ MonoBehaviour:
   Path: event:/SFX/BackgroundAmbience
   guid: 9528ef2864b3a342b0136adc1067e9b6
   Banks:
-  - {fileID: 8063401600156018687}
+  - {fileID: -2201595733066128368}
   IsStream: 1
   Is3D: 0
   IsOneShot: 0
@@ -1071,7 +1177,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   EditorBanks:
   - {fileID: 8406078464662799278}
-  - {fileID: 8063401600156018687}
+  - {fileID: -2201595733066128368}
   EditorEvents:
   - {fileID: -2476700855449114489}
   - {fileID: -3950360499755595112}
@@ -1092,12 +1198,12 @@ MonoBehaviour:
   - {fileID: 4312682417252988629}
   - {fileID: -72759346246134745}
   EditorParameters:
-  - {fileID: 6921029582084334533}
+  - {fileID: -2016128647566197467}
   MasterBanks:
-  - {fileID: 8063401600156018687}
+  - {fileID: -2201595733066128368}
   StringsBanks:
   - {fileID: 8406078464662799278}
-  stringsBankWriteTime: 637260995860000000
+  stringsBankWriteTime: 637261004390000000
   cacheVersion: 3
 --- !u!114 &99111093974494254
 MonoBehaviour:
@@ -1156,6 +1262,24 @@ MonoBehaviour:
   Max: 6
   Default: 1
   Exists: 0
+--- !u!114 &1050721282177415609
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/Master.bank
+  m_EditorClassIdentifier: 
+  Path: Assets/Audio/Build/Desktop/Master.bank
+  SubDir: 
+  lastModified: 637261003800000000
+  LoadResult: 0
+  FileSizes: []
+  Exists: 0
 --- !u!114 &1620966471833687850
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1189,7 +1313,7 @@ MonoBehaviour:
   Path: event:/SFX/BlackHoleOpen
   guid: da79172cabc14e43a1a80e69898b02df
   Banks:
-  - {fileID: 8063401600156018687}
+  - {fileID: -2201595733066128368}
   IsStream: 0
   Is3D: 0
   IsOneShot: 1
@@ -1229,7 +1353,7 @@ MonoBehaviour:
   Path: event:/Space_ships/ReelIn
   guid: e20e54f10f708e42ab49496fdf5c7865
   Banks:
-  - {fileID: 8063401600156018687}
+  - {fileID: -2201595733066128368}
   IsStream: 0
   Is3D: 0
   IsOneShot: 1
@@ -1390,7 +1514,7 @@ MonoBehaviour:
   Path: event:/UI/CountDown
   guid: ed7337959489af4c90af647b0562939f
   Banks:
-  - {fileID: 8063401600156018687}
+  - {fileID: -2201595733066128368}
   IsStream: 0
   Is3D: 0
   IsOneShot: 1
@@ -1413,7 +1537,7 @@ MonoBehaviour:
   Path: event:/UI/UIClick
   guid: 80ddb14b57d4f24cbe65eb91efe2606d
   Banks:
-  - {fileID: 8063401600156018687}
+  - {fileID: -2201595733066128368}
   IsStream: 0
   Is3D: 0
   IsOneShot: 1
@@ -1454,7 +1578,7 @@ MonoBehaviour:
   Path: event:/SFX/InfectroidSpawn
   guid: ab94fa96f309cc4ab55b11ebd137e798
   Banks:
-  - {fileID: 8063401600156018687}
+  - {fileID: -2201595733066128368}
   IsStream: 0
   Is3D: 0
   IsOneShot: 1
@@ -1477,7 +1601,7 @@ MonoBehaviour:
   Path: event:/UI/StartGame
   guid: 553a878ab4d3614e824ca69d6a45c6e6
   Banks:
-  - {fileID: 8063401600156018687}
+  - {fileID: -2201595733066128368}
   IsStream: 0
   Is3D: 0
   IsOneShot: 1
@@ -1500,7 +1624,7 @@ MonoBehaviour:
   Path: event:/SFX/ResourceSpawn
   guid: 287aa4c64f3f0949afbad65ec881092e
   Banks:
-  - {fileID: 8063401600156018687}
+  - {fileID: -2201595733066128368}
   IsStream: 0
   Is3D: 0
   IsOneShot: 1
@@ -1646,6 +1770,23 @@ MonoBehaviour:
   Max: 6
   Default: 1
   Exists: 0
+--- !u!114 &4071173177583716455
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: par
+  m_EditorClassIdentifier: 
+  Name: par
+  Min: 1
+  Max: 6
+  Default: 1
+  Exists: 0
 --- !u!114 &4080964795998414523
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1678,7 +1819,7 @@ MonoBehaviour:
   Path: event:/Space_ships/Exaust
   guid: 536a2f8e4de5f543bbe638eef94eb6b8
   Banks:
-  - {fileID: 8063401600156018687}
+  - {fileID: -2201595733066128368}
   IsStream: 0
   Is3D: 0
   IsOneShot: 1
@@ -1887,6 +2028,23 @@ MonoBehaviour:
   Max: 6
   Default: 1
   Exists: 0
+--- !u!114 &6387642090003235950
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: par
+  m_EditorClassIdentifier: 
+  Name: par
+  Min: 1
+  Max: 6
+  Default: 1
+  Exists: 0
 --- !u!114 &6406325263963335601
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2029,23 +2187,6 @@ MonoBehaviour:
   FileSizes:
   - Name: Desktop
     Value: 1292
-  Exists: 1
---- !u!114 &6921029582084334533
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
-  m_Name: par
-  m_EditorClassIdentifier: 
-  Name: par
-  Min: 1
-  Max: 6
-  Default: 1
   Exists: 1
 --- !u!114 &6923259999451483476
 MonoBehaviour:
@@ -2241,24 +2382,6 @@ MonoBehaviour:
   LoadResult: 0
   FileSizes: []
   Exists: 0
---- !u!114 &8063401600156018687
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
-  m_Name: bank:/Master.bank
-  m_EditorClassIdentifier: 
-  Path: Assets/Audio/Build/Desktop/Master.bank
-  SubDir: 
-  lastModified: 637260995860000000
-  LoadResult: 0
-  FileSizes: []
-  Exists: 1
 --- !u!114 &8142924819811834380
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2296,9 +2419,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Path: Assets/Audio/Build/Desktop/Master.strings.bank
   SubDir: 
-  lastModified: 637260995860000000
+  lastModified: 637261004390000000
   LoadResult: 0
-  FileSizes: []
+  FileSizes:
+  - Name: Desktop
+    Value: 1624
   Exists: 1
 --- !u!114 &8634505732723415505
 MonoBehaviour:
@@ -2337,7 +2462,7 @@ MonoBehaviour:
   Path: event:/Space_ships/ReelOut
   guid: 185e427e73f6ff4cb1e7e033dc3ff00c
   Banks:
-  - {fileID: 8063401600156018687}
+  - {fileID: -2201595733066128368}
   IsStream: 0
   Is3D: 0
   IsOneShot: 1
