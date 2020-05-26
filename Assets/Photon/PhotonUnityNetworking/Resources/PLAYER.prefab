@@ -5329,8 +5329,8 @@ MonoBehaviour:
   - tutorialName: THIS IS YOUR PLANET!
     text: THIS IS YOUR PLANET!
     image: {fileID: 21300000, guid: 7a55722a414ec884f8072b034e7da0ad, type: 3}
-    imagePos: {x: 977, y: -19, z: 0}
-    textPos: {x: 0, y: 0, z: 0}
+    imagePos: {x: 450, y: -19, z: 0}
+    textPos: {x: 0.5, y: 0, z: 0}
     duration: 3
     afterDuration: 0
     completeAfterDuration: 1
@@ -5340,14 +5340,16 @@ MonoBehaviour:
         m_Calls: []
       m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
-  - tutorialName: Collecting
-    text: Collect these to make your planet grow!
+  - tutorialName: GrabResource
+    text: 'Fly this object <color=''#FF00FF''>TO YOUR PLANET</color> to earn points!
+      <br> <br> Press <color=''#FF00FF''>SPACEBAR</color> to grab objects <br> <color=''#FF00FF''><
+      ></color> keys to rotate ship   '
     image: {fileID: 21300000, guid: 55426068ebf08964aa117576335130af, type: 3}
-    imagePos: {x: 1600, y: 20, z: 0}
-    textPos: {x: 0, y: 0, z: 0}
-    duration: 3
-    afterDuration: 0
-    completeAfterDuration: 1
+    imagePos: {x: 1500, y: -19, z: 0}
+    textPos: {x: 0.5, y: 0, z: 0}
+    duration: 0
+    afterDuration: 2
+    completeAfterDuration: 0
     completed: 0
     tutorialEvent:
       m_PersistentCalls:
@@ -5365,28 +5367,14 @@ MonoBehaviour:
           m_CallState: 2
       m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
-  - tutorialName: GrabResource
-    text: 'Press <color=''#FF00FF''>space</color> to grab objects <br> <color=''#FF00FF''><
-      ></color> keys to rotate ship   '
-    image: {fileID: 0}
-    imagePos: {x: 3000, y: -19, z: 0}
-    textPos: {x: 3000, y: 0, z: 0}
-    duration: 3
-    afterDuration: 1
-    completeAfterDuration: 0
-    completed: 0
-    tutorialEvent:
-      m_PersistentCalls:
-        m_Calls: []
-      m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null
   - tutorialName: Infectroid
-    text: Keep this object away from your planet!
+    text: This object steals points from planets <color='#FF00FF'> REMOVE IT</color>
+      from your orbit
     image: {fileID: 0}
-    imagePos: {x: 3000, y: -19, z: 0}
-    textPos: {x: 0, y: 0, z: 0}
-    duration: 3
-    afterDuration: 1
+    imagePos: {x: 1000, y: -19, z: 0}
+    textPos: {x: 0.5, y: 0, z: 0}
+    duration: 5
+    afterDuration: 0
     completeAfterDuration: 0
     completed: 0
     tutorialEvent:
@@ -5406,12 +5394,12 @@ MonoBehaviour:
       m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
   - tutorialName: InfectroidThrow
-    text: Press <color='#ff00ff'>Space</color> to throw grabbed objects
+    text: ' Press <color=''#ff00ff''>SPACEBAR</color> to throw grabbed objects'
     image: {fileID: 0}
     imagePos: {x: 3000, y: -19, z: 0}
-    textPos: {x: 0, y: 0, z: 0}
-    duration: 1.5
-    afterDuration: 0
+    textPos: {x: 0.5, y: 0, z: 0}
+    duration: 0
+    afterDuration: 2
     completeAfterDuration: 0
     completed: 0
     tutorialEvent:
@@ -5420,13 +5408,13 @@ MonoBehaviour:
       m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
   - tutorialName: Recap
-    text: Waiting for other players... <br> <br> <color='#ff00ff'>L Shift</color>
-      to Boost <br> <color='#ff00ff'>< and ></color> to steer <br> <color='#ff00ff'>^</color>
-      to thrust <br>  <color='#ff00ff'>Space</color> to throw <br> <color='#ff00ff'>Space</color>
-      to shoot grapple
+    text: 'Waiting for other players... <br> <br> <color=''#ff00ff''>^</color> to
+      Thrust <br> <color=''#ff00ff''>SHIFT</color> to Boost<color=''#ff00ff''> <br>
+      < > </color> to rotate ship <br> <color=''#ff00ff''>SPACEBAR</color> to Grab
+      & Throw  <br> '
     image: {fileID: 0}
     imagePos: {x: 3000, y: -19, z: 0}
-    textPos: {x: 0, y: 0, z: 0}
+    textPos: {x: 0.5, y: 0, z: 0}
     duration: 5
     afterDuration: 0
     completeAfterDuration: 0
@@ -10971,7 +10959,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7728442620695218153}
-  m_LocalRotation: {x: 0, y: 0, z: -0.7071068, w: 0.7071068}
+  m_LocalRotation: {x: -0, y: -0, z: -0.7071068, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 9, y: 9, z: 1}
   m_Children:
@@ -11020,7 +11008,7 @@ MonoBehaviour:
     m_BestFit: 0
     m_MinSize: 1
     m_MaxSize: 300
-    m_Alignment: 4
+    m_Alignment: 3
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0

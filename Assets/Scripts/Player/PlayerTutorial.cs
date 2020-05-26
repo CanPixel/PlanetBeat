@@ -52,6 +52,7 @@ public class PlayerTutorial : MonoBehaviour {
     private Asteroid tutorialResource;
     private Infectroid tutorialInfectroid;
     private Vector3 textPos;
+    private GameObject focalObject;
 
     public Dictionary<string, TutorialPiece> tutorialStepsByName = new Dictionary<string, TutorialPiece>();
 
@@ -70,11 +71,16 @@ public class PlayerTutorial : MonoBehaviour {
     void Update() {
         TutorialTick();
 
+        if(focalObject != null) {
+            transform.position = focalObject.transform.position;
+            radius = Mathf.Lerp(radius, 0.05f, Time.deltaTime * 2f);
+        } else transform.localPosition = Vector3.Lerp(transform.localPosition, Vector3.zero, Time.deltaTime * 3f);
+
         float offset = 2.75f;
         var sine = Mathf.Sin(Time.time * 7f);
         text.transform.rotation = Quaternion.identity;
-        if(transform.position.x > 1) offset = -3f;
-        text.transform.position = new Vector3(transform.position.x + textPos.x + offset + sine / 14f, transform.position.y + textPos.y, 0);
+        if(host.transform.position.x > 1) offset = -3f;
+        text.transform.position = new Vector3(host.transform.position.x + textPos.x + offset + sine / 14f, host.transform.position.y + textPos.y, 0);
 
         var targetCol = new Color(1, 1, 1, radius / 100f);
         foreach(var i in images) i.color = targetCol;
@@ -102,6 +108,7 @@ public class PlayerTutorial : MonoBehaviour {
         if(tutorialProgress < tutorialSteps.Length) {
             var curTutorial = tutorialSteps[tutorialProgress];
             text.text = "<size=110>" + curTutorial.text.Replace("<br>", "\n") + "</size>";
+            textPos = curTutorial.textPos;
             if(curTutorial.image != null) {
                 icon.sprite = curTutorial.image;
                 icon.transform.localPosition = curTutorial.imagePos;
@@ -149,6 +156,7 @@ public class PlayerTutorial : MonoBehaviour {
         tutorialResource.transform.position = transform.position;
         tutorialResource.tag = "ResourceTutorial";
         tutorialResource.value = 10;
+        focalObject = tutorialResource.gameObject;
         host.planet.tutorial = true;
     }
     public void SpawnTutorialInfectroid() {
@@ -158,18 +166,20 @@ public class PlayerTutorial : MonoBehaviour {
         tutorialInfectroid = obj.GetComponent<Infectroid>();
         tutorialInfectroid.transform.position = transform.position;
         tutorialInfectroid.tag = "InfectroidTutorial";
+        focalObject = tutorialInfectroid.gameObject;
         host.planet.currentScore = 10;
-        line.startColor = line.endColor = host.playerColor;
 
+        //line.startColor = line.endColor = host.playerColor;
         //host.planet.Explode(10);
     }
 
     public void ResetOrbitColor() {
+        focalObject = null;
         showHighlight = false;
         line.startColor = line.endColor = Color.white;
         Destroy(tutorialInfectroid.gameObject);
 
-        host.planet.photonView.RPC("SetResource", RpcTarget.All, 0f);
+        host.planet.photonView.RPC("SetResource", RpcTarget.AllBuffered, 0f);
 
         host.photonView.RPC("ReadyPlayer", RpcTarget.MasterClient, host.photonView.ViewID);
         text.enabled = icon.enabled = false;

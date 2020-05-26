@@ -280,7 +280,7 @@ public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
                 if(asteroid.tag == "InfectroidTutorial") playerTutorial.tutorialStepsByName["InfectroidThrow"].completed = true;
                 asteroid.rb.constraints = RigidbodyConstraints2D.None;
                 asteroid.throwed = true;
-                if((asteroid.tag == "Powerup" && !(asteroid as Infectroid).inOrbit) || asteroid.tag == "Resource" || asteroid.tag == "InfectroidTutorial") asteroid.rb.AddForce(transform.up * throwForce);
+                if((asteroid.tag == "Powerup" && !(asteroid as Infectroid).inOrbit) || asteroid.tag == "Resource" || asteroid.tag == "InfectroidTutorial" || ((asteroid as Infectroid).playerPlanets != null && (asteroid as Infectroid).playerPlanets.playerNumber == playerNumber)) asteroid.rb.AddForce(transform.up * throwForce);
             }
             SetCollision(asteroid.GetCollider2D(), false);
             asteroid.transform.TransformDirection(new Vector2(transform.forward.x * asteroid.transform.forward.x, transform.forward.y * asteroid.transform.forward.y));

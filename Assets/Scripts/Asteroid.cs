@@ -32,7 +32,7 @@ public class Asteroid : PickupableObject {
     //EXPLOSION
     public GameObject explodeParticles;
     public Color explosionColor, UnstableTextColor;
-    public Vector2 StablePhase = new Vector2(8, 10), UnstablePhase = new Vector2(5, 7);
+    public Vector2 StablePhase = new Vector2(8, 10);//, UnstablePhase = new Vector2(5, 7);
     private float stablePhaseTime, unstablePhaseTime;
     public float TimeAfterSizzle = 1f;
     private float bombTimer = 0;
@@ -105,9 +105,12 @@ public class Asteroid : PickupableObject {
         
         if(PhotonNetwork.IsMasterClient && photonView.ViewID > 0) {
             stablePhaseTime = Random.Range(StablePhase.x, StablePhase.y);
-            unstablePhaseTime = Random.Range(UnstablePhase.x, UnstablePhase.y);
             currentIncreaseDelay = Random.Range(increaseValueDelay.x, increaseValueDelay.y);
             currentIncrease = Random.Range(increaseRate.x, increaseRate.y);
+            
+            unstablePhaseTime = 5;//animator.GetCurrentAnimatorClipInfo(0)[0].clip.length;
+            
+            
             value = Random.Range(baseValue.x, baseValue.y);
             photonView.RPC("SynchValues", RpcTarget.All, value, currentIncrease, currentIncreaseDelay, stablePhaseTime, unstablePhaseTime);
         }
@@ -149,6 +152,8 @@ public class Asteroid : PickupableObject {
     }
 
     void Update() {
+        //unstablePhaseTime = animator.GetCurrentAnimatorClipInfo(0)[0].clip.length;
+
         if(gameObject.tag == "ResourceTutorial" && held && ownerPlayer != null) ownerPlayer.playerTutorial.tutorialStepsByName["GrabResource"].completed = true;
 
         if(consumeTimer > 0) consumeTimer -= Time.deltaTime;
@@ -188,38 +193,33 @@ public class Asteroid : PickupableObject {
             src.color = glow.color = Color.Lerp(src.color, explosionColor, tickBomb * Time.deltaTime);
 
             if(timeBombTick > 1f / tickBomb) {
-                
                 //
                 SoundManager.PLAY_SOUND("HotPotatoTicking");
                 //
-
                 timeBombTick = 0;
             }
+
             if(bombTimer > 1f / tickBomb) {
                 explosionExpand = new Vector3(1.2f, 1.2f, 1.2f) * Mathf.Sin(Time.time * tickBomb) / 20f;
                 distortionFX.SetIntensity(tickBomb / 1000f);
             }
             if(bombTimer > unstablePhaseTime / 2f) distortionFX.gameObject.SetActive(true); 
 
-            //Actual explosion
-            if(bombTimer > unstablePhaseTime) {
-          //      animator.SetBool("res-unstable", false);
-            //    animator.SetBool("res-explode", true);    
+            animator.SetBool("res-unstable", true);
+            animator.SetBool("res-high", false);    
 
+            //Actual explosion
+            if(spawnTimer > (stablePhaseTime + unstablePhaseTime) - 1) {
                 if(!nearExplode) {
                     SoundManager.PLAY_SOUND("HotPotatoSizzle");
                     nearExplode = true;
                 }
-                if(bombTimer > unstablePhaseTime + TimeAfterSizzle && !destroy) photonView.RPC("ExplodeAsteroid", RpcTarget.All, photonView.ViewID);
-            } else {
-              //  animator.SetBool("res-high", false);
-                //animator.SetBool("res-unstable", true);
-            }
-        } else {
+                if(spawnTimer > stablePhaseTime + unstablePhaseTime + TimeAfterSizzle && !destroy) photonView.RPC("ExplodeAsteroid", RpcTarget.All, photonView.ViewID);
+            } 
         }
 
         //animation
-        if(timeBombTick > 1 && timeBombTick <= 2) {
+        /* if(timeBombTick > 1 && timeBombTick <= 2) {
             animator.SetBool("res-low", false);
             animator.SetBool("res-ned", true);
         } else if(timeBombTick > 2 && timeBombTick < 4) {
@@ -229,7 +229,7 @@ public class Asteroid : PickupableObject {
         if(bombTimer > 2.1f) {
             animator.SetBool("res-high", false);
             animator.SetBool("res-unstable", true);
-        }
+        } */
 
         increaseValueTimer += Time.deltaTime;
         if(increaseValueTimer > currentIncreaseDelay) {

@@ -43,7 +43,7 @@ public class PlayerTagsManager : MonoBehaviour {
         tagNum = _asteroid.ownerPlayer.playerNumber;
         asteroidTrailRenderer.material.color = _asteroid.ownerPlayer.playerColor;
       //  TagOn(false);
-        src.color = glow.color = _asteroid.ownerPlayer.playerColor * 1.7f;
+        if(_asteroid != null && _asteroid.ownerPlayer != null && src != null && glow != null) src.color = glow.color = _asteroid.ownerPlayer.playerColor * 1.7f;
     }
 
     public void RemoveTag() {

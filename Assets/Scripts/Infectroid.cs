@@ -160,17 +160,17 @@ public class Infectroid : PickupableObject {
         increasePopupTxt.transform.position = transform.position + new Vector3(0.05f, 0.35f, 0);
         if(increasePopupHideTimer > 1f) increasePopupTxt.transform.localScale = Vector3.Lerp(increasePopupTxt.transform.localScale, Vector3.zero, Time.deltaTime * 2f);
         
-        if(spawnTimer > destroyAfter) {
+        if(spawnTimer > destroyAfter && gameObject.tag != "InfectroidTutorial") {
             DestroyDefinite();
             return;
         }
 
-        if(PhotonNetwork.IsMasterClient) {
+        if(PhotonNetwork.IsMasterClient || gameObject.tag == "InfectroidTutorial") {
             spawnTimer += Time.deltaTime;
 
             if(infectTime > infectDelay && playerPlanets != null && playerPlanets.currentScore > 0) {
                 playerPlanets.Explode(penalty);
-                this.infectTime = 0;
+                infectTime = 0;
             } 
             if(photonView.ViewID > 0) photonView.RPC("SynchTimer", RpcTarget.All, spawnTimer, timeBombTick);
         }
@@ -241,7 +241,7 @@ public class Infectroid : PickupableObject {
             }
             if(playerPlanets != null && playerPlanets.HasPlayer() && !GameManager.GAME_WON) {
                 if(playerPlanets.currentScore > 0) playerPlanets.infected = true;
-                if(PhotonNetwork.IsMasterClient) infectTime += Time.deltaTime;
+                infectTime += Time.deltaTime;
             }
         }
     }

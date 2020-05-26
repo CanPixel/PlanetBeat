@@ -26,8 +26,7 @@ public class PlayerPlanets : MonoBehaviourPun {
     public AnimationCurve orbitScaleReduction;
 
     private PlanetGlow planetGlow;
-    private Vector3 basePos;
-    private float increasePopupBaseSize, increasePopupHideTimer;
+    private float increasePopupHideTimer;
     
     private Outline textOutline;
     private Vector2 outlineBase;
@@ -69,7 +68,6 @@ public class PlayerPlanets : MonoBehaviourPun {
 
     public void OnEnable() {
         stages = GetComponent<PlanetStages>();
-        basePos = transform.localPosition;
         planetGlow = GetComponent<PlanetGlow>();
         rechargeBar.SetAlpha(0);
         baseWarningScale = warningSign.transform.localScale.x;
@@ -86,7 +84,6 @@ public class PlayerPlanets : MonoBehaviourPun {
             scoreText.enabled = false;
             return;
         }
-        increasePopupBaseSize = increasePopupTxt.transform.localScale.x;
         increasePopupTxt.transform.localScale = Vector3.zero;
     }
 
@@ -228,7 +225,7 @@ public class PlayerPlanets : MonoBehaviourPun {
         increasePopupTxt.color = redDecrease;
         increasePopupTxt.text = "-" + penalty.ToString() + "!";
         increasePopupHideTimer = 0.1f;
-        increasePopupTxt.transform.localScale = Vector3.one * increasePopupBaseSize;
+        increasePopupTxt.transform.localScale = Vector3.one * 4f;
     }
 
     public void AddingResource(float amount) {
@@ -244,7 +241,7 @@ public class PlayerPlanets : MonoBehaviourPun {
         increasePopupTxt.color = greenIncrease;
         increasePopupTxt.text = "+" + amount.ToString() + "!";
         increasePopupHideTimer = 0.1f;
-        increasePopupTxt.transform.localScale = Vector3.one * increasePopupBaseSize;
+        increasePopupTxt.transform.localScale = Vector3.one * 4f;
     }
 
     protected void WinGame() {
