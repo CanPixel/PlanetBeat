@@ -2036,7 +2036,7 @@ MonoBehaviour:
   asteroidAmount: 2
   powerupAmount: 1
   blackHole: {fileID: 58724069}
-  objectSpawnDelay: {x: 4, y: 6}
+  objectSpawnDelay: {x: 2, y: 7}
   powerupSpawnDelays: {x: 6, y: 8}
   animator: {fileID: 9047533849500989284}
 --- !u!1001 &1177378517
