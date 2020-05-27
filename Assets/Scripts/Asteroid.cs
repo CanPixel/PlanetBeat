@@ -5,9 +5,9 @@ using Photon.Pun;
 using UnityEngine.UI;
 
 public class Asteroid : PickupableObject {
-    public Image src, glow;
+    //public Image src, glow;
     public Text scoreText, increasePopupTxt;
-    
+
     public Animator animator;
 
     public bool canScoreWithoutDropping = false;
@@ -86,7 +86,7 @@ public class Asteroid : PickupableObject {
         playerTagsManager = GetComponent<PlayerTagsManager>();
         rb.drag = defaultRbDrag - .15f;
         standardScale = transform.localScale;
-        SetTexture(PlanetSwitcher.GetCurrentTexturePack());
+        //SetTexture(PlanetSwitcher.GetCurrentTexturePack());
         rb.AddForce(transform.up * Thrust);
         LinksOfRechts = Random.Range(0, 2);
 
@@ -94,7 +94,7 @@ public class Asteroid : PickupableObject {
         scoreText.transform.localScale = Vector3.zero;
         increasePopupBaseSize = increasePopupTxt.transform.localScale.x;
         increasePopupTxt.transform.localScale = Vector3.zero;
-        standardGlowScale = glow.transform.localScale;
+        //standardGlowScale = glow.transform.localScale;
     }
 
     void OnEnable() {
@@ -152,14 +152,14 @@ public class Asteroid : PickupableObject {
     }
 
     void Update() {
-        //unstablePhaseTime = animator.GetCurrentAnimatorClipInfo(0)[0].clip.length;
+        unstablePhaseTime = animator.GetCurrentAnimatorClipInfo(0)[0].clip.length;
 
         if(gameObject.tag == "ResourceTutorial" && held && ownerPlayer != null) ownerPlayer.playerTutorial.tutorialStepsByName["GrabResource"].completed = true;
 
         if(consumeTimer > 0) consumeTimer -= Time.deltaTime;
 
         float fade = (collectTimer <= 0f) ? 1 : 0.4f;
-        src.color = glow.color = Color.Lerp(src.color, new Color(src.color.r, src.color.g, src.color.b, fade), Time.deltaTime * 5f);
+        //src.color = glow.color = Color.Lerp(src.color, new Color(src.color.r, src.color.g, src.color.b, fade), Time.deltaTime * 5f);
         scoreText.color = Color.Lerp(scoreText.color, new Color(scoreText.color.r, scoreText.color.g, scoreText.color.b, fade), Time.deltaTime * 5f);
 
         if(collectTimer > 0) collectTimer -= Time.deltaTime;
@@ -188,9 +188,8 @@ public class Asteroid : PickupableObject {
             timeBombTick += Time.deltaTime;
             var tickBomb = spawnTimer - stablePhaseTime;
            // src.transform.localPosition = glow.transform.localPosition = scoreText.transform.localPosition = Vector3.Lerp(src.transform.localPosition, new Vector3(Mathf.Sin(Time.time * tickBomb * 4f) * 10f * tickBomb, Mathf.Sin(Time.time * tickBomb * 4f) * 10f * tickBomb, 0), tickBomb * Time.deltaTime * 4f);
-
-            glow.fillAmount = Mathf.Sin(Time.time * tickBomb);
-            src.color = glow.color = Color.Lerp(src.color, explosionColor, tickBomb * Time.deltaTime);
+            //glow.fillAmount = Mathf.Sin(Time.time * tickBomb);
+            //src.color = glow.color = Color.Lerp(src.color, explosionColor, tickBomb * Time.deltaTime);
 
             if(timeBombTick > 1f / tickBomb) {
                 //
@@ -204,9 +203,10 @@ public class Asteroid : PickupableObject {
                 distortionFX.SetIntensity(tickBomb / 1000f);
             }
             if(bombTimer > unstablePhaseTime / 2f) distortionFX.gameObject.SetActive(true); 
-
             animator.SetBool("res-unstable", true);
-            animator.SetBool("res-high", false);    
+            animator.SetBool("res-high", false);
+
+            // GELUIDJE \\    
 
             //Actual explosion
             if(spawnTimer > (stablePhaseTime + unstablePhaseTime) - 1) {
@@ -278,7 +278,7 @@ public class Asteroid : PickupableObject {
     }
 
     public void SetColor(float r, float g, float b) {
-        src.color = new Color(r, g, b);
+        //src.color = new Color(r, g, b);
     }
 
     public override void Capture(HookShot hookShot) {
@@ -348,6 +348,7 @@ public class Asteroid : PickupableObject {
         }     
     }
 
+    /* 
     public void SetTexture(PlanetSwitcher.TexturePack elm) {
         src.sprite = elm.asteroid.src;
         if(elm.asteroid.glow == null) {
@@ -358,7 +359,7 @@ public class Asteroid : PickupableObject {
         glow.sprite = elm.asteroid.glow;
         src.SetNativeSize();
         glow.SetNativeSize();
-    }
+    }*/
 
     void OrbitAroundPlanet() {
         if(inOrbit) {

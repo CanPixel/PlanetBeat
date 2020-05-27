@@ -11,7 +11,7 @@ public class PlanetStages : MonoBehaviour {
 
     [System.Serializable]
     public class LightStage {
-        public float lightIntensity = 0f;
+        //public float lightIntensity = 0f;
         public int moons = 0;
         public Material material;
 

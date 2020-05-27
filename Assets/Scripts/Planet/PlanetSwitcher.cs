@@ -111,10 +111,10 @@ public class PlanetSwitcher : MonoBehaviour {
         if(sunGlowReference != null) sunGlowReference.sprite = texturePack.blackHole.glow;
         if(sunReference != null) sunReference.sprite = texturePack.blackHole.src;
 
-        if(asteroidReference != null) {
-            var asts = asteroidReference.GetComponentsInChildren<Asteroid>();
-            foreach(var i in asts) i.SetTexture(texturePack);
-        }
+      //  if(asteroidReference != null) {
+        //    var asts = asteroidReference.GetComponentsInChildren<Asteroid>();
+//            foreach(var i in asts) i.SetTexture(texturePack);
+       // }
 
         if(colorPlayerTexture.Count <= 0) {
             for(int i = 0; i < texturePack.Ship.Length; i++) colorPlayerTexture.Add(texturePack.Ship[i].tint, texturePack.Ship[i]);

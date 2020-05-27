@@ -45,7 +45,6 @@ public class PhaseSystem : MonoBehaviour {
             }
             else break;
         }
-
         text.text = "[" + phaseIndex + "] " + gamePhases[phaseIndex].phaseName.ToUpper();
 
         //Phase Events

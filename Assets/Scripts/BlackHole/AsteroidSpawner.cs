@@ -88,7 +88,7 @@ public class AsteroidSpawner : MonoBehaviourPun {
                     //animator.SetBool("Opening", true);
                 }
                 if(asteroidSpawnTimer > asteroidSpawnDelay + spawnAnimationDelay) {
-                    SpawnAsteroid();
+                    SpawnResource();
                     asteroidSpawnDelay = Random.Range(objectSpawnDelay.x, objectSpawnDelay.y);
                     asteroidSpawnTimer = 0;
                     openBlackHole = shake = false;
@@ -120,15 +120,15 @@ public class AsteroidSpawner : MonoBehaviourPun {
 
         var power = powerup;
         if(enableRemoteroid) power = Random.Range(0, 2) == 1? remoteroid : powerup;
-        GameObject InstancedPrefab = GameManager.SPAWN_SERVER_OBJECT(power, new Vector3(blackHole.transform.position.x, blackHole.transform.position.y, -9), rot);
+        GameObject InstancedPrefab = GameManager.SPAWN_SERVER_OBJECT(power, new Vector3(blackHole.transform.position.x, blackHole.transform.position.y, -1.1f), rot);
 
         SoundManager.PLAY_SOUND("InfectroidSpawn");
     }
-    protected void SpawnAsteroid() {
+    protected void SpawnResource() {
         Vector3 center = transform.position;
         Vector3 pos = RandomCircle(center, Random.Range(8f, 9f), Random.Range(0, 360));
         Quaternion rot = Quaternion.FromToRotation(Vector2.up, center + pos);
-        GameObject InstancedPrefab = GameManager.SPAWN_SERVER_OBJECT(asteroid, new Vector3(blackHole.transform.position.x, blackHole.transform.position.y, -9), rot);
+        GameObject InstancedPrefab = GameManager.SPAWN_SERVER_OBJECT(asteroid, new Vector3(blackHole.transform.position.x, blackHole.transform.position.y, -1.1f), rot);
 
         SoundManager.PLAY_SOUND("ResourceSpawn");
     }
