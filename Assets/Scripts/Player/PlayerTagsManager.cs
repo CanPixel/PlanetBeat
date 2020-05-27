@@ -40,7 +40,7 @@ public class PlayerTagsManager : MonoBehaviour {
     }
 
     public void GiveTag() {
-        tagNum = _asteroid.ownerPlayer.playerNumber;
+        if(_asteroid != null && _asteroid.ownerPlayer != null) tagNum = _asteroid.ownerPlayer.playerNumber;
         asteroidTrailRenderer.material.color = _asteroid.ownerPlayer.playerColor;
       //  TagOn(false);
         if(_asteroid != null && _asteroid.ownerPlayer != null && src != null && glow != null) src.color = glow.color = _asteroid.ownerPlayer.playerColor * 1.7f;

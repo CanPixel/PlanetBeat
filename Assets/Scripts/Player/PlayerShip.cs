@@ -280,10 +280,12 @@ public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
                 if(asteroid.tag == "InfectroidTutorial") playerTutorial.tutorialStepsByName["InfectroidThrow"].completed = true;
                 asteroid.rb.constraints = RigidbodyConstraints2D.None;
                 asteroid.throwed = true;
+                asteroid.ReleaseAsteroid(true, asteroid.photonView.ViewID);
                 if((asteroid.tag == "Powerup" && !(asteroid as Infectroid).inOrbit) || asteroid.tag == "Resource" || asteroid.tag == "InfectroidTutorial" || ((asteroid as Infectroid).playerPlanets != null && (asteroid as Infectroid).playerPlanets.playerNumber == playerNumber)) asteroid.rb.AddForce(transform.up * throwForce);
             }
             SetCollision(asteroid.GetCollider2D(), false);
             asteroid.transform.TransformDirection(new Vector2(transform.forward.x * asteroid.transform.forward.x, transform.forward.y * asteroid.transform.forward.y));
+            
             if(asteroid.photonView.ViewID > 0) asteroid.photonView.RPC("ReleaseAsteroid", RpcTarget.All, true, asteroid.photonView.ViewID); 
             else asteroid.ReleaseAsteroid(true, asteroid.photonView.ViewID);
             dropAsteroid = false;
@@ -291,7 +293,9 @@ public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
     }
 
     void Update() {
-        if(Input.GetKeyDown(KeyCode.R) && planet != null) planet.AddingResource(5); /////////////////////////////////////////////////////////////////////////////////////////  DEBUG
+        #if UNITY_EDITOR
+            if(Input.GetKeyDown(KeyCode.R) && planet != null) planet.AddingResource(5); /////////////////////////////////////////////////////////////////////////////////////////  DEBUG
+        #endif
 
         BoostManager();
 
@@ -334,6 +338,7 @@ public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
 
         //Removes asteroids owned by other players
         for(int i = 0; i < trailingObjects.Count; i++) if(!trailingObjects[i].IsOwnedBy(this)) {
+            trailingObjects[i].ReleaseAsteroid(true, trailingObjects[i].photonView.ViewID);
             trailingObjects.RemoveAt(i);
             i--;
         }

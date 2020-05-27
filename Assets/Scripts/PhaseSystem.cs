@@ -32,7 +32,6 @@ public class PhaseSystem : MonoBehaviour {
         
         //Phase Logic
         float currentRatio = 0;
-        phaseIndex = 0;
         for(int i = 0; i < gamePhases.Count; i++) {
             int playerWealth = 0;
             var currentPhase = gamePhases[i];
@@ -40,9 +39,13 @@ public class PhaseSystem : MonoBehaviour {
 
             currentRatio = (playerWealth / GameManager.LIVE_PLAYER_COUNT);
 
-            if(currentRatio >= currentPhase.ratioOfPlayersWithScore) phaseIndex = i;
+            if(currentRatio >= currentPhase.ratioOfPlayersWithScore) if(i >= phaseIndex) {
+                phaseIndex = i;
+                Debug.LogError(currentRatio + " | " + gamePhases[phaseIndex].ratioOfPlayersWithScore + ", " + gamePhases[phaseIndex + 1].ratioOfPlayersWithScore + " :: " + playerWealth + " :::: " + GameManager.LIVE_PLAYER_COUNT);
+            }
             else break;
         }
+
         text.text = "[" + phaseIndex + "] " + gamePhases[phaseIndex].phaseName.ToUpper();
 
         //Phase Events

@@ -168,7 +168,8 @@ public class PlayerPlanets : MonoBehaviourPun {
         if(scoreText != null) {
             var basePos = transform.position - new Vector3(-0.025f, 0f, 1);
             scoreText.transform.rotation = Quaternion.identity;
-            scoreText.transform.position = Vector3.Lerp(scoreText.transform.position, (!tutorial) ? basePos : basePos - new Vector3(0, 0.5f, 0), Time.deltaTime * (tutorial ? 2f : 6f));
+            if(!GameManager.GAME_STARTED) scoreText.transform.position = Vector3.Lerp(scoreText.transform.position, (!tutorial) ? basePos : basePos - new Vector3(0, 0.5f, 0), Time.deltaTime * (tutorial ? 2f : 6f));
+            else scoreText.transform.position = basePos;
 
             scoreText.transform.localScale = Vector2.Lerp(scoreText.transform.localScale, scoreBaseScale, Time.deltaTime * 1f);
             textOutline.effectDistance = Vector2.Lerp(textOutline.effectDistance, outlineBase, Time.deltaTime * 1.2f);

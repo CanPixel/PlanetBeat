@@ -221,7 +221,7 @@ public class Infectroid : PickupableObject {
         if(owner != null) {
             held = true;
             this.ownerPlayer = owner.GetComponent<PlayerShip>();
-            col = ownerPlayer.playerColor;
+            if(this.ownerPlayer != null) col = ownerPlayer.playerColor;
             Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("ASTEROID"), LayerMask.NameToLayer("PLAYER"), true);
         }
         if(forceReset) {

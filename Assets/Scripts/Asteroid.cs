@@ -316,7 +316,7 @@ public class Asteroid : PickupableObject {
         if(owner != null) {
             held = true;
             this.ownerPlayer = owner.GetComponent<PlayerShip>();
-            col = ownerPlayer.playerColor;
+            if(this.ownerPlayer != null) col = ownerPlayer.playerColor;
             SetColor(col.r, col.g, col.b);
             if(playerTagsManager != null) playerTagsManager.GiveTag();
             Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("ASTEROID"), LayerMask.NameToLayer("PLAYER"), true);
@@ -415,9 +415,9 @@ public class Asteroid : PickupableObject {
     public new void ReleaseAsteroid(bool released, int viewID) {
         if(photonView.ViewID == viewID) {
             if(released) {
-                //playerTagsManager.TagOn(true);
                 playerTagsManager.runTagTimer = true;
                 held = false;
+                transform.localScale = baseScale;
                 canScore = true;
                 ReleasedTimer();
                 ForceRelease();

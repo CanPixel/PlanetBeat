@@ -127,11 +127,11 @@ public class PlayerTutorial : MonoBehaviour {
         //Tuturial Resource
         if(tutorialResource != null && !tutorialResource.held) {
             resourceTick += Time.deltaTime;    
-            tutorialResource.transform.position = GetOrbit(host.planet.transform.position, Mathf.Clamp(resourceTick, 0, 1), resourceTick * resourceOrbitSpeed);
+            if(host != null && host.planet != null) tutorialResource.transform.position = GetOrbit(host.planet.transform.position, Mathf.Clamp(resourceTick, 0, 1), resourceTick * resourceOrbitSpeed);
         }
         if(tutorialInfectroid != null && !tutorialInfectroid.throwed && !tutorialInfectroid.held) {
             infectroidTick += Time.deltaTime;    
-            tutorialInfectroid.transform.position = GetOrbit(host.planet.transform.position, Mathf.Clamp(infectroidTick, 0, 0.9f), infectroidTick * resourceOrbitSpeed);
+            if(host != null && host.planet != null) tutorialInfectroid.transform.position = GetOrbit(host.planet.transform.position, Mathf.Clamp(infectroidTick, 0, 0.9f), infectroidTick * resourceOrbitSpeed);
         }
     }
 
@@ -157,7 +157,7 @@ public class PlayerTutorial : MonoBehaviour {
         tutorialResource.tag = "ResourceTutorial";
         tutorialResource.value = 10;
         focalObject = tutorialResource.gameObject;
-        host.planet.tutorial = true;
+        if(host != null && host.planet != null) host.planet.tutorial = true;
     }
     public void SpawnTutorialInfectroid() {
         if(GameManager.SkipCountdown() || !host.photonView.IsMine) return;

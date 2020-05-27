@@ -237,11 +237,6 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
-    - target: {fileID: 6779712837694326453, guid: 19b5728514bab3147b669e9530a983fc,
-        type: 3}
-      propertyPath: viewIdField
-      value: 9
-      objectReference: {fileID: 0}
     - target: {fileID: 5336174367327457939, guid: 19b5728514bab3147b669e9530a983fc,
         type: 3}
       propertyPath: warningArrow
@@ -252,6 +247,11 @@ PrefabInstance:
       propertyPath: warningSign
       value: 
       objectReference: {fileID: 53269890}
+    - target: {fileID: 6779712837694326453, guid: 19b5728514bab3147b669e9530a983fc,
+        type: 3}
+      propertyPath: viewIdField
+      value: 9
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 19b5728514bab3147b669e9530a983fc, type: 3}
 --- !u!224 &49112592 stripped
@@ -541,11 +541,6 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
-    - target: {fileID: 6779712837694326453, guid: fb02a1d286a40dd418e8d3bc2dbc826e,
-        type: 3}
-      propertyPath: viewIdField
-      value: 12
-      objectReference: {fileID: 0}
     - target: {fileID: 5336174367327457939, guid: fb02a1d286a40dd418e8d3bc2dbc826e,
         type: 3}
       propertyPath: warningArrow
@@ -556,6 +551,11 @@ PrefabInstance:
       propertyPath: warningSign
       value: 
       objectReference: {fileID: 53269890}
+    - target: {fileID: 6779712837694326453, guid: fb02a1d286a40dd418e8d3bc2dbc826e,
+        type: 3}
+      propertyPath: viewIdField
+      value: 12
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fb02a1d286a40dd418e8d3bc2dbc826e, type: 3}
 --- !u!224 &308654112 stripped
@@ -1386,11 +1386,6 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
-    - target: {fileID: 6779712837694326453, guid: 5c4665511032b9a4fb9a03b79b414b6b,
-        type: 3}
-      propertyPath: viewIdField
-      value: 14
-      objectReference: {fileID: 0}
     - target: {fileID: 5336174367327457939, guid: 5c4665511032b9a4fb9a03b79b414b6b,
         type: 3}
       propertyPath: warningArrow
@@ -1401,6 +1396,11 @@ PrefabInstance:
       propertyPath: warningSign
       value: 
       objectReference: {fileID: 53269890}
+    - target: {fileID: 6779712837694326453, guid: 5c4665511032b9a4fb9a03b79b414b6b,
+        type: 3}
+      propertyPath: viewIdField
+      value: 14
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5c4665511032b9a4fb9a03b79b414b6b, type: 3}
 --- !u!224 &896761578 stripped
@@ -2065,16 +2065,6 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
-    - target: {fileID: 5336174367327457940, guid: 8e6dc6dfda24555468d723370681b917,
-        type: 3}
-      propertyPath: planetColor.a
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6779712837694326453, guid: 8e6dc6dfda24555468d723370681b917,
-        type: 3}
-      propertyPath: viewIdField
-      value: 10
-      objectReference: {fileID: 0}
     - target: {fileID: 5336174367327457939, guid: 8e6dc6dfda24555468d723370681b917,
         type: 3}
       propertyPath: warningArrow
@@ -2085,6 +2075,16 @@ PrefabInstance:
       propertyPath: warningSign
       value: 
       objectReference: {fileID: 53269890}
+    - target: {fileID: 5336174367327457940, guid: 8e6dc6dfda24555468d723370681b917,
+        type: 3}
+      propertyPath: planetColor.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6779712837694326453, guid: 8e6dc6dfda24555468d723370681b917,
+        type: 3}
+      propertyPath: viewIdField
+      value: 10
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8e6dc6dfda24555468d723370681b917, type: 3}
 --- !u!224 &1177378518 stripped
@@ -2927,11 +2927,16 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
-    - target: {fileID: 6779712837694326453, guid: 51299799d9767174ea6e1c99b072de4b,
+    - target: {fileID: 5336174367327457939, guid: 51299799d9767174ea6e1c99b072de4b,
         type: 3}
-      propertyPath: viewIdField
-      value: 13
-      objectReference: {fileID: 0}
+      propertyPath: warningArrow
+      value: 
+      objectReference: {fileID: 1516893952}
+    - target: {fileID: 5336174367327457939, guid: 51299799d9767174ea6e1c99b072de4b,
+        type: 3}
+      propertyPath: warningSign
+      value: 
+      objectReference: {fileID: 53269890}
     - target: {fileID: 5336174367327457940, guid: 51299799d9767174ea6e1c99b072de4b,
         type: 3}
       propertyPath: planetColor.a
@@ -2952,16 +2957,11 @@ PrefabInstance:
       propertyPath: planetColor.b
       value: 0.21568628
       objectReference: {fileID: 0}
-    - target: {fileID: 5336174367327457939, guid: 51299799d9767174ea6e1c99b072de4b,
+    - target: {fileID: 6779712837694326453, guid: 51299799d9767174ea6e1c99b072de4b,
         type: 3}
-      propertyPath: warningArrow
-      value: 
-      objectReference: {fileID: 1516893952}
-    - target: {fileID: 5336174367327457939, guid: 51299799d9767174ea6e1c99b072de4b,
-        type: 3}
-      propertyPath: warningSign
-      value: 
-      objectReference: {fileID: 53269890}
+      propertyPath: viewIdField
+      value: 13
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 51299799d9767174ea6e1c99b072de4b, type: 3}
 --- !u!224 &2045571494 stripped
@@ -3211,11 +3211,6 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
-    - target: {fileID: 6779712837694326453, guid: 93610d40ad8acb34087c5875505729eb,
-        type: 3}
-      propertyPath: viewIdField
-      value: 11
-      objectReference: {fileID: 0}
     - target: {fileID: 5336174367327457939, guid: 93610d40ad8acb34087c5875505729eb,
         type: 3}
       propertyPath: warningArrow
@@ -3226,6 +3221,11 @@ PrefabInstance:
       propertyPath: warningSign
       value: 
       objectReference: {fileID: 53269890}
+    - target: {fileID: 6779712837694326453, guid: 93610d40ad8acb34087c5875505729eb,
+        type: 3}
+      propertyPath: viewIdField
+      value: 11
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 93610d40ad8acb34087c5875505729eb, type: 3}
 --- !u!224 &2136583257 stripped
@@ -3650,7 +3650,7 @@ MonoBehaviour:
       m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
   - phaseName: Infectroid Phase
-    minScore: 10
+    minScore: 20
     ratioOfPlayersWithScore: 0.1
     phaseUpdate:
       m_PersistentCalls:
@@ -3668,8 +3668,8 @@ MonoBehaviour:
           m_CallState: 2
       m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
-  - phaseName: Remoteroid Phase
-    minScore: 25
+  - phaseName: Visual Phase
+    minScore: 50
     ratioOfPlayersWithScore: 0.5
     phaseUpdate:
       m_PersistentCalls:
@@ -3688,32 +3688,13 @@ MonoBehaviour:
       m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
   - phaseName: Orbit Phase
-    minScore: 50
+    minScore: 80
     ratioOfPlayersWithScore: 0.5
     phaseUpdate:
       m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 7556721353495335922}
           m_MethodName: StartRotate
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-      m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null
-  - phaseName: Elimination Phase (FINAL)
-    minScore: 75
-    ratioOfPlayersWithScore: 0.75
-    phaseUpdate:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 7556721353495335922}
-          m_MethodName: StartEliminate
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
