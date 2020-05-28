@@ -95,7 +95,7 @@ public class Infectroid : PickupableObject {
     private Vector3 baseScale;
     private float baseTextScale, increasePopupBaseSize, increasePopupHideTimer;
     private bool scaleBack = false;
-    private float timeBombTick = 0;
+    private int spawnTimerChange = 0;
 
     private Vector3 standardGlowScale;
 
@@ -120,7 +120,7 @@ public class Infectroid : PickupableObject {
     }
 
     [PunRPC]
-    public void SynchTimer(float timer, float timeBombTick) {
+    public void SynchTimer(float timer) {
         if(spawnTimer > destroyAfter - 5) {
             increasePopupHideTimer = 0;
             increasePopupTxt.color = new Color(0, 1, 0f);
@@ -129,7 +129,6 @@ public class Infectroid : PickupableObject {
         }
         if(PhotonNetwork.IsMasterClient) return;
         this.spawnTimer = timer;
-        this.timeBombTick = timeBombTick;
     }
 
     void FixedUpdate() {
@@ -172,7 +171,10 @@ public class Infectroid : PickupableObject {
                 playerPlanets.Explode(penalty);
                 infectTime = 0;
             } 
-            if(photonView.ViewID > 0) photonView.RPC("SynchTimer", RpcTarget.All, spawnTimer, timeBombTick);
+            if(photonView.ViewID > 0 && Mathf.FloorToInt(spawnTimer) != spawnTimerChange) {
+                spawnTimerChange = Mathf.FloorToInt(spawnTimer);
+                photonView.RPC("SynchTimer", RpcTarget.All, spawnTimer);
+            }
         }
         increasePopupHideTimer += Time.deltaTime;
         if(spawnTimer < activateAfterSpawning) return;
