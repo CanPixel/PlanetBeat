@@ -267,6 +267,13 @@ public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
             }
         } else if(model != null) model.SetActive(true);
 
+        //Rotate animation
+        if(boostCooldownTimer < (boostCooldownDuration - 2)) {
+            animationRotateSpeed = Mathf.LerpAngle(animationRotateSpeed, (boostShipRotate * ((boostCooldownDuration - 1) - boostCooldownTimer)), Time.deltaTime * 6f); 
+            model.transform.Rotate(-animationRotateSpeed, 0, 0);
+        } 
+        else model.transform.localRotation = Quaternion.Lerp(model.transform.localRotation, Quaternion.Euler(0, 180, -90), Time.deltaTime * 2.5f);
+
         if(IsThisClient() && respawnDelay <= 0) {
             ProcessInputs();
             if(rb != null) {
@@ -397,14 +404,11 @@ public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
         return Input.GetKeyDown(KeyCode.Space);
     }
 
-    void ProcessInputs() {
-        //Rotate animation
-        if(boostCooldownTimer < (boostCooldownDuration - 2)) {
-            animationRotateSpeed = Mathf.LerpAngle(animationRotateSpeed, (boostShipRotate * ((boostCooldownDuration - 1) - boostCooldownTimer)), Time.deltaTime * 6f); 
-            model.transform.Rotate(-animationRotateSpeed, 0, 0);
-        } 
-        else model.transform.localRotation = Quaternion.Lerp(model.transform.localRotation, Quaternion.Euler(0, 180, -90), Time.deltaTime * 2.5f);
+    public void SetLean(float x, float y, float z) {
+        model.transform.localRotation = Quaternion.Lerp(model.transform.localRotation, Quaternion.Euler(x, y, z - 90), Time.deltaTime * 3f);
+    }
 
+    void ProcessInputs() {
         //naar voren en naar achteren (W & S)
         if(IsThrust()) {
             velocity = Mathf.Lerp(velocity, maxVelocity, Time.deltaTime * acceleration);

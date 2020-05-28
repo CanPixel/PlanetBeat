@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlanetStages : MonoBehaviour {
     public GameObject moonPrefab;
-    public MeshRenderer meshRenderer;
+    public MeshRenderer meshRenderer, lightLayerRender;
 
     public int currentLightStage = 0;
     public const int lightStageAmount = 5;
@@ -12,7 +12,7 @@ public class PlanetStages : MonoBehaviour {
     [System.Serializable]
     public class LightStage {
         public int moons = 0;
-        public Material material;
+        public Material material, lightLayer;
 
         public void ApplyStage(GameObject root, GameObject prefab, int moonAmount) {
             var moonList = root.GetComponentsInChildren<Moon>();
@@ -30,6 +30,10 @@ public class PlanetStages : MonoBehaviour {
         }
     }
 
+    void Start() {
+        SetLightStage(0);
+    }
+
     [Space(5)]
     public LightStage[] lightStages;
 
@@ -40,6 +44,11 @@ public class PlanetStages : MonoBehaviour {
         currentLightStage = i;
         curStage = lightStages[i];
         meshRenderer.material = curStage.material;
+        if(curStage.lightLayer != null) {
+            lightLayerRender.material = curStage.lightLayer;
+            lightLayerRender.enabled = true;
+        }
+        else lightLayerRender.enabled = false;
         curStage.ApplyStage(gameObject, moonPrefab, lightStages[i].moons);
         var moonList = GetComponentsInChildren<Moon>();
         if(moonList.Length > 0) for(int m = 0; m < (moonList.Length - lightStages[i].moons); m++) DestroyImmediate(moonList[moonList.Length - 1 - m].gameObject);

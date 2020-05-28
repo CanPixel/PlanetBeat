@@ -184,7 +184,7 @@ public class PlayerTutorial : MonoBehaviour {
         host.photonView.RPC("ReadyPlayer", RpcTarget.MasterClient, host.photonView.ViewID);
         text.enabled = icon.enabled = false;
         
-        var obj = PhotonNetwork.Instantiate("PLAYERREADY", transform.position + Vector3.up / 3f, Quaternion.identity) as GameObject;
+        var obj = PhotonNetwork.Instantiate("PLAYERREADY", transform.position, Quaternion.identity) as GameObject;
         obj.GetPhotonView().RPC("Set", RpcTarget.All, PlayerShip.PLAYERNAME, host.transform.localPosition, host.playerColor.r, host.playerColor.g, host.playerColor.b);
 
         host.planet.tutorial = false;

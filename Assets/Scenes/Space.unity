@@ -2028,6 +2028,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a631b72e9910f8f43b74291b7158f63b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  animator: {fileID: 9047533849500989284}
   asteroid: {fileID: 1781471089144147448, guid: 4b427ff2594d5cb4da23ba21c8787ea5,
     type: 3}
   powerup: {fileID: 8069275902880659580, guid: 7b6b88afab4aba24da93c6831e440dc3, type: 3}
@@ -2038,7 +2039,6 @@ MonoBehaviour:
   blackHole: {fileID: 58724069}
   objectSpawnDelay: {x: 2, y: 7}
   powerupSpawnDelays: {x: 6, y: 8}
-  animator: {fileID: 9047533849500989284}
 --- !u!1001 &1177378517
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2702,7 +2702,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!108 &1859159725
 Light:
   m_ObjectHideFlags: 0
