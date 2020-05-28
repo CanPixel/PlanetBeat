@@ -5623,8 +5623,6 @@ MonoBehaviour:
   model: {fileID: 996780550299991467}
   playerLabel: {fileID: 0}
   colliders: []
-  idleShipRotate: 0
-  moveShipRotate: 0
   boostShipRotate: 10
   boostDuration: 0.12
   boostVelocity: 23

@@ -120,7 +120,7 @@ public class PlayerPlanets : MonoBehaviourPun {
         orbitTrail.material.color = orbitColor;
         currentScore = minScore; 
         player.SetHomePlanet(gameObject);
-        scoreText.transform.position = transform.position - new Vector3(0, 0.05f, 1);
+        //scoreText.transform.position = transform.position - new Vector3(0, 0.05f, 1);
     }
 
     public Color GetColor() {
@@ -135,7 +135,7 @@ public class PlayerPlanets : MonoBehaviourPun {
         scoreText = GetComponentInChildren<Text>();
         photonView.RPC("ClaimPlayer", RpcTarget.AllBufferedViaServer, playerNumber, player.playerColor.r, player.playerColor.g, player.playerColor.b);
         scoreText.enabled = true;
-        scoreText.transform.position = transform.position - new Vector3(0, 0.05f, 1);
+        //scoreText.transform.position = transform.position - new Vector3(0, 0.05f, 1);
     }
 
     void Update() {
@@ -166,10 +166,11 @@ public class PlayerPlanets : MonoBehaviourPun {
         transform.localScale = Vector3.Lerp(transform.localScale, new Vector3(Mathf.Clamp(transform.localScale.x, 0, maxScale), Mathf.Clamp(transform.localScale.y, 0, maxScale), Mathf.Clamp(transform.localScale.z, 0, maxScale)), Time.deltaTime * 2f);
 
         if(scoreText != null) {
-            var basePos = transform.position - new Vector3(-0.025f, 0f, 1);
+            var basePos = transform.position - new Vector3(-0.025f, 0.75f, 1);
             scoreText.transform.rotation = Quaternion.identity;
-            if(!GameManager.GAME_STARTED) scoreText.transform.position = Vector3.Lerp(scoreText.transform.position, (!tutorial) ? basePos : basePos - new Vector3(0, 0.5f, 0), Time.deltaTime * (tutorial ? 2f : 6f));
-            else scoreText.transform.position = basePos;
+            
+            //if(!GameManager.GAME_STARTED) scoreText.transform.position = Vector3.Lerp(scoreText.transform.position, (!tutorial) ? basePos : basePos - new Vector3(0, 0.5f, 0), Time.deltaTime * (tutorial ? 2f : 6f));
+            scoreText.transform.position = basePos;
 
             scoreText.transform.localScale = Vector2.Lerp(scoreText.transform.localScale, scoreBaseScale, Time.deltaTime * 1f);
             textOutline.effectDistance = Vector2.Lerp(textOutline.effectDistance, outlineBase, Time.deltaTime * 1.2f);
