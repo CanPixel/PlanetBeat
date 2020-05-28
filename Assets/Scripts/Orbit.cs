@@ -22,13 +22,14 @@ public class Orbit : MonoBehaviour {
     public float PowerupExitVelocityReduction = 2;
 
     private float totalForce;
+    private bool flip = false;
 
     void OnValidate() {
         if(orbitTrailOffset < 0) orbitTrailOffset = 0;
     }
 
     void Start() {
-        var Planet = GetComponentInParent<PlanetGlow>();
+        if(Random.Range(0, 2) == 0) flip = true;
     }
 
     void Update() {
@@ -37,7 +38,7 @@ public class Orbit : MonoBehaviour {
     }
 
     void FixedUpdate() {
-        transform.rotation = Quaternion.Euler(0, 0, 300f * Time.time);
+        transform.rotation = Quaternion.Euler(0, 0, ((flip) ? -1f : 1f) * 300f * Time.time);
     }
 
     void OnTriggerStay2D(Collider2D col) {

@@ -15,8 +15,6 @@ public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
     [HideInInspector] public GameObject playerLabel;
     [HideInInspector] public Collider2D[] colliders;
 
-    public float idleShipRotate = 1f;
-    public float moveShipRotate = 5f;
     public float boostShipRotate = 10f;
 
     [Header("BOOST")]
@@ -401,8 +399,11 @@ public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
 
     void ProcessInputs() {
         //Rotate animation
-        animationRotateSpeed = Mathf.LerpAngle(animationRotateSpeed, IsThrust() ? ((boostCooldownTimer < boostCooldownDuration) ? (boostShipRotate * (boostCooldownDuration - boostCooldownTimer)) : moveShipRotate) : idleShipRotate, Time.deltaTime * 6f); 
-        if(model != null) model.transform.Rotate(-animationRotateSpeed, 0, 0);
+        if(IsThrust() && (boostCooldownTimer < boostCooldownDuration)) {
+            animationRotateSpeed = Mathf.LerpAngle(animationRotateSpeed, (boostShipRotate * (boostCooldownDuration - boostCooldownTimer)), Time.deltaTime * 6f); 
+            model.transform.Rotate(-animationRotateSpeed, 0, 0);
+        } 
+        else model.transform.localRotation = Quaternion.Lerp(model.transform.localRotation, Quaternion.Euler(0, 180, -90), Time.deltaTime * 1.5f);
 
         //naar voren en naar achteren (W & S)
         if(IsThrust()) {
