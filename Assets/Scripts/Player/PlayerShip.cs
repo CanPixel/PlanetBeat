@@ -399,11 +399,11 @@ public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
 
     void ProcessInputs() {
         //Rotate animation
-        if(IsThrust() && (boostCooldownTimer < boostCooldownDuration)) {
-            animationRotateSpeed = Mathf.LerpAngle(animationRotateSpeed, (boostShipRotate * (boostCooldownDuration - boostCooldownTimer)), Time.deltaTime * 6f); 
+        if(boostCooldownTimer < (boostCooldownDuration - 2)) {
+            animationRotateSpeed = Mathf.LerpAngle(animationRotateSpeed, (boostShipRotate * ((boostCooldownDuration - 1) - boostCooldownTimer)), Time.deltaTime * 6f); 
             model.transform.Rotate(-animationRotateSpeed, 0, 0);
         } 
-        else model.transform.localRotation = Quaternion.Lerp(model.transform.localRotation, Quaternion.Euler(0, 180, -90), Time.deltaTime * 1.5f);
+        else model.transform.localRotation = Quaternion.Lerp(model.transform.localRotation, Quaternion.Euler(0, 180, -90), Time.deltaTime * 2.5f);
 
         //naar voren en naar achteren (W & S)
         if(IsThrust()) {
@@ -451,7 +451,7 @@ public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
     }
 
     public bool CanCastHook() {
-        return respawnDelay <= 0 /* && GameManager.GAME_STARTED*/ && !hookShot.HasObject();
+        return respawnDelay <= 0 && !hookShot.HasObject();
     }
     [PunRPC]
     public void CastHook(int viewID) {

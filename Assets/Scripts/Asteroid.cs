@@ -5,7 +5,6 @@ using Photon.Pun;
 using UnityEngine.UI;
 
 public class Asteroid : PickupableObject {
-    //public Image src, glow;
     public Text scoreText, increasePopupTxt;
 
     public Animator animator;
@@ -32,7 +31,7 @@ public class Asteroid : PickupableObject {
     //EXPLOSION
     public GameObject explodeParticles;
     public Color explosionColor, UnstableTextColor;
-    public Vector2 StablePhase = new Vector2(8, 10);//, UnstablePhase = new Vector2(5, 7);
+    public Vector2 StablePhase = new Vector2(8, 10);
     private float stablePhaseTime, unstablePhaseTime;
     public float TimeAfterSizzle = 1f;
     private float bombTimer = 0;
@@ -86,7 +85,6 @@ public class Asteroid : PickupableObject {
         playerTagsManager = GetComponent<PlayerTagsManager>();
         rb.drag = defaultRbDrag - .15f;
         standardScale = transform.localScale;
-        //SetTexture(PlanetSwitcher.GetCurrentTexturePack());
         rb.AddForce(transform.up * Thrust);
         LinksOfRechts = Random.Range(0, 2);
 
@@ -94,7 +92,6 @@ public class Asteroid : PickupableObject {
         scoreText.transform.localScale = Vector3.zero;
         increasePopupBaseSize = increasePopupTxt.transform.localScale.x;
         increasePopupTxt.transform.localScale = Vector3.zero;
-        //standardGlowScale = glow.transform.localScale;
     }
 
     void OnEnable() {
@@ -107,9 +104,6 @@ public class Asteroid : PickupableObject {
             stablePhaseTime = Random.Range(StablePhase.x, StablePhase.y);
             currentIncreaseDelay = Random.Range(increaseValueDelay.x, increaseValueDelay.y);
             currentIncrease = Random.Range(increaseRate.x, increaseRate.y);
-            
-            unstablePhaseTime = 5;//animator.GetCurrentAnimatorClipInfo(0)[0].clip.length;
-            
             
             value = Random.Range(baseValue.x, baseValue.y);
             photonView.RPC("SynchValues", RpcTarget.All, value, currentIncrease, currentIncreaseDelay, stablePhaseTime, unstablePhaseTime);
@@ -155,11 +149,9 @@ public class Asteroid : PickupableObject {
         unstablePhaseTime = animator.GetCurrentAnimatorClipInfo(0)[0].clip.length;
 
         if(gameObject.tag == "ResourceTutorial" && held && ownerPlayer != null) ownerPlayer.playerTutorial.tutorialStepsByName["GrabResource"].completed = true;
-
         if(consumeTimer > 0) consumeTimer -= Time.deltaTime;
 
         float fade = (collectTimer <= 0f) ? 1 : 0.4f;
-        //src.color = glow.color = Color.Lerp(src.color, new Color(src.color.r, src.color.g, src.color.b, fade), Time.deltaTime * 5f);
         scoreText.color = Color.Lerp(scoreText.color, new Color(scoreText.color.r, scoreText.color.g, scoreText.color.b, fade), Time.deltaTime * 5f);
 
         if(collectTimer > 0) collectTimer -= Time.deltaTime;
@@ -171,7 +163,7 @@ public class Asteroid : PickupableObject {
         scoreText.transform.localScale = Vector3.Lerp(scoreText.transform.localScale, Vector3.one * baseTextScale, Time.deltaTime * 2f);
         scoreText.text = value.ToString();
         scoreText.transform.rotation = Quaternion.identity;
-        
+
         if(PhotonNetwork.IsMasterClient && photonView.ViewID > 0) {
             spawnTimer += Time.deltaTime;
             photonView.RPC("SynchTimer", RpcTarget.All, spawnTimer, timeBombTick);
@@ -188,8 +180,6 @@ public class Asteroid : PickupableObject {
             timeBombTick += Time.deltaTime;
             var tickBomb = spawnTimer - stablePhaseTime;
            // src.transform.localPosition = glow.transform.localPosition = scoreText.transform.localPosition = Vector3.Lerp(src.transform.localPosition, new Vector3(Mathf.Sin(Time.time * tickBomb * 4f) * 10f * tickBomb, Mathf.Sin(Time.time * tickBomb * 4f) * 10f * tickBomb, 0), tickBomb * Time.deltaTime * 4f);
-            //glow.fillAmount = Mathf.Sin(Time.time * tickBomb);
-            //src.color = glow.color = Color.Lerp(src.color, explosionColor, tickBomb * Time.deltaTime);
 
             if(timeBombTick > 1f / tickBomb) {
                 //
@@ -217,23 +207,10 @@ public class Asteroid : PickupableObject {
                 if(spawnTimer > stablePhaseTime + unstablePhaseTime + TimeAfterSizzle && !destroy) photonView.RPC("ExplodeAsteroid", RpcTarget.All, photonView.ViewID);
             } 
         }
-
-        //animation
-        /* if(timeBombTick > 1 && timeBombTick <= 2) {
-            animator.SetBool("res-low", false);
-            animator.SetBool("res-ned", true);
-        } else if(timeBombTick > 2 && timeBombTick < 4) {
-            animator.SetBool("res-ned", false);
-            animator.SetBool("res-high", true);
-        }
-        if(bombTimer > 2.1f) {
-            animator.SetBool("res-high", false);
-            animator.SetBool("res-unstable", true);
-        } */
-
-        increaseValueTimer += Time.deltaTime;
-        if(increaseValueTimer > currentIncreaseDelay) {
-            if(PhotonNetwork.IsMasterClient) {
+        
+        if(PhotonNetwork.IsMasterClient) {
+            increaseValueTimer += Time.deltaTime;
+            if(increaseValueTimer > currentIncreaseDelay) {
                 int inc = Random.Range(increaseRate.x, increaseRate.y);
                 float del = Random.Range(increaseValueDelay.x, increaseValueDelay.y);
                 photonView.RPC("SetValue", RpcTarget.All, value + inc, inc, del);
@@ -277,10 +254,6 @@ public class Asteroid : PickupableObject {
         if(this.value > maxValue) this.value = maxValue;
     }
 
-    public void SetColor(float r, float g, float b) {
-        //src.color = new Color(r, g, b);
-    }
-
     public override void Capture(HookShot hookShot) {
         if(!hookShot.CanHold() || collectTimer > 0) return;
 
@@ -317,13 +290,11 @@ public class Asteroid : PickupableObject {
             held = true;
             this.ownerPlayer = owner.GetComponent<PlayerShip>();
             if(this.ownerPlayer != null) col = ownerPlayer.playerColor;
-            SetColor(col.r, col.g, col.b);
             if(playerTagsManager != null) playerTagsManager.GiveTag();
             Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("ASTEROID"), LayerMask.NameToLayer("PLAYER"), true);
         }
         if(forceReset) {
             Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("ASTEROID"), LayerMask.NameToLayer("PLAYER"), false);
-            SetColor(1f, 1f, 1f);
             held = false;
         }
     }
@@ -347,19 +318,6 @@ public class Asteroid : PickupableObject {
             OrbitAroundPlanet();
         }     
     }
-
-    /* 
-    public void SetTexture(PlanetSwitcher.TexturePack elm) {
-        src.sprite = elm.asteroid.src;
-        if(elm.asteroid.glow == null) {
-            glow.enabled = false;
-            return;
-        }
-        glow.enabled = true;
-        glow.sprite = elm.asteroid.glow;
-        src.SetNativeSize();
-        glow.SetNativeSize();
-    }*/
 
     void OrbitAroundPlanet() {
         if(inOrbit) {
@@ -395,12 +353,8 @@ public class Asteroid : PickupableObject {
     public void ConsumeResource() {
         if(gameObject.tag == "ResourceTutorial" && held) value = 10;
         if(consumeTimer > 0) return;
-
         playerPlanets.AddingResource(value);
-        //GameManager.DESTROY_SERVER_OBJECT(gameObject);
-        if(photonView != null && photonView.ViewID > 0) {
-            photonView.RPC("DestroyAsteroid", RpcTarget.All, photonView.ViewID);
-        }
+        if(photonView != null && photonView.ViewID > 0) photonView.RPC("DestroyAsteroid", RpcTarget.All, photonView.ViewID);
         Destroy(gameObject);
         canConsume = false;
     }

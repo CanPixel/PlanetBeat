@@ -159,7 +159,7 @@ public class Infectroid : PickupableObject {
         increasePopupTxt.transform.position = transform.position + new Vector3(0.05f, 0.35f, 0);
         if(increasePopupHideTimer > 1f) increasePopupTxt.transform.localScale = Vector3.Lerp(increasePopupTxt.transform.localScale, Vector3.zero, Time.deltaTime * 2f);
         
-        if(spawnTimer > destroyAfter && gameObject.tag != "InfectroidTutorial") {
+        if(spawnTimerChange > destroyAfter && gameObject.tag != "InfectroidTutorial") {
             DestroyDefinite();
             return;
         }
@@ -170,9 +170,9 @@ public class Infectroid : PickupableObject {
             if(infectTime > infectDelay && playerPlanets != null && playerPlanets.currentScore > 0) {
                 playerPlanets.Explode(penalty);
                 infectTime = 0;
-            } 
-            if(photonView.ViewID > 0 && Mathf.FloorToInt(spawnTimer) != spawnTimerChange) {
-                spawnTimerChange = Mathf.FloorToInt(spawnTimer);
+            }
+            if(photonView.ViewID > 0 && (Mathf.CeilToInt(spawnTimer) != spawnTimerChange)) {
+                spawnTimerChange = Mathf.CeilToInt(spawnTimer);
                 photonView.RPC("SynchTimer", RpcTarget.All, spawnTimer);
             }
         }
