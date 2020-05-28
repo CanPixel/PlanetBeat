@@ -295,6 +295,7 @@ public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
     void Update() {
         #if UNITY_EDITOR
             if(Input.GetKeyDown(KeyCode.R) && planet != null) planet.AddingResource(5); /////////////////////////////////////////////////////////////////////////////////////////  DEBUG
+            if(Input.GetKeyDown(KeyCode.Q) && planet != null) planet.Explode(5);
         #endif
 
         BoostManager();

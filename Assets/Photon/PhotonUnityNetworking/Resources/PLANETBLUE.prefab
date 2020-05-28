@@ -219,6 +219,7 @@ MonoBehaviour:
   warningArrow: {fileID: 0}
   infected: 0
   eliminationTimer: 0
+  tutorial: 0
 --- !u!114 &5336174367327457940
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -304,20 +305,15 @@ MonoBehaviour:
   meshRenderer: {fileID: 95744570482962424}
   currentLightStage: 0
   lightStages:
-  - lightIntensity: 0
-    moons: 0
+  - moons: 0
     material: {fileID: 2100000, guid: 5cca81dc723e92d43aa70e5c24f5dbc4, type: 2}
-  - lightIntensity: 0.25
-    moons: 0
+  - moons: 0
     material: {fileID: 2100000, guid: d411c0d630c2a1f479c8b6b9593f322b, type: 2}
-  - lightIntensity: 0.5
-    moons: 1
+  - moons: 1
     material: {fileID: 2100000, guid: 95a6dce877a0ced49b5b29169012f6ae, type: 2}
-  - lightIntensity: 0.75
-    moons: 2
+  - moons: 2
     material: {fileID: 2100000, guid: 1dd6469a643c1ca44b375a6781f05de3, type: 2}
-  - lightIntensity: 1
-    moons: 3
+  - moons: 3
     material: {fileID: 2100000, guid: 3f27b7c84449bc549a7c284f083c0272, type: 2}
 --- !u!1 &5336174368059501567
 GameObject:
@@ -753,6 +749,16 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6061447726823252456, guid: f3469c6a1e99fd544b899569b8f579c8,
+        type: 3}
+      propertyPath: m_FillAmount
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6061447726823252456, guid: f3469c6a1e99fd544b899569b8f579c8,
+        type: 3}
+      propertyPath: m_Color.a
+      value: 0.6156863
+      objectReference: {fileID: 0}
     - target: {fileID: 6061447726823252457, guid: f3469c6a1e99fd544b899569b8f579c8,
         type: 3}
       propertyPath: m_SizeDelta.y
@@ -767,16 +773,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Color.a
       value: 0.5921569
-      objectReference: {fileID: 0}
-    - target: {fileID: 6061447726823252456, guid: f3469c6a1e99fd544b899569b8f579c8,
-        type: 3}
-      propertyPath: m_FillAmount
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6061447726823252456, guid: f3469c6a1e99fd544b899569b8f579c8,
-        type: 3}
-      propertyPath: m_Color.a
-      value: 0.6156863
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f3469c6a1e99fd544b899569b8f579c8, type: 3}

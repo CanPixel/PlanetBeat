@@ -11,14 +11,12 @@ public class PlanetStages : MonoBehaviour {
 
     [System.Serializable]
     public class LightStage {
-        //public float lightIntensity = 0f;
         public int moons = 0;
         public Material material;
 
-        public void ApplyStage(GameObject root, GameObject prefab) {
+        public void ApplyStage(GameObject root, GameObject prefab, int moonAmount) {
             var moonList = root.GetComponentsInChildren<Moon>();
             int moonsToSpawn = moons - moonList.Length;
-
             if(moonsToSpawn > 0) {
                 for(int i = 0; i < moonsToSpawn; i++) {
                     Random.InitState((int)Time.time);
@@ -42,6 +40,8 @@ public class PlanetStages : MonoBehaviour {
         currentLightStage = i;
         curStage = lightStages[i];
         meshRenderer.material = curStage.material;
-        curStage.ApplyStage(gameObject, moonPrefab);
+        curStage.ApplyStage(gameObject, moonPrefab, lightStages[i].moons);
+        var moonList = GetComponentsInChildren<Moon>();
+        if(moonList.Length > 0) for(int m = 0; m < (moonList.Length - lightStages[i].moons); m++) DestroyImmediate(moonList[moonList.Length - 1 - m].gameObject);
     }
 }

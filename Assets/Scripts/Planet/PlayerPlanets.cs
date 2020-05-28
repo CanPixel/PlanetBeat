@@ -227,6 +227,9 @@ public class PlayerPlanets : MonoBehaviourPun {
         increasePopupTxt.text = "-" + penalty.ToString() + "!";
         increasePopupHideTimer = 0.1f;
         increasePopupTxt.transform.localScale = Vector3.one * 4f;
+
+        var curStage = Mathf.RoundToInt((currentScore / maxScore) * (float)PlanetStages.lightStageAmount);
+        stages.SetLightStage((int)curStage);
     }
 
     public void AddingResource(float amount) {

@@ -29,25 +29,30 @@ public class PhaseSystem : MonoBehaviour {
 
     void Update() {
         if(GameManager.GAME_STARTED) text.enabled = true;
-        
+
         //Phase Logic
         float currentRatio = 0;
         for(int i = 0; i < gamePhases.Count; i++) {
             int playerWealth = 0;
             var currentPhase = gamePhases[i];
-            foreach(var planet in planets) if(planet.HasPlayer() && planet.currentScore >= currentPhase.minScore) playerWealth++;
+            foreach(var planet in planets) if(planet.HasPlayer() && planet.currentScore >= currentPhase.minScore) playerWealth = 1;
 
-            currentRatio = (playerWealth / GameManager.LIVE_PLAYER_COUNT);
+            currentRatio = (playerWealth);
 
-            if(currentRatio >= currentPhase.ratioOfPlayersWithScore) if(i >= phaseIndex) {
+      //      if(currentRatio >= currentPhase.ratioOfPlayersWithScore) 
+            if(i >= phaseIndex && currentRatio > 0) //{
                 phaseIndex = i;
-                Debug.LogError(currentRatio + " | " + gamePhases[phaseIndex].ratioOfPlayersWithScore + ", " + gamePhases[phaseIndex + 1].ratioOfPlayersWithScore + " :: " + playerWealth + " :::: " + GameManager.LIVE_PLAYER_COUNT);
-            }
-            else break;
+//                Debug.LogError(currentRatio + " | " + gamePhases[phaseIndex].ratioOfPlayersWithScore + ", " + gamePhases[phaseIndex + 1].ratioOfPlayersWithScore + " :: " + playerWealth + " :::: " + GameManager.LIVE_PLAYER_COUNT);
+        //    }
+          //  else break;
         }
         text.text = "[" + phaseIndex + "] " + gamePhases[phaseIndex].phaseName.ToUpper();
 
         //Phase Events
         if(phaseIndex > 0 && phaseIndex < gamePhases.Count && gamePhases[phaseIndex].phaseUpdate != null) gamePhases[phaseIndex].phaseUpdate.Invoke();
+    }
+
+    public void SetLoop(int i) {
+        
     }
 }
