@@ -5623,8 +5623,8 @@ MonoBehaviour:
   model: {fileID: 996780550299991467}
   playerLabel: {fileID: 0}
   colliders: []
-  idleShipRotate: 1
-  moveShipRotate: 5
+  idleShipRotate: 0
+  moveShipRotate: 0
   boostShipRotate: 10
   boostDuration: 0.12
   boostVelocity: 23
@@ -11032,22 +11032,22 @@ PrefabInstance:
     - target: {fileID: 7849991732350099818, guid: 87efed4e15800334f8eeb2c944566ae3,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7849991732350099818, guid: 87efed4e15800334f8eeb2c944566ae3,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7849991732350099818, guid: 87efed4e15800334f8eeb2c944566ae3,
-        type: 3}
-      propertyPath: m_LocalRotation.z
       value: -0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: 7849991732350099818, guid: 87efed4e15800334f8eeb2c944566ae3,
         type: 3}
-      propertyPath: m_LocalRotation.w
+      propertyPath: m_LocalRotation.y
       value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 7849991732350099818, guid: 87efed4e15800334f8eeb2c944566ae3,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7849991732350099818, guid: 87efed4e15800334f8eeb2c944566ae3,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7849991732350099818, guid: 87efed4e15800334f8eeb2c944566ae3,
         type: 3}
@@ -11062,7 +11062,7 @@ PrefabInstance:
     - target: {fileID: 7849991732350099818, guid: 87efed4e15800334f8eeb2c944566ae3,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
+      value: 180
       objectReference: {fileID: 0}
     - target: {fileID: 7849991732350099818, guid: 87efed4e15800334f8eeb2c944566ae3,
         type: 3}

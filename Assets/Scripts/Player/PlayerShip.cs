@@ -120,7 +120,7 @@ public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
         model.transform.SetParent(transform);
         model.transform.localPosition = Vector3.zero;
         model.transform.localScale = Vector3.one * 8f;
-        model.transform.localRotation = Quaternion.Euler(0, model.transform.localEulerAngles.y, -90);
+        model.transform.localRotation = Quaternion.Euler(0, 180, -90);
 
         if(playerLabel != null) playerLabel.GetComponent<Text>().color = col;
     }
