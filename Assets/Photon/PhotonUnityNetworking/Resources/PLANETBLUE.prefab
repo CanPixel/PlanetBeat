@@ -217,7 +217,7 @@ MonoBehaviour:
   auroraVolumetric: 1
   auroraCircular: 0
   auroraVolumetricRange: {x: 426, y: -500}
-  auroraLights: 1
+  auroraLights: 0
   auroraLightsCount: 25
   auroraLightsRange: 5000
   auroraLightsIntesity: 1

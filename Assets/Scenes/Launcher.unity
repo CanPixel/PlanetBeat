@@ -209,7 +209,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parallax: 1
-  parallaxSpeed: 5
+  parallaxSpeed: 8
   wiggleSpeed: 0
   wiggleRange: 0
 --- !u!114 &105211514
@@ -2826,7 +2826,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parallax: 1
-  parallaxSpeed: 8
+  parallaxSpeed: 4
   wiggleSpeed: 0
   wiggleRange: 0
 --- !u!114 &1290435505
@@ -3654,8 +3654,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 34b698f4878e61543bd80087b39b4b91, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  parallax: 0
-  parallaxSpeed: 1
+  parallax: 1
+  parallaxSpeed: -1
   wiggleSpeed: 0
   wiggleRange: 0
 --- !u!114 &1582620228
@@ -3671,7 +3671,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.8039216}
   m_RaycastTarget: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -4329,6 +4329,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   aurora: {fileID: 0}
+  auroraAnim: {fileID: 0}
   render: {fileID: 0}
   planetColor: {r: 0, g: 0, b: 0, a: 0}
   partScale: 1
@@ -4533,6 +4534,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   aurora: {fileID: 0}
+  auroraAnim: {fileID: 0}
   render: {fileID: 0}
   planetColor: {r: 0, g: 0, b: 0, a: 0}
   partScale: 1
@@ -5053,6 +5055,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   aurora: {fileID: 0}
+  auroraAnim: {fileID: 0}
   render: {fileID: 0}
   planetColor: {r: 0, g: 0, b: 0, a: 0}
   partScale: 1
@@ -5069,6 +5072,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   aurora: {fileID: 0}
+  auroraAnim: {fileID: 0}
   render: {fileID: 0}
   planetColor: {r: 0, g: 0, b: 0, a: 0}
   partScale: 1

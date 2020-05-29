@@ -105,7 +105,7 @@ namespace ProceduralAurora
 
             //Create lights
             if (auroraLights)
-                InitializeLights();
+        //        InitializeLights();
 
             //Prepare audio visualizer
             if (useAudioSourceVisualization)
@@ -122,7 +122,7 @@ namespace ProceduralAurora
         }
 
         //Lights Initialization
-        private void InitializeLights()
+        /* private void InitializeLights()
         {
             l_Lights = new Light[auroraLightsCount];
 
@@ -140,7 +140,7 @@ namespace ProceduralAurora
 
                 l_Lights[i] = l_Light;
             }
-        }
+        } */
 
         //Base Aurora Update
         private void FixedUpdate()
@@ -209,14 +209,14 @@ namespace ProceduralAurora
                 if (auroraVolumetric || auroraCircular)
                     angleOffset += Random.Range(auroraVolumetricRange.x, auroraVolumetricRange.y) / p_Particles.Length;
 
-                if (auroraLights && i != 0 && i % lightOffset == 0)
+                /* if (auroraLights && i != 0 && i % lightOffset == 0)
                 {
                     int n = i / (lightOffset + 1);
                     l_Lights[n].transform.position = p_Position;
                     l_Lights[n].color = p_Color;
                     l_Lights[n].range = auroraLightsRange;
                     l_Lights[n].intensity = auroraLightsIntesity * Mathf.Clamp01(p_Color.a);
-                }
+                } */
             }
             pSystem.SetParticles(p_Particles, auroraParticlesCount);
         }
