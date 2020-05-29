@@ -9,6 +9,12 @@ public class PlanetStages : MonoBehaviour {
     public int currentLightStage = 0;
     public const int lightStageAmount = 5;
 
+    [Space(5)]
+    public LightStage[] lightStages;
+
+    protected LightStage curStage;
+    private Material targetMaterial;
+
     [System.Serializable]
     public class LightStage {
         public int moons = 0;
@@ -34,23 +40,28 @@ public class PlanetStages : MonoBehaviour {
         SetLightStage(0);
     }
 
-    [Space(5)]
-    public LightStage[] lightStages;
-
-    protected LightStage curStage;
+    void FixedUpdate() {
+        if(targetMaterial != null) meshRenderer.material.Lerp(meshRenderer.material, targetMaterial, Time.deltaTime * 1f);
+    }
 
     public void SetLightStage(int i) {
         if(i > lightStageAmount - 1) return;
         currentLightStage = i;
         curStage = lightStages[i];
-        meshRenderer.material = curStage.material;
+        
+        targetMaterial = curStage.material;
+
         if(curStage.lightLayer != null) {
             lightLayerRender.material = curStage.lightLayer;
             lightLayerRender.enabled = true;
         }
         else lightLayerRender.enabled = false;
         curStage.ApplyStage(gameObject, moonPrefab, lightStages[i].moons);
+        
         var moonList = GetComponentsInChildren<Moon>();
-        if(moonList.Length > 0) for(int m = 0; m < (moonList.Length - lightStages[i].moons); m++) DestroyImmediate(moonList[moonList.Length - 1 - m].gameObject);
+        if(moonList.Length > 0) for(int m = 0; m < (moonList.Length - lightStages[i].moons); m++) {
+            moonList[m].Destroy();
+            //Destroy(moonList[moonList.Length - 1 - m].gameObject);
+        }
     }
 }

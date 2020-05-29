@@ -135,6 +135,7 @@ GameObject:
   - component: {fileID: 6779712837694326453}
   - component: {fileID: -3640689715881509520}
   - component: {fileID: 9101083135672933921}
+  - component: {fileID: 8373792744642751139}
   m_Layer: 5
   m_Name: PLANETRED
   m_TagString: PLAYERPLANET
@@ -180,7 +181,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa27af3838c8ac340b14c0099c027c78, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  aurora: {fileID: 8643269259289502831}
+  borealisAnim: {fileID: 7400000, guid: 28dcd9a67b11b1e41adcaf2876aa2b11, type: 2}
   playerNumber: 0
   currentScore: 100
   minScore: 0
@@ -235,11 +236,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 815daaffd6ccbd941854a36d95dfb8ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mesh: {fileID: 5938187727379157761}
+  aurora: {fileID: 8643269259289502831}
+  auroraAnim: {fileID: 0}
   render: {fileID: 95744570482962424}
-  planetName: 
   planetColor: {r: 0.6431373, g: 0.21568628, b: 0.21568628, a: 1}
-  randomGen: 0
+  partScale: 1
 --- !u!58 &5336174367327457938
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -324,6 +325,25 @@ MonoBehaviour:
   - moons: 3
     material: {fileID: 2100000, guid: 94e69cafade990a42a21d7ecabc37a2b, type: 2}
     lightLayer: {fileID: 2100000, guid: fad8b8084371b4940972d7b3b75c174e, type: 2}
+--- !u!95 &8373792744642751139
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5336174367327457933}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 00b976b565dbfca42973b4c90647fcdb, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &5336174368059501567
 GameObject:
   m_ObjectHideFlags: 0
@@ -642,7 +662,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &6996320198591947405
 Transform:
   m_ObjectHideFlags: 0
@@ -715,17 +735,17 @@ MonoBehaviour:
   scale: {x: 0.001, y: 0.001, z: 0.001}
   auroraSeed: 35
   auroraParticlesCount: 500
-  auroraAnimationFrequency: 0.85
-  auroraRotation: 189
-  auroraCurvature: 14.4
-  auroraSizes: {x: 500, y: 1800, z: 989}
-  auroraParticleThickness: 332.9
+  auroraAnimationFrequency: 0.99
+  auroraRotation: 256
+  auroraCurvature: 700
+  auroraSizes: {x: 500, y: 500, z: 989}
+  auroraParticleThickness: 270.2
   auroraVolumetric: 1
-  auroraCircular: 1
-  auroraVolumetricRange: {x: 600, y: 300}
+  auroraCircular: 0
+  auroraVolumetricRange: {x: 426, y: -500}
   auroraLights: 1
   auroraLightsCount: 25
-  auroraLightsRange: 15995.7
+  auroraLightsRange: 5000
   auroraLightsIntesity: 1
   auroraColorMain:
     serializedVersion: 2
@@ -1143,12 +1163,6 @@ PrefabInstance:
 --- !u!23 &95744570482962424 stripped
 MeshRenderer:
   m_CorrespondingSourceObject: {fileID: -1504981713932161579, guid: a318da0dbbd934d4d8b7646a21e36f63,
-    type: 3}
-  m_PrefabInstance: {fileID: 7658683664461611565}
-  m_PrefabAsset: {fileID: 0}
---- !u!33 &5938187727379157761 stripped
-MeshFilter:
-  m_CorrespondingSourceObject: {fileID: -5178661895559278292, guid: a318da0dbbd934d4d8b7646a21e36f63,
     type: 3}
   m_PrefabInstance: {fileID: 7658683664461611565}
   m_PrefabAsset: {fileID: 0}

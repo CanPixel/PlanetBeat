@@ -135,6 +135,7 @@ GameObject:
   - component: {fileID: 6779712837694326453}
   - component: {fileID: 685116055582315026}
   - component: {fileID: 9199892084354297928}
+  - component: {fileID: 2048093436354245009}
   m_Layer: 5
   m_Name: PLANETCYAN
   m_TagString: PLAYERPLANET
@@ -159,6 +160,7 @@ RectTransform:
   - {fileID: 1173775177141538614}
   - {fileID: 270711317900668933}
   - {fileID: 4131717229305809}
+  - {fileID: 486617870954569943}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -179,6 +181,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa27af3838c8ac340b14c0099c027c78, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  borealisAnim: {fileID: 7400000, guid: 28dcd9a67b11b1e41adcaf2876aa2b11, type: 2}
   playerNumber: 0
   currentScore: 100
   minScore: 0
@@ -233,11 +236,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 815daaffd6ccbd941854a36d95dfb8ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mesh: {fileID: 5938187727379157761}
+  aurora: {fileID: 8465111835161200692}
+  auroraAnim: {fileID: 0}
   render: {fileID: 95744570482962424}
-  planetName: 
   planetColor: {r: 0.168, g: 0.908, b: 0.915, a: 1}
-  randomGen: 0
+  partScale: 1
 --- !u!58 &5336174367327457938
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -322,6 +325,25 @@ MonoBehaviour:
   - moons: 3
     material: {fileID: 2100000, guid: b7dd0cb51ac83364ea21d2fe87c72dfc, type: 2}
     lightLayer: {fileID: 2100000, guid: c27ccd7856edf594baeebb811c179cce, type: 2}
+--- !u!95 &2048093436354245009
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5336174367327457933}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 00b976b565dbfca42973b4c90647fcdb, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &5336174368059501567
 GameObject:
   m_ObjectHideFlags: 0
@@ -624,6 +646,137 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 750
+--- !u!1 &8465111835161200692
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 486617870954569943}
+  - component: {fileID: 4519323809606377029}
+  m_Layer: 0
+  m_Name: Aurora
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &486617870954569943
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8465111835161200692}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.01, y: 0.01, z: 0.01}
+  m_Children: []
+  m_Father: {fileID: 5336174367327457932}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4519323809606377029
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8465111835161200692}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d2573877b1485b43b71a69b0edfeb1e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  useAudioSourceVisualization: 0
+  audioSource: {fileID: 0}
+  audioSamples: 256
+  audioSamplingWindow: 4
+  audioMultiplier: 100
+  audioFrequenciesScale: 0
+  audioBufferSmoothness: 0.5
+  audioVisualizeColorGradient: 0
+  audioVisualizeOpacity: 0
+  audioVisualizePositionOffset: 0
+  audioVisualizeFrequency: 0
+  audioVisualizeHeight: 0
+  audioVisualizePositionOffsetMutliplier: 0.102
+  audioHeightMultiplier: 1
+  audioColorGradient:
+    serializedVersion: 2
+    key0: {r: 0.50966907, g: 0.1189879, b: 0.99050707, a: 1}
+    key1: {r: 0.1189879, g: 0.77413, b: 0.99050707, a: 1}
+    key2: {r: 0.9852941, g: 0.91274613, b: 0.5071367, a: 0}
+    key3: {r: 1, g: 0.6922921, b: 0.45588237, a: 0}
+    key4: {r: 0, g: 0, b: 0, a: 0}
+    key5: {r: 0, g: 0, b: 0, a: 0}
+    key6: {r: 0, g: 0, b: 0, a: 0}
+    key7: {r: 0, g: 0, b: 0, a: 0}
+    ctime0: 0
+    ctime1: 16962
+    ctime2: 33539
+    ctime3: 63415
+    ctime4: 0
+    ctime5: 0
+    ctime6: 0
+    ctime7: 0
+    atime0: 0
+    atime1: 65535
+    atime2: 65535
+    atime3: 65535
+    atime4: 65535
+    atime5: 65535
+    atime6: 65535
+    atime7: 65535
+    m_Mode: 0
+    m_NumColorKeys: 4
+    m_NumAlphaKeys: 2
+  scale: {x: 0.001, y: 0.001, z: 0.001}
+  auroraSeed: 35
+  auroraParticlesCount: 500
+  auroraAnimationFrequency: 0.99
+  auroraRotation: 256
+  auroraCurvature: 700
+  auroraSizes: {x: 500, y: 500, z: 989}
+  auroraParticleThickness: 270.2
+  auroraVolumetric: 1
+  auroraCircular: 0
+  auroraVolumetricRange: {x: 426, y: -500}
+  auroraLights: 1
+  auroraLightsCount: 25
+  auroraLightsRange: 5000
+  auroraLightsIntesity: 1
+  auroraColorMain:
+    serializedVersion: 2
+    key0: {r: 0.16927983, g: 0.74264705, b: 0.29186174, a: 0}
+    key1: {r: 0.10726642, g: 0.3954181, b: 0.4705882, a: 0.19215687}
+    key2: {r: 0.014705896, g: 1, b: 0.30689654, a: 0.34509805}
+    key3: {r: 0.1189879, g: 0.77413, b: 0.99050707, a: 1}
+    key4: {r: 0, g: 0, b: 0, a: 1}
+    key5: {r: 0, g: 0, b: 0, a: 0.43529412}
+    key6: {r: 0, g: 0, b: 0, a: 0.46666667}
+    key7: {r: 0, g: 0, b: 0, a: 0}
+    ctime0: 14842
+    ctime1: 32189
+    ctime2: 42983
+    ctime3: 52814
+    ctime4: 0
+    ctime5: 0
+    ctime6: 0
+    ctime7: 0
+    atime0: 0
+    atime1: 10023
+    atime2: 17348
+    atime3: 25250
+    atime4: 37394
+    atime5: 48959
+    atime6: 56283
+    atime7: 65535
+    m_Mode: 0
+    m_NumColorKeys: 4
+    m_NumAlphaKeys: 8
+  auroraMaterialMain: {fileID: 2100000, guid: 43cfe7bfdef565b43b248e321a24e9ce, type: 2}
 --- !u!1001 &4553674065557195142
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1068,16 +1221,6 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 6061447726823252456, guid: f3469c6a1e99fd544b899569b8f579c8,
-        type: 3}
-      propertyPath: m_FillAmount
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6061447726823252456, guid: f3469c6a1e99fd544b899569b8f579c8,
-        type: 3}
-      propertyPath: m_Color.a
-      value: 0.6156863
-      objectReference: {fileID: 0}
     - target: {fileID: 6061447726823252457, guid: f3469c6a1e99fd544b899569b8f579c8,
         type: 3}
       propertyPath: m_SizeDelta.y
@@ -1092,6 +1235,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Color.a
       value: 0.5921569
+      objectReference: {fileID: 0}
+    - target: {fileID: 6061447726823252456, guid: f3469c6a1e99fd544b899569b8f579c8,
+        type: 3}
+      propertyPath: m_FillAmount
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6061447726823252456, guid: f3469c6a1e99fd544b899569b8f579c8,
+        type: 3}
+      propertyPath: m_Color.a
+      value: 0.6156863
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f3469c6a1e99fd544b899569b8f579c8, type: 3}
@@ -1222,12 +1375,6 @@ PrefabInstance:
 --- !u!23 &95744570482962424 stripped
 MeshRenderer:
   m_CorrespondingSourceObject: {fileID: -1504981713932161579, guid: a318da0dbbd934d4d8b7646a21e36f63,
-    type: 3}
-  m_PrefabInstance: {fileID: 7658683664461611565}
-  m_PrefabAsset: {fileID: 0}
---- !u!33 &5938187727379157761 stripped
-MeshFilter:
-  m_CorrespondingSourceObject: {fileID: -5178661895559278292, guid: a318da0dbbd934d4d8b7646a21e36f63,
     type: 3}
   m_PrefabInstance: {fileID: 7658683664461611565}
   m_PrefabAsset: {fileID: 0}

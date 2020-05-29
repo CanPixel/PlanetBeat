@@ -6,11 +6,12 @@ using Photon.Pun;
 using Photon.Realtime;
 
 public class PlayerPlanets : MonoBehaviourPun {
-    public GameObject aurora;
+    public AnimationClip borealisAnim;
     private PlanetStages stages;
     private PlayerShip player;
     [HideInInspector] public int playerNumber = 0;
     [HideInInspector] public float currentScore;
+    private float lerpScore;
     public float minScore = 0;
     public float maxScore = 100f;
     public Text scoreText, increasePopupTxt;
@@ -75,6 +76,7 @@ public class PlayerPlanets : MonoBehaviourPun {
     }
 
     void Start() {
+        lerpScore = minScore;
         scoreBaseScale = scoreText.transform.localScale;
         textOutline = scoreText.GetComponent<Outline>();
         outlineBase = textOutline.effectDistance;
@@ -136,10 +138,12 @@ public class PlayerPlanets : MonoBehaviourPun {
         scoreText = GetComponentInChildren<Text>();
         photonView.RPC("ClaimPlayer", RpcTarget.AllBufferedViaServer, playerNumber, player.playerColor.r, player.playerColor.g, player.playerColor.b);
         scoreText.enabled = true;
-        //scoreText.transform.position = transform.position - new Vector3(0, 0.05f, 1);
     }
 
     void Update() {
+        lerpScore = Mathf.Lerp(lerpScore, (currentScore + 1), borealisAnim.length * Time.deltaTime);
+        if(currentScore == 0) lerpScore = 0;
+
         if(player != null && player.photonView.IsMine) {
             if(infected) {
                 warningSign.transform.position = Vector3.Lerp(warningSign.transform.position, player.transform.position + Vector3.up / 1.5f, Time.deltaTime * 4f);
@@ -166,11 +170,6 @@ public class PlayerPlanets : MonoBehaviourPun {
         orbit.transform.localScale = Vector3.Lerp(orbit.transform.localScale, transform.localScale / orbitScaleReduction.Evaluate(currentScore / maxScore), Time.deltaTime * 2f);
         transform.localScale = Vector3.Lerp(transform.localScale, new Vector3(Mathf.Clamp(transform.localScale.x, 0, maxScale), Mathf.Clamp(transform.localScale.y, 0, maxScale), Mathf.Clamp(transform.localScale.z, 0, maxScale)), Time.deltaTime * 2f);
 
-        if(aurora != null) {
-            aurora.transform.position = transform.position;
-            aurora.transform.rotation = Quaternion.Euler(90, 180, 0);
-        }
-
         if(scoreText != null) {
             var basePos = transform.position - new Vector3(-0.025f, 0.75f, 1);
             scoreText.transform.rotation = Quaternion.identity;
@@ -181,7 +180,7 @@ public class PlayerPlanets : MonoBehaviourPun {
             scoreText.transform.localScale = Vector2.Lerp(scoreText.transform.localScale, scoreBaseScale, Time.deltaTime * 1f);
             textOutline.effectDistance = Vector2.Lerp(textOutline.effectDistance, outlineBase, Time.deltaTime * 1.2f);
 
-            scoreText.text = currentScore.ToString();
+            scoreText.text = ((int)lerpScore).ToString();
             if(player != null) {
                 orbitColor = player.playerColor;
                 scoreText.color = orbitColor;
@@ -246,6 +245,7 @@ public class PlayerPlanets : MonoBehaviourPun {
 
         currentScore += amount;
         if(currentScore > maxScore) currentScore = maxScore;
+        planetGlow.Animate();
         photonView.RPC("SetResource", RpcTarget.AllBufferedViaServer, currentScore);
 
         increasePopupTxt.enabled = true;    

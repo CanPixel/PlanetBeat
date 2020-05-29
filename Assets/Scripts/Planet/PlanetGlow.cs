@@ -5,20 +5,32 @@ using UnityEngine.UI;
 using Photon.Pun;
 
 public class PlanetGlow : MonoBehaviour {
+    private ProceduralAurora.AuroraMain auroraSRC;
+    public GameObject aurora;
+    [HideInInspector] public Animator auroraAnim;
     private float glowOffset;
     private PlayerPlanets playerPlanets;
-    public MeshFilter mesh;
     public MeshRenderer render;
-    public string planetName;
     public Color planetColor;
+    private float baseRange; 
+    private List<GameObject> borealis = new List<GameObject>();
 
-    public bool randomGen = false;
+    [HideInInspector] public float partScale = 1f;
 
     private float flicker = 0, subFlicker = 0;
 
     void Start() {
+        if(aurora != null) auroraSRC = aurora.GetComponent<ProceduralAurora.AuroraMain>();
+        auroraAnim = GetComponent<Animator>();
         playerPlanets = GetComponent<PlayerPlanets>();
         glowOffset = 1f + Random.Range(0f, 1f);
+        if(aurora != null) foreach(Transform t in aurora.transform) borealis.Add(t.gameObject);
+
+        if(auroraSRC != null) {
+            var keys = auroraSRC.auroraColorMain.colorKeys;
+            for(int i = 0; i < auroraSRC.auroraColorMain.colorKeys.Length; i++) keys[i].color = playerPlanets.GetColor() * 2f;
+            auroraSRC.auroraColorMain.SetKeys(keys, auroraSRC.auroraColorMain.alphaKeys);
+        }
     }
 
     void Update() {
@@ -32,40 +44,21 @@ public class PlanetGlow : MonoBehaviour {
         } else render.enabled = true;
     }
 
+    void FixedUpdate() {
+        if(aurora != null) {
+            aurora.transform.position = transform.position;
+            aurora.transform.rotation = Quaternion.Euler(90, 180, 0);
+
+            foreach(var i in borealis) i.transform.localScale = Vector3.one * partScale;
+        }
+    }
+
     public void Flicker() {
         flicker = 1;
         subFlicker = 0;
     }
 
-    public void SetsPlanet(PlanetSwitcher.PlanetElement element) {
-        return;
-        /* var newModel = element.model;
-        var newRender = element.lightStages[0];
-        var ringModel = element.ring;
-        var ringMat = element.ringMaterial;
-
-        if(ringModel != null) {
-            var obj = new GameObject("RING");
-            obj.transform.SetParent(mesh.transform);
-            obj.transform.localPosition = Vector3.zero;
-            obj.transform.localScale = Vector3.one;
-            obj.AddComponent<MeshFilter>().mesh = ringModel;
-            obj.AddComponent<MeshRenderer>().material = ringMat;
-        }        
-        mesh.mesh = newModel;
-        render.material = newRender;
-        planetName = element.name; */
-
-        //if(src != null && element != null) src.sprite = element.src;
-        /* if(element.glow == null) {
-            glow.sprite = null;
-            glow.color = new Color(0, 0, 0, 0);
-            glow.enabled = false;
-            return;
-        }*/
-        //if(glow == null) return;
-        //glow.enabled = true;
-        //glow.color = new Color(1, 1, 1, 1);
-       // glow.sprite = element.glow;
+    public void Animate() {
+        if(auroraAnim != null) auroraAnim.SetTrigger("Scorealis");
     }
 }
