@@ -6,6 +6,7 @@ using Photon.Pun;
 using Photon.Realtime;
 
 public class PlayerPlanets : MonoBehaviourPun {
+    public GameObject aurora;
     private PlanetStages stages;
     private PlayerShip player;
     [HideInInspector] public int playerNumber = 0;
@@ -164,6 +165,11 @@ public class PlayerPlanets : MonoBehaviourPun {
 
         orbit.transform.localScale = Vector3.Lerp(orbit.transform.localScale, transform.localScale / orbitScaleReduction.Evaluate(currentScore / maxScore), Time.deltaTime * 2f);
         transform.localScale = Vector3.Lerp(transform.localScale, new Vector3(Mathf.Clamp(transform.localScale.x, 0, maxScale), Mathf.Clamp(transform.localScale.y, 0, maxScale), Mathf.Clamp(transform.localScale.z, 0, maxScale)), Time.deltaTime * 2f);
+
+        if(aurora != null) {
+            aurora.transform.position = transform.position;
+            aurora.transform.rotation = Quaternion.Euler(90, 180, 0);
+        }
 
         if(scoreText != null) {
             var basePos = transform.position - new Vector3(-0.025f, 0.75f, 1);

@@ -153,7 +153,7 @@ public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
             playerNumber = photonView.ViewID;
             GameManager.ClaimPlanet(this);
 
-            if(playerName != null) playerName.SetHost(gameObject, photonView.Owner.NickName);
+            if(playerName != null && photonView.ViewID > 0) playerName.SetHost(gameObject, photonView.Owner.NickName);
         }
 
         public override void OnDisable() {
