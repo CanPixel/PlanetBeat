@@ -10,15 +10,18 @@ public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
     public HookShot hookShot;
     public ParticleSystem exhaust;
     public Light exhaustLight;
+    public GameObject model;
 
     [HideInInspector] public GameObject playerLabel;
     [HideInInspector] public Collider2D[] colliders;
 
+    public float boostShipRotate = 10f;
+
     [Header("BOOST")]
-    public float boostDuration = 0.2f;
+    public float boostDuration = 0.12f;
     public float boostVelocity = 23;
     public float boostForce = 230;
-    public float boostCooldownDuration = 3;
+    public float boostCooldownDuration = 3.5f;
     private float boostCooldownTimer = 0f, boostTimer = 0f;
     private bool canBoost = true;
     private float fuelMeter;
@@ -26,48 +29,47 @@ public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
     private bool isBoosting;
     private bool onCooldown;
     private float waitForCooldown;
-    public float cooldownPenalty; 
+    public float cooldownPenalty = 3.5f; 
 
-    [Header("PLAYER VALUES")]
-    public GameObject model;
-    public int playerNumber;
-    public Color playerColor;
     [Space(10)]
     public Component[] networkIgnore;
 
+    [HideInInspector] public int playerNumber;
+    [HideInInspector] public Color playerColor;
+
     #region MOVEMENT
-    [Header("PHYSICS")]
         private float maxVelocity = 5;
         private float baseVelocity;
-        public float acceleration = 0.1f;
+        [Header("PHYSICS")]
+        public float acceleration = 25f;
 
         public float defaultVelocity = 4.0f;
 
         [Range(1, 20)]
-        public float turningSpeed = 2.5f;
+        public float turningSpeed = 4.6f;
         [Range(1, 5)]
-        public float brakingSpeed = 1;
+        public float brakingSpeed = 1.3f;
 
-        public float respawningTime = 2;
+        public float respawningTime = 3;
 
-        public float defaultDrag;
-        public float stopDrag;
+        public float defaultDrag = 2;
+        public float stopDrag = 1.5f;
         private float baseStopDrag, baseDefaultDrag;
         private float hookDelay;
 
         [Range(1, 10)]
-        public int maxAsteroids = 2;
+        public int maxAsteroids = 1;
     #endregion
 
     //Rigidbody reference voor physics en movement hoeraaa
     private Rigidbody2D rb;
     private float velocity, turn;
     [Header("GRAPPLE")]
-    public float trailingSpeed = 8f;
+    public float trailingSpeed = 15f;
     public float throwForce = 34;
 
     [Range(0.1f,10)]
-    public float throwingReduction = 1f; 
+    public float throwingReduction = 0.4f; 
 
     [Space(5)]
     public float heldResourceScaleFactor = 0.09f;
@@ -78,6 +80,7 @@ public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
     private float exLastTime;
 
     private AudioSource exhaustSound;
+    private float animationRotateSpeed;
 
     [HideInInspector] public PlayerName playerName;
     [HideInInspector] public PlayerPlanets planet;
@@ -108,12 +111,14 @@ public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
     public void SetTextureByPlanet(Color col) {
         var playerElm = PlanetSwitcher.GetPlayerTexture(col);
 
-        Destroy(model);
+        DestroyImmediate(model.gameObject);
+        Destroy(model.gameObject);
+
         model = Instantiate(playerElm.model);
         model.transform.SetParent(transform);
         model.transform.localPosition = Vector3.zero;
         model.transform.localScale = Vector3.one * 8f;
-        model.transform.localRotation = Quaternion.Euler(0, 0, -90);
+        model.transform.localRotation = Quaternion.Euler(0, 180, -90);
 
         if(playerLabel != null) playerLabel.GetComponent<Text>().color = col;
     }
@@ -148,7 +153,7 @@ public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
             playerNumber = photonView.ViewID;
             GameManager.ClaimPlanet(this);
 
-            if(playerName != null) playerName.SetHost(gameObject, photonView.Owner.NickName);
+            if(playerName != null && photonView.ViewID > 0) playerName.SetHost(gameObject, photonView.Owner.NickName);
         }
 
         public override void OnDisable() {
@@ -257,10 +262,17 @@ public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
 
             flicker += Time.deltaTime;
             if(flicker > 0.2f) {
-                model.SetActive(!model.activeSelf);
+                if(model != null) model.SetActive(!model.activeSelf);
                 flicker = 0;
             }
-        } else model.SetActive(true);
+        } else if(model != null) model.SetActive(true);
+
+        //Rotate animation
+        if(boostCooldownTimer < (boostCooldownDuration - 2)) {
+            animationRotateSpeed = Mathf.LerpAngle(animationRotateSpeed, (boostShipRotate * ((boostCooldownDuration - 1) - boostCooldownTimer)), Time.deltaTime * 6f); 
+            model.transform.Rotate(-animationRotateSpeed, 0, 0);
+        } 
+        else model.transform.localRotation = Quaternion.Lerp(model.transform.localRotation, Quaternion.Euler(0, 180, -90), Time.deltaTime * 2.5f);
 
         if(IsThisClient() && respawnDelay <= 0) {
             ProcessInputs();
@@ -280,10 +292,12 @@ public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
                 if(asteroid.tag == "InfectroidTutorial") playerTutorial.tutorialStepsByName["InfectroidThrow"].completed = true;
                 asteroid.rb.constraints = RigidbodyConstraints2D.None;
                 asteroid.throwed = true;
-                asteroid.rb.AddForce(transform.up * throwForce);
+                asteroid.ReleaseAsteroid(true, asteroid.photonView.ViewID);
+                if((asteroid.tag == "Powerup" && !(asteroid as Infectroid).inOrbit) || asteroid.tag == "Resource" || asteroid.tag == "InfectroidTutorial" || ((asteroid as Infectroid).playerPlanets != null && (asteroid as Infectroid).playerPlanets.playerNumber == playerNumber)) asteroid.rb.AddForce(transform.up * throwForce);
             }
             SetCollision(asteroid.GetCollider2D(), false);
             asteroid.transform.TransformDirection(new Vector2(transform.forward.x * asteroid.transform.forward.x, transform.forward.y * asteroid.transform.forward.y));
+            
             if(asteroid.photonView.ViewID > 0) asteroid.photonView.RPC("ReleaseAsteroid", RpcTarget.All, true, asteroid.photonView.ViewID); 
             else asteroid.ReleaseAsteroid(true, asteroid.photonView.ViewID);
             dropAsteroid = false;
@@ -291,7 +305,10 @@ public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
     }
 
     void Update() {
-        if(Input.GetKeyDown(KeyCode.R) && planet != null) planet.AddingResource(5); /////////////////////////////////////////////////////////////////////////////////////////  DEBUG
+        #if UNITY_EDITOR
+            if(Input.GetKeyDown(KeyCode.R) && planet != null) planet.AddingResource(5); /////////////////////////////////////////////////////////////////////////////////////////  DEBUG
+            if(Input.GetKeyDown(KeyCode.Q) && planet != null) planet.Explode(5);
+        #endif
 
         BoostManager();
 
@@ -334,6 +351,7 @@ public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
 
         //Removes asteroids owned by other players
         for(int i = 0; i < trailingObjects.Count; i++) if(!trailingObjects[i].IsOwnedBy(this)) {
+            trailingObjects[i].ReleaseAsteroid(true, trailingObjects[i].photonView.ViewID);
             trailingObjects.RemoveAt(i);
             i--;
         }
@@ -386,6 +404,10 @@ public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
         return Input.GetKeyDown(KeyCode.Space);
     }
 
+    public void SetLean(float x, float y, float z) {
+        model.transform.localRotation = Quaternion.Lerp(model.transform.localRotation, Quaternion.Euler(x, y, z - 90), Time.deltaTime * 3f);
+    }
+
     void ProcessInputs() {
         //naar voren en naar achteren (W & S)
         if(IsThrust()) {
@@ -433,7 +455,7 @@ public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
     }
 
     public bool CanCastHook() {
-        return respawnDelay <= 0 /* && GameManager.GAME_STARTED*/ && !hookShot.HasObject();
+        return respawnDelay <= 0 && !hookShot.HasObject();
     }
     [PunRPC]
     public void CastHook(int viewID) {

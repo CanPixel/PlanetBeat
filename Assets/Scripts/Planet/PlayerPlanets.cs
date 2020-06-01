@@ -6,6 +6,7 @@ using Photon.Pun;
 using Photon.Realtime;
 
 public class PlayerPlanets : MonoBehaviourPun {
+    public GameObject aurora;
     private PlanetStages stages;
     private PlayerShip player;
     [HideInInspector] public int playerNumber = 0;
@@ -26,15 +27,13 @@ public class PlayerPlanets : MonoBehaviourPun {
     public AnimationCurve orbitScaleReduction;
 
     private PlanetGlow planetGlow;
-    private Vector3 basePos;
-    private float increasePopupBaseSize, increasePopupHideTimer;
+    private float increasePopupHideTimer;
     
     private Outline textOutline;
     private Vector2 outlineBase;
     private Vector2 scoreBaseScale;
 
     private float baseWarningScale;
-    private Vector3 scoreTextBasePos;
 
     public Image warningSign, warningArrow;
     [HideInInspector] public bool infected = false;
@@ -58,6 +57,8 @@ public class PlayerPlanets : MonoBehaviourPun {
         rechargeBar.SetProgress(player.playerColor, progress);
     }
 
+    [HideInInspector] public bool tutorial = false;
+
     public bool HasPlayer() {
         return player != null && playerNumber > 0;
     }
@@ -68,14 +69,12 @@ public class PlayerPlanets : MonoBehaviourPun {
 
     public void OnEnable() {
         stages = GetComponent<PlanetStages>();
-        basePos = transform.localPosition;
         planetGlow = GetComponent<PlanetGlow>();
         rechargeBar.SetAlpha(0);
         baseWarningScale = warningSign.transform.localScale.x;
     }
 
     void Start() {
-        scoreTextBasePos = scoreText.transform.position;
         scoreBaseScale = scoreText.transform.localScale;
         textOutline = scoreText.GetComponent<Outline>();
         outlineBase = textOutline.effectDistance;
@@ -86,7 +85,6 @@ public class PlayerPlanets : MonoBehaviourPun {
             scoreText.enabled = false;
             return;
         }
-        increasePopupBaseSize = increasePopupTxt.transform.localScale.x;
         increasePopupTxt.transform.localScale = Vector3.zero;
     }
 
@@ -123,6 +121,7 @@ public class PlayerPlanets : MonoBehaviourPun {
         orbitTrail.material.color = orbitColor;
         currentScore = minScore; 
         player.SetHomePlanet(gameObject);
+        //scoreText.transform.position = transform.position - new Vector3(0, 0.05f, 1);
     }
 
     public Color GetColor() {
@@ -137,13 +136,11 @@ public class PlayerPlanets : MonoBehaviourPun {
         scoreText = GetComponentInChildren<Text>();
         photonView.RPC("ClaimPlayer", RpcTarget.AllBufferedViaServer, playerNumber, player.playerColor.r, player.playerColor.g, player.playerColor.b);
         scoreText.enabled = true;
+        //scoreText.transform.position = transform.position - new Vector3(0, 0.05f, 1);
     }
 
     void Update() {
         if(player != null && player.photonView.IsMine) {
-            //scoreText.transform.position = transform.position - new Vector3(0, 0.05f, 1);
-            scoreText.transform.position = Vector3.Lerp(scoreText.transform.position, (GameManager.GAME_STARTED) ? scoreTextBasePos : new Vector3(0, -1, 0), Time.deltaTime * 2f);
-
             if(infected) {
                 warningSign.transform.position = Vector3.Lerp(warningSign.transform.position, player.transform.position + Vector3.up / 1.5f, Time.deltaTime * 4f);
                 warningSign.transform.localScale = Vector3.Lerp(warningSign.transform.localScale, Vector3.one * baseWarningScale + (new Vector3(1.2f, 1.2f, 1.2f) * Mathf.Sin(Time.time * 10f) * 0.02f), Time.deltaTime * 4f);
@@ -166,16 +163,20 @@ public class PlayerPlanets : MonoBehaviourPun {
             }
         }
 
-        //if(currentScore > maxScore && player != null && GameManager.GAME_STARTED && !GameManager.GAME_WON) {
-        //    WinGame();
-            //SynchWin(player.photonView.ViewID);
-        //}
-
         orbit.transform.localScale = Vector3.Lerp(orbit.transform.localScale, transform.localScale / orbitScaleReduction.Evaluate(currentScore / maxScore), Time.deltaTime * 2f);
         transform.localScale = Vector3.Lerp(transform.localScale, new Vector3(Mathf.Clamp(transform.localScale.x, 0, maxScale), Mathf.Clamp(transform.localScale.y, 0, maxScale), Mathf.Clamp(transform.localScale.z, 0, maxScale)), Time.deltaTime * 2f);
 
+        if(aurora != null) {
+            aurora.transform.position = transform.position;
+            aurora.transform.rotation = Quaternion.Euler(90, 180, 0);
+        }
+
         if(scoreText != null) {
+            var basePos = transform.position - new Vector3(-0.025f, 0.75f, 1);
             scoreText.transform.rotation = Quaternion.identity;
+            
+            //if(!GameManager.GAME_STARTED) scoreText.transform.position = Vector3.Lerp(scoreText.transform.position, (!tutorial) ? basePos : basePos - new Vector3(0, 0.5f, 0), Time.deltaTime * (tutorial ? 2f : 6f));
+            scoreText.transform.position = basePos;
 
             scoreText.transform.localScale = Vector2.Lerp(scoreText.transform.localScale, scoreBaseScale, Time.deltaTime * 1f);
             textOutline.effectDistance = Vector2.Lerp(textOutline.effectDistance, outlineBase, Time.deltaTime * 1.2f);
@@ -232,7 +233,10 @@ public class PlayerPlanets : MonoBehaviourPun {
         increasePopupTxt.color = redDecrease;
         increasePopupTxt.text = "-" + penalty.ToString() + "!";
         increasePopupHideTimer = 0.1f;
-        increasePopupTxt.transform.localScale = Vector3.one * increasePopupBaseSize;
+        increasePopupTxt.transform.localScale = Vector3.one * 4f;
+
+        var curStage = Mathf.RoundToInt((currentScore / maxScore) * (float)PlanetStages.lightStageAmount);
+        stages.SetLightStage((int)curStage);
     }
 
     public void AddingResource(float amount) {
@@ -248,7 +252,7 @@ public class PlayerPlanets : MonoBehaviourPun {
         increasePopupTxt.color = greenIncrease;
         increasePopupTxt.text = "+" + amount.ToString() + "!";
         increasePopupHideTimer = 0.1f;
-        increasePopupTxt.transform.localScale = Vector3.one * increasePopupBaseSize;
+        increasePopupTxt.transform.localScale = Vector3.one * 4f;
     }
 
     protected void WinGame() {

@@ -11,22 +11,25 @@ public class PlayerTagsManager : MonoBehaviour {
     private TrailRenderer asteroidTrailRenderer;
     public Color ogTrailColor; 
 
+    public MeshRenderer ColorShell;
+
     private Asteroid _asteroid; 
     private Collider2D asteroidColl;
 
     private PlayerShip tagPlayer;
 
-    private Image src, glow;
+    //private Image src, glow;
 
     void Start() {
         asteroidColl = GetComponent<Collider2D>();
         _asteroid = GetComponent<Asteroid>();
-        src = _asteroid.src;
-        glow = _asteroid.glow;
+        //src = _asteroid.src;
+        //glow = _asteroid.glow;
         asteroidTrailRenderer = GetComponent<TrailRenderer>();
         asteroidTrailRenderer.material.color = ogTrailColor; 
         
         DisableTrails();
+        ColorShell.material.SetColor("_EmissionColor", Color.white * Mathf.LinearToGammaSpace(-10));
     }
 
     public void DisableTrails() {
@@ -40,10 +43,11 @@ public class PlayerTagsManager : MonoBehaviour {
     }
 
     public void GiveTag() {
-        tagNum = _asteroid.ownerPlayer.playerNumber;
+        if(_asteroid != null && _asteroid.ownerPlayer != null) tagNum = _asteroid.ownerPlayer.playerNumber;
         asteroidTrailRenderer.material.color = _asteroid.ownerPlayer.playerColor;
-        TagOn(false);
-        src.color = glow.color = _asteroid.ownerPlayer.playerColor * 1.7f;
+      //  TagOn(false);
+        //if(_asteroid != null && _asteroid.ownerPlayer != null && src != null && glow != null) src.color = glow.color = _asteroid.ownerPlayer.playerColor * 1.7f;
+        if(_asteroid != null && _asteroid.ownerPlayer != null) ColorShell.material.SetColor("_EmissionColor", _asteroid.ownerPlayer.playerColor * 1f);
     }
 
     public void RemoveTag() {
@@ -54,12 +58,9 @@ public class PlayerTagsManager : MonoBehaviour {
         tagNum = 0;
         asteroidTrailRenderer.material.color = ogTrailColor;
         
-        src.color = glow.color = Color.white;
+        ColorShell.material.SetColor("_EmissionColor", Color.white * Mathf.LinearToGammaSpace(-10));
+        //src.color = glow.color = Color.white;
         if(_asteroid != null) _asteroid.ForceRelease(true);
-    }
-
-    public void TagOn(bool state) {
-        //if(asteroidTrailRenderer != null) asteroidTrailRenderer.enabled = state;
     }
 
     public void StartTagTimer() {

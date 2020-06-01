@@ -97,7 +97,7 @@ LightmapSettings:
     m_ShowResolutionOverlay: 1
     m_ExportTrainingData: 0
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 1
+  m_UseShadowmask: 0
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -279,7 +279,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 742433453}
-  - {fileID: 1192945093}
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -297,39 +296,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   soundEvents:
   - labelName: BlackHoleOpen
-    fmodPath: event:/SFX/BlackHoleOpen
+    fmodPath: event:/SFX/black_hole
   - labelName: HotPotato
-    fmodPath: event:/SFX/HotPatatoExplosion
+    fmodPath: event:/SFX/hot_patato
   - labelName: InfectroidExplosion
-    fmodPath: event:/SFX/InfectroidExplosion
+    fmodPath: event:/SFX/infectroid_explosion
   - labelName: InfectroidSpawn
-    fmodPath: event:/SFX/InfectroidSpawn
+    fmodPath: event:/SFX/infectroid_spawn
   - labelName: ResourceSpawn
-    fmodPath: event:/SFX/ResourceSpawn
+    fmodPath: event:/SFX/resource_spawn
   - labelName: ScoreDecrease
-    fmodPath: event:/SFX/ScoreDecrease
+    fmodPath: event:/SFX/score_eraf
   - labelName: ScoreIncrease
-    fmodPath: event:/SFX/ScoreIncrease
-  - labelName: ReelOut
-    fmodPath: event:/Space_ships/ReelOut
+    fmodPath: event:/SFX/score_erbij
+  - labelName: Reelout
+    fmodPath: event:/Space_ships/reel_out
   - labelName: Exhaust
-    fmodPath: event:/Space_ships/Exaust
+    fmodPath: event:/Space_ships/thruts_vliegen
   - labelName: Countdown
-    fmodPath: event:/UI/CountDown
-  - labelName: StartGame
-    fmodPath: event:/UI/StartGame
-  - labelName: UIClick
-    fmodPath: event:/UI/UIClick
-  - labelName: HotPotatoTicking
-    fmodPath: event:/SFX/HotPatatoTicking
-  - labelName: CatchObject
-    fmodPath: event:/SFX/CatchObject
-  - labelName: ReelIn
-    fmodPath: event:/Space_ships/ReelIn
-  - labelName: HotPotatoSizzle
-    fmodPath: event:/SFX/HotPatatoSissing
-  - labelName: HotPotatoExplosion
-    fmodPath: event:/SFX/HotPatatoExplosion
+    fmodPath: event:/UI/count_down
 --- !u!114 &185244988
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -346,18 +331,7 @@ MonoBehaviour:
   - fmodString: Kick 1
     Event:
       m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 0}
-          m_MethodName: 
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: 
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 0
+        m_Calls: []
       m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
   - fmodString: Kick 2
@@ -2663,60 +2637,6 @@ MonoBehaviour:
   rotFreq: 0
   rotAmp: 1
   scaleOffset: {x: 0, y: 0, z: 0}
---- !u!1 &1192945092
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1192945093}
-  - component: {fileID: 1192945094}
-  m_Layer: 0
-  m_Name: FMOD Ambience
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1192945093
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1192945092}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 185244983}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1192945094
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1192945092}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  CollisionTag: 
-  Event: event:/SFX/BackgroundAmbience
-  PlayEvent: 1
-  StopEvent: 2
-  AllowFadeout: 1
-  TriggerOnce: 0
-  Preload: 0
-  Params: []
-  OverrideAttenuation: 0
-  OverrideMinDistance: 0
-  OverrideMaxDistance: 0
 --- !u!1 &1202013680
 GameObject:
   m_ObjectHideFlags: 0

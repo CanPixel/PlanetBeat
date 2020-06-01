@@ -22,13 +22,14 @@ public class Orbit : MonoBehaviour {
     public float PowerupExitVelocityReduction = 2;
 
     private float totalForce;
+    private bool flip = false;
 
     void OnValidate() {
         if(orbitTrailOffset < 0) orbitTrailOffset = 0;
     }
 
     void Start() {
-        var Planet = GetComponentInParent<PlanetGlow>();
+        if(Random.Range(0, 2) == 0) flip = true;
     }
 
     void Update() {
@@ -37,7 +38,7 @@ public class Orbit : MonoBehaviour {
     }
 
     void FixedUpdate() {
-        transform.rotation = Quaternion.Euler(0, 0, 300f * Time.time);
+        transform.rotation = Quaternion.Euler(0, 0, ((flip) ? -1f : 1f) * 300f * Time.time);
     }
 
     void OnTriggerStay2D(Collider2D col) {
@@ -46,6 +47,9 @@ public class Orbit : MonoBehaviour {
             float totalForce = -(planetForcePlayer * (Mass / 2f)); 
             var orientation = (col.transform.position - transform.position).normalized;
             col.GetComponent<Rigidbody2D>().AddForce(orientation * totalForce);
+
+            var rot = Quaternion.LookRotation(orientation * 100f);
+            col.GetComponent<PlayerShip>().SetLean(rot.eulerAngles.x, rot.eulerAngles.y, rot.eulerAngles.z);
 
         } else if(col.tag == "Resource" || col.tag == "Powerup" || col.tag == "InfectroidTutorial") {
             if(col.GetComponent<PickupableObject>().held) return; //Influence of gravity bij trailingObjects 
@@ -61,6 +65,9 @@ public class Orbit : MonoBehaviour {
         if(col.tag == "PLAYERSHIP") {
             var ship = col.GetComponent<PlayerShip>();
             if(ship != null) ship.NeutralizeForce(PlayerExitVelocityReduction);
+
+            col.GetComponent<PlayerShip>().SetLean(0, 0, 0);
+
         } else if(col.tag == "Resource" || col.tag == "Powerup" || col.tag == "InfectroidTutorial") {
             var rb = col.GetComponent<Rigidbody2D>();
             if(rb != null) {
