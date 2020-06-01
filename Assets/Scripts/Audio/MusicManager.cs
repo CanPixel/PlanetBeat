@@ -18,6 +18,7 @@ public class MusicManager : MonoBehaviour {
     TimelineInfo timelineInfo;
     GCHandle timelineHandle;
 
+
     FMOD.Studio.EVENT_CALLBACK beatCallback;
     FMOD.Studio.EventInstance musicInstance;
 
