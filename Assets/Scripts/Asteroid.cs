@@ -4,8 +4,10 @@ using UnityEngine;
 using Photon.Pun;
 using UnityEngine.UI;
 
+using TMPro;
+
 public class Asteroid : PickupableObject {
-    public Text scoreText, increasePopupTxt;
+    public TextMeshProUGUI scoreText, increasePopupTxt;
 
     public Animator animator;
 
@@ -160,11 +162,20 @@ public class Asteroid : PickupableObject {
         increasePopupTxt.transform.position = transform.position + new Vector3(0.05f, 0.35f, 0);
         if(increasePopupHideTimer > 1f) increasePopupTxt.transform.localScale = Vector3.Lerp(increasePopupTxt.transform.localScale, Vector3.zero, Time.deltaTime * 2f);
         
-        scoreText.transform.localScale = Vector3.Lerp(scoreText.transform.localScale, Vector3.one * baseTextScale, Time.deltaTime * 2f);
-        scoreText.text = value.ToString();
-        scoreText.transform.rotation = Quaternion.identity;
 
-        if(PhotonNetwork.IsMasterClient && photonView.ViewID > 0) {
+
+        if (scoreText != null)
+        {
+            scoreText.transform.localScale = Vector3.Lerp(scoreText.transform.localScale, Vector3.one * baseTextScale, Time.deltaTime * 2f);
+            scoreText.text = "+" + value.ToString();
+
+            var basePos = transform.position - new Vector3(0.0f, 0.45f, 1);
+
+            scoreText.transform.rotation = Quaternion.identity;
+            scoreText.transform.position = basePos;
+        }
+
+        if (PhotonNetwork.IsMasterClient && photonView.ViewID > 0) {
             spawnTimer += Time.deltaTime;
             photonView.RPC("SynchTimer", RpcTarget.All, spawnTimer, timeBombTick);
         }

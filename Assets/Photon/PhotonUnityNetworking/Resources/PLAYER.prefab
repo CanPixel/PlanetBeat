@@ -10786,6 +10786,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: acec2764b16147f4db4a6737d7329e26, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  redHand: {fileID: 21300000, guid: 9f18dd24f97ccf94583fee2fb129b157, type: 3}
+  pinkHand: {fileID: 21300000, guid: 258f44af8089c5b4da25000a0f5122fa, type: 3}
 --- !u!1 &6393540074933268921
 GameObject:
   m_ObjectHideFlags: 0

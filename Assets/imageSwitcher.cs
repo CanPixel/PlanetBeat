@@ -14,12 +14,12 @@ public class imageSwitcher : MonoBehaviour
         myImageComponent = GetComponent<Image>(); //Our image component is the one attached to this gameObject.
     }
 
-    public void SetImage1() //method to set our first image
+    public void SetHandRed() //method to set our first image
     {
         myImageComponent.sprite = redHand;
     }
 
-    public void SetImage2()
+    public void SetHandPink()
     {
         myImageComponent.sprite = pinkHand;
     }
