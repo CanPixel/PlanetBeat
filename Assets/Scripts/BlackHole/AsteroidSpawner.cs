@@ -112,7 +112,7 @@ public class AsteroidSpawner : MonoBehaviourPun {
         enableInfectroid = true;
     }
     public void EnableRemoteroid() {
-        enableRemoteroid = true;
+        //enableRemoteroid = true;
     }
 
     protected void SpawnPowerup() {

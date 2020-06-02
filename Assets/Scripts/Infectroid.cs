@@ -65,6 +65,7 @@ public class Infectroid : PickupableObject {
     public bool inOrbit = false;
 
     public float grabDelay = 0; 
+    public Animator infectroidAnimator; //
     
     [Header("INFECT")]
     public float infectDelay = 1;
@@ -112,6 +113,8 @@ public class Infectroid : PickupableObject {
         increasePopupBaseSize = increasePopupTxt.transform.localScale.x;
         increasePopupTxt.transform.localScale = Vector3.zero;
         standardGlowScale = glow.transform.localScale;
+
+        //infectroidAnimator.SetInteger("infectroidAnimate", 1);
     }
 
     void OnEnable() {
@@ -179,12 +182,12 @@ public class Infectroid : PickupableObject {
         increasePopupHideTimer += Time.deltaTime;
         if(spawnTimer < activateAfterSpawning) return;
 
-        if(scaleBack) transform.localScale = Vector3.Lerp(transform.localScale, baseScale, Time.deltaTime * 2f);
+        if(scaleBack) transform.localScale = Vector3.Lerp(transform.localScale, baseScale, Time.deltaTime * 2f); 
 
         if(held) ReleaseAsteroid(false, photonView.ViewID);
-        else ReleasedTimer();  
+        else ReleasedTimer();
 
-        float maxScale = 0.8f;
+        float maxScale = 0.8f; 
         transform.localScale = new Vector3(Mathf.Clamp(transform.localScale.x, 0, maxScale), Mathf.Clamp(transform.localScale.y, 0, maxScale), Mathf.Clamp(transform.localScale.z, 0, maxScale));
     }
 
@@ -261,6 +264,7 @@ public class Infectroid : PickupableObject {
     }
 
     public void SetTexture(PlanetSwitcher.TexturePack elm) {
+        /*
         src.sprite = elm.asteroid.src;
         if(elm.asteroid.glow == null) {
             glow.enabled = false;
@@ -270,6 +274,7 @@ public class Infectroid : PickupableObject {
         glow.sprite = elm.asteroid.glow;
         src.SetNativeSize();
         glow.SetNativeSize();
+        */
     }
 
     [PunRPC]
@@ -283,7 +288,7 @@ public class Infectroid : PickupableObject {
     public void DestroyDefinite() {
         SoundManager.PLAY_SOUND("InfectroidExplosion");
 
-        Instantiate(explodeParticles, transform.position, Quaternion.identity);
+        //Instantiate(explodeParticles, transform.position, Quaternion.identity);
         GameManager.DESTROY_SERVER_OBJECT(gameObject);
         if(photonView != null) photonView.RPC("DestroyAsteroid", RpcTarget.All, photonView.ViewID);
         Destroy(gameObject);
