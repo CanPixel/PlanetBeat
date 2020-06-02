@@ -84,7 +84,7 @@ MonoBehaviour:
   Path: event:/SFX/hot_patato
   guid: 08aad5bfabd16e45b3413fe1261586f0
   Banks:
-  - {fileID: 1620966471833687850}
+  - {fileID: 2477222748336854569}
   IsStream: 0
   Is3D: 0
   IsOneShot: 1
@@ -109,6 +109,23 @@ MonoBehaviour:
   lastModified: 659221914700000000
   LoadResult: 0
   FileSizes: []
+  Exists: 1
+--- !u!114 &-7441501352214075158
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: par
+  m_EditorClassIdentifier: 
+  Name: par
+  Min: 1
+  Max: 6
+  Default: 1
   Exists: 1
 --- !u!114 &-7309081069039735710
 MonoBehaviour:
@@ -148,7 +165,7 @@ MonoBehaviour:
   Path: event:/SFX/score_eraf
   guid: d975fa7944db594d89de0f95271f53b0
   Banks:
-  - {fileID: 1620966471833687850}
+  - {fileID: 2477222748336854569}
   IsStream: 0
   Is3D: 0
   IsOneShot: 1
@@ -286,7 +303,7 @@ MonoBehaviour:
   Path: event:/Space_ships/thruts_vliegen
   guid: 536a2f8e4de5f543bbe638eef94eb6b8
   Banks:
-  - {fileID: 1620966471833687850}
+  - {fileID: 2477222748336854569}
   IsStream: 0
   Is3D: 0
   IsOneShot: 1
@@ -387,7 +404,7 @@ MonoBehaviour:
   Path: event:/Music
   guid: e1a532fd455f3842bb99309bf24c5f56
   Banks:
-  - {fileID: 1620966471833687850}
+  - {fileID: 2477222748336854569}
   IsStream: 0
   Is3D: 0
   IsOneShot: 0
@@ -410,7 +427,7 @@ MonoBehaviour:
   Path: event:/SFX/resource_spawn
   guid: 287aa4c64f3f0949afbad65ec881092e
   Banks:
-  - {fileID: 1620966471833687850}
+  - {fileID: 2477222748336854569}
   IsStream: 0
   Is3D: 0
   IsOneShot: 1
@@ -473,7 +490,7 @@ MonoBehaviour:
   Path: event:/SFX/infectroid_explosion
   guid: cd0a11b8c98d104bbff6cd5aefd527ce
   Banks:
-  - {fileID: 1620966471833687850}
+  - {fileID: 2477222748336854569}
   IsStream: 0
   Is3D: 0
   IsOneShot: 1
@@ -495,7 +512,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   EditorBanks:
   - {fileID: 8406078464662799278}
-  - {fileID: 1620966471833687850}
+  - {fileID: 2477222748336854569}
   EditorEvents:
   - {fileID: -8259912739363674573}
   - {fileID: 6992929517751267980}
@@ -509,12 +526,12 @@ MonoBehaviour:
   - {fileID: -2476700855449114489}
   - {fileID: 2923365563153268621}
   EditorParameters:
-  - {fileID: 5252705375221064252}
+  - {fileID: -7441501352214075158}
   MasterBanks:
-  - {fileID: 1620966471833687850}
+  - {fileID: 2477222748336854569}
   StringsBanks:
   - {fileID: 8406078464662799278}
-  stringsBankWriteTime: 659221914700000000
+  stringsBankWriteTime: 637266242753783114
   cacheVersion: 3
 --- !u!114 &99111093974494254
 MonoBehaviour:
@@ -556,7 +573,7 @@ MonoBehaviour:
   lastModified: 659221914700000000
   LoadResult: 0
   FileSizes: []
-  Exists: 1
+  Exists: 0
 --- !u!114 &2141710367921304538
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -572,7 +589,7 @@ MonoBehaviour:
   Path: event:/SFX/infectroid_spawn
   guid: ab94fa96f309cc4ab55b11ebd137e798
   Banks:
-  - {fileID: 1620966471833687850}
+  - {fileID: 2477222748336854569}
   IsStream: 0
   Is3D: 0
   IsOneShot: 1
@@ -580,6 +597,24 @@ MonoBehaviour:
   MinDistance: 0
   MaxDistance: 0
   Length: 1548
+--- !u!114 &2477222748336854569
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/Master.bank
+  m_EditorClassIdentifier: 
+  Path: Assets/Audio/Build/Desktop/Master.bank
+  SubDir: 
+  lastModified: 637266242753813028
+  LoadResult: 0
+  FileSizes: []
+  Exists: 1
 --- !u!114 &2527403837033758816
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -595,7 +630,7 @@ MonoBehaviour:
   Path: event:/SFX/score_erbij
   guid: 47b08459f7f865408d4ab0415ff4c0f0
   Banks:
-  - {fileID: 1620966471833687850}
+  - {fileID: 2477222748336854569}
   IsStream: 0
   Is3D: 0
   IsOneShot: 1
@@ -618,7 +653,7 @@ MonoBehaviour:
   Path: event:/UI/count_down
   guid: ed7337959489af4c90af647b0562939f
   Banks:
-  - {fileID: 1620966471833687850}
+  - {fileID: 2477222748336854569}
   IsStream: 0
   Is3D: 0
   IsOneShot: 1
@@ -711,7 +746,7 @@ MonoBehaviour:
   Min: 1
   Max: 6
   Default: 1
-  Exists: 1
+  Exists: 0
 --- !u!114 &5463973675056786447
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -839,7 +874,7 @@ MonoBehaviour:
   Path: event:/Space_ships/reel_out
   guid: 185e427e73f6ff4cb1e7e033dc3ff00c
   Banks:
-  - {fileID: 1620966471833687850}
+  - {fileID: 2477222748336854569}
   IsStream: 0
   Is3D: 0
   IsOneShot: 1
@@ -930,7 +965,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Path: Assets/Audio/Build/Desktop/Master.strings.bank
   SubDir: 
-  lastModified: 659221914700000000
+  lastModified: 637266242753783114
   LoadResult: 0
   FileSizes:
   - Name: Desktop
@@ -951,7 +986,7 @@ MonoBehaviour:
   Path: event:/SFX/black_hole
   guid: da79172cabc14e43a1a80e69898b02df
   Banks:
-  - {fileID: 1620966471833687850}
+  - {fileID: 2477222748336854569}
   IsStream: 0
   Is3D: 0
   IsOneShot: 1

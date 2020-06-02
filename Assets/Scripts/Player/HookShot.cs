@@ -10,6 +10,7 @@ public class HookShot : MonoBehaviour {
     private CircleCollider2D tip;
     public GameObject aimPos;
     public Animator animateHand;
+    public Animator animateHandUI;
     public SkinnedMeshRenderer handRenderer;
     public ParticleSystem handParticles;
 
@@ -71,19 +72,36 @@ public class HookShot : MonoBehaviour {
         FreeAim();
         if(shootTimer > 0) shootTimer += Time.deltaTime;
         if(shootTimer > 1) didntCatch = true;
-
+        
         var progress = (HookCooldownDelay / HookCooldownTime);
+
+        /*
         HookCooldownParent.fillAmount = 1f - progress;
         HookCooldownParent.color = Color.Lerp(HookCooldownParent.color, (HookCooldown) ? off : on, (HookCooldown) ? (1f - progress) : (Time.deltaTime * 2f));
 
         var stateCol = (HookCooldown) ? off : on;
         var endCol = new Color(stateCol.r, stateCol.g, stateCol.b, (HookCooldown) ? 0.55f : 0.75f);
         HookCooldownIcon.color = Color.Lerp(HookCooldownIcon.color, endCol, (HookCooldown) ? (1f - progress) : (Time.deltaTime * 4f));
+        */
+
+
+        
+
 
         //Cooldown
-        if(HookCooldown) {
+        if (HookCooldown) {
             HookCooldownDelay -= Time.deltaTime;
             if(HookCooldownDelay < 0) HookCooldown = false;
+        }
+
+        // animation
+        if (HookCooldown == true)
+        {
+            animateHandUI.SetInteger("handAnimation", 2);
+        }
+        else
+        {
+            animateHandUI.SetInteger("handAnimation", 1);
         }
     }
 

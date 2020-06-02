@@ -9,6 +9,10 @@ public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
     public PlayerTutorial playerTutorial;
     public HookShot hookShot;
     public ParticleSystem exhaust;
+
+    public ParticleSystem exhaustDefault;               //Bradley
+    public GameObject exhaustDefaultGameObject;         //Bradley
+
     public Light exhaustLight;
     public GameObject model;
 
@@ -29,7 +33,11 @@ public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
     private bool isBoosting;
     private bool onCooldown;
     private float waitForCooldown;
-    public float cooldownPenalty = 3.5f; 
+    public float cooldownPenalty = 3.5f;
+
+    // Bradley
+
+    public Animator boostAnimator;
 
     [Space(10)]
     public Component[] networkIgnore;
@@ -225,8 +233,15 @@ public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
         playerColor = col;
         SetTextureByPlanet(playerColor);
         var settings = exhaust.main;
-        settings.startColor = new ParticleSystem.MinMaxGradient(col);
-        if(playerName != null) playerName.SetHost(gameObject, photonView.Owner.NickName);
+        var settingsTwo = exhaustDefault.main;
+
+        settings.startColor = new ParticleSystem.MinMaxGradient(col);                                   // COLOR FIRE
+        settingsTwo.startColor = new ParticleSystem.MinMaxGradient(col);                                   // COLOR FIRE
+
+        //gameObject.GetComponent<Renderer>().material.SetColor("_EMISSION", playerColor);
+
+        boostAnimator.SetInteger("boostAnimatie", 1);
+        if (playerName != null) playerName.SetHost(gameObject, photonView.Owner.NickName);
     }
 
     public void SetCollision(Collider2D asteroid, bool state) {
@@ -381,22 +396,39 @@ public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
         else if (!canBoost) BoostCooldown();
     }
     private void BoostPlayer() {
-        if (canBoost) {
-            if(rb != null) rb.AddForce(transform.up * boostForce);
+        if (canBoost)
+        {
+            boostAnimator.SetInteger("boostAnimatie", 3);                                       // BOOSTING ANIMATIE
+
+            if (rb != null) rb.AddForce(transform.up * boostForce);
             isBoosting = true;
+
         }
-        else if (!canBoost) isBoosting = false;
+        else if (!canBoost)
+        {
+            isBoosting = false;
+            boostAnimator.SetInteger("boostAnimatie", 1);                                       // EMPTIE BOOST ANIMATIE (Niet zichtbaar)
+        }
+        
     }
     private void BoostCooldown() {
         boostCooldownTimer += Time.deltaTime;
         var settings = exhaust.main;
-        var switchcol = Color.white;
-        settings.startColor = new ParticleSystem.MinMaxGradient(switchcol);
+        var switchcol = Color.clear;                                                            // COLOR FIRE
+        
+        if (boostCooldownTimer >= 0.9f && boostCooldownTimer < boostCooldownDuration)
+        {
+            settings.startColor = new ParticleSystem.MinMaxGradient(switchcol);                 // COLOR FIRE
+            
+        }
 
         if (boostCooldownTimer >= boostCooldownDuration)
         {
             canBoost = true;
-            settings.startColor = new ParticleSystem.MinMaxGradient(playerColor);
+
+            //gameObject.GetComponent<Renderer>().material.SetColor("_EMISSION", playerColor);
+            settings.startColor = new ParticleSystem.MinMaxGradient(playerColor);               // COLOR FIRE
+            boostAnimator.SetInteger("boostAnimatie", 2);                                       // FULL BOOST ANIMATIE
         }
     }
 
@@ -413,10 +445,16 @@ public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
         if(IsThrust()) {
             velocity = Mathf.Lerp(velocity, maxVelocity, Time.deltaTime * acceleration);
             if(rb != null) rb.drag = defaultDrag;
+
+            //Particle enabled
+            exhaustDefaultGameObject.SetActive(true);
         }
         else {
             velocity = Mathf.Lerp(velocity, 0, Time.deltaTime * acceleration * 2f);
             if(rb != null) rb.drag = stopDrag;
+
+            // Particle disabled
+            exhaustDefaultGameObject.SetActive(false);
         }
 
         //Spreekt voor zich

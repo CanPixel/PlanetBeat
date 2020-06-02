@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
+
 using Photon.Pun;
 using Photon.Realtime;
 
@@ -14,7 +16,7 @@ public class PlayerPlanets : MonoBehaviourPun {
     private float lerpScore;
     public float minScore = 0;
     public float maxScore = 100f;
-    public Text scoreText, increasePopupTxt;
+    public TextMeshProUGUI scoreText, increasePopupTxt;
     private Color orbitColor;
     public TrailRenderer orbitTrail; 
     public Orbit orbit;
@@ -78,8 +80,10 @@ public class PlayerPlanets : MonoBehaviourPun {
     void Start() {
         lerpScore = minScore;
         scoreBaseScale = scoreText.transform.localScale;
-        textOutline = scoreText.GetComponent<Outline>();
-        outlineBase = textOutline.effectDistance;
+
+        //textOutline = scoreText.GetComponent<Outline>();
+        //outlineBase = textOutline.effectDistance;
+
         baseScale = transform.localScale;
         currentScore = minScore;
         increasePopupTxt.enabled = false;
@@ -118,7 +122,7 @@ public class PlayerPlanets : MonoBehaviourPun {
         var col = new Color(r, g, b);
         player.playerColor = col;
         orbitColor = player.playerColor;
-        scoreText.color = player.playerColor;
+        //scoreText.color = player.playerColor;
         scoreText.enabled = true;
         orbitTrail.material.color = orbitColor;
         currentScore = minScore; 
@@ -135,7 +139,7 @@ public class PlayerPlanets : MonoBehaviourPun {
         this.player = player;
         this.player.planet = this;
         playerNumber = player.playerNumber;
-        scoreText = GetComponentInChildren<Text>();
+        scoreText = GetComponentInChildren<TextMeshProUGUI>();
         photonView.RPC("ClaimPlayer", RpcTarget.AllBufferedViaServer, playerNumber, player.playerColor.r, player.playerColor.g, player.playerColor.b);
         scoreText.enabled = true;
     }
@@ -146,11 +150,11 @@ public class PlayerPlanets : MonoBehaviourPun {
 
         if(player != null && player.photonView.IsMine) {
             if(infected) {
-                warningSign.transform.position = Vector3.Lerp(warningSign.transform.position, player.transform.position + Vector3.up / 1.5f, Time.deltaTime * 4f);
+                warningSign.transform.position = Vector3.Lerp(warningSign.transform.position, player.transform.position + Vector3.up / 2.0f, Time.deltaTime * 10f); //was 1.5 en 4
                 warningSign.transform.localScale = Vector3.Lerp(warningSign.transform.localScale, Vector3.one * baseWarningScale + (new Vector3(1.2f, 1.2f, 1.2f) * Mathf.Sin(Time.time * 10f) * 0.02f), Time.deltaTime * 4f);
                 warningArrow.transform.position = Vector3.Lerp(warningArrow.transform.position, transform.position + (new Vector3(1, 0, 0) * Mathf.Sin(Time.time * 10f) * 0.2f) + Vector3.right * 1.5f, Time.deltaTime * 4f);
             } else {
-                warningSign.transform.position = Vector3.Lerp(warningSign.transform.position, new Vector3(0, 10, 0), Time.deltaTime * 8f);
+                warningSign.transform.position = Vector3.Lerp(warningSign.transform.position, new Vector3(0, 10, 0), Time.deltaTime * 18f);
                 warningArrow.transform.position = Vector3.Lerp(warningArrow.transform.position, new Vector3(0, 10, 0), Time.deltaTime * 8f);
             }
         }
@@ -178,12 +182,12 @@ public class PlayerPlanets : MonoBehaviourPun {
             scoreText.transform.position = basePos;
 
             scoreText.transform.localScale = Vector2.Lerp(scoreText.transform.localScale, scoreBaseScale, Time.deltaTime * 1f);
-            textOutline.effectDistance = Vector2.Lerp(textOutline.effectDistance, outlineBase, Time.deltaTime * 1.2f);
+            //textOutline.effectDistance = Vector2.Lerp(textOutline.effectDistance, outlineBase, Time.deltaTime * 1.2f);
 
             scoreText.text = ((int)lerpScore).ToString();
             if(player != null) {
                 orbitColor = player.playerColor;
-                scoreText.color = orbitColor;
+                //scoreText.color = orbitColor;
                 orbitTrail.material.color = orbitColor * 1.5f; 
             }
         }
