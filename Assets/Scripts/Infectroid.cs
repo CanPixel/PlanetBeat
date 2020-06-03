@@ -65,7 +65,7 @@ public class Infectroid : PickupableObject {
     public bool inOrbit = false;
 
     public float grabDelay = 0; 
-    public Animator infectroidAnimator; //
+    public Animator infectroidAnimator; 
     
     [Header("INFECT")]
     public float infectDelay = 1;
@@ -113,8 +113,6 @@ public class Infectroid : PickupableObject {
         increasePopupBaseSize = increasePopupTxt.transform.localScale.x;
         increasePopupTxt.transform.localScale = Vector3.zero;
         standardGlowScale = glow.transform.localScale;
-
-        //infectroidAnimator.SetInteger("infectroidAnimate", 1);
     }
 
     void OnEnable() {
@@ -124,11 +122,16 @@ public class Infectroid : PickupableObject {
 
     [PunRPC]
     public void SynchTimer(float timer) {
+
         if(spawnTimer > destroyAfter - 5) {
+            infectroidAnimator.SetInteger("Infectroid_Animation", 1);
+
+            /*
             increasePopupHideTimer = 0;
             increasePopupTxt.color = new Color(0, 1, 0f);
             increasePopupTxt.text = ((int)Mathf.Clamp((destroyAfter - spawnTimer) + 1, 0, 5)).ToString();
             increasePopupTxt.transform.localScale = Vector3.one * increasePopupBaseSize;
+            */
         }
         if(PhotonNetwork.IsMasterClient) return;
         this.spawnTimer = timer;
@@ -153,6 +156,8 @@ public class Infectroid : PickupableObject {
     }
 
     void Update() {
+
+
         float fade = 1;
         src.color = Color.Lerp(src.color, new Color(src.color.r, src.color.g, src.color.b, fade), Time.deltaTime * 5f);
 

@@ -80,7 +80,7 @@ public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
     public float throwingReduction = 0.4f; 
 
     [Space(5)]
-    public float heldResourceScaleFactor = 0.09f;
+    public float heldResourceScaleFactor = 1f;
 
     public static string PLAYERNAME;
 

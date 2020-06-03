@@ -26,7 +26,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1599504987379561016}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.011, z: 0.421}
+  m_LocalPosition: {x: 0, y: 0, z: 0.421}
   m_LocalScale: {x: 0.2404929, y: 0.24049287, z: 0.24049294}
   m_Children: []
   m_Father: {fileID: 4280653198423037391}
@@ -317,7 +317,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4280653197173459106}
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: -0.00003759766, y: 0.0071513676, z: 0.00019887937}
+  m_LocalPosition: {x: -0.00003759766, y: -0.006, z: 0.00019887937}
   m_LocalScale: {x: 0.73936, y: 0.73936, z: 0.73936}
   m_Children:
   - {fileID: 4280653198609003553}
@@ -550,7 +550,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4280653197876188339}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.0060017905, y: 0.0079956055, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.20028064, y: 0.20028064, z: 0.20028064}
   m_Children: []
   m_Father: {fileID: 4280653198423037391}
@@ -610,6 +610,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4280653198423037391}
+  - component: {fileID: 1294679769863999534}
   m_Layer: 12
   m_Name: Infectroid Model
   m_TagString: Untagged
@@ -626,7 +627,7 @@ Transform:
   m_GameObject: {fileID: 4280653198423037390}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 14.039, z: 282.32}
-  m_LocalScale: {x: 1719.9747, y: 1719.9747, z: 1719.9747}
+  m_LocalScale: {x: 1719.975, y: 1719.975, z: 1719.975}
   m_Children:
   - {fileID: 4280653197876188340}
   - {fileID: 4280653197173459107}
@@ -635,6 +636,25 @@ Transform:
   m_Father: {fileID: 8069275902880659583}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!95 &1294679769863999534
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4280653198423037390}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 9a9cbcc7d8db0a3478f20afe8b383189, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &4280653198609003552
 GameObject:
   m_ObjectHideFlags: 0
@@ -954,7 +974,7 @@ Transform:
   m_GameObject: {fileID: 7403363031841953947}
   m_LocalRotation: {x: 0.000000091230575, y: 0.000000087545374, z: -0.7018309, w: 0.7123436}
   m_LocalPosition: {x: 0, y: 0, z: 0.793}
-  m_LocalScale: {x: 0.10411098, y: 0.104110904, z: 0.104110934}
+  m_LocalScale: {x: 0.23903264, y: 0.2390324, z: 0.2390325}
   m_Children: []
   m_Father: {fileID: 4280653198423037391}
   m_RootOrder: 2
@@ -978,7 +998,7 @@ ParticleSystem:
   playOnAwake: 1
   useUnscaledTime: 0
   autoRandomSeed: 1
-  useRigidbodyForVelocity: 1
+  useRigidbodyForVelocity: 0
   startDelay:
     serializedVersion: 2
     minMaxState: 0
@@ -1042,8 +1062,8 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 1.9
-      minScalar: 0.5
+      scalar: 0.3
+      minScalar: 0.1
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -1095,7 +1115,7 @@ ParticleSystem:
     startSpeed:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 1.2
+      scalar: 1
       minScalar: 0.1
       maxCurve:
         serializedVersion: 2
@@ -1212,7 +1232,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 3
       scalar: 0.5
-      minScalar: 0.3
+      minScalar: 0.2
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -1533,7 +1553,7 @@ ParticleSystem:
     gravityModifier:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0
+      scalar: 1
       minScalar: 0
       maxCurve:
         serializedVersion: 2
@@ -1586,11 +1606,11 @@ ParticleSystem:
   ShapeModule:
     serializedVersion: 6
     enabled: 1
-    type: 0
+    type: 10
     angle: 25
     length: 5
     boxThickness: {x: 0, y: 0, z: 0}
-    radiusThickness: 1
+    radiusThickness: 0
     donutRadius: 0.2
     m_Position: {x: 0, y: 0, z: 0}
     m_Rotation: {x: 0, y: 0, z: 0}
@@ -1673,7 +1693,7 @@ ParticleSystem:
     sphericalDirectionAmount: 0
     randomPositionAmount: 0
     radius:
-      value: 0.0001
+      value: 0.8
       mode: 0
       spread: 0
       speed:
@@ -1792,7 +1812,7 @@ ParticleSystem:
     rateOverTime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 50
+      scalar: 40
       minScalar: 10
       maxCurve:
         serializedVersion: 2
@@ -2230,8 +2250,8 @@ ParticleSystem:
       maxColor: {r: 1, g: 1, b: 1, a: 1}
       maxGradient:
         serializedVersion: 2
-        key0: {r: 1, g: 1, b: 1, a: 0}
-        key1: {r: 1, g: 1, b: 1, a: 1}
+        key0: {r: 1, g: 1, b: 1, a: 1}
+        key1: {r: 1, g: 1, b: 1, a: 0}
         key2: {r: 0, g: 0, b: 0, a: 0}
         key3: {r: 0, g: 0, b: 0, a: 0}
         key4: {r: 0, g: 0, b: 0, a: 0}
@@ -2246,8 +2266,8 @@ ParticleSystem:
         ctime5: 0
         ctime6: 0
         ctime7: 0
-        atime0: 0
-        atime1: 31033
+        atime0: 31033
+        atime1: 65535
         atime2: 65535
         atime3: 0
         atime4: 0
@@ -2256,7 +2276,7 @@ ParticleSystem:
         atime7: 0
         m_Mode: 0
         m_NumColorKeys: 2
-        m_NumAlphaKeys: 3
+        m_NumAlphaKeys: 2
       minGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -2995,7 +3015,7 @@ ParticleSystem:
         m_PreInfinity: 2
         m_PostInfinity: 2
         m_RotationOrder: 4
-    inWorldSpace: 0
+    inWorldSpace: 1
   InheritVelocityModule:
     enabled: 0
     m_Mode: 0
@@ -3715,7 +3735,7 @@ ParticleSystem:
     octaves: 1
     octaveMultiplier: 0.5
     octaveScale: 2
-    quality: 2
+    quality: 1
     scrollSpeed:
       serializedVersion: 2
       minMaxState: 0
@@ -4860,7 +4880,7 @@ ParticleSystem:
         m_PreInfinity: 2
         m_PostInfinity: 2
         m_RotationOrder: 4
-    minVertexDistance: 0.2
+    minVertexDistance: 0.1
     textureMode: 0
     ribbonCount: 1
     shadowBias: 0.5
@@ -5657,16 +5677,16 @@ ParticleSystemRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_RenderMode: 0
-  m_SortMode: 0
+  m_SortMode: 3
   m_MinParticleSize: 0
-  m_MaxParticleSize: 0.5
+  m_MaxParticleSize: 0.1
   m_CameraVelocityScale: 0
   m_VelocityScale: 0
   m_LengthScale: 2
   m_SortingFudge: 0
   m_NormalDirection: 1
   m_ShadowBias: 0
-  m_RenderAlignment: 0
+  m_RenderAlignment: 2
   m_Pivot: {x: 0, y: 0, z: 0}
   m_Flip: {x: 0, y: 0, z: 0}
   m_UseCustomVertexStreams: 0
@@ -5755,7 +5775,7 @@ MonoBehaviour:
   inOrbitTimer: 0
   inOrbit: 0
   grabDelay: 0
-  infectroidAnimator: {fileID: 0}
+  infectroidAnimator: {fileID: 1294679769863999534}
   infectDelay: 0.7
   penalty: 1
   destroyAfter: 22
