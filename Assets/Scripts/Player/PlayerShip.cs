@@ -36,8 +36,8 @@ public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
     public float cooldownPenalty = 3.5f;
 
     // Bradley
-
     public Animator boostAnimator;
+    public imageSwitcher imageSwitcherScript;
 
     [Space(10)]
     public Component[] networkIgnore;
@@ -80,7 +80,7 @@ public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
     public float throwingReduction = 0.4f; 
 
     [Space(5)]
-    public float heldResourceScaleFactor = 1f;
+    public float heldResourceScaleFactor = 0.09f;
 
     public static string PLAYERNAME;
 
@@ -320,8 +320,32 @@ public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
     }
 
     void Update() {
-        #if UNITY_EDITOR
-            if(Input.GetKeyDown(KeyCode.R) && planet != null) planet.AddingResource(5); /////////////////////////////////////////////////////////////////////////////////////////  DEBUG
+
+        // Bradley BEGIN
+
+        if (planet.gameObject == GameObject.Find("PLANETRED")){
+            imageSwitcherScript.SetHandRed();
+        }
+        else if (planet.gameObject == GameObject.Find("PLANETPINK")){
+            imageSwitcherScript.SetHandPink();
+        }
+        else if (planet.gameObject == GameObject.Find("PLANETBLUE")){
+            imageSwitcherScript.SetHandBlue();
+        }
+        else if (planet.gameObject == GameObject.Find("PLANETYELLOW")){
+            imageSwitcherScript.SetHandYellow();
+        }
+        else if (planet.gameObject == GameObject.Find("PLANETCYAN")){
+            imageSwitcherScript.SetHandCyan();
+        }
+        else if (planet.gameObject == GameObject.Find("PLANETGREEN")){
+            imageSwitcherScript.SetHandGreen();
+        }
+
+        // Bradley END
+
+#if UNITY_EDITOR
+        if (Input.GetKeyDown(KeyCode.R) && planet != null) planet.AddingResource(5); /////////////////////////////////////////////////////////////////////////////////////////  DEBUG
             if(Input.GetKeyDown(KeyCode.Q) && planet != null) planet.Explode(5);
         #endif
 
@@ -354,7 +378,7 @@ public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
             emitting.enabled = shouldEmit;
         }
         exhaustLight.color = exhaust.main.startColor.color;
-        exhaustLight.enabled = exhaust.emission.enabled;
+        //exhaustLight.enabled = exhaust.emission.enabled; //(Nu blijft het licht altijd branden)
 
         if(!photonView.IsMine && PhotonNetwork.IsConnected) return;
 

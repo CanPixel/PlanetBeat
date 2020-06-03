@@ -71,7 +71,7 @@ public class GameManager : MonoBehaviourPunCallbacks {
       skipCountdown = Launcher.GetSkipCountDown();
       
       SoundManager.PLAY_SOUND("StartGame");
-   }
+    }
 
    public static bool SkipCountdown() {
       return instance.skipCountdown;
@@ -103,7 +103,7 @@ public class GameManager : MonoBehaviourPunCallbacks {
    private void ChoosePlanet(PlayerShip player) {
       PlayerPlanets playerPlanets = null;
       for(int i = 0; i < allPlanets.Count; i++) {
-         var planet = allPlanets[i];
+         var planet = allPlanets[i]; // HOORT "i" TE ZIJN
          if(planet.HasPlayer()) continue;
          player.SetHomePlanet(planet.gameObject);
          planet.AssignPlayer(player);
@@ -134,6 +134,8 @@ public class GameManager : MonoBehaviourPunCallbacks {
 
    void Update() {
       gameField.transform.localScale = Vector3.Lerp(gameField.transform.localScale, gameFieldScale * Vector3.one, Time.deltaTime * 7f);
+
+
 
       spectating = PlayerPrefs.GetInt("Spectate") == 0;
       if(Input.GetKeyUp(KeyCode.Escape)) Screen.fullScreen = !Screen.fullScreen;

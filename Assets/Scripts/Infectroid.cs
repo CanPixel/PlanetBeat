@@ -100,6 +100,8 @@ public class Infectroid : PickupableObject {
 
     private Vector3 standardGlowScale;
 
+    // Bradley
+
     void Start() {
         dropBoosts = false;
         base.Init();
@@ -156,7 +158,6 @@ public class Infectroid : PickupableObject {
     }
 
     void Update() {
-
 
         float fade = 1;
         src.color = Color.Lerp(src.color, new Color(src.color.r, src.color.g, src.color.b, fade), Time.deltaTime * 5f);

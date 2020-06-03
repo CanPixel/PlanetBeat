@@ -1,11 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using Photon.Pun;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
-
-using Photon.Pun;
-using Photon.Realtime;
 
 public class PlayerPlanets : MonoBehaviourPun {
     public AnimationClip borealisAnim;
@@ -39,10 +35,19 @@ public class PlayerPlanets : MonoBehaviourPun {
     private float baseWarningScale;
 
     public Image warningSign, warningArrow;
+
+    public Sprite redWarning;
+    public Sprite pinkWarning;
+    public Sprite blueWarning;
+    public Sprite yellowWarning;
+    public Sprite greenWarning;
+    public Sprite cyanWarning;
+
     [HideInInspector] public bool infected = false;
 
     [HideInInspector] public float eliminationTimer;
     private bool destructionInit = false;
+
     public void SetElimination(float prog) {
         if(destructionInit) return;
         eliminationTimer = prog;
@@ -92,6 +97,8 @@ public class PlayerPlanets : MonoBehaviourPun {
             return;
         }
         increasePopupTxt.transform.localScale = Vector3.zero;
+
+        warningSign = warningSign.GetComponent<Image>();
     }
 
     public bool HasReachedMax() {
@@ -144,6 +151,23 @@ public class PlayerPlanets : MonoBehaviourPun {
         scoreText.enabled = true;
     }
 
+    public void warningSignSwitcher()
+    {
+        if (player.planet.gameObject == GameObject.Find("PLANETRED")){
+            warningSign.sprite = redWarning;
+        }else if (player.planet.gameObject == GameObject.Find("PLANETCYAN")){
+            warningSign.sprite = cyanWarning;
+        }else if (player.planet.gameObject == GameObject.Find("PLANETBLUE")){
+            warningSign.sprite = blueWarning;
+        }else if (player.planet.gameObject == GameObject.Find("PLANETPINK")){
+            warningSign.sprite = pinkWarning;
+        }else if (player.planet.gameObject == GameObject.Find("PLANETYELLOW")){
+            warningSign.sprite = yellowWarning;
+        }else if (player.planet.gameObject == GameObject.Find("PLANETGREEN")){
+            warningSign.sprite = greenWarning;
+        }
+    }
+
     void Update() {
         lerpScore = Mathf.Lerp(lerpScore, (currentScore + 1), borealisAnim.length * Time.deltaTime);
         if(currentScore == 0) lerpScore = 0;
@@ -153,11 +177,15 @@ public class PlayerPlanets : MonoBehaviourPun {
                 warningSign.transform.position = Vector3.Lerp(warningSign.transform.position, player.transform.position + Vector3.up / 2.0f, Time.deltaTime * 10f); //was 1.5 en 4
                 warningSign.transform.localScale = Vector3.Lerp(warningSign.transform.localScale, Vector3.one * baseWarningScale + (new Vector3(1.2f, 1.2f, 1.2f) * Mathf.Sin(Time.time * 10f) * 0.02f), Time.deltaTime * 4f);
                 warningArrow.transform.position = Vector3.Lerp(warningArrow.transform.position, transform.position + (new Vector3(1, 0, 0) * Mathf.Sin(Time.time * 10f) * 0.2f) + Vector3.right * 1.5f, Time.deltaTime * 4f);
+
+                warningSignSwitcher();
             } else {
                 warningSign.transform.position = Vector3.Lerp(warningSign.transform.position, new Vector3(0, 10, 0), Time.deltaTime * 18f);
                 warningArrow.transform.position = Vector3.Lerp(warningArrow.transform.position, new Vector3(0, 10, 0), Time.deltaTime * 8f);
             }
         }
+
+
 
         rechargeBar.LerpAlpha(0, 4f);
 

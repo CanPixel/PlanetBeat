@@ -5655,6 +5655,7 @@ MonoBehaviour:
   maxFuel: 0.8
   cooldownPenalty: 3.5
   boostAnimator: {fileID: 2797592908302227500}
+  imageSwitcherScript: {fileID: 7109669085828936881}
   networkIgnore:
   - {fileID: 1662954744308020766}
   - {fileID: 7716859393941716483}
@@ -10708,7 +10709,7 @@ RectTransform:
   m_GameObject: {fileID: 5365137927936052174}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 740.0238, y: 740.0238, z: 740.0238}
+  m_LocalScale: {x: 581.12585, y: 581.12585, z: 581.12585}
   m_Children: []
   m_Father: {fileID: 4592365809444739995}
   m_RootOrder: 0
@@ -10786,8 +10787,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: acec2764b16147f4db4a6737d7329e26, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  planet: {fileID: 0}
   redHand: {fileID: 21300000, guid: 9f18dd24f97ccf94583fee2fb129b157, type: 3}
   pinkHand: {fileID: 21300000, guid: 258f44af8089c5b4da25000a0f5122fa, type: 3}
+  blueHand: {fileID: 21300000, guid: 1b03ec0002cd53b48a6c4c4bb4798726, type: 3}
+  yellowHand: {fileID: 21300000, guid: e7274684f5a43274ba0d6e295a46f5d6, type: 3}
+  greenHand: {fileID: 21300000, guid: 9c328eca6b6777f4c91c4e6c993ccc09, type: 3}
+  cyanHand: {fileID: 21300000, guid: 94ce4759482dc2647ac448ee38302288, type: 3}
 --- !u!1 &6393540074933268921
 GameObject:
   m_ObjectHideFlags: 0
