@@ -240,7 +240,7 @@ public class Asteroid : PickupableObject {
 
             SoundManager.PLAY_SOUND("HotPotatoExplosion");
 
-            Instantiate(explodeParticles, transform.position, Quaternion.identity);
+            Instantiate(explodeParticles, new Vector3 (transform.position.x , transform.position.y, 0f), Quaternion.identity);
             PhotonNetwork.InstantiateSceneObject("Shockwave", transform.position, Quaternion.identity);
 
             destroy = true;

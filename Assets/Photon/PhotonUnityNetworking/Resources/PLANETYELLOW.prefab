@@ -415,6 +415,12 @@ MonoBehaviour:
     m_RotationOrder: 4
   warningSign: {fileID: 0}
   warningArrow: {fileID: 0}
+  redWarning: {fileID: 0}
+  pinkWarning: {fileID: 0}
+  blueWarning: {fileID: 0}
+  yellowWarning: {fileID: 0}
+  greenWarning: {fileID: 0}
+  cyanWarning: {fileID: 0}
   infected: 0
   eliminationTimer: 0
   tutorial: 0
@@ -738,7 +744,7 @@ TrailRenderer:
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
-  m_DynamicOccludee: 1
+  m_DynamicOccludee: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
@@ -774,7 +780,7 @@ TrailRenderer:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 0.27659693
+        value: 0.10775843
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -784,20 +790,20 @@ TrailRenderer:
       - serializedVersion: 3
         time: 0.41893554
         value: 0
-        inSlope: 0.28585544
-        outSlope: 0.28585544
+        inSlope: 0
+        outSlope: 0
         tangentMode: 0
         weightedMode: 0
-        inWeight: 0.875
+        inWeight: 0.38444075
         outWeight: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 0.5568628, g: 0.5568628, b: 0.5568628, a: 0}
-      key1: {r: 0.5568628, g: 0.5568628, b: 0.5568628, a: 0.078431375}
-      key2: {r: 0.5568628, g: 0.5568628, b: 0.5568628, a: 0.85490197}
+      key0: {r: 1, g: 0.8674295, b: 0, a: 0}
+      key1: {r: 1, g: 0.8674295, b: 0, a: 0.078431375}
+      key2: {r: 0.5568628, g: 0.5568628, b: 0.5568628, a: 1}
       key3: {r: 0, g: 0, b: 0, a: 0.078431375}
       key4: {r: 0, g: 0, b: 0, a: 0}
       key5: {r: 0, g: 0, b: 0, a: 0}
@@ -816,7 +822,7 @@ TrailRenderer:
       atime2: 32768
       atime3: 52428
       atime4: 65535
-      atime5: 0
+      atime5: 65535
       atime6: 0
       atime7: 0
       m_Mode: 0

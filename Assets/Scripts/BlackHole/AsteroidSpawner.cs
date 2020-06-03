@@ -70,6 +70,7 @@ public class AsteroidSpawner : MonoBehaviourPun {
                     if(powerupSpawnTimer > powerupSpawnDelay) {
                         openBlackHole = true;
                         //animator.SetBool("Opening", true);
+                        animator.SetInteger("blackHoleAnimation", 1);
                     }
                     if(powerupSpawnTimer > powerupSpawnDelay + spawnAnimationDelay) {
                         SpawnPowerup();
@@ -78,6 +79,7 @@ public class AsteroidSpawner : MonoBehaviourPun {
                         openBlackHole = shake = false;
                         //animator.SetBool("Closing", true);
                         //animator.SetBool("Opening", false);
+                        animator.SetInteger("blackHoleAnimation", 2);
                     }
                 }
 
@@ -87,6 +89,7 @@ public class AsteroidSpawner : MonoBehaviourPun {
                     if(asteroidSpawnTimer > asteroidSpawnDelay) {
                         openBlackHole = true;
                         //animator.SetBool("Opening", true);
+                        animator.SetInteger("blackHoleAnimation", 1);
                     }
                     if(asteroidSpawnTimer > asteroidSpawnDelay + spawnAnimationDelay) {
                         SpawnResource();
@@ -95,6 +98,7 @@ public class AsteroidSpawner : MonoBehaviourPun {
                         openBlackHole = shake = false;
                         //animator.SetBool("Closing", true);
                         //animator.SetBool("Opening", false);
+                        animator.SetInteger("blackHoleAnimation", 2);
                     }
                 }
             }

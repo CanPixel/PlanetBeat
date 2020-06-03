@@ -235,10 +235,11 @@ public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
         var settings = exhaust.main;
         var settingsTwo = exhaustDefault.main;
 
-        settings.startColor = new ParticleSystem.MinMaxGradient(col);                                   // COLOR FIRE
+        settings.startColor = new ParticleSystem.MinMaxGradient(col);                                      // COLOR FIRE
         settingsTwo.startColor = new ParticleSystem.MinMaxGradient(col);                                   // COLOR FIRE
 
         //gameObject.GetComponent<Renderer>().material.SetColor("_EMISSION", playerColor);
+        exhaustLight.color = col;
 
         boostAnimator.SetInteger("boostAnimatie", 1);
         if (playerName != null) playerName.SetHost(gameObject, photonView.Owner.NickName);
@@ -377,7 +378,9 @@ public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
             bool shouldEmit = Mathf.Abs(Vector3.Distance(exLastPos, transform.position)) > 0.04f;
             emitting.enabled = shouldEmit;
         }
-        exhaustLight.color = exhaust.main.startColor.color;
+
+        //exhaustLight.color = exhaust.main.startColor.color;
+
         //exhaustLight.enabled = exhaust.emission.enabled; //(Nu blijft het licht altijd branden)
 
         if(!photonView.IsMine && PhotonNetwork.IsConnected) return;

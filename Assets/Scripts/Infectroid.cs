@@ -4,6 +4,8 @@ using UnityEngine;
 using Photon.Pun;
 using UnityEngine.UI;
 
+using TMPro;
+
 public abstract class PickupableObject : MonoBehaviourPun {
     public float bounceMultiplier = 0.35f;
 
@@ -56,7 +58,7 @@ public abstract class PickupableObject : MonoBehaviourPun {
 
 public class Infectroid : PickupableObject {
     public Image src, glow;
-    public Text increasePopupTxt;
+    public TextMeshProUGUI increasePopupTxt;
     public GameObject explodeParticles;
 
     [HideInInspector] public bool giveTag = false;
@@ -114,7 +116,7 @@ public class Infectroid : PickupableObject {
 
         increasePopupBaseSize = increasePopupTxt.transform.localScale.x;
         increasePopupTxt.transform.localScale = Vector3.zero;
-        standardGlowScale = glow.transform.localScale;
+        //standardGlowScale = glow.transform.localScale;
     }
 
     void OnEnable() {
@@ -160,7 +162,7 @@ public class Infectroid : PickupableObject {
     void Update() {
 
         float fade = 1;
-        src.color = Color.Lerp(src.color, new Color(src.color.r, src.color.g, src.color.b, fade), Time.deltaTime * 5f);
+        //src.color = Color.Lerp(src.color, new Color(src.color.r, src.color.g, src.color.b, fade), Time.deltaTime * 5f);
 
         if(collectTimer > 0) collectTimer -= Time.deltaTime;
 
