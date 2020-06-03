@@ -15,6 +15,9 @@ public class PlanetStages : MonoBehaviour {
     protected LightStage curStage;
     private Material targetMaterial;
 
+    [Space(5)] // BRadley
+    public Animator LightAnimator;
+
     [System.Serializable]
     public class LightStage {
         public int moons = 0;
@@ -42,6 +45,11 @@ public class PlanetStages : MonoBehaviour {
 
     void FixedUpdate() {
         if(targetMaterial != null) meshRenderer.material.Lerp(meshRenderer.material, targetMaterial, Time.deltaTime * 1f);
+
+        if(currentLightStage == 1)
+        {
+            LightAnimator.SetInteger("LightAnimation", 1);
+        }
     }
 
     public void SetLightStage(int i) {

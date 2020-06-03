@@ -30,6 +30,11 @@ public class Orbit : MonoBehaviour {
 
     void Start() {
         if(Random.Range(0, 2) == 0) flip = true;
+
+        if(flip == true)
+        {
+            Debug.Log("Hallo??");
+        }
     }
 
     void Update() {

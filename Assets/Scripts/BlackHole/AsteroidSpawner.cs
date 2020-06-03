@@ -4,6 +4,9 @@ using System.Collections.Generic;
 using Photon.Pun;
 using Photon.Realtime;
 
+
+// Orbits zijn precies hetzelfde + asteroids spawnen allemaal hetzelfde
+
 public class AsteroidSpawner : MonoBehaviourPun {
     public Animator animator;
     public GameObject asteroid;
