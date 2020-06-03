@@ -9,6 +9,7 @@ using Photon.Realtime;
 
 public class PlayerPlanets : MonoBehaviourPun {
     public AnimationClip borealisAnim;
+    public GameObject tutorialColliders;
     private PlanetStages stages;
     private PlayerShip player;
     [HideInInspector] public int playerNumber = 0;
@@ -60,7 +61,16 @@ public class PlayerPlanets : MonoBehaviourPun {
         rechargeBar.SetProgress(player.playerColor, progress);
     }
 
-    [HideInInspector] public bool tutorial = false;
+    private bool tutorial = false;
+
+    public void StartTutorial() {
+        tutorial = true;
+    }
+
+    public void FinishTutorial() {
+        tutorial = false;
+        Destroy(tutorialColliders);
+    }
 
     public bool HasPlayer() {
         return player != null && playerNumber > 0;
@@ -87,6 +97,9 @@ public class PlayerPlanets : MonoBehaviourPun {
         baseScale = transform.localScale;
         currentScore = minScore;
         increasePopupTxt.enabled = false;
+
+        if(Launcher.GetSkipCountDown()) FinishTutorial();
+
         if(player == null) {
             scoreText.enabled = false;
             return;
@@ -142,9 +155,15 @@ public class PlayerPlanets : MonoBehaviourPun {
         scoreText = GetComponentInChildren<TextMeshProUGUI>();
         photonView.RPC("ClaimPlayer", RpcTarget.AllBufferedViaServer, playerNumber, player.playerColor.r, player.playerColor.g, player.playerColor.b);
         scoreText.enabled = true;
+        player.PositionToPlanet();
     }
 
     void Update() {
+        if(tutorialColliders != null) {
+            tutorialColliders.transform.position = transform.position;
+            tutorialColliders.transform.rotation = Quaternion.identity;
+        }
+
         lerpScore = Mathf.Lerp(lerpScore, (currentScore + 1), borealisAnim.length * Time.deltaTime);
         if(currentScore == 0) lerpScore = 0;
 
@@ -229,9 +248,11 @@ public class PlayerPlanets : MonoBehaviourPun {
     protected void ExplodeReduce(float penalty) {
         if(playerNumber <= 0 || GameManager.GAME_WON) return;
         planetGlow.Flicker();
+        
         if(currentScore - penalty >= 0) currentScore -= penalty;
         else currentScore = 0;
         SoundManager.PLAY_SOUND("ScoreDecrease");
+
         increasePopupTxt.enabled = true;    
         increasePopupTxt.color = redDecrease;
         increasePopupTxt.text = "-" + penalty.ToString() + "!";

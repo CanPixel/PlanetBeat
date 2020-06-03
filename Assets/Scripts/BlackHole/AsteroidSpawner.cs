@@ -29,6 +29,10 @@ public class AsteroidSpawner : MonoBehaviourPun {
     private ScreenShake mainCamScreenShake;
     private int sample = 0;
 
+    [FMODUnity.ParamRef]
+    private float cutoff = 0;
+    private float cutoffSpeed = 2f;
+
     void Start() {
         Random.InitState(System.DateTime.Now.Millisecond);
         mainCamScreenShake = Camera.main.GetComponent<ScreenShake>();
@@ -48,14 +52,14 @@ public class AsteroidSpawner : MonoBehaviourPun {
     }
 
     void Update() {
-        if(!GameManager.GAME_STARTED) return;
+        FMODUnity.RuntimeManager.StudioSystem.setParameterByName("BlackHole", cutoff);
 
+        if(!GameManager.GAME_STARTED) return;
         if(PhotonNetwork.IsMasterClient) {
             if(openBlackHole) blackHoleEffect.radius = Mathf.Lerp(blackHoleEffect.radius, baseRadius * 1.5f + Mathf.Sin(Time.time * 15f) * 1f, Time.deltaTime * 2f);
             else blackHoleEffect.radius = Mathf.Lerp(blackHoleEffect.radius, 0, Time.deltaTime * 1f);
             photonView.RPC("SynchRadius", RpcTarget.All, blackHoleEffect.radius, asteroidSpawnTimer, powerupSpawnTimer);
         }
-
         if(asteroidSpawnTimer > asteroidSpawnDelay + (spawnAnimationDelay / 2f) && !shake) {
             mainCamScreenShake.Shake(0.6f);
             photonView.RPC("ShakeScreenNetwork", RpcTarget.All);
@@ -70,6 +74,7 @@ public class AsteroidSpawner : MonoBehaviourPun {
                     if(powerupSpawnTimer > powerupSpawnDelay) {
                         openBlackHole = true;
                         //animator.SetBool("Opening", true);
+                        cutoff = Mathf.Lerp(cutoff, 1, Time.deltaTime * cutoffSpeed);
                     }
                     if(powerupSpawnTimer > powerupSpawnDelay + spawnAnimationDelay) {
                         SpawnPowerup();
@@ -78,6 +83,7 @@ public class AsteroidSpawner : MonoBehaviourPun {
                         openBlackHole = shake = false;
                         //animator.SetBool("Closing", true);
                         //animator.SetBool("Opening", false);
+                        cutoff = 0;
                     }
                 }
 
@@ -87,6 +93,7 @@ public class AsteroidSpawner : MonoBehaviourPun {
                     if(asteroidSpawnTimer > asteroidSpawnDelay) {
                         openBlackHole = true;
                         //animator.SetBool("Opening", true);
+                        cutoff = Mathf.Lerp(cutoff, 1, Time.deltaTime * cutoffSpeed);
                     }
                     if(asteroidSpawnTimer > asteroidSpawnDelay + spawnAnimationDelay) {
                         SpawnResource();
@@ -95,6 +102,7 @@ public class AsteroidSpawner : MonoBehaviourPun {
                         openBlackHole = shake = false;
                         //animator.SetBool("Closing", true);
                         //animator.SetBool("Opening", false);
+                        cutoff = 0;
                     }
                 }
             }

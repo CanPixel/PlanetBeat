@@ -108,6 +108,7 @@ public class GameManager : MonoBehaviourPunCallbacks {
          player.SetHomePlanet(planet.gameObject);
          planet.AssignPlayer(player);
          playerPlanets = planet;
+         player.PositionToPlanet();
          break;
       }
       if(playerPlanets != null) photonView.RPC("SynchPlanet", RpcTarget.All, player.photonView.ViewID, playerPlanets.photonView.ViewID);

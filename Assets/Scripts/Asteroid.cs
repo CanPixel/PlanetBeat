@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 using UnityEngine.UI;
-
 using TMPro;
 
 public class Asteroid : PickupableObject {
@@ -150,19 +149,20 @@ public class Asteroid : PickupableObject {
     void Update() {
         unstablePhaseTime = animator.GetCurrentAnimatorClipInfo(0)[0].clip.length;
 
-        if(gameObject.tag == "ResourceTutorial" && held && ownerPlayer != null) ownerPlayer.playerTutorial.tutorialStepsByName["GrabResource"].completed = true;
+        if(gameObject.tag == "ResourceTutorial" && held && ownerPlayer != null) ownerPlayer.playerTutorial.CompleteSubTask("GrabResource");
+
         if(consumeTimer > 0) consumeTimer -= Time.deltaTime;
 
         float fade = (collectTimer <= 0f) ? 1 : 0.4f;
-        scoreText.color = Color.Lerp(scoreText.color, new Color(scoreText.color.r, scoreText.color.g, scoreText.color.b, fade), Time.deltaTime * 5f);
+        if(scoreText != null) scoreText.color = Color.Lerp(scoreText.color, new Color(scoreText.color.r, scoreText.color.g, scoreText.color.b, fade), Time.deltaTime * 5f);
 
         if(collectTimer > 0) collectTimer -= Time.deltaTime;
 
-        increasePopupTxt.transform.rotation = Quaternion.Euler(0, 0, Mathf.Sin(Time.time * 3f) * 10f);
-        increasePopupTxt.transform.position = transform.position + new Vector3(0.05f, 0.35f, 0);
-        if(increasePopupHideTimer > 1f) increasePopupTxt.transform.localScale = Vector3.Lerp(increasePopupTxt.transform.localScale, Vector3.zero, Time.deltaTime * 2f);
-        
-
+        if(increasePopupTxt != null) {
+            increasePopupTxt.transform.rotation = Quaternion.Euler(0, 0, Mathf.Sin(Time.time * 3f) * 10f);
+            increasePopupTxt.transform.position = transform.position + new Vector3(0.05f, 0.35f, 0);
+            if(increasePopupHideTimer > 1f) increasePopupTxt.transform.localScale = Vector3.Lerp(increasePopupTxt.transform.localScale, Vector3.zero, Time.deltaTime * 2f);
+        }
 
         if (scoreText != null)
         {
@@ -314,7 +314,12 @@ public class Asteroid : PickupableObject {
         if (col.gameObject.tag == "PLAYERPLANET" && col.gameObject != null) {
             playerPlanets = col.gameObject.GetComponent<PlayerPlanets>();
             if(playerTagsManager.tagNum == playerPlanets.playerNumber && playerPlanets.HasPlayer() && !playerPlanets.HasReachedMax()) {
-                if(canConsume || canScoreWithoutDropping) ConsumeResource();
+                if((canConsume || canScoreWithoutDropping) && gameObject.tag != "ResourceTutorial") ConsumeResource();
+
+                if(gameObject.tag == "ResourceTutorial" && throwed) {
+                    if(ownerPlayer != null) ownerPlayer.playerTutorial.CompleteSubTask("throwresource");
+                    ConsumeResource();
+                }
             }
         }
         if(col.gameObject.tag == "ORBIT") {

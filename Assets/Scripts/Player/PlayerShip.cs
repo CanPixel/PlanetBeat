@@ -109,6 +109,7 @@ public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
         this.planet = planet.GetComponent<PlayerPlanets>();
         playerColor = planet.GetComponent<PlanetGlow>().planetColor;
         ForceColor(playerColor.r, playerColor.g, playerColor.b);
+        PositionToPlanet();
     }
     [PunRPC]
     public void ClearHomePlanet() {
@@ -300,15 +301,16 @@ public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
         if(dropAsteroid && trailingObjects.Count > 0 && respawnDelay <= 0 && hookDelay <= 0) {
             var asteroid = trailingObjects[0];
 
-            if(asteroid.tag == "ResourceTutorial") return;
-
             trailingObjects.RemoveAt(0);
             if(asteroid.rb != null) {
-                if(asteroid.tag == "InfectroidTutorial") playerTutorial.tutorialStepsByName["InfectroidThrow"].completed = true;
+                
+                if(asteroid.tag == "InfectroidTutorial") playerTutorial.CompleteSubTask("infectroid");//playerTutorial.tutorialPiecesByName["InfectroidThrow"].completed = true;
+
+
                 asteroid.rb.constraints = RigidbodyConstraints2D.None;
                 asteroid.throwed = true;
                 asteroid.ReleaseAsteroid(true, asteroid.photonView.ViewID);
-                if((asteroid.tag == "Powerup" && !(asteroid as Infectroid).inOrbit) || asteroid.tag == "Resource" || asteroid.tag == "InfectroidTutorial" || ((asteroid as Infectroid).playerPlanets != null && (asteroid as Infectroid).playerPlanets.playerNumber == playerNumber)) asteroid.rb.AddForce(transform.up * throwForce);
+                if((asteroid.tag == "Powerup" && !(asteroid as Infectroid).inOrbit) || asteroid.tag == "ResourceTutorial" || asteroid.tag == "Resource" || asteroid.tag == "InfectroidTutorial" || ((asteroid as Infectroid).playerPlanets != null && (asteroid as Infectroid).playerPlanets.playerNumber == playerNumber)) asteroid.rb.AddForce(transform.up * throwForce);
             }
             SetCollision(asteroid.GetCollider2D(), false);
             asteroid.transform.TransformDirection(new Vector2(transform.forward.x * asteroid.transform.forward.x, transform.forward.y * asteroid.transform.forward.y));
@@ -327,7 +329,7 @@ public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
 
         BoostManager();
 
-        if(!GameManager.GAME_STARTED) PositionToPlanet();
+        //if(!GameManager.GAME_STARTED) PositionToPlanet();
         exhaustSound.volume = Mathf.Lerp(exhaustSound.volume, IsThrust() ? 0.05f : 0, Time.deltaTime * 10f);
 
         if(hookDelay > 0) hookDelay -= Time.deltaTime;
@@ -396,20 +398,19 @@ public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
         else if (!canBoost) BoostCooldown();
     }
     private void BoostPlayer() {
-        if (canBoost)
-        {
+        if (canBoost) {
+            playerTutorial.CompleteSubTask("boost");
+            SoundManager.PLAY_SOUND("Boost");
+
             boostAnimator.SetInteger("boostAnimatie", 3);                                       // BOOSTING ANIMATIE
 
             if (rb != null) rb.AddForce(transform.up * boostForce);
             isBoosting = true;
-
         }
-        else if (!canBoost)
-        {
+        else {
             isBoosting = false;
-            boostAnimator.SetInteger("boostAnimatie", 1);                                       // EMPTIE BOOST ANIMATIE (Niet zichtbaar)
+            boostAnimator.SetInteger("boostAnimatie", 1);                                       // EMPTY BOOST ANIMATIE (Niet zichtbaar)
         }
-        
     }
     private void BoostCooldown() {
         boostCooldownTimer += Time.deltaTime;
@@ -465,6 +466,8 @@ public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
 
         if(IsTurningLeft()) turn += turningSpeed * Time.deltaTime * 50f;
         if(IsTurningRight()) turn -= turningSpeed * Time.deltaTime * 50f;
+
+        if(IsTurningLeft() || IsTurningRight() || IsThrust()) playerTutorial.CompleteSubTask("move");
     }
 
     //Wanneer je orbits exit, de speed dampening.
