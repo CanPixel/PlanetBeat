@@ -213,7 +213,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5336174367327457933}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -50}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_Children:
@@ -284,12 +284,12 @@ MonoBehaviour:
     m_RotationOrder: 4
   warningSign: {fileID: 0}
   warningArrow: {fileID: 0}
-  redWarning: {fileID: 0}
-  pinkWarning: {fileID: 0}
-  blueWarning: {fileID: 0}
-  yellowWarning: {fileID: 0}
-  greenWarning: {fileID: 0}
-  cyanWarning: {fileID: 0}
+  redWarning: {fileID: 21300000, guid: 342624424aa8d504883fc98e1afb30eb, type: 3}
+  pinkWarning: {fileID: 21300000, guid: a43ea7d1f705b1245b9208ece6d1b9d3, type: 3}
+  blueWarning: {fileID: 21300000, guid: 0d9999d75c6130a46b784baa6f567884, type: 3}
+  yellowWarning: {fileID: 21300000, guid: 6ef054e7032a38f4e89ed35c7c221b7c, type: 3}
+  greenWarning: {fileID: 21300000, guid: a28a286b2aa430d49baae6c0e2be03a0, type: 3}
+  cyanWarning: {fileID: 21300000, guid: 1830dadff8bf69c41b568361db9e382f, type: 3}
   infected: 0
   eliminationTimer: 0
   tutorial: 0
@@ -383,17 +383,33 @@ MonoBehaviour:
     material: {fileID: 2100000, guid: 79bc63e8908e39c45a59efde220ed91c, type: 2}
     lightLayer: {fileID: 0}
   - moons: 0
-    material: {fileID: 2100000, guid: 2c3c14a350ace224ea9560608851994a, type: 2}
+    material: {fileID: 2100000, guid: ccb61a0510053c045bda5afa6dcd31df, type: 2}
     lightLayer: {fileID: 2100000, guid: 3e57e04856e05eb4aabaed9e0a833f97, type: 2}
   - moons: 1
-    material: {fileID: 2100000, guid: 759c5a1db6f6a584bb49b221ccc119e9, type: 2}
-    lightLayer: {fileID: 2100000, guid: 8a79adce7fdc1a849a8062188ec888b8, type: 2}
+    material: {fileID: 2100000, guid: 3bc2786ec3fa08b40b369e0d620b2d22, type: 2}
+    lightLayer: {fileID: 2100000, guid: 4f4e733c8a4cbfd44a6880fd78a31cb8, type: 2}
   - moons: 2
-    material: {fileID: 2100000, guid: fdf48b9de5e371849876fd591fde406e, type: 2}
-    lightLayer: {fileID: 2100000, guid: 052cf9cc2dac9f14394e43c2041bf526, type: 2}
+    material: {fileID: 2100000, guid: 8cbb73f376ba84f4baae654eb09935f6, type: 2}
+    lightLayer: {fileID: 2100000, guid: fb1833533ea89a5418bf6dde1789865f, type: 2}
   - moons: 3
-    material: {fileID: 2100000, guid: 94e69cafade990a42a21d7ecabc37a2b, type: 2}
-    lightLayer: {fileID: 2100000, guid: fad8b8084371b4940972d7b3b75c174e, type: 2}
+    material: {fileID: 2100000, guid: e813dbef9e369ce4aadfcf69bd43bc1e, type: 2}
+    lightLayer: {fileID: 2100000, guid: 3ad5d4cb27f19194eb9d39fee2e2cb5c, type: 2}
+  - moons: 3
+    material: {fileID: 2100000, guid: 68a0aa0e018429f40bcd05f100222acf, type: 2}
+    lightLayer: {fileID: 2100000, guid: 33c4c516c45871f418b26cec439e0947, type: 2}
+  - moons: 3
+    material: {fileID: 2100000, guid: 80034cb401c73544391219d65d049e5b, type: 2}
+    lightLayer: {fileID: 2100000, guid: 512802c35de07a2489f0985e41885652, type: 2}
+  - moons: 3
+    material: {fileID: 2100000, guid: 094b0b185ce2f894e86fedd17dd10ca6, type: 2}
+    lightLayer: {fileID: 2100000, guid: 40b521c82c532864cb7cb932a8344f71, type: 2}
+  - moons: 3
+    material: {fileID: 2100000, guid: 82476c6d64c2e284d9ee920103f69f27, type: 2}
+    lightLayer: {fileID: 2100000, guid: 5fb494eceff5b5f4e941b5ad61546a40, type: 2}
+  - moons: 3
+    material: {fileID: 2100000, guid: f64518ab083091345bb13217610a9881, type: 2}
+    lightLayer: {fileID: 2100000, guid: e8fac2ecde8ec9d4ebbb8772f673a0d8, type: 2}
+  LightAnimator: {fileID: 0}
 --- !u!95 &8373792744642751139
 Animator:
   serializedVersion: 3
@@ -921,11 +937,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Atmos-Sphere
       objectReference: {fileID: 0}
-    - target: {fileID: -927199367670048503, guid: a318da0dbbd934d4d8b7646a21e36f63,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: a318da0dbbd934d4d8b7646a21e36f63,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -998,9 +1009,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -1504981713932161579, guid: a318da0dbbd934d4d8b7646a21e36f63,
         type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -1504981713932161579, guid: a318da0dbbd934d4d8b7646a21e36f63,
+        type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: fad8b8084371b4940972d7b3b75c174e, type: 2}
+      objectReference: {fileID: 2100000, guid: 3e57e04856e05eb4aabaed9e0a833f97, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a318da0dbbd934d4d8b7646a21e36f63, type: 3}
 --- !u!4 &7768988595593637033 stripped
@@ -1142,16 +1158,6 @@ PrefabInstance:
       propertyPath: m_LocalScale.y
       value: 0.8
       objectReference: {fileID: 0}
-    - target: {fileID: 6061447726742359363, guid: f3469c6a1e99fd544b899569b8f579c8,
-        type: 3}
-      propertyPath: m_LocalScale.z
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6061447726823252456, guid: f3469c6a1e99fd544b899569b8f579c8,
-        type: 3}
-      propertyPath: m_FillAmount
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 6061447726823252456, guid: f3469c6a1e99fd544b899569b8f579c8,
         type: 3}
       propertyPath: m_Color.a
@@ -1159,13 +1165,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6061447726823252457, guid: f3469c6a1e99fd544b899569b8f579c8,
         type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 200
+      propertyPath: m_SizeDelta.x
+      value: 800
       objectReference: {fileID: 0}
     - target: {fileID: 6061447726823252457, guid: f3469c6a1e99fd544b899569b8f579c8,
         type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 800
+      propertyPath: m_SizeDelta.y
+      value: 200
       objectReference: {fileID: 0}
     - target: {fileID: 6061447726742359362, guid: f3469c6a1e99fd544b899569b8f579c8,
         type: 3}
@@ -1212,8 +1218,8 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -927199367670048503, guid: a318da0dbbd934d4d8b7646a21e36f63,
         type: 3}
-      propertyPath: m_IsActive
-      value: 1
+      propertyPath: m_Layer
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: a318da0dbbd934d4d8b7646a21e36f63,
         type: 3}
@@ -1284,6 +1290,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalScale.z
       value: 2.5
+      objectReference: {fileID: 0}
+    - target: {fileID: -1504981713932161579, guid: a318da0dbbd934d4d8b7646a21e36f63,
+        type: 3}
+      propertyPath: m_CastShadows
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -1504981713932161579, guid: a318da0dbbd934d4d8b7646a21e36f63,
         type: 3}

@@ -97,11 +97,11 @@ public class HookShot : MonoBehaviour {
         // animation
         if (HookCooldown == true)
         {
-            animateHandUI.SetInteger("handAnimation", 2);
+            animateHandUI.SetInteger("handAnimation", 2); //"Disabled"
         }
         else
         {
-            animateHandUI.SetInteger("handAnimation", 1);
+            animateHandUI.SetInteger("handAnimation", 1); //"Enabled"
         }
     }
 

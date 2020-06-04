@@ -7,7 +7,7 @@ public class PlanetStages : MonoBehaviour {
     public MeshRenderer meshRenderer, lightLayerRender;
 
     public int currentLightStage = 0;
-    public const int lightStageAmount = 5;
+    public const int lightStageAmount = 10;
 
     [Space(5)]
     public LightStage[] lightStages;
@@ -46,10 +46,30 @@ public class PlanetStages : MonoBehaviour {
     void FixedUpdate() {
         if(targetMaterial != null) meshRenderer.material.Lerp(meshRenderer.material, targetMaterial, Time.deltaTime * 1f);
 
+        // Bradley
+        
         if(currentLightStage == 1)
         {
             LightAnimator.SetInteger("LightAnimation", 1);
         }
+        else if (currentLightStage == 3)
+        {
+            LightAnimator.SetInteger("LightAnimation", 2);
+        }
+        else if (currentLightStage == 5)
+        {
+            LightAnimator.SetInteger("LightAnimation", 3);
+        }
+        else if (currentLightStage == 8)
+        {
+            LightAnimator.SetInteger("LightAnimation", 4);
+        }
+        else if (currentLightStage == 10)
+        {
+            LightAnimator.SetInteger("LightAnimation", 5);
+        }
+        
+        // Bradley
     }
 
     public void SetLightStage(int i) {
