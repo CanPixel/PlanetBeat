@@ -23,7 +23,7 @@ Material:
   m_Name: Bolletjes
   m_Shader: {fileID: -6465566751694194690, guid: 941e30b21759831449e084a6d76d7085,
     type: 3}
-  m_ShaderKeywords: _ALPHAMODULATE_ON _COLORCOLOR_ON _EMISSION _RECEIVE_SHADOWS_OFF
+  m_ShaderKeywords: _ALPHAMODULATE_ON _EMISSION
   m_LightmapFlags: 2
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0

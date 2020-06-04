@@ -5,22 +5,43 @@ using UnityEngine.UI;
 
 public class imageSwitcher : MonoBehaviour
 {
+    [HideInInspector] public PlayerPlanets planet;
+
     Image myImageComponent;
     public Sprite redHand; 
-    public Sprite pinkHand; 
+    public Sprite pinkHand;
+    public Sprite blueHand;
+    public Sprite yellowHand;
+    public Sprite greenHand;
+    public Sprite cyanHand;
 
     void Start()
     {
         myImageComponent = GetComponent<Image>(); //Our image component is the one attached to this gameObject.
     }
-
-    public void SetHandRed() //method to set our first image
-    {
+    
+    public void SetHandRed(){
         myImageComponent.sprite = redHand;
     }
 
-    public void SetHandPink()
-    {
+    public void SetHandPink(){
         myImageComponent.sprite = pinkHand;
     }
+
+    public void SetHandBlue(){
+        myImageComponent.sprite = blueHand;
+    }
+
+    public void SetHandYellow(){
+        myImageComponent.sprite = yellowHand;
+    }
+
+    public void SetHandGreen(){
+        myImageComponent.sprite = greenHand;
+    }
+
+    public void SetHandCyan(){
+        myImageComponent.sprite = cyanHand;
+    }
+
 }

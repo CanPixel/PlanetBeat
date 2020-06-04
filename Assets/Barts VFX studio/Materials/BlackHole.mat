@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: BlackHole
-  m_Shader: {fileID: -6465566751694194690, guid: f06b87d71eb203c4ca8b08bf704b23fe,
+  m_Shader: {fileID: -6465566751694194690, guid: b55482a8a9a8a3b46871751d001b38be,
     type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
@@ -49,11 +49,11 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
-    - Vector1_2E510540: 0.1
-    - Vector1_36874B96: 0.001
+    - Vector1_2E510540: 0.403
+    - Vector1_36874B96: 0.05
     - Vector1_398961E2: 12.9
     - Vector1_42CEC7F7: 0.508
-    - Vector1_DC2B334F: 10
+    - Vector1_DC2B334F: 1.84
     - Vector1_E088325: 0.0298
     - _AlphaClip: 0
     - _Blend: 0

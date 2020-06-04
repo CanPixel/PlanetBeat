@@ -8,13 +8,10 @@ public class AsteroidSpawner : MonoBehaviourPun {
     public Animator animator;
     public GameObject asteroid;
     public GameObject powerup;
-    public GameObject remoteroid;
     public int asteroidAmount = 4, powerupAmount = 2;
 
     public GameObject blackHole;
     private GameObject[] AsteroidsList, PowerupsList;
-
-    private List<GameObject> spawnQueue = new List<GameObject>();
 
     public Vector2Int objectSpawnDelay = new Vector2Int(2, 7), powerupSpawnDelays = new Vector2Int(6, 8);
     private float asteroidSpawnDelay, powerupSpawnDelay, asteroidSpawnTimer = 0, powerupSpawnTimer = 0;
@@ -77,6 +74,7 @@ public class AsteroidSpawner : MonoBehaviourPun {
                         openBlackHole = true;
                         //animator.SetBool("Opening", true);
                         cutoff = Mathf.Lerp(cutoff, 1, Time.deltaTime * cutoffSpeed);
+                        animator.SetInteger("blackHoleAnimation", 1);
                     }
                     if(powerupSpawnTimer > powerupSpawnDelay + spawnAnimationDelay) {
                         SpawnPowerup();
@@ -85,6 +83,7 @@ public class AsteroidSpawner : MonoBehaviourPun {
                         openBlackHole = shake = false;
                         //animator.SetBool("Closing", true);
                         //animator.SetBool("Opening", false);
+                        animator.SetInteger("blackHoleAnimation", 2);
                         cutoff = 0;
                     }
                 }
@@ -96,6 +95,7 @@ public class AsteroidSpawner : MonoBehaviourPun {
                         openBlackHole = true;
                         //animator.SetBool("Opening", true);
                         cutoff = Mathf.Lerp(cutoff, 1, Time.deltaTime * cutoffSpeed);
+                        animator.SetInteger("blackHoleAnimation", 1);
                     }
                     if(asteroidSpawnTimer > asteroidSpawnDelay + spawnAnimationDelay) {
                         SpawnResource();
@@ -104,6 +104,7 @@ public class AsteroidSpawner : MonoBehaviourPun {
                         openBlackHole = shake = false;
                         //animator.SetBool("Closing", true);
                         //animator.SetBool("Opening", false);
+                        animator.SetInteger("blackHoleAnimation", 2);
                         cutoff = 0;
                     }
                 }
@@ -114,15 +115,12 @@ public class AsteroidSpawner : MonoBehaviourPun {
     [PunRPC]
     protected void ShakeScreenNetwork() {
         if(PhotonNetwork.IsMasterClient) return;
-        mainCamScreenShake.Shake(1f);
+        mainCamScreenShake.Shake(0.6f);
         shake = true;
     }
 
     public void EnableInfectroidPowerup() {
         enableInfectroid = true;
-    }
-    public void EnableRemoteroid() {
-        enableRemoteroid = true;
     }
 
     protected void SpawnPowerup() {
@@ -130,9 +128,7 @@ public class AsteroidSpawner : MonoBehaviourPun {
         Vector3 pos = RandomCircle(center, Random.Range(8f, 9f), Random.Range(0, 360));
         Quaternion rot = Quaternion.FromToRotation(Vector2.up, center + pos);
 
-        var power = powerup;
-        if(enableRemoteroid) power = Random.Range(0, 2) == 1? remoteroid : powerup;
-        GameObject InstancedPrefab = GameManager.SPAWN_SERVER_OBJECT(power, new Vector3(blackHole.transform.position.x, blackHole.transform.position.y, -1.1f), rot);
+        GameObject InstancedPrefab = GameManager.SPAWN_SERVER_OBJECT(powerup, new Vector3(blackHole.transform.position.x, blackHole.transform.position.y, -1.1f), rot);
 
         SoundManager.PLAY_SOUND("InfectroidSpawn");
     }

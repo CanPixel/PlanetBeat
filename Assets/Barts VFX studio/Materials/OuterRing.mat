@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: OuterRing
-  m_Shader: {fileID: -6465566751694194690, guid: 68f7951173d13dc47b52aae8ae63a644,
+  m_Shader: {fileID: -6465566751694194690, guid: cf5449bf914ed5640b7a9ba972e220bd,
     type: 3}
   m_ShaderKeywords: _EMISSION
   m_LightmapFlags: 2

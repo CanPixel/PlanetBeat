@@ -37,6 +37,7 @@ public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
 
     // Bradley
     public Animator boostAnimator;
+    public imageSwitcher imageSwitcherScript;
 
     private Vector3 baseScale;
 
@@ -331,6 +332,13 @@ public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
     }
 
     void Update() {
+        if (planet.gameObject == GameObject.Find("PLANETRED")) imageSwitcherScript.SetHandRed();
+        else if (planet.gameObject == GameObject.Find("PLANETPINK")) imageSwitcherScript.SetHandPink();
+        else if (planet.gameObject == GameObject.Find("PLANETBLUE")) imageSwitcherScript.SetHandBlue();
+        else if (planet.gameObject == GameObject.Find("PLANETYELLOW")) imageSwitcherScript.SetHandYellow();
+        else if (planet.gameObject == GameObject.Find("PLANETCYAN")) imageSwitcherScript.SetHandCyan();
+        else if (planet.gameObject == GameObject.Find("PLANETGREEN")) imageSwitcherScript.SetHandGreen();
+
         #if UNITY_EDITOR
             if(Input.GetKeyDown(KeyCode.R) && planet != null) planet.AddingResource(5); /////////////////////////////////////////////////////////////////////////////////////////  DEBUG
             if(Input.GetKeyDown(KeyCode.Q) && planet != null) planet.Explode(5);

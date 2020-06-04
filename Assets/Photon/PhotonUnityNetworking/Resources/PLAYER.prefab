@@ -6472,7 +6472,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1446986112285196595}
   - component: {fileID: 1446986112285196593}
-  - component: {fileID: 1446986112285196592}
   m_Layer: 5
   m_Name: Rope
   m_TagString: Untagged
@@ -6508,35 +6507,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1446986112285196594}
   m_CullTransparentMesh: 0
---- !u!114 &1446986112285196592
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1446986112285196594}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 0
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: da2b4bdf10037cc438c226ce01c9e8e1, type: 3}
-  m_Type: 2
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 1
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
 --- !u!1 &1446986112358890866
 GameObject:
   m_ObjectHideFlags: 0
@@ -6547,7 +6517,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1446986112358890867}
   - component: {fileID: 1446986112358890865}
-  - component: {fileID: 1446986112358890864}
   - component: {fileID: 1446986112358890862}
   - component: {fileID: 1446986112358890863}
   - component: {fileID: 1446986112358890860}
@@ -6586,35 +6555,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1446986112358890866}
   m_CullTransparentMesh: 0
---- !u!114 &1446986112358890864
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1446986112358890866}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 0
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: c2c69dfe8f077a541b4c768e79031915, type: 3}
-  m_Type: 0
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
 --- !u!58 &1446986112358890862
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -8213,6 +8153,7 @@ MonoBehaviour:
   maxFuel: 0.8
   cooldownPenalty: 3.5
   boostAnimator: {fileID: 2797592908302227500}
+  imageSwitcherScript: {fileID: 7109669085828936881}
   networkIgnore:
   - {fileID: 1662954744308020766}
   - {fileID: 7716859393941716483}
@@ -14786,7 +14727,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: 9f18dd24f97ccf94583fee2fb129b157, type: 3}
+  m_Sprite: {fileID: 21300000, guid: b505ff3de1daf0143862b1ad542a8be3, type: 3}
   m_Type: 3
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -14826,8 +14767,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: acec2764b16147f4db4a6737d7329e26, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  redHand: {fileID: 21300000, guid: 9f18dd24f97ccf94583fee2fb129b157, type: 3}
+  planet: {fileID: 0}
+  redHand: {fileID: 21300000, guid: b505ff3de1daf0143862b1ad542a8be3, type: 3}
   pinkHand: {fileID: 21300000, guid: 258f44af8089c5b4da25000a0f5122fa, type: 3}
+  blueHand: {fileID: 21300000, guid: 1b03ec0002cd53b48a6c4c4bb4798726, type: 3}
+  yellowHand: {fileID: 21300000, guid: e7274684f5a43274ba0d6e295a46f5d6, type: 3}
+  greenHand: {fileID: 21300000, guid: 9c328eca6b6777f4c91c4e6c993ccc09, type: 3}
+  cyanHand: {fileID: 21300000, guid: 94ce4759482dc2647ac448ee38302288, type: 3}
 --- !u!1 &5368105868632736228
 GameObject:
   m_ObjectHideFlags: 0
@@ -23484,9 +23430,9 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 7441306658712936867}
   m_PrefabAsset: {fileID: 0}
---- !u!95 &5527152550213085123 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: -6057140222963153312, guid: f9dd89dbf83db6e46a4ba7671872fd60,
+--- !u!137 &3144114295746932236 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -3681983302351433809, guid: f9dd89dbf83db6e46a4ba7671872fd60,
     type: 3}
   m_PrefabInstance: {fileID: 7441306658712936867}
   m_PrefabAsset: {fileID: 0}
@@ -23496,9 +23442,9 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 7441306658712936867}
   m_PrefabAsset: {fileID: 0}
---- !u!137 &3144114295746932236 stripped
-SkinnedMeshRenderer:
-  m_CorrespondingSourceObject: {fileID: -3681983302351433809, guid: f9dd89dbf83db6e46a4ba7671872fd60,
+--- !u!95 &5527152550213085123 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: -6057140222963153312, guid: f9dd89dbf83db6e46a4ba7671872fd60,
     type: 3}
   m_PrefabInstance: {fileID: 7441306658712936867}
   m_PrefabAsset: {fileID: 0}
