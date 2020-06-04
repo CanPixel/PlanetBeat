@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.01.00">
+	<object class="AudioFile" id="{cfcc9630-18b3-4f6a-90c3-cd5a50b27b59}">
+		<property name="assetPath">
+			<value>MusicLayers/Lex (niet genormaliseerd)/planet beat Bright Synth Brass 120BPM.aif</value>
+		</property>
+		<property name="isStreaming">
+			<value>true</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>44.0999985</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>245.19371882086168</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{2aa189aa-2b15-4400-8911-0bc3e274fc7a}</destination>
+		</relationship>
+	</object>
+</objects>

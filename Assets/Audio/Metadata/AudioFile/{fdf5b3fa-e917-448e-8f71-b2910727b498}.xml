@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.01.00">
+	<object class="AudioFile" id="{fdf5b3fa-e917-448e-8f71-b2910727b498}">
+		<property name="assetPath">
+			<value>MusicLayers/Lex (niet genormaliseerd)/planet beat Slow Drift 120BPM.aif</value>
+		</property>
+		<property name="isStreaming">
+			<value>true</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>44.0999985</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>276.40133786848071</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{2aa189aa-2b15-4400-8911-0bc3e274fc7a}</destination>
+		</relationship>
+	</object>
+</objects>

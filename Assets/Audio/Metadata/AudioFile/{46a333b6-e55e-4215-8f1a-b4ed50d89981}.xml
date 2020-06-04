@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.01.00">
+	<object class="AudioFile" id="{46a333b6-e55e-4215-8f1a-b4ed50d89981}">
+		<property name="assetPath">
+			<value>MusicLayers/Lex (niet genormaliseerd)/planet beat Boutique 78 120BPM.aif</value>
+		</property>
+		<property name="isStreaming">
+			<value>true</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>44.0999985</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>254.1101814058957</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{2aa189aa-2b15-4400-8911-0bc3e274fc7a}</destination>
+		</relationship>
+	</object>
+</objects>
