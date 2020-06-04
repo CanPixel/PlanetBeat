@@ -90,6 +90,7 @@ public class PlayerTutorial : MonoBehaviour {
         if(tutorialTasks.ContainsKey(name.ToLower()) && tutorialTimer > tutorialSteps[tutorialProgress].duration) {
             if(tutorialTasks[name.ToLower()].reference.tutorialName.ToLower() == tutorialSteps[tutorialProgress].tutorialName.ToLower()) {
                 tutorialTasks[name.ToLower()].onSubComplete.Invoke();
+                if(!tutorialTasks[name.ToLower()].completed) SoundManager.PLAY_SOUND("ScoreIncrease");
                 tutorialTasks[name.ToLower()].completed = true;
 
                 bool fullComplete = true;
@@ -198,6 +199,8 @@ public class PlayerTutorial : MonoBehaviour {
                 } else IncrementTutorial();
             }
         }
+
+        if(!host.photonView.IsMine) foreach(var i in tutorialSteps) i.step.gameObject.SetActive(false);
 
         //Tuturial Resource
         if(tutorialResource != null && !tutorialResource.held) {
