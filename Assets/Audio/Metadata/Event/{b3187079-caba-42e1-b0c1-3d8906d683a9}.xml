@@ -1,11 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <objects serializationModel="Studio.02.01.00">
 	<object class="Event" id="{b3187079-caba-42e1-b0c1-3d8906d683a9}">
+		<property name="note">
+			<value>Wordt niet gebruikt, tikken zit nu in de hot patato
+</value>
+		</property>
+		<property name="color">
+			<value>Red</value>
+		</property>
 		<property name="name">
 			<value>HotPatatoSissing</value>
 		</property>
 		<property name="outputFormat">
-			<value>1</value>
+			<value>0</value>
 		</property>
 		<relationship name="folder">
 			<destination>{d5e5e02c-3f1d-4715-b0b0-8412c7ae7ad0}</destination>
@@ -59,18 +66,11 @@
 	<object class="EventAutomatableProperties" id="{4081ad30-819a-4f6f-962c-b96ac4e14394}" />
 	<object class="MarkerTrack" id="{739d77d3-2513-41ec-8f18-21975df305de}" />
 	<object class="GroupTrack" id="{4afaaf1a-0d81-492d-861c-eb1b6cdd291a}">
-		<relationship name="modules">
-			<destination>{8b0db42e-679a-4c30-b558-9b145eaf670c}</destination>
-		</relationship>
 		<relationship name="mixerGroup">
 			<destination>{203d6b0b-5842-46ee-9363-b852ecd6e39b}</destination>
 		</relationship>
 	</object>
-	<object class="Timeline" id="{53ae1bd4-ec25-4244-9aeb-da4886a99260}">
-		<relationship name="modules">
-			<destination>{8b0db42e-679a-4c30-b558-9b145eaf670c}</destination>
-		</relationship>
-	</object>
+	<object class="Timeline" id="{53ae1bd4-ec25-4244-9aeb-da4886a99260}" />
 	<object class="EventMixerMaster" id="{5935e993-3aaf-4643-ba90-059dbea455f8}">
 		<property name="volume">
 			<value>-14.5</value>
@@ -91,14 +91,6 @@
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{e8237251-a272-4b0d-b5ea-361de7cf8e81}" />
-	<object class="SingleSound" id="{8b0db42e-679a-4c30-b558-9b145eaf670c}">
-		<property name="length">
-			<value>0.90625</value>
-		</property>
-		<relationship name="audioFile">
-			<destination>{7bdb0dc3-db8b-4817-be55-0ac79b1b830b}</destination>
-		</relationship>
-	</object>
 	<object class="EventMixerGroup" id="{203d6b0b-5842-46ee-9363-b852ecd6e39b}">
 		<property name="name">
 			<value>Audio 1</value>

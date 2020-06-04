@@ -240,7 +240,7 @@ MonoBehaviour:
   - labelName: HotPotatoExplosion
     fmodPath: event:/SFX/HotPatatoExplosion
   - labelName: Boost
-    fmodPath: event:/SFX/Boost
+    fmodPath: event:/Space_ships/Boost
 --- !u!114 &185244988
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <objects serializationModel="Studio.02.01.00">
 	<object class="Event" id="{bfd5aa08-d1ab-456e-b341-3fe1261586f0}">
+		<property name="note">
+			<value>Inclusief tikken nu</value>
+		</property>
 		<property name="name">
 			<value>HotPatatoExplosion</value>
 		</property>
@@ -60,7 +63,7 @@
 	<object class="MarkerTrack" id="{076bd531-d628-4179-bd7c-638283e33149}" />
 	<object class="GroupTrack" id="{ea379cc3-e1af-4aae-a2f1-cff2ba9fa137}">
 		<relationship name="modules">
-			<destination>{3647a0c9-8aad-4ae8-a2e1-53e1f449221c}</destination>
+			<destination>{9a3bb669-7a8e-4e3d-bba9-bc0028ef9a8c}</destination>
 		</relationship>
 		<relationship name="mixerGroup">
 			<destination>{c97cac17-2684-4ba1-98bf-a8d9bbe49a34}</destination>
@@ -68,10 +71,13 @@
 	</object>
 	<object class="Timeline" id="{e4e0c73e-5913-41c1-b5b1-7dc21b929c7e}">
 		<relationship name="modules">
-			<destination>{3647a0c9-8aad-4ae8-a2e1-53e1f449221c}</destination>
+			<destination>{9a3bb669-7a8e-4e3d-bba9-bc0028ef9a8c}</destination>
 		</relationship>
 	</object>
 	<object class="EventMixerMaster" id="{a271b72d-6db0-47c1-afa2-8bde7f04da39}">
+		<property name="volume">
+			<value>-9</value>
+		</property>
 		<relationship name="effectChain">
 			<destination>{2f21daaf-6f28-49f8-acff-5d7e1b5ade70}</destination>
 		</relationship>
@@ -88,12 +94,12 @@
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{64869d94-7ab1-4a9c-b1a7-1fe6e8f02712}" />
-	<object class="SingleSound" id="{3647a0c9-8aad-4ae8-a2e1-53e1f449221c}">
+	<object class="SingleSound" id="{9a3bb669-7a8e-4e3d-bba9-bc0028ef9a8c}">
 		<property name="length">
-			<value>3.4393125000000002</value>
+			<value>5.6801133786848075</value>
 		</property>
 		<relationship name="audioFile">
-			<destination>{676d04da-d5ba-4ce2-83ec-cde266d296df}</destination>
+			<destination>{abc07b83-88ff-4bfe-bc71-e58eb8c5b0f8}</destination>
 		</relationship>
 	</object>
 	<object class="EventMixerGroup" id="{c97cac17-2684-4ba1-98bf-a8d9bbe49a34}">
