@@ -5616,7 +5616,7 @@ RectTransform:
   - {fileID: 8185459131870024093}
   - {fileID: 1484607488769715593}
   - {fileID: 1615301141932425475}
-  - {fileID: 996780550299991492}
+  - {fileID: 7000145518057561196}
   - {fileID: 4592365809444739995}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -5644,7 +5644,7 @@ MonoBehaviour:
   exhaustDefault: {fileID: 713167841743702350}
   exhaustDefaultGameObject: {fileID: 4556623503040887228}
   exhaustLight: {fileID: 9118803508655691075}
-  model: {fileID: 996780550299991467}
+  model: {fileID: 6304716884605136511}
   playerLabel: {fileID: 0}
   colliders: []
   boostShipRotate: 10
@@ -15965,13 +15965,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 87efed4e15800334f8eeb2c944566ae3, type: 3}
---- !u!1 &996780550299991467 stripped
+--- !u!1 &6304716884605136511 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6533487463123243897, guid: 87efed4e15800334f8eeb2c944566ae3,
     type: 3}
   m_PrefabInstance: {fileID: 996780550299991302}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &996780550299991492 stripped
+--- !u!4 &7000145518057561196 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7849991732350099818, guid: 87efed4e15800334f8eeb2c944566ae3,
     type: 3}

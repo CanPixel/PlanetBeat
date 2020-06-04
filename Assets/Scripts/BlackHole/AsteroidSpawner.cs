@@ -51,7 +51,8 @@ public class AsteroidSpawner : MonoBehaviourPun {
     }
 
     void Update() {
-        if(!GameManager.GAME_STARTED) return;
+        Random.InitState(System.DateTime.Now.Millisecond);
+        if (!GameManager.GAME_STARTED) return;
 
         if(PhotonNetwork.IsMasterClient) {
             if(openBlackHole) blackHoleEffect.radius = Mathf.Lerp(blackHoleEffect.radius, baseRadius * 1.5f + Mathf.Sin(Time.time * 15f) * 1f, Time.deltaTime * 2f);
