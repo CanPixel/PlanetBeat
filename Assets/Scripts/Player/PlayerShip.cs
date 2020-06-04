@@ -381,6 +381,7 @@ public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
         else if (!canBoost) BoostCooldown();
     }
     private void BoostPlayer() {
+        SoundManager.PLAY_SOUND("Boost");
         if (canBoost) {
             if(rb != null) rb.AddForce(transform.up * boostForce);
             isBoosting = true;
