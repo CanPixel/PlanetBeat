@@ -106,7 +106,6 @@ public class MusicManager : MonoBehaviour {
     void Update () {
         string markerAnim = timelineInfo.lastMarker;
         //if (AnimDelay > 0) AnimDelay -= Time.deltaTime;
-
         foreach(var i in audioEvents) {
             if(i.fmodString == markerAnim) {
                 i.Event.Invoke();

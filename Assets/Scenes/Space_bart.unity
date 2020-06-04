@@ -2634,6 +2634,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2126952665}
     m_Modifications:
+    - target: {fileID: 5336174367327457933, guid: 51299799d9767174ea6e1c99b072de4b,
+        type: 3}
+      propertyPath: m_Name
+      value: PLANETRED
+      objectReference: {fileID: 0}
     - target: {fileID: 5336174367327457932, guid: 51299799d9767174ea6e1c99b072de4b,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2738,11 +2743,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Pivot.y
       value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 5336174367327457933, guid: 51299799d9767174ea6e1c99b072de4b,
-        type: 3}
-      propertyPath: m_Name
-      value: PLANETRED
       objectReference: {fileID: 0}
     - target: {fileID: 5336174367327457940, guid: 51299799d9767174ea6e1c99b072de4b,
         type: 3}
@@ -3544,6 +3544,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 975042796}
     m_Modifications:
+    - target: {fileID: 6061447726742359388, guid: f3469c6a1e99fd544b899569b8f579c8,
+        type: 3}
+      propertyPath: m_Name
+      value: EliminationBar
+      objectReference: {fileID: 0}
     - target: {fileID: 6061447726742359363, guid: f3469c6a1e99fd544b899569b8f579c8,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -3649,11 +3654,6 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
-    - target: {fileID: 6061447726742359388, guid: f3469c6a1e99fd544b899569b8f579c8,
-        type: 3}
-      propertyPath: m_Name
-      value: EliminationBar
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f3469c6a1e99fd544b899569b8f579c8, type: 3}
 --- !u!114 &6427999354323748640
@@ -3721,6 +3721,7 @@ MonoBehaviour:
   powerup: {fileID: 8069275902880659580, guid: 7b6b88afab4aba24da93c6831e440dc3, type: 3}
   remoteroid: {fileID: 8069275902880659580, guid: 1276c2d859cead5468515b9ae43211b6,
     type: 3}
+  cutoffSpeed: 3
   asteroidAmount: 2
   powerupAmount: 1
   blackHole: {fileID: 6427999355445188860}

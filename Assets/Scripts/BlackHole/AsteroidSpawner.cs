@@ -9,6 +9,8 @@ public class AsteroidSpawner : MonoBehaviourPun {
     public GameObject asteroid;
     public GameObject powerup;
     public GameObject remoteroid;
+    
+    public float cutoffSpeed = 2f;
     public int asteroidAmount = 4, powerupAmount = 2;
 
     public GameObject blackHole;
@@ -24,6 +26,8 @@ public class AsteroidSpawner : MonoBehaviourPun {
 
     private BlackHoleEffect blackHoleEffect;
     private float baseRadius;
+    private float cutoff;
+    
     private bool openBlackHole = false, shake = false, enableRemoteroid = false, enableInfectroid = false;
 
     private ScreenShake mainCamScreenShake;
@@ -70,12 +74,17 @@ public class AsteroidSpawner : MonoBehaviourPun {
                     if(powerupSpawnTimer > powerupSpawnDelay) {
                         openBlackHole = true;
                         //animator.SetBool("Opening", true);
+                        cutoff = Mathf.Lerp(cutoff, 1, Time.deltaTime * cutoffSpeed);
+                        
                     }
                     if(powerupSpawnTimer > powerupSpawnDelay + spawnAnimationDelay) {
                         SpawnPowerup();
                         powerupSpawnDelay = Random.Range(powerupSpawnDelays.x, powerupSpawnDelays.y);
                         powerupSpawnTimer = 0;
                         openBlackHole = shake = false;
+                        
+                        cutoff = 0;
+                        
                         //animator.SetBool("Closing", true);
                         //animator.SetBool("Opening", false);
                     }
@@ -87,6 +96,8 @@ public class AsteroidSpawner : MonoBehaviourPun {
                     if(asteroidSpawnTimer > asteroidSpawnDelay) {
                         openBlackHole = true;
                         //animator.SetBool("Opening", true);
+                        
+                        //
                     }
                     if(asteroidSpawnTimer > asteroidSpawnDelay + spawnAnimationDelay) {
                         SpawnResource();
@@ -95,6 +106,8 @@ public class AsteroidSpawner : MonoBehaviourPun {
                         openBlackHole = shake = false;
                         //animator.SetBool("Closing", true);
                         //animator.SetBool("Opening", false);
+                        
+                        cutoff = 1;
                     }
                 }
             }
