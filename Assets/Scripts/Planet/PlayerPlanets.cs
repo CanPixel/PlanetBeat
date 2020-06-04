@@ -69,7 +69,6 @@ public class PlayerPlanets : MonoBehaviourPun {
 
     public void FinishTutorial() {
         tutorial = false;
-        Destroy(tutorialColliders);
     }
 
     public bool HasPlayer() {
@@ -160,6 +159,8 @@ public class PlayerPlanets : MonoBehaviourPun {
 
     void Update() {
         if(tutorialColliders != null) {
+            if(GameManager.GAME_STARTED) Destroy(tutorialColliders);
+
             tutorialColliders.transform.position = transform.position;
             tutorialColliders.transform.rotation = Quaternion.identity;
         }

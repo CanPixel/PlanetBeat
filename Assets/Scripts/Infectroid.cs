@@ -260,6 +260,10 @@ public class Infectroid : PickupableObject {
         }
     }
 
+    void OnCollisionEnter2D(Collision2D col) {
+        if(col.gameObject.tag == "TutorialWall" && throwed) Destroy(gameObject);
+    }
+
     public void SetTexture(PlanetSwitcher.TexturePack elm) {
         src.sprite = elm.asteroid.src;
         if(elm.asteroid.glow == null) {

@@ -270,7 +270,7 @@ public class Asteroid : PickupableObject {
 
         SoundManager.PLAY_SOUND("CatchObject");
 
-        if((!held || (held && ownerPlayer != null && ownerPlayer.photonView.ViewID != hookShot.hostPlayer.photonView.ViewID))) {
+        if(gameObject.tag == "ResourceTutorial" || (!held || (held && ownerPlayer != null && ownerPlayer.photonView.ViewID != hookShot.hostPlayer.photonView.ViewID))) {
             transform.position = hookShot.transform.position;
             ownerPlayer = hookShot.hostPlayer;
             FetchAsteroid(hookShot.hostPlayer);

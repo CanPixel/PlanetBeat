@@ -25,7 +25,6 @@ public class HookShot : MonoBehaviour {
     public float hookShotRange = 5;
 
     private bool isShootingHook = false, triggerHook = false;
-
     private float shootTimer = 0;
     private bool hitObject = false, didntCatch = false;
     private GameObject grabbedObj;
@@ -44,6 +43,7 @@ public class HookShot : MonoBehaviour {
     private bool scaleTo = false, scaleBack = false;
 
     private float shootDelay = 0;
+    private bool grabbable = false;
 
     void Start() {
         baseHandScale = animateHand.transform.localScale;
@@ -53,6 +53,8 @@ public class HookShot : MonoBehaviour {
 
         var em = handParticles.emission;
         em.enabled = false;
+
+        if(GameManager.SkipCountdown()) grabbable = true;
     }
 
     void Update() {
@@ -73,21 +75,6 @@ public class HookShot : MonoBehaviour {
         if(shootTimer > 0) shootTimer += Time.deltaTime;
         if(shootTimer > 1) didntCatch = true;
         
-        var progress = (HookCooldownDelay / HookCooldownTime);
-
-        /*
-        HookCooldownParent.fillAmount = 1f - progress;
-        HookCooldownParent.color = Color.Lerp(HookCooldownParent.color, (HookCooldown) ? off : on, (HookCooldown) ? (1f - progress) : (Time.deltaTime * 2f));
-
-        var stateCol = (HookCooldown) ? off : on;
-        var endCol = new Color(stateCol.r, stateCol.g, stateCol.b, (HookCooldown) ? 0.55f : 0.75f);
-        HookCooldownIcon.color = Color.Lerp(HookCooldownIcon.color, endCol, (HookCooldown) ? (1f - progress) : (Time.deltaTime * 4f));
-        */
-
-
-        
-
-
         //Cooldown
         if (HookCooldown) {
             HookCooldownDelay -= Time.deltaTime;
@@ -95,14 +82,14 @@ public class HookShot : MonoBehaviour {
         }
 
         // animation
-        if (HookCooldown == true)
-        {
-            animateHandUI.SetInteger("handAnimation", 2);
-        }
-        else
-        {
-            animateHandUI.SetInteger("handAnimation", 1);
-        }
+        if(grabbable) {
+            if (HookCooldown) animateHandUI.SetInteger("handAnimation", 2);
+            else animateHandUI.SetInteger("handAnimation", 1);
+        } else animateHandUI.SetInteger("handAnimation", 2);
+    }
+
+    public void ActivateGrapple() {
+        grabbable = true;
     }
 
     protected void FreeAim() {
@@ -111,7 +98,7 @@ public class HookShot : MonoBehaviour {
             HookCooldown = true;
             HookCooldownDelay = HookCooldownTime;
         }
-        if(Input.GetKeyUp(KeyCode.Space) && triggerHook && shootTimer <= 0) {
+        if(Input.GetKeyUp(KeyCode.Space) && triggerHook && shootTimer <= 0 && grabbable) {
             if(hostPlayer.IsThisClient()) hostPlayer.photonView.RPC("CastHook", RpcTarget.All, hostPlayer.photonView.ViewID);
         }
 

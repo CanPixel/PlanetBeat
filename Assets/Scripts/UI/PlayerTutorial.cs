@@ -7,6 +7,7 @@ using Photon.Pun;
 
 public class PlayerTutorial : MonoBehaviour {
     public GameObject resourcePrefab, infectroidPrefab;
+    public Text spaceToContinueText;
 
     private LineRenderer line;
 
@@ -62,6 +63,8 @@ public class PlayerTutorial : MonoBehaviour {
         line.positionCount = segments + 1;
         foreach(var i in tutorialSteps) i.step.gameObject.SetActive(false);
 
+        spaceToContinueText.gameObject.SetActive(false);
+
         transform.SetParent(host.transform.parent, true);
         transform.localScale = Vector3.one * 0.02f;
         
@@ -84,7 +87,7 @@ public class PlayerTutorial : MonoBehaviour {
     public void CompleteSubTask(string name) {
         if(Launcher.GetSkipCountDown() || !tutorialTasks.ContainsKey(name.ToLower())) return;
 
-        if(tutorialTasks.ContainsKey(name.ToLower())) {
+        if(tutorialTasks.ContainsKey(name.ToLower()) && tutorialTimer > tutorialSteps[tutorialProgress].duration) {
             if(tutorialTasks[name.ToLower()].reference.tutorialName.ToLower() == tutorialSteps[tutorialProgress].tutorialName.ToLower()) {
                 tutorialTasks[name.ToLower()].onSubComplete.Invoke();
                 tutorialTasks[name.ToLower()].completed = true;
@@ -96,7 +99,10 @@ public class PlayerTutorial : MonoBehaviour {
                         break;
                     }
                 }
-                if(fullComplete) tutorialSteps[tutorialProgress].completed = true;
+                if(fullComplete) {
+                    tutorialSteps[tutorialProgress].step.CompleteStep();
+                    tutorialSteps[tutorialProgress].completed = true;
+                }
             }
         }
     }
@@ -120,11 +126,23 @@ public class PlayerTutorial : MonoBehaviour {
     }
 
     private void IncrementTutorial() {
-        foreach(var i in tutorialSteps) i.step.gameObject.SetActive(false);
-        tutorialProgress++;
-        tutorialSteps[tutorialProgress].step.gameObject.SetActive(true);
-        if(tutorialProgress < tutorialSteps.Length) tutorialSteps[tutorialProgress].step.tutorialEvent.Invoke();
-        tutorialTimer = tutorialWait = 0;
+        if(tutorialSteps[tutorialProgress].step != null && tutorialSteps[tutorialProgress].step.PressSpaceToContinue) {
+            spaceToContinueText.gameObject.SetActive(true);
+            spaceToContinueText.color = new Color(1, 1, 1, Mathf.Sin(Time.time * 8f) * 0.25f + 0.5f);
+            spaceToContinueText.transform.position = (tutorialSteps[tutorialProgress].step.pressSpacePos.focalPoint.transform.position + tutorialSteps[tutorialProgress].step.pressSpacePos.offset) + new Vector3(0, Mathf.Sin(Time.time * 8f) / 100f, 0);
+        }
+
+        if(Input.GetKey(KeyCode.Space) || !tutorialSteps[tutorialProgress].step.PressSpaceToContinue) {
+            spaceToContinueText.gameObject.SetActive(false);
+
+            tutorialSteps[tutorialProgress].step.ReleaseAchievements();
+
+            foreach(var i in tutorialSteps) i.step.gameObject.SetActive(false);
+            tutorialProgress++;
+            if(tutorialProgress < tutorialSteps.Length) tutorialSteps[tutorialProgress].step.tutorialEvent.Invoke();
+            tutorialTimer = tutorialWait = 0;
+        }
+        tutorialSteps[tutorialProgress].step.ScreenCheck(host.planet.transform.position);
     }
 
     private void TutorialTick() {
@@ -152,6 +170,8 @@ public class PlayerTutorial : MonoBehaviour {
                     transform.position = Vector3.Lerp(transform.position, vocalPoint, Time.deltaTime * 8f);
                 }
                 else line.enabled = showHighlight = false;
+
+                tutorialSteps[tutorialProgress].step.gameObject.SetActive(true);
             }
 
             //float offset = 2.75f;
@@ -211,7 +231,13 @@ public class PlayerTutorial : MonoBehaviour {
         tutorialResource.transform.position = transform.position;
         tutorialResource.tag = "ResourceTutorial";
         tutorialResource.value = 10;
-        //focalObject = tutorialResource.gameObject;
+        tutorialResource.timeToScore = 1f;
+        tutorialResource.Init();
+
+        var ph = new PhysicsMaterial2D();
+        ph.bounciness = 1;
+        tutorialResource.rb.sharedMaterial = ph;
+
         if(host != null && host.planet != null) host.planet.StartTutorial();
     }
     public void SpawnTutorialInfectroid() {
@@ -242,6 +268,8 @@ public class PlayerTutorial : MonoBehaviour {
         obj.GetPhotonView().RPC("Set", RpcTarget.All, PlayerShip.PLAYERNAME, host.transform.localPosition, host.playerColor.r, host.playerColor.g, host.playerColor.b);
 
         host.planet.FinishTutorial();
+
+        gameObject.SetActive(false);
     }
 
     private Vector3 GetOrbit(Vector3 center, float radius, float angle) {

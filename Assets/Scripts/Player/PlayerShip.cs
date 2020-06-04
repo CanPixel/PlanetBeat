@@ -36,8 +36,9 @@ public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
     public float cooldownPenalty = 3.5f;
 
     // Bradley
-
     public Animator boostAnimator;
+
+    private Vector3 baseScale;
 
     [Space(10)]
     public Component[] networkIgnore;
@@ -96,6 +97,14 @@ public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
     private bool dropAsteroid = false;
     [SerializeField] [HideInInspector] private float respawnDelay = 0;
     private float flicker = 0;
+
+    private bool boostable = false;
+    public void ActivateBoosting() {
+        boostable = true;
+    }
+    public void ActivateGrapple() {
+        hookShot.ActivateGrapple();
+    }
 
     public bool CanExplode() {
         return respawnDelay <= 0;
@@ -267,6 +276,8 @@ public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
       //  if(customController != null && customController.useCustomControls) hookShot.customController = customController;
         maxVelocity = defaultVelocity;
         boostCooldownTimer = boostCooldownDuration;
+
+        if(GameManager.SkipCountdown()) ActivateBoosting();
     }
 
     void FixedUpdate() {
@@ -303,9 +314,7 @@ public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
 
             trailingObjects.RemoveAt(0);
             if(asteroid.rb != null) {
-                
-                if(asteroid.tag == "InfectroidTutorial") playerTutorial.CompleteSubTask("infectroid");//playerTutorial.tutorialPiecesByName["InfectroidThrow"].completed = true;
-
+                if(asteroid.tag == "InfectroidTutorial") playerTutorial.CompleteSubTask("infectroid");
 
                 asteroid.rb.constraints = RigidbodyConstraints2D.None;
                 asteroid.throwed = true;
@@ -336,7 +345,6 @@ public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
         if(ReleaseAsteroidKey() && trailingObjects.Count > 0 && respawnDelay <= 0) {
             
             //SoundManager.PLAY_SOUND("Collect");
-            
             dropAsteroid = true;
             hookShot.DelayShoot();
         }
@@ -382,7 +390,7 @@ public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
     }
 
     protected void BoostManager() {
-        if (Input.GetKeyDown(KeyCode.LeftShift)) BoostPlayer();
+        if (Input.GetKeyDown(KeyCode.LeftShift) && photonView.IsMine && boostable) BoostPlayer();
 
         if (isBoosting) {
             boostTimer += Time.deltaTime;
@@ -405,6 +413,11 @@ public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
             boostAnimator.SetInteger("boostAnimatie", 3);                                       // BOOSTING ANIMATIE
 
             if (rb != null) rb.AddForce(transform.up * boostForce);
+
+            if(!isBoosting) {
+                baseScale = model.transform.localScale;
+                model.transform.localScale *= 1.25f;
+            }
             isBoosting = true;
         }
         else {
@@ -415,21 +428,21 @@ public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
     private void BoostCooldown() {
         boostCooldownTimer += Time.deltaTime;
         var settings = exhaust.main;
-        var switchcol = Color.clear;                                                            // COLOR FIRE
+        var switchcol = Color.clear;
         
         if (boostCooldownTimer >= 0.9f && boostCooldownTimer < boostCooldownDuration)
         {
             settings.startColor = new ParticleSystem.MinMaxGradient(switchcol);                 // COLOR FIRE
-            
         }
 
-        if (boostCooldownTimer >= boostCooldownDuration)
-        {
+        if (boostCooldownTimer >= boostCooldownDuration) {
             canBoost = true;
 
             //gameObject.GetComponent<Renderer>().material.SetColor("_EMISSION", playerColor);
             settings.startColor = new ParticleSystem.MinMaxGradient(playerColor);               // COLOR FIRE
             boostAnimator.SetInteger("boostAnimatie", 2);                                       // FULL BOOST ANIMATIE
+        } else {
+            model.transform.localScale = Vector3.Lerp(model.transform.localScale, baseScale, Time.deltaTime * 2f);
         }
     }
 
@@ -467,7 +480,7 @@ public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
         if(IsTurningLeft()) turn += turningSpeed * Time.deltaTime * 50f;
         if(IsTurningRight()) turn -= turningSpeed * Time.deltaTime * 50f;
 
-        if(IsTurningLeft() || IsTurningRight() || IsThrust()) playerTutorial.CompleteSubTask("move");
+        if(IsThrust()) playerTutorial.CompleteSubTask("move");
     }
 
     //Wanneer je orbits exit, de speed dampening.

@@ -168,7 +168,7 @@ GameObject:
   - component: {fileID: 8750682063136060132}
   m_Layer: 5
   m_Name: Wall (2)
-  m_TagString: Untagged
+  m_TagString: TutorialWall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -387,7 +387,7 @@ GameObject:
   - component: {fileID: 1316099145081696027}
   m_Layer: 5
   m_Name: Wall (1)
-  m_TagString: Untagged
+  m_TagString: TutorialWall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -542,7 +542,6 @@ MonoBehaviour:
   warningArrow: {fileID: 0}
   infected: 0
   eliminationTimer: 0
-  tutorial: 0
 --- !u!114 &5336174367327457940
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1039,7 +1038,7 @@ GameObject:
   - component: {fileID: 5663402311504768282}
   m_Layer: 5
   m_Name: Wall (3)
-  m_TagString: Untagged
+  m_TagString: TutorialWall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1100,7 +1099,7 @@ GameObject:
   - component: {fileID: 2876563312852798151}
   m_Layer: 5
   m_Name: TutorialColliders
-  m_TagString: Untagged
+  m_TagString: TutorialWall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1140,7 +1139,7 @@ GameObject:
   - component: {fileID: 2184896216216103010}
   m_Layer: 5
   m_Name: Wall
-  m_TagString: Untagged
+  m_TagString: TutorialWall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1434,6 +1433,16 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6061447726823252456, guid: f3469c6a1e99fd544b899569b8f579c8,
+        type: 3}
+      propertyPath: m_FillAmount
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6061447726823252456, guid: f3469c6a1e99fd544b899569b8f579c8,
+        type: 3}
+      propertyPath: m_Color.a
+      value: 0.6156863
+      objectReference: {fileID: 0}
     - target: {fileID: 6061447726823252457, guid: f3469c6a1e99fd544b899569b8f579c8,
         type: 3}
       propertyPath: m_SizeDelta.y
@@ -1448,16 +1457,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Color.a
       value: 0.5921569
-      objectReference: {fileID: 0}
-    - target: {fileID: 6061447726823252456, guid: f3469c6a1e99fd544b899569b8f579c8,
-        type: 3}
-      propertyPath: m_FillAmount
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6061447726823252456, guid: f3469c6a1e99fd544b899569b8f579c8,
-        type: 3}
-      propertyPath: m_Color.a
-      value: 0.6156863
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f3469c6a1e99fd544b899569b8f579c8, type: 3}

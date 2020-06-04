@@ -29,6 +29,7 @@ public class Orbit : MonoBehaviour {
     }
 
     void Start() {
+        Random.InitState(System.DateTime.Now.Millisecond);
         if(Random.Range(0, 2) == 0) flip = true;
     }
 

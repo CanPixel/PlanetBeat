@@ -29,6 +29,7 @@ TagManager:
   - MOON
   - ResourceTutorial
   - InfectroidTutorial
+  - TutorialWall
   layers:
   - Default
   - TransparentFX

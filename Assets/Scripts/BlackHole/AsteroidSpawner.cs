@@ -52,6 +52,8 @@ public class AsteroidSpawner : MonoBehaviourPun {
     }
 
     void Update() {
+        Random.InitState(System.DateTime.Now.Millisecond);
+
         FMODUnity.RuntimeManager.StudioSystem.setParameterByName("BlackHole", cutoff);
 
         if(!GameManager.GAME_STARTED) return;

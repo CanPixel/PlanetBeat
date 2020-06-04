@@ -25,15 +25,15 @@ public class PlayerTagsManager : MonoBehaviour {
         _asteroid = GetComponent<Asteroid>();
         //src = _asteroid.src;
         //glow = _asteroid.glow;
-        asteroidTrailRenderer = GetComponent<TrailRenderer>();
-        asteroidTrailRenderer.material.color = ogTrailColor; 
+//        asteroidTrailRenderer = GetComponent<TrailRenderer>();
+//        asteroidTrailRenderer.material.color = ogTrailColor; 
         
         DisableTrails();
         ColorShell.material.SetColor("_EmissionColor", Color.white * Mathf.LinearToGammaSpace(-10));
     }
 
     public void DisableTrails() {
-        asteroidTrailRenderer.enabled = false;
+        //asteroidTrailRenderer.enabled = false;
     }
 
     void Update() {
@@ -44,7 +44,7 @@ public class PlayerTagsManager : MonoBehaviour {
 
     public void GiveTag() {
         if(_asteroid != null && _asteroid.ownerPlayer != null) tagNum = _asteroid.ownerPlayer.playerNumber;
-        asteroidTrailRenderer.material.color = _asteroid.ownerPlayer.playerColor;
+        //asteroidTrailRenderer.material.color = _asteroid.ownerPlayer.playerColor;
       //  TagOn(false);
         //if(_asteroid != null && _asteroid.ownerPlayer != null && src != null && glow != null) src.color = glow.color = _asteroid.ownerPlayer.playerColor * 1.7f;
         if(_asteroid != null && _asteroid.ownerPlayer != null) ColorShell.material.SetColor("_EmissionColor", _asteroid.ownerPlayer.playerColor * 1f);
