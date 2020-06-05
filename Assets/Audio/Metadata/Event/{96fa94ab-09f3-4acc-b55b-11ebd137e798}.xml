@@ -5,9 +5,6 @@
 			<value>Moet onheilspellender Klnken, tegenovergestelde van een Resource Spawn
 </value>
 		</property>
-		<property name="color">
-			<value>Magenta</value>
-		</property>
 		<property name="name">
 			<value>InfectroidSpawn</value>
 		</property>
