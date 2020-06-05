@@ -280,6 +280,8 @@ public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
     }
 
     void FixedUpdate() {
+        if(transform.position.z != -1.1f) transform.position = new Vector3(transform.position.x, transform.position.y, -1.1f);
+
         maxVelocity = Mathf.Lerp(maxVelocity, defaultVelocity, Time.deltaTime * 2f);
 
         if(respawnDelay > 0) {
@@ -367,8 +369,9 @@ public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
             bool shouldEmit = Mathf.Abs(Vector3.Distance(exLastPos, transform.position)) > 0.04f;
             emitting.enabled = shouldEmit;
         }
-        exhaustLight.color = exhaust.main.startColor.color;
-        exhaustLight.enabled = exhaust.emission.enabled;
+        
+        exhaustLight.color = playerColor;
+        exhaustLight.enabled = true;
 
         if(!photonView.IsMine && PhotonNetwork.IsConnected) return;
 
