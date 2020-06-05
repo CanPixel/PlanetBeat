@@ -127,7 +127,7 @@ public class HookShot : MonoBehaviour {
     public void CastHook() {
         if(!hostPlayer.CanCastHook() || IsDelayingHook()) return;
 
-        SoundManager.PLAY_SOUND("ReelOut");
+        if(GameManager.GAME_STARTED || (!GameManager.GAME_STARTED && hostPlayer.photonView.IsMine)) SoundManager.PLAY_SOUND("ReelOut");
 
         isShootingHook = true;
         triggerHook = false;

@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class imageSwitcher : MonoBehaviour
-{
+public class imageSwitcher : MonoBehaviour {
     [HideInInspector] public PlayerPlanets planet;
 
     Image myImageComponent;
@@ -15,33 +14,37 @@ public class imageSwitcher : MonoBehaviour
     public Sprite greenHand;
     public Sprite cyanHand;
 
-    void Start()
-    {
-        myImageComponent = GetComponent<Image>(); //Our image component is the one attached to this gameObject.
+    void Start() {
+        myImageComponent = GetComponent<Image>();
     }
     
-    public void SetHandRed(){
+    public void SetHandRed() {
+        if(myImageComponent == null) return;
         myImageComponent.sprite = redHand;
     }
 
-    public void SetHandPink(){
+    public void SetHandPink() {
+        if(myImageComponent == null) return;
         myImageComponent.sprite = pinkHand;
     }
 
-    public void SetHandBlue(){
+    public void SetHandBlue() {
+        if(myImageComponent == null) return;
         myImageComponent.sprite = blueHand;
     }
 
-    public void SetHandYellow(){
+    public void SetHandYellow() {
+        if(myImageComponent == null) return;
         myImageComponent.sprite = yellowHand;
     }
 
-    public void SetHandGreen(){
+    public void SetHandGreen() {
+        if(myImageComponent == null) return;
         myImageComponent.sprite = greenHand;
     }
 
-    public void SetHandCyan(){
+    public void SetHandCyan() {
+        if(myImageComponent == null) return;
         myImageComponent.sprite = cyanHand;
     }
-
 }

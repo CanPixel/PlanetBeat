@@ -35,7 +35,8 @@ public class Launcher : MonoBehaviourPunCallbacks, ILobbyCallbacks, IInRoomCallb
 
     public Toggle SpectToggle;
     public Image SpectIcon;
-    public Text playText, playersOnline, playersInSpace, countOfRooms, title;
+    public Text playText, playersOnline, playersInSpace, countOfRooms;
+    public GameObject title;
     [Header("ROOM SELECTION")]
     public ToggleGroup roomGroup;
     private List<SpaceRoomToggle> roomList = new List<SpaceRoomToggle>();

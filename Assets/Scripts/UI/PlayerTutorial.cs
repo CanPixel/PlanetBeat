@@ -90,7 +90,7 @@ public class PlayerTutorial : MonoBehaviour {
         if(tutorialTasks.ContainsKey(name.ToLower()) && tutorialTimer > tutorialSteps[tutorialProgress].duration) {
             if(tutorialTasks[name.ToLower()].reference.tutorialName.ToLower() == tutorialSteps[tutorialProgress].tutorialName.ToLower()) {
                 tutorialTasks[name.ToLower()].onSubComplete.Invoke();
-                if(!tutorialTasks[name.ToLower()].completed) SoundManager.PLAY_SOUND("ScoreIncrease");
+                if(!tutorialTasks[name.ToLower()].completed && host.photonView.IsMine) SoundManager.PLAY_SOUND("ScoreIncrease");
                 tutorialTasks[name.ToLower()].completed = true;
 
                 bool fullComplete = true;
@@ -175,22 +175,6 @@ public class PlayerTutorial : MonoBehaviour {
                 tutorialSteps[tutorialProgress].step.gameObject.SetActive(true);
             }
 
-            //float offset = 2.75f;
-            //var sine = Mathf.Sin(Time.time * 7f);
-           // curTutorial.step.transform.rotation = Quaternion.identity;
-            //if(transform.position.x > 1) offset = -3f;
-            //curTutorial.step.transform.position = new Vector3(transform.position.x + offset + sine / 14f, transform.position.y, 0);
-
-            /* if(curTutorial.textFocalPoint != null) {
-                var focalPoint = curTutorial.textFocalPoint.gameObject;
-                if(curTutorial.tutorialName.Contains("PLANET!") && host.planet != null) focalPoint = host.planet.gameObject;
-
-                float offset = 2.75f;
-                var sine = Mathf.Sin(Time.time * 7f);
-                if(focalPoint.transform.position.x > 1) offset = -3f;
-                textPrefab.transform.position = new Vector3(focalPoint.transform.position.x + textPos.x + offset + sine / 14f, focalPoint.transform.position.y + textPos.y, 0);
-            } */
-
             tutorialTimer += Time.deltaTime;
             if(tutorialTimer > curTutorial.duration && (curTutorial.completeAfterDuration || curTutorial.completed)) {
                 if(curTutorial.afterDuration > 0) {
@@ -241,6 +225,8 @@ public class PlayerTutorial : MonoBehaviour {
         ph.bounciness = 1;
         tutorialResource.rb.sharedMaterial = ph;
 
+        if(host.photonView.IsMine) SoundManager.PLAY_SOUND("ResourceSpawn");
+
         if(host != null && host.planet != null) host.planet.StartTutorial();
     }
     public void SpawnTutorialInfectroid() {
@@ -250,11 +236,9 @@ public class PlayerTutorial : MonoBehaviour {
         tutorialInfectroid = obj.GetComponent<Infectroid>();
         tutorialInfectroid.transform.position = transform.position;
         tutorialInfectroid.tag = "InfectroidTutorial";
-        //focalObject = tutorialInfectroid.gameObject;
         host.planet.currentScore = 10;
 
-        //line.startColor = line.endColor = host.playerColor;
-        //host.planet.Explode(10);
+        if(host.photonView.IsMine) SoundManager.PLAY_SOUND("InfectroidSpawn");
     }
 
     public void ResetOrbitColor() {

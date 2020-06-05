@@ -25,9 +25,9 @@ public class TutorialAchievement : MonoBehaviour {
         if(!moveToPlayer) transform.localScale = Vector3.Lerp(transform.localScale, baseScale, Time.deltaTime * 3f);
         else {
             transform.position = Vector3.Lerp(transform.position, player.transform.position, Time.deltaTime * 4f);
-            transform.localScale = Vector3.Lerp(transform.localScale, Vector3.zero, Time.deltaTime * 1f);
+            transform.localScale = Vector3.Lerp(transform.localScale, Vector3.zero, Time.deltaTime * 2f);
 
-            if(transform.localScale.x < 5f) Destroy(gameObject);
+            if(transform.localScale.x < 6f) Destroy(gameObject);
         }
     }
 

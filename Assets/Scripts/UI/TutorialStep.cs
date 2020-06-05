@@ -47,11 +47,10 @@ public class TutorialStep : MonoBehaviour {
         for(int i = 0; i < tutorialPositioners.Length; i++) {
             if(tutorialPositioners[i].focalPoint != null) tutorialPositioners[i].HUDElement.transform.position = tutorialPositioners[i].focalPoint.transform.position + tutorialPositioners[i].offset;
             else if(tutorialPositioners[i].specialFocalPoint.Length > 0) {
-                if(tutorialPositioners[i].specialFocalPoint.ToLower() == "planet") tutorialPositioners[i].HUDElement.transform.position = host.planet.transform.position + tutorialPositioners[i].offset;
+                if(tutorialPositioners[i].specialFocalPoint.ToLower() == "planet" && host != null && host.planet != null && tutorialPositioners[i].HUDElement != null) tutorialPositioners[i].HUDElement.transform.position = host.planet.transform.position + tutorialPositioners[i].offset;
             }
             tutorialPositioners[i].HUDElement.transform.eulerAngles = tutorialPositioners[i].rotation;
         }
-
         transform.localPosition = new Vector3(transform.localPosition.x, Mathf.Sin(Time.time * 6f) * 100f, transform.localPosition.z);
     }
 

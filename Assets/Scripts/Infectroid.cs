@@ -57,7 +57,6 @@ public abstract class PickupableObject : MonoBehaviourPun {
 }
 
 public class Infectroid : PickupableObject {
-    public Image src, glow;
     public Text increasePopupTxt;
     public GameObject explodeParticles;
 
@@ -100,21 +99,17 @@ public class Infectroid : PickupableObject {
     private bool scaleBack = false;
     private int spawnTimerChange = 0;
 
-    //private Vector3 standardGlowScale;
-
     void Start() {
         dropBoosts = false;
         base.Init();
         network = GetComponent<AsteroidNetwork>();
         rb = GetComponent<Rigidbody2D>();
         
-        //SetTexture(PlanetSwitcher.GetCurrentTexturePack());
         rb.AddForce(transform.up * Thrust);
         LinksOfRechts = Random.Range(0, 2);
 
         increasePopupBaseSize = increasePopupTxt.transform.localScale.x;
         increasePopupTxt.transform.localScale = Vector3.zero;
-        //standardGlowScale = glow.transform.localScale;
     }
 
     void OnEnable() {
@@ -124,14 +119,7 @@ public class Infectroid : PickupableObject {
 
     [PunRPC]
     public void SynchTimer(float timer) {
-        if(spawnTimer > destroyAfter - 5) {
-            infectroidAnimator.SetInteger("Infectroid_Animation", 1);
-            
-            /* increasePopupHideTimer = 0;
-            increasePopupTxt.color = new Color(0, 1, 0f);
-            increasePopupTxt.text = ((int)Mathf.Clamp((destroyAfter - spawnTimer) + 1, 0, 5)).ToString();
-             increasePopupTxt.transform.localScale = Vector3.one * increasePopupBaseSize; */
-        }
+        if(spawnTimer > destroyAfter - 5) infectroidAnimator.SetInteger("Infectroid_Animation", 1);
         if(PhotonNetwork.IsMasterClient) return;
         this.spawnTimer = timer;
     }
@@ -155,9 +143,6 @@ public class Infectroid : PickupableObject {
     }
 
     void Update() {
-        //float fade = 1;
-        //src.color = Color.Lerp(src.color, new Color(src.color.r, src.color.g, src.color.b, fade), Time.deltaTime * 5f);
-
         if(collectTimer > 0) collectTimer -= Time.deltaTime;
 
         increasePopupTxt.transform.rotation = Quaternion.Euler(0, 0, Mathf.Sin(Time.time * 3f) * 10f);
@@ -269,18 +254,6 @@ public class Infectroid : PickupableObject {
         if(col.gameObject.tag == "TutorialWall" && throwed) Destroy(gameObject);
     }
 
-    //public void SetTexture(PlanetSwitcher.TexturePack elm) {
-      /*   src.sprite = elm.asteroid.src;
-        if(elm.asteroid.glow == null) {
-            glow.enabled = false;
-            return;
-        }
-        glow.enabled = true;
-        glow.sprite = elm.asteroid.glow;
-        src.SetNativeSize();
-        glow.SetNativeSize(); */
-    //}
-
     [PunRPC]
     public void DestroyAsteroid(int asteroidID) {
         if(photonView != null && photonView.ViewID == asteroidID) {
@@ -291,8 +264,6 @@ public class Infectroid : PickupableObject {
 
     public void DestroyDefinite() {
         SoundManager.PLAY_SOUND("InfectroidExplosion");
-
-        //Instantiate(explodeParticles, transform.position, Quaternion.identity);
         GameManager.DESTROY_SERVER_OBJECT(gameObject);
         if(photonView != null) photonView.RPC("DestroyAsteroid", RpcTarget.All, photonView.ViewID);
         Destroy(gameObject);
@@ -316,7 +287,7 @@ public class Infectroid : PickupableObject {
         held = true;
     }
 
-    public void ReleasedTimer() { //Gives a small time window in which the player can instantly score
+    public void ReleasedTimer() {
         if (canScore && canConsume == false) {
             releaseTimer += Time.deltaTime;
             canConsume = true; 

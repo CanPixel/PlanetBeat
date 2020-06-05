@@ -5,7 +5,6 @@ using UnityEngine.UI;
 using TMPro;
 
 using Photon.Pun;
-using Photon.Realtime;
 
 public class PlayerPlanets : MonoBehaviourPun {
     public AnimationClip borealisAnim;
@@ -98,9 +97,6 @@ public class PlayerPlanets : MonoBehaviourPun {
         lerpScore = minScore;
         scoreBaseScale = scoreText.transform.localScale;
 
-        //textOutline = scoreText.GetComponent<Outline>();
-        //outlineBase = textOutline.effectDistance;
-
         baseScale = transform.localScale;
         currentScore = minScore;
         increasePopupTxt.enabled = false;
@@ -147,7 +143,6 @@ public class PlayerPlanets : MonoBehaviourPun {
         orbitTrail.material.color = orbitColor;
         currentScore = minScore; 
         player.SetHomePlanet(gameObject);
-        //scoreText.transform.position = transform.position - new Vector3(0, 0.05f, 1);
     }
 
     public Color GetColor() {
@@ -215,13 +210,12 @@ public class PlayerPlanets : MonoBehaviourPun {
 
         if(scoreText != null) {
             var basePos = transform.position - new Vector3(-0.025f, 0.75f, 1);
-            scoreText.transform.rotation = Quaternion.identity;
+            scoreText.transform.rotation = Quaternion.Euler(0, 0, 0);
             
             //if(!GameManager.GAME_STARTED) scoreText.transform.position = Vector3.Lerp(scoreText.transform.position, (!tutorial) ? basePos : basePos - new Vector3(0, 0.5f, 0), Time.deltaTime * (tutorial ? 2f : 6f));
             scoreText.transform.position = basePos;
 
             scoreText.transform.localScale = Vector2.Lerp(scoreText.transform.localScale, scoreBaseScale, Time.deltaTime * 1f);
-            //textOutline.effectDistance = Vector2.Lerp(textOutline.effectDistance, outlineBase, Time.deltaTime * 1.2f);
 
             scoreText.text = ((int)lerpScore).ToString();
             if(player != null) {
@@ -271,7 +265,7 @@ public class PlayerPlanets : MonoBehaviourPun {
         
         if(currentScore - penalty >= 0) currentScore -= penalty;
         else currentScore = 0;
-        SoundManager.PLAY_SOUND("ScoreDecrease");
+        if(GameManager.GAME_STARTED || (!GameManager.GAME_STARTED && player.photonView.IsMine)) SoundManager.PLAY_SOUND("ScoreDecrease");
 
         increasePopupTxt.enabled = true;    
         increasePopupTxt.color = redDecrease;
@@ -286,7 +280,7 @@ public class PlayerPlanets : MonoBehaviourPun {
     public void AddingResource(float amount) {
         if(playerNumber <= 0) return;
         
-        SoundManager.PLAY_SOUND("ScoreIncrease");
+        if(GameManager.GAME_STARTED || (!GameManager.GAME_STARTED && player.photonView.IsMine)) SoundManager.PLAY_SOUND("ScoreIncrease");
 
         currentScore += amount;
         if(currentScore > maxScore) currentScore = maxScore;
