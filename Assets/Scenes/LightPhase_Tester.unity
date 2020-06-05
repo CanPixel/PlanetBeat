@@ -24,7 +24,7 @@ RenderSettings:
   m_AmbientEquatorColor: {r: 0.114, g: 0.125, b: 0.133, a: 1}
   m_AmbientGroundColor: {r: 0.047, g: 0.043, b: 0.035, a: 1}
   m_AmbientIntensity: 1
-  m_AmbientMode: 0
+  m_AmbientMode: 3
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
   m_SkyboxMaterial: {fileID: 0}
   m_HaloStrength: 0.5
@@ -70,7 +70,7 @@ LightmapSettings:
     m_FinalGather: 0
     m_FinalGatherFiltering: 1
     m_FinalGatherRayCount: 256
-    m_ReflectionCompression: 2
+    m_ReflectionCompression: 0
     m_MixedBakeMode: 2
     m_BakeBackend: 0
     m_PVRSampling: 1
@@ -96,7 +96,7 @@ LightmapSettings:
     m_PVRFilteringAtrousPositionSigmaAO: 1
     m_ShowResolutionOverlay: 1
     m_ExportTrainingData: 0
-  m_LightingDataAsset: {fileID: 112000000, guid: 404745747afb2fd40aa9f7a102ef8729,
+  m_LightingDataAsset: {fileID: 112000000, guid: 7018eca27c2676543a3f3572327bce8d,
     type: 2}
   m_UseShadowmask: 1
 --- !u!196 &4
@@ -137,7 +137,7 @@ GameObject:
   - component: {fileID: 5631180}
   - component: {fileID: 5631179}
   - component: {fileID: 5631178}
-  m_Layer: 5
+  m_Layer: 14
   m_Name: PLANETYELLOW
   m_TagString: PLAYERPLANET
   m_Icon: {fileID: 0}
@@ -536,7 +536,7 @@ Transform:
   - {fileID: 351265308}
   - {fileID: 1970969301}
   m_Father: {fileID: 975042796}
-  m_RootOrder: 13
+  m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &128106031
 GameObject:
@@ -2523,7 +2523,7 @@ RectTransform:
   - {fileID: 1796082371}
   - {fileID: 661438928}
   m_Father: {fileID: 977717398}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -3899,7 +3899,7 @@ GameObject:
   - component: {fileID: 361059103}
   - component: {fileID: 361059105}
   - component: {fileID: 361059104}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Model
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3937,7 +3937,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: ee375e0c2de010c4198d0f6669a5769a, type: 2}
+  - {fileID: 2100000, guid: 40c61b42e44e3ea46b7fb91918afe780, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -4231,7 +4231,7 @@ Transform:
   - {fileID: 1792692382}
   - {fileID: 1233549696}
   m_Father: {fileID: 975042796}
-  m_RootOrder: 14
+  m_RootOrder: 15
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &401660888
 GameObject:
@@ -5020,7 +5020,7 @@ Transform:
   - {fileID: 1282111609}
   - {fileID: 1777907677}
   m_Father: {fileID: 975042796}
-  m_RootOrder: 10
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &474676431
 GameObject:
@@ -6406,7 +6406,7 @@ GameObject:
   - component: {fileID: 525670563}
   - component: {fileID: 525670565}
   - component: {fileID: 525670564}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Model
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6444,7 +6444,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: ee375e0c2de010c4198d0f6669a5769a, type: 2}
+  - {fileID: 2100000, guid: fbd857176fbc285439a903fa8862fe7e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -7242,7 +7242,7 @@ GameObject:
   - component: {fileID: 556833953}
   - component: {fileID: 556833952}
   - component: {fileID: 556833951}
-  m_Layer: 5
+  m_Layer: 14
   m_Name: PLANETYELLOW
   m_TagString: PLAYERPLANET
   m_Icon: {fileID: 0}
@@ -7263,7 +7263,7 @@ RectTransform:
   - {fileID: 987316580}
   - {fileID: 1633287016}
   m_Father: {fileID: 977717398}
-  m_RootOrder: 5
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -8557,7 +8557,7 @@ GameObject:
   - component: {fileID: 663829192}
   - component: {fileID: 663829194}
   - component: {fileID: 663829193}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Model
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9178,7 +9178,7 @@ GameObject:
   - component: {fileID: 709235721}
   - component: {fileID: 709235720}
   - component: {fileID: 709235719}
-  m_Layer: 5
+  m_Layer: 14
   m_Name: 'PLANETYELLOW '
   m_TagString: PLAYERPLANET
   m_Icon: {fileID: 0}
@@ -9199,7 +9199,7 @@ RectTransform:
   - {fileID: 525670563}
   - {fileID: 1274278443}
   m_Father: {fileID: 1528850962}
-  m_RootOrder: 5
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -9651,7 +9651,7 @@ RectTransform:
   - {fileID: 32600662}
   - {fileID: 648586572}
   m_Father: {fileID: 2000203972}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -10785,6 +10785,97 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 851774437}
   m_Mesh: {fileID: 5161748241955256188, guid: 8126b528fe5428343b49e62a5a8a3c2d, type: 3}
+--- !u!1 &876878073
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 876878074}
+  - component: {fileID: 876878075}
+  m_Layer: 0
+  m_Name: PLANETYELLOW_LIGHT
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &876878074
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 876878073}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -300.99045, y: 21.007092, z: -643.6}
+  m_LocalScale: {x: 0.2, y: 0.2, z: 0.19999999}
+  m_Children: []
+  m_Father: {fileID: 975042796}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+--- !u!108 &876878075
+Light:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 876878073}
+  m_Enabled: 1
+  serializedVersion: 9
+  m_Type: 1
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Intensity: 0.72
+  m_Range: 10
+  m_SpotAngle: 30
+  m_InnerSpotAngle: 21.80208
+  m_CookieSize: 10
+  m_Shadows:
+    m_Type: 0
+    m_Resolution: -1
+    m_CustomResolution: -1
+    m_Strength: 1
+    m_Bias: 0.05
+    m_NormalBias: 0.4
+    m_NearPlane: 0.2
+    m_CullingMatrixOverride:
+      e00: 1
+      e01: 0
+      e02: 0
+      e03: 0
+      e10: 0
+      e11: 1
+      e12: 0
+      e13: 0
+      e20: 0
+      e21: 0
+      e22: 1
+      e23: 0
+      e30: 0
+      e31: 0
+      e32: 0
+      e33: 1
+    m_UseCullingMatrixOverride: 0
+  m_Cookie: {fileID: 0}
+  m_DrawHalo: 0
+  m_Flare: {fileID: 0}
+  m_RenderMode: 0
+  m_CullingMask:
+    serializedVersion: 2
+    m_Bits: 16384
+  m_RenderingLayerMask: 1
+  m_Lightmapping: 4
+  m_LightShadowCasterMode: 0
+  m_AreaSize: {x: 1, y: 1}
+  m_BounceIntensity: 1
+  m_ColorTemperature: 6570
+  m_UseColorTemperature: 0
+  m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
+  m_UseBoundingSphereOverride: 0
+  m_ShadowRadius: 0
+  m_ShadowAngle: 0
 --- !u!1 &879128871
 GameObject:
   m_ObjectHideFlags: 0
@@ -10930,7 +11021,7 @@ Transform:
   - {fileID: 814080876}
   - {fileID: 1265000051}
   m_Father: {fileID: 975042796}
-  m_RootOrder: 12
+  m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &895592587
 GameObject:
@@ -11060,7 +11151,7 @@ RectTransform:
   - {fileID: 1050501667}
   - {fileID: 1546899090}
   m_Father: {fileID: 1528850962}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -11362,7 +11453,7 @@ RectTransform:
   m_Children:
   - {fileID: 1553499728}
   m_Father: {fileID: 1457222438}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -11927,7 +12018,7 @@ RectTransform:
   - {fileID: 603757118}
   - {fileID: 1231707626}
   m_Father: {fileID: 1528850962}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -12214,6 +12305,7 @@ RectTransform:
   - {fileID: 519420032}
   - {fileID: 320044792}
   - {fileID: 1306677425}
+  - {fileID: 876878074}
   - {fileID: 1457222438}
   - {fileID: 2000203972}
   - {fileID: 1528850962}
@@ -12295,12 +12387,12 @@ Transform:
   - {fileID: 968675107}
   - {fileID: 1555983539}
   - {fileID: 143424381}
+  - {fileID: 556833950}
   - {fileID: 2035768040}
   - {fileID: 264649638}
-  - {fileID: 556833950}
   - {fileID: 2144143637}
   m_Father: {fileID: 975042796}
-  m_RootOrder: 9
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &987316579
 GameObject:
@@ -12313,7 +12405,7 @@ GameObject:
   - component: {fileID: 987316580}
   - component: {fileID: 987316582}
   - component: {fileID: 987316581}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Model
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -12491,7 +12583,7 @@ Transform:
   - {fileID: 427100594}
   - {fileID: 335571844}
   m_Father: {fileID: 975042796}
-  m_RootOrder: 11
+  m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1039565234
 GameObject:
@@ -12911,7 +13003,7 @@ RectTransform:
   - {fileID: 2042290801}
   - {fileID: 285646180}
   m_Father: {fileID: 2000203972}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -14100,7 +14192,7 @@ GameObject:
   - component: {fileID: 1178359575}
   - component: {fileID: 1178359577}
   - component: {fileID: 1178359576}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Atmos-Sphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14138,7 +14230,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 2cca0ea1a6a65184c82a1e865a944292, type: 2}
+  - {fileID: 2100000, guid: ddf215e409bc2ac4d9854e5d32a52c1b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -14869,7 +14961,7 @@ Transform:
   - {fileID: 239575010}
   - {fileID: 541793256}
   m_Father: {fileID: 975042796}
-  m_RootOrder: 15
+  m_RootOrder: 16
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1210086393
 GameObject:
@@ -16236,7 +16328,7 @@ GameObject:
   - component: {fileID: 1274278443}
   - component: {fileID: 1274278445}
   - component: {fileID: 1274278444}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Atmos-Sphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -16274,7 +16366,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 2cca0ea1a6a65184c82a1e865a944292, type: 2}
+  - {fileID: 2100000, guid: 6cde30f68476c4349b0a1d4c25f41b47, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -17052,12 +17144,12 @@ Transform:
   - {fileID: 959309377}
   - {fileID: 5336174368566666025}
   - {fileID: 5336174367375389827}
+  - {fileID: 1652462858}
   - {fileID: 2011082174}
   - {fileID: 956182221}
-  - {fileID: 1652462858}
   - {fileID: 1593705092}
   m_Father: {fileID: 975042796}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1475212141
 GameObject:
@@ -17397,12 +17489,12 @@ Transform:
   - {fileID: 1409190534}
   - {fileID: 1209725045}
   - {fileID: 196274722}
+  - {fileID: 709235718}
   - {fileID: 970059905}
   - {fileID: 899622688}
-  - {fileID: 709235718}
   - {fileID: 730307488}
   m_Father: {fileID: 975042796}
-  m_RootOrder: 8
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1534178630
 GameObject:
@@ -19061,7 +19153,7 @@ GameObject:
   - component: {fileID: 1633287016}
   - component: {fileID: 1633287018}
   - component: {fileID: 1633287017}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Atmos-Sphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19099,7 +19191,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 2cca0ea1a6a65184c82a1e865a944292, type: 2}
+  - {fileID: 2100000, guid: 21404d0f8077f6a4eb46239696dd978d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -19369,7 +19461,7 @@ GameObject:
   - component: {fileID: 1652462861}
   - component: {fileID: 1652462860}
   - component: {fileID: 1652462859}
-  m_Layer: 5
+  m_Layer: 14
   m_Name: PLANETYELLOW
   m_TagString: PLAYERPLANET
   m_Icon: {fileID: 0}
@@ -19389,7 +19481,7 @@ RectTransform:
   m_Children:
   - {fileID: 663829192}
   m_Father: {fileID: 1457222438}
-  m_RootOrder: 5
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -20011,7 +20103,7 @@ GameObject:
   - component: {fileID: 1709358466}
   - component: {fileID: 1709358465}
   - component: {fileID: 1709358464}
-  m_Layer: 5
+  m_Layer: 14
   m_Name: PLANETYELLOW
   m_TagString: PLAYERPLANET
   m_Icon: {fileID: 0}
@@ -20032,7 +20124,7 @@ RectTransform:
   - {fileID: 361059103}
   - {fileID: 1178359575}
   m_Father: {fileID: 2000203972}
-  m_RootOrder: 5
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -23543,12 +23635,12 @@ Transform:
   - {fileID: 1606139828}
   - {fileID: 568699376}
   - {fileID: 1207883751}
+  - {fileID: 1709358463}
   - {fileID: 1044642559}
   - {fileID: 731244597}
-  - {fileID: 1709358463}
   - {fileID: 1938701968}
   m_Father: {fileID: 975042796}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2011082173
 GameObject:
@@ -23586,7 +23678,7 @@ RectTransform:
   m_Children:
   - {fileID: 2113263238}
   m_Father: {fileID: 1457222438}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -24193,7 +24285,7 @@ RectTransform:
   - {fileID: 2025796834}
   - {fileID: 659950705}
   m_Father: {fileID: 977717398}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -27340,7 +27432,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: ee375e0c2de010c4198d0f6669a5769a, type: 2}
+  - {fileID: 2100000, guid: d76d1f90501aeca47973f396a0d52739, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -27824,7 +27916,7 @@ GameObject:
   - component: {fileID: 5006512736391068525}
   - component: {fileID: 4044710142896357723}
   - component: {fileID: 7718390322359319970}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Atmos-Sphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -28130,7 +28222,7 @@ GameObject:
   - component: {fileID: 5006512735853038320}
   - component: {fileID: 4044710141595119814}
   - component: {fileID: 7718390323096423487}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Model
   m_TagString: Untagged
   m_Icon: {fileID: 0}

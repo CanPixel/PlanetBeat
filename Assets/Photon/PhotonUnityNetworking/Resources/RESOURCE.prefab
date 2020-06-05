@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 3766480353466668451}
   - component: {fileID: 2141314415609688911}
   - component: {fileID: 4269830438480074159}
-  - component: {fileID: 7926521406406210428}
   m_Layer: 12
   m_Name: Sphere (2)
   m_TagString: Untagged
@@ -78,19 +77,6 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!135 &7926521406406210428
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 100102696842670324}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1781471089144147448
 GameObject:
   m_ObjectHideFlags: 0
@@ -718,7 +704,6 @@ GameObject:
   - component: {fileID: 7260877221076916843}
   - component: {fileID: 5817145804172600135}
   - component: {fileID: 3093903820074358421}
-  - component: {fileID: 5856055742896219231}
   - component: {fileID: 2199909048597315532}
   m_Layer: 12
   m_Name: Draai3
@@ -787,19 +772,6 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!135 &5856055742896219231
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5570874442061574369}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &2199909048597315532
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -823,7 +795,6 @@ GameObject:
   - component: {fileID: 2469503369448391130}
   - component: {fileID: 437428347946014540}
   - component: {fileID: 5138433587620098045}
-  - component: {fileID: 214571523222831309}
   m_Layer: 12
   m_Name: Sphere (2)
   m_TagString: Untagged
@@ -890,19 +861,6 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!135 &214571523222831309
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6024341755092312460}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &6553926034652145673
 GameObject:
   m_ObjectHideFlags: 0
@@ -1061,7 +1019,6 @@ GameObject:
   - component: {fileID: 5923729959993238934}
   - component: {fileID: 8066580006288808263}
   - component: {fileID: 853770151949002582}
-  - component: {fileID: 8949326219324771559}
   m_Layer: 12
   m_Name: Sphere (3)
   m_TagString: Untagged
@@ -1128,19 +1085,6 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!135 &8949326219324771559
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6587574502102510054}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &6652289592007248449
 GameObject:
   m_ObjectHideFlags: 0
@@ -1310,7 +1254,6 @@ GameObject:
   - component: {fileID: 7177905397647933873}
   - component: {fileID: 7339307203713147942}
   - component: {fileID: 4397776515495732201}
-  - component: {fileID: 714263978904846018}
   - component: {fileID: 1768501298956831666}
   m_Layer: 12
   m_Name: Draai1
@@ -1379,19 +1322,6 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!135 &714263978904846018
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6687108059659808148}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &1768501298956831666
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1415,7 +1345,6 @@ GameObject:
   - component: {fileID: 7280760372702222975}
   - component: {fileID: 5168881777026752156}
   - component: {fileID: 3148117836679270549}
-  - component: {fileID: 3279236248435870572}
   - component: {fileID: 9183861272319284226}
   m_Layer: 12
   m_Name: Draai2
@@ -1484,19 +1413,6 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!135 &3279236248435870572
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6989409442288497406}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &9183861272319284226
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1678,7 +1594,6 @@ GameObject:
   - component: {fileID: 4230283878076933822}
   - component: {fileID: 9174347429572261621}
   - component: {fileID: 4351511649159007854}
-  - component: {fileID: 6132746352347610008}
   m_Layer: 12
   m_Name: ColorShell
   m_TagString: Untagged
@@ -1750,16 +1665,3 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!135 &6132746352347610008
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9202380993155223088}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
