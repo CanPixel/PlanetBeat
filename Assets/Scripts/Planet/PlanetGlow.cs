@@ -54,6 +54,8 @@ public class PlanetGlow : MonoBehaviour {
     }
 
     public void Flicker() {
+        return;
+        //
         flicker = 1;
         subFlicker = 0;
     }

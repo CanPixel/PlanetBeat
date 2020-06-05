@@ -26,7 +26,7 @@ RenderSettings:
   m_AmbientIntensity: 1
   m_AmbientMode: 3
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
-  m_SkyboxMaterial: {fileID: 2100000, guid: 4ad50940b7fa69549a59ee9403517cb5, type: 2}
+  m_SkyboxMaterial: {fileID: 0}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -5139,25 +5139,43 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   soundEvents:
   - labelName: BlackHoleOpen
-    fmodPath: event:/SFX/black_hole
+    fmodPath: event:/SFX/BlackHoleOpen
   - labelName: HotPotato
-    fmodPath: event:/SFX/hot_patato
+    fmodPath: event:/SFX/HotPatatoExplosion
   - labelName: InfectroidExplosion
-    fmodPath: event:/SFX/infectroid_explosion
+    fmodPath: event:/SFX/InfectroidExplosion
   - labelName: InfectroidSpawn
-    fmodPath: event:/SFX/infectroid_spawn
+    fmodPath: event:/SFX/InfectroidSpawn
   - labelName: ResourceSpawn
-    fmodPath: event:/SFX/resource_spawn
+    fmodPath: event:/SFX/ResourceSpawn
   - labelName: ScoreDecrease
-    fmodPath: event:/SFX/score_eraf
+    fmodPath: event:/SFX/ScoreDecrease
   - labelName: ScoreIncrease
-    fmodPath: event:/SFX/score_erbij
-  - labelName: Reelout
-    fmodPath: event:/Space_ships/reel_out
+    fmodPath: event:/SFX/ScoreIncrease
+  - labelName: ReelOut
+    fmodPath: event:/Space_ships/ReelOut
   - labelName: Exhaust
-    fmodPath: event:/Space_ships/thruts_vliegen
+    fmodPath: event:/Space_ships/Exaust
   - labelName: Countdown
-    fmodPath: event:/UI/count_down
+    fmodPath: event:/UI/CountDown
+  - labelName: StartGame
+    fmodPath: event:/UI/StartGame
+  - labelName: UIClick
+    fmodPath: event:/UI/UIClick
+  - labelName: HotPotatoTicking
+    fmodPath: event:/SFX/HotPatatoTicking
+  - labelName: CatchObject
+    fmodPath: event:/SFX/CatchObject
+  - labelName: ReelIn
+    fmodPath: event:/Space_ships/ReelIn
+  - labelName: HotPotatoSizzle
+    fmodPath: event:/SFX/HotPatatoSissing
+  - labelName: HotPotatoExplosion
+    fmodPath: event:/SFX/HotPatatoExplosion
+  - labelName: Boost
+    fmodPath: event:/Space_ships/Boost
+  - labelName: ThrowObject
+    fmodPath: event:/UI/UIClick
 --- !u!114 &185244988
 MonoBehaviour:
   m_ObjectHideFlags: 0

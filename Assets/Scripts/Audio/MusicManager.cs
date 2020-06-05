@@ -23,7 +23,6 @@ public class MusicManager : MonoBehaviour {
 
     string markerAnim;
     string oldmarkerAnim;
-    //private Animator m_Animator;
     private float AnimDelay = 0;
 
     [System.Serializable]
@@ -48,9 +47,8 @@ public class MusicManager : MonoBehaviour {
         musicInstance.setUserData(GCHandle.ToIntPtr(timelineHandle));
 
         musicInstance.setCallback(beatCallback, FMOD.Studio.EVENT_CALLBACK_TYPE.TIMELINE_BEAT | FMOD.Studio.EVENT_CALLBACK_TYPE.TIMELINE_MARKER);
-        musicInstance.start();
-
-        //m_Animator = gameObject.GetComponent<Animator>();
+        
+        musicInstance.start();// <------ on match start
     }
 
     void OnDestroy() {

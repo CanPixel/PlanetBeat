@@ -6969,8 +6969,8 @@ MonoBehaviour:
   playerColliders:
   - {fileID: 7716859393941716483}
   - {fileID: 1662954744308020737}
-  hookShotCastSpeed: 350
-  HookShotReelSpeed: 550
+  hookShotCastSpeed: 150
+  HookShotReelSpeed: 150
   hookShotRange: 250
   HookCooldownTime: 3
   on: {r: 0, g: 1, b: 0, a: 0.5882353}
@@ -8843,7 +8843,7 @@ RectTransform:
   - {fileID: 8185459131870024093}
   - {fileID: 1484607488769715593}
   - {fileID: 1615301141932425475}
-  - {fileID: 996780550299991092}
+  - {fileID: 7000145518057561196}
   - {fileID: 4592365809444739995}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -8871,7 +8871,7 @@ MonoBehaviour:
   exhaustDefault: {fileID: 713167841743702350}
   exhaustDefaultGameObject: {fileID: 4556623503040887228}
   exhaustLight: {fileID: 9118803508655691075}
-  model: {fileID: 996780550299991067}
+  model: {fileID: 6304716884605136511}
   playerLabel: {fileID: 0}
   colliders: []
   boostShipRotate: 10
@@ -20170,7 +20170,7 @@ RectTransform:
   m_GameObject: {fileID: 5365137927936052174}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 740.0238, y: 740.0238, z: 740.0238}
+  m_LocalScale: {x: 581.1259, y: 581.1259, z: 581.1259}
   m_Children: []
   m_Father: {fileID: 4592365809444739995}
   m_RootOrder: 0
@@ -28213,13 +28213,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 87efed4e15800334f8eeb2c944566ae3, type: 3}
---- !u!1 &996780550299991067 stripped
+--- !u!1 &6304716884605136511 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6533487463123243897, guid: 87efed4e15800334f8eeb2c944566ae3,
     type: 3}
   m_PrefabInstance: {fileID: 996780550299991302}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &996780550299991092 stripped
+--- !u!4 &7000145518057561196 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7849991732350099818, guid: 87efed4e15800334f8eeb2c944566ae3,
     type: 3}

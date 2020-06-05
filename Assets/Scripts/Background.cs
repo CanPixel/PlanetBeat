@@ -7,7 +7,6 @@ public class Background : MonoBehaviour {
     private Image src;
 
     public bool parallax = false;
-
     public float parallaxSpeed = 1f;
 
     [Header("PLANET WIGGLES")]

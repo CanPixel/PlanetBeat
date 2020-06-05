@@ -1579,7 +1579,7 @@ RectTransform:
   m_LocalScale: {x: 0.49727333, y: 0.49727333, z: 0.49727333}
   m_Children: []
   m_Father: {fileID: 975042796}
-  m_RootOrder: 2
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -1988,9 +1988,9 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.018279687, y: 0.018279687, z: 0.018279687}
   m_Children:
-  - {fileID: 1174389657}
-  - {fileID: 1392890730}
   - {fileID: 895592588}
+  - {fileID: 1392890730}
+  - {fileID: 1174389657}
   - {fileID: 519420032}
   - {fileID: 964552071}
   - {fileID: 1623480000}
@@ -2291,7 +2291,7 @@ Light:
   m_RenderMode: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 11831
   m_RenderingLayerMask: 1
   m_Lightmapping: 4
   m_LightShadowCasterMode: 0
@@ -2437,11 +2437,11 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1174389656}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 398}
+  m_LocalPosition: {x: 0, y: 0, z: 329}
   m_LocalScale: {x: 36.00007, y: 36.00007, z: 28.008688}
   m_Children: []
   m_Father: {fileID: 975042796}
-  m_RootOrder: 0
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -2461,7 +2461,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parallax: 1
-  parallaxSpeed: 8
+  parallaxSpeed: 4
   wiggleSpeed: 0
   wiggleRange: 0
 --- !u!114 &1174389659
@@ -2811,7 +2811,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1392890729}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 398}
+  m_LocalPosition: {x: 0, y: 0, z: 329}
   m_LocalScale: {x: 28.008688, y: 28.008688, z: 28.008688}
   m_Children: []
   m_Father: {fileID: 975042796}
@@ -2835,7 +2835,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parallax: 1
-  parallaxSpeed: 4
+  parallaxSpeed: 8
   wiggleSpeed: 0
   wiggleRange: 0
 --- !u!114 &1392890732
@@ -4021,6 +4021,7 @@ GameObject:
   - component: {fileID: 7556721353495335922}
   - component: {fileID: 7556721353495335923}
   - component: {fileID: 7556721353495335924}
+  - component: {fileID: 7556721353495335925}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: GAMEMANAGER
@@ -4110,7 +4111,18 @@ MonoBehaviour:
     ratioOfPlayersWithScore: 0
     phaseUpdate:
       m_PersistentCalls:
-        m_Calls: []
+        m_Calls:
+        - m_Target: {fileID: 7556721353495335925}
+          m_MethodName: MusicGameState
+          m_Mode: 4
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 1
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
       m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
   - phaseName: Infectroid Phase
@@ -4130,6 +4142,17 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+        - m_Target: {fileID: 7556721353495335925}
+          m_MethodName: MusicGameState
+          m_Mode: 4
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 2
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
       m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
   - phaseName: Visual Phase
@@ -4137,7 +4160,18 @@ MonoBehaviour:
     ratioOfPlayersWithScore: 0.5
     phaseUpdate:
       m_PersistentCalls:
-        m_Calls: []
+        m_Calls:
+        - m_Target: {fileID: 7556721353495335925}
+          m_MethodName: MusicGameState
+          m_Mode: 4
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 3
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
       m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
   - phaseName: Orbit Phase
@@ -4157,9 +4191,32 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+        - m_Target: {fileID: 7556721353495335925}
+          m_MethodName: MusicGameState
+          m_Mode: 4
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 4
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
       m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
   phaseIndex: 0
+--- !u!114 &7556721353495335925
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7556721353495335920}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 01a0a6c0887d7fa4283415d160be50f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &7556721353495335926
 MonoBehaviour:
   m_ObjectHideFlags: 0

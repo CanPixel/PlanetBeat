@@ -2,7 +2,7 @@
 <objects serializationModel="Studio.02.01.00">
 	<object class="Event" id="{7e425e18-f673-4cff-b1e7-e033dc3ff00c}">
 		<property name="name">
-			<value>reel_out</value>
+			<value>ReelOut</value>
 		</property>
 		<property name="outputFormat">
 			<value>1</value>
@@ -72,6 +72,9 @@
 		</relationship>
 	</object>
 	<object class="EventMixerMaster" id="{c4efcbad-edd3-4cfa-a8f4-ce3e195ae527}">
+		<property name="volume">
+			<value>-5.5</value>
+		</property>
 		<relationship name="effectChain">
 			<destination>{3a73e695-7dca-478e-911f-042eebe47001}</destination>
 		</relationship>

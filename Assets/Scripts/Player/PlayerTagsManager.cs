@@ -56,7 +56,7 @@ public class PlayerTagsManager : MonoBehaviour {
             tagPlayer = null;
         }
         tagNum = 0;
-        asteroidTrailRenderer.material.color = ogTrailColor;
+        //asteroidTrailRenderer.material.color = ogTrailColor;
         
         ColorShell.material.SetColor("_EmissionColor", Color.white * Mathf.LinearToGammaSpace(-10));
         //src.color = glow.color = Color.white;

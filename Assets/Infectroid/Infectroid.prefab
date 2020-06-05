@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &7022536578191297315
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 7689357816046133984}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6645646060031659139}
+  m_Layer: 0
+  m_Name: Missing Prefab (Dummy)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6645646060031659139
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 3930522966762516067, guid: 5d2de77f80c388445a9e23cff7c67065,
+    type: 3}
+  m_PrefabInstance: {fileID: 7689357816046133984}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7022536578191297315}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1831383570833245917}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7689357815751468279
 GameObject:
   m_ObjectHideFlags: 0
@@ -351,7 +382,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7689357816925998830}
   m_Layer: 8
-  m_Name: Infectroid (2)
+  m_Name: Infectroid
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -586,7 +617,7 @@ Transform:
   m_LocalPosition: {x: 8.397009, y: 0.42600012, z: 4.402503}
   m_LocalScale: {x: 0.08194837, y: 0.08194831, z: 0.081948355}
   m_Children:
-  - {fileID: 6645646060031659139}
+  - {fileID: 1831383570833245917}
   m_Father: {fileID: 7689357816925998830}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -86.786}
@@ -831,7 +862,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: ef2e04394fc705b4da750499b55ee5c3, type: 2}
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -917,6 +948,37 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!1 &8458020610465218076
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 7689357816046133984}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1831383570833245917}
+  m_Layer: 0
+  m_Name: Sparkle (Missing Prefab)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1831383570833245917
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 7689357816046133984}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8458020610465218076}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 6645646060031659139}
+  m_Father: {fileID: 7689357817332851662}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &7689357816046133984
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -924,16 +986,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7689357817332851662}
     m_Modifications:
-    - target: {fileID: 3930522966762516066, guid: 5d2de77f80c388445a9e23cff7c67065,
-        type: 3}
-      propertyPath: m_Name
-      value: Sparkle
-      objectReference: {fileID: 0}
-    - target: {fileID: 3930522966762516066, guid: 5d2de77f80c388445a9e23cff7c67065,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 3930522966762516067, guid: 5d2de77f80c388445a9e23cff7c67065,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1003,6 +1055,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalScale.z
       value: 0.077783
+      objectReference: {fileID: 0}
+    - target: {fileID: 3930522966762516066, guid: 5d2de77f80c388445a9e23cff7c67065,
+        type: 3}
+      propertyPath: m_Name
+      value: Sparkle
+      objectReference: {fileID: 0}
+    - target: {fileID: 3930522966762516066, guid: 5d2de77f80c388445a9e23cff7c67065,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3930522966762516065, guid: 5d2de77f80c388445a9e23cff7c67065,
         type: 3}
@@ -1101,9 +1163,3 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5d2de77f80c388445a9e23cff7c67065, type: 3}
---- !u!4 &6645646060031659139 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 3930522966762516067, guid: 5d2de77f80c388445a9e23cff7c67065,
-    type: 3}
-  m_PrefabInstance: {fileID: 7689357816046133984}
-  m_PrefabAsset: {fileID: 0}

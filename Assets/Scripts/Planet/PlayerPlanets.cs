@@ -209,7 +209,7 @@ public class PlayerPlanets : MonoBehaviourPun {
         transform.localScale = Vector3.Lerp(transform.localScale, new Vector3(Mathf.Clamp(transform.localScale.x, 0, maxScale), Mathf.Clamp(transform.localScale.y, 0, maxScale), Mathf.Clamp(transform.localScale.z, 0, maxScale)), Time.deltaTime * 2f);
 
         if(scoreText != null) {
-            var basePos = transform.position - new Vector3(-0.025f, 0.75f, 1);
+            var basePos = transform.position - new Vector3(-0.025f, 0.55f, 1);
             scoreText.transform.rotation = Quaternion.Euler(0, 0, 0);
             
             //if(!GameManager.GAME_STARTED) scoreText.transform.position = Vector3.Lerp(scoreText.transform.position, (!tutorial) ? basePos : basePos - new Vector3(0, 0.5f, 0), Time.deltaTime * (tutorial ? 2f : 6f));

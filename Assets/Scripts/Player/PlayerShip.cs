@@ -89,7 +89,6 @@ public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
     private Vector3 exLastPos;
     private float exLastTime;
 
-    private AudioSource exhaustSound;
     private float animationRotateSpeed;
 
     [HideInInspector] public PlayerName playerName;
@@ -154,7 +153,6 @@ public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
             fuelMeter = maxFuel;
 
             colliders = GetComponentsInChildren<Collider2D>();
-            exhaustSound = GetComponent<AudioSource>();
             transform.SetParent(GameObject.FindGameObjectWithTag("GAMEFIELD").transform, false);
 
             var playerNameTag = Instantiate(Resources.Load("PlayerName"), transform.position, Quaternion.identity) as GameObject;
@@ -214,7 +212,6 @@ public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
         Destroy(model);
         Destroy(rb);
         foreach(var i in colliders) Destroy(i);
-        Destroy(exhaustSound);
         Destroy(exhaust);
         foreach(Transform t in transform) if(t == transform) Destroy(t.gameObject);
         Destroy(this);
@@ -277,6 +274,7 @@ public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
       //  if(customController != null && customController.useCustomControls) hookShot.customController = customController;
         maxVelocity = defaultVelocity;
         boostCooldownTimer = boostCooldownDuration;
+        SoundManager.PLAY_SOUND("Exhaust");
 
         if(GameManager.SkipCountdown()) ActivateBoosting();
     }
@@ -332,6 +330,8 @@ public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
     }
 
     void Update() {
+        //RuntimeManager.StudioSystem.setParameterByName("Exhaust", Exaust);
+
         if (planet.gameObject == GameObject.Find("PLANETRED")) imageSwitcherScript.SetHandRed();
         else if (planet.gameObject == GameObject.Find("PLANETPINK")) imageSwitcherScript.SetHandPink();
         else if (planet.gameObject == GameObject.Find("PLANETBLUE")) imageSwitcherScript.SetHandBlue();
@@ -346,13 +346,9 @@ public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
 
         BoostManager();
 
-        //if(!GameManager.GAME_STARTED) PositionToPlanet();
-        exhaustSound.volume = Mathf.Lerp(exhaustSound.volume, IsThrust() ? 0.05f : 0, Time.deltaTime * 10f);
-
         if(hookDelay > 0) hookDelay -= Time.deltaTime;
         if(ReleaseAsteroidKey() && trailingObjects.Count > 0 && respawnDelay <= 0) {
-            
-            //SoundManager.PLAY_SOUND("Collect");
+            SoundManager.PLAY_SOUND("ThrowObject");
             dropAsteroid = true;
             hookShot.DelayShoot();
         }

@@ -68,7 +68,7 @@ public class Asteroid : PickupableObject {
 
     private Vector3 baseScale, explosionExpand = Vector3.zero;
     private float baseTextScale, increasePopupBaseSize, increasePopupHideTimer;
-    private float timeBombTick = 0;
+    private bool timeBombTick = false;
 
     private Vector3 standardGlowScale;
     private Vector3 standardScale;
@@ -122,7 +122,7 @@ public class Asteroid : PickupableObject {
     }
 
     [PunRPC]
-    public void SynchTimer(float timer, float timeBombTick) {
+    public void SynchTimer(float timer, bool timeBombTick) {
         if(PhotonNetwork.IsMasterClient) return;
         this.spawnTimer = timer;
         this.timeBombTick = timeBombTick;
@@ -188,15 +188,12 @@ public class Asteroid : PickupableObject {
             scoreText.CrossFadeColor(UnstableTextColor, 0.5f, false, false);
 
             bombTimer += Time.deltaTime;
-            timeBombTick += Time.deltaTime;
             var tickBomb = spawnTimer - stablePhaseTime;
            // src.transform.localPosition = glow.transform.localPosition = scoreText.transform.localPosition = Vector3.Lerp(src.transform.localPosition, new Vector3(Mathf.Sin(Time.time * tickBomb * 4f) * 10f * tickBomb, Mathf.Sin(Time.time * tickBomb * 4f) * 10f * tickBomb, 0), tickBomb * Time.deltaTime * 4f);
 
-            if(timeBombTick > 1f / tickBomb) {
-                //
+            if(!timeBombTick) {
                 SoundManager.PLAY_SOUND("HotPotatoTicking");
-                //
-                timeBombTick = 0;
+                timeBombTick = true;
             }
 
             if(bombTimer > 1f / tickBomb) {
@@ -206,8 +203,6 @@ public class Asteroid : PickupableObject {
             if(bombTimer > unstablePhaseTime / 2f) distortionFX.gameObject.SetActive(true); 
             animator.SetBool("res-unstable", true);
             animator.SetBool("res-high", false);
-
-            // GELUIDJE \\    
 
             //Actual explosion
             if(spawnTimer > (stablePhaseTime + unstablePhaseTime) - 1) {
@@ -268,7 +263,7 @@ public class Asteroid : PickupableObject {
     public override void Capture(HookShot hookShot) {
         if(!hookShot.CanHold() || collectTimer > 0) return;
 
-        SoundManager.PLAY_SOUND("CatchObject");
+        if(GameManager.GAME_STARTED || (!GameManager.GAME_STARTED && hookShot.hostPlayer.photonView.IsMine)) SoundManager.PLAY_SOUND("CatchObject");
 
         if(gameObject.tag == "ResourceTutorial" || (!held || (held && ownerPlayer != null && ownerPlayer.photonView.ViewID != hookShot.hostPlayer.photonView.ViewID))) {
             transform.position = hookShot.transform.position;

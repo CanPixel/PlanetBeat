@@ -110,7 +110,7 @@ public class HookShot : MonoBehaviour {
 
             if(didntCatch) {
                 if(!reelback) {
-                    SoundManager.PLAY_SOUND("ReelIn");
+                    if(GameManager.GAME_STARTED || (!GameManager.GAME_STARTED && hostPlayer.photonView.IsMine)) SoundManager.PLAY_SOUND("ReelIn");
                     reelback = true;
                 }
 
@@ -159,9 +159,6 @@ public class HookShot : MonoBehaviour {
         var photon = obj.GetComponent<PhotonView>();
         if(photon != null && hostPlayer.photonView != null) photon.TransferOwnership(hostPlayer.photonView.Controller.ActorNumber);
         animateHand.SetBool("Fetch", true);
-
-        //if(obj.tag == "InfectroidTutorial") hostPlayer.playerTutorial.tutorialStepsByName["Infectroid"].completed = true;
-
         scaleBack = true;
     }
 
