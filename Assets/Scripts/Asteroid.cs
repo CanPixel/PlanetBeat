@@ -169,7 +169,7 @@ public class Asteroid : PickupableObject {
             scoreText.transform.localScale = Vector3.Lerp(scoreText.transform.localScale, Vector3.one * baseTextScale, Time.deltaTime * 2f);
             scoreText.text = "+" + value.ToString();
 
-            var basePos = transform.position - new Vector3(0.0f, 0.45f, 1);
+            var basePos = transform.position - new Vector3(0.0f, 0.35f, 1);
 
             scoreText.transform.rotation = Quaternion.identity;
             scoreText.transform.position = basePos;

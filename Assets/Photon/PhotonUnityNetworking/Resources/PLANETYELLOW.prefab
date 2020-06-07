@@ -468,7 +468,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5336174367327457933}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_Children:
@@ -1209,11 +1209,12 @@ PrefabInstance:
       propertyPath: m_Name
       value: Atmos-Sphere
       objectReference: {fileID: 0}
-    - target: {fileID: -927199367670048503, guid: a318da0dbbd934d4d8b7646a21e36f63,
+    - target: {fileID: -5178661895559278292, guid: a318da0dbbd934d4d8b7646a21e36f63,
         type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: -6976191071164304731, guid: ed43f7ce223801d4f94ce97b976824c3,
+        type: 3}
     - target: {fileID: -4216859302048453862, guid: a318da0dbbd934d4d8b7646a21e36f63,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1288,13 +1289,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: e8f8603c66acde34f974348f2294f070, type: 2}
-    - target: {fileID: -5178661895559278292, guid: a318da0dbbd934d4d8b7646a21e36f63,
-        type: 3}
-      propertyPath: m_Mesh
-      value: 
-      objectReference: {fileID: -6976191071164304731, guid: ed43f7ce223801d4f94ce97b976824c3,
-        type: 3}
+      objectReference: {fileID: 2100000, guid: ddf215e409bc2ac4d9854e5d32a52c1b, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a318da0dbbd934d4d8b7646a21e36f63, type: 3}
 --- !u!4 &6782529887445698203 stripped
@@ -1316,11 +1311,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5336174367327457932}
     m_Modifications:
-    - target: {fileID: 6061447726742359388, guid: f3469c6a1e99fd544b899569b8f579c8,
-        type: 3}
-      propertyPath: m_Name
-      value: EliminationBar
-      objectReference: {fileID: 0}
     - target: {fileID: 6061447726742359363, guid: f3469c6a1e99fd544b899569b8f579c8,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1436,15 +1426,10 @@ PrefabInstance:
       propertyPath: m_LocalScale.y
       value: 0.8
       objectReference: {fileID: 0}
-    - target: {fileID: 6061447726742359363, guid: f3469c6a1e99fd544b899569b8f579c8,
+    - target: {fileID: 6061447726742359388, guid: f3469c6a1e99fd544b899569b8f579c8,
         type: 3}
-      propertyPath: m_LocalScale.z
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6061447726823252456, guid: f3469c6a1e99fd544b899569b8f579c8,
-        type: 3}
-      propertyPath: m_FillAmount
-      value: 1
+      propertyPath: m_Name
+      value: EliminationBar
       objectReference: {fileID: 0}
     - target: {fileID: 6061447726823252456, guid: f3469c6a1e99fd544b899569b8f579c8,
         type: 3}
@@ -1453,13 +1438,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6061447726823252457, guid: f3469c6a1e99fd544b899569b8f579c8,
         type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 200
+      propertyPath: m_SizeDelta.x
+      value: 800
       objectReference: {fileID: 0}
     - target: {fileID: 6061447726823252457, guid: f3469c6a1e99fd544b899569b8f579c8,
         type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 800
+      propertyPath: m_SizeDelta.y
+      value: 200
       objectReference: {fileID: 0}
     - target: {fileID: 6061447726742359362, guid: f3469c6a1e99fd544b899569b8f579c8,
         type: 3}
@@ -1504,11 +1489,12 @@ PrefabInstance:
       propertyPath: m_Name
       value: Model
       objectReference: {fileID: 0}
-    - target: {fileID: -927199367670048503, guid: a318da0dbbd934d4d8b7646a21e36f63,
+    - target: {fileID: -5178661895559278292, guid: a318da0dbbd934d4d8b7646a21e36f63,
         type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: -6976191071164304731, guid: ed43f7ce223801d4f94ce97b976824c3,
+        type: 3}
     - target: {fileID: -4216859302048453862, guid: a318da0dbbd934d4d8b7646a21e36f63,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1583,13 +1569,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: ee375e0c2de010c4198d0f6669a5769a, type: 2}
-    - target: {fileID: -5178661895559278292, guid: a318da0dbbd934d4d8b7646a21e36f63,
-        type: 3}
-      propertyPath: m_Mesh
-      value: 
-      objectReference: {fileID: -6976191071164304731, guid: ed43f7ce223801d4f94ce97b976824c3,
-        type: 3}
+      objectReference: {fileID: 2100000, guid: 40c61b42e44e3ea46b7fb91918afe780, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a318da0dbbd934d4d8b7646a21e36f63, type: 3}
 --- !u!23 &95744570482962424 stripped

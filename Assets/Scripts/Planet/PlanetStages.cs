@@ -18,7 +18,7 @@ public class PlanetStages : MonoBehaviour {
     [System.Serializable]
     public class LightStage {
         public int moons = 0;
-        public Material material, lightLayer;
+        public Material lightLayer;
 
         public void ApplyStage(GameObject root, GameObject prefab, int moonAmount) {
             var moonList = root.GetComponentsInChildren<Moon>();
@@ -49,7 +49,7 @@ public class PlanetStages : MonoBehaviour {
         currentLightStage = i;
         curStage = lightStages[i];
         
-        targetMaterial = curStage.material;
+        //targetMaterial = curStage.material;
 
         if(curStage.lightLayer != null) {
             lightLayerRender.material = curStage.lightLayer;
