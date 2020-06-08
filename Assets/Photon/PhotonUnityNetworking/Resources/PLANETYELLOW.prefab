@@ -342,7 +342,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 4000, y: 1000}
+  m_Size: {x: 4000, y: 400}
   m_EdgeRadius: 0
 --- !u!1 &1541882919655562108
 GameObject:
@@ -666,7 +666,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1000, y: 4000}
+  m_Size: {x: 400, y: 4000}
   m_EdgeRadius: 0
 --- !u!1 &5336174367327457933
 GameObject:
@@ -1401,7 +1401,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 4000, y: 1000}
+  m_Size: {x: 4000, y: 400}
   m_EdgeRadius: 0
 --- !u!1 &7352115951666838383
 GameObject:
@@ -1515,7 +1515,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1000, y: 4000}
+  m_Size: {x: 400, y: 4000}
   m_EdgeRadius: 0
 --- !u!1001 &1971123296262057345
 PrefabInstance:
@@ -1599,17 +1599,17 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 2.6
       objectReference: {fileID: 0}
+    - target: {fileID: -1504981713932161579, guid: a318da0dbbd934d4d8b7646a21e36f63,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: ddf215e409bc2ac4d9854e5d32a52c1b, type: 2}
     - target: {fileID: -5178661895559278292, guid: a318da0dbbd934d4d8b7646a21e36f63,
         type: 3}
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: -6976191071164304731, guid: ed43f7ce223801d4f94ce97b976824c3,
         type: 3}
-    - target: {fileID: -1504981713932161579, guid: a318da0dbbd934d4d8b7646a21e36f63,
-        type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: ddf215e409bc2ac4d9854e5d32a52c1b, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a318da0dbbd934d4d8b7646a21e36f63, type: 3}
 --- !u!1 &7528676243525153928 stripped
@@ -1890,17 +1890,17 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 2.5
       objectReference: {fileID: 0}
+    - target: {fileID: -1504981713932161579, guid: a318da0dbbd934d4d8b7646a21e36f63,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 40c61b42e44e3ea46b7fb91918afe780, type: 2}
     - target: {fileID: -5178661895559278292, guid: a318da0dbbd934d4d8b7646a21e36f63,
         type: 3}
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: -6976191071164304731, guid: ed43f7ce223801d4f94ce97b976824c3,
         type: 3}
-    - target: {fileID: -1504981713932161579, guid: a318da0dbbd934d4d8b7646a21e36f63,
-        type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: 40c61b42e44e3ea46b7fb91918afe780, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a318da0dbbd934d4d8b7646a21e36f63, type: 3}
 --- !u!23 &95744570482962424 stripped

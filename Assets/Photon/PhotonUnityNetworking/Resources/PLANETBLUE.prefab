@@ -138,7 +138,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1000, y: 4000}
+  m_Size: {x: 400, y: 4000}
   m_EdgeRadius: 0
 --- !u!222 &2846411269139517590
 CanvasRenderer:
@@ -380,7 +380,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 4000, y: 1000}
+  m_Size: {x: 4000, y: 400}
   m_EdgeRadius: 0
 --- !u!222 &5884937256472475073
 CanvasRenderer:
@@ -1345,7 +1345,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1000, y: 4000}
+  m_Size: {x: 400, y: 4000}
   m_EdgeRadius: 0
 --- !u!222 &5684712910697415649
 CanvasRenderer:
@@ -1416,7 +1416,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 4000, y: 1000}
+  m_Size: {x: 4000, y: 400}
   m_EdgeRadius: 0
 --- !u!222 &1261849814089230425
 CanvasRenderer:
@@ -1560,17 +1560,17 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 2.6
       objectReference: {fileID: 0}
+    - target: {fileID: -1504981713932161579, guid: a318da0dbbd934d4d8b7646a21e36f63,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: ae7b9614222e93146a0538db69683cc2, type: 2}
     - target: {fileID: -5178661895559278292, guid: a318da0dbbd934d4d8b7646a21e36f63,
         type: 3}
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 2540817853737639666, guid: 325be4b5d315141489361de8b020c504,
         type: 3}
-    - target: {fileID: -1504981713932161579, guid: a318da0dbbd934d4d8b7646a21e36f63,
-        type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: ae7b9614222e93146a0538db69683cc2, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a318da0dbbd934d4d8b7646a21e36f63, type: 3}
 --- !u!23 &7066397268137251942 stripped
@@ -1851,17 +1851,17 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 2.5
       objectReference: {fileID: 0}
+    - target: {fileID: -1504981713932161579, guid: a318da0dbbd934d4d8b7646a21e36f63,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 8bcf4ad89dfc2a44ebba436ad69ff733, type: 2}
     - target: {fileID: -5178661895559278292, guid: a318da0dbbd934d4d8b7646a21e36f63,
         type: 3}
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 2540817853737639666, guid: 325be4b5d315141489361de8b020c504,
         type: 3}
-    - target: {fileID: -1504981713932161579, guid: a318da0dbbd934d4d8b7646a21e36f63,
-        type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: 8bcf4ad89dfc2a44ebba436ad69ff733, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a318da0dbbd934d4d8b7646a21e36f63, type: 3}
 --- !u!23 &95744570482962424 stripped
