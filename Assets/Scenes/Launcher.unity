@@ -15869,7 +15869,7 @@ Camera:
     width: 1
     height: 1
   near clip plane: 0.3
-  far clip plane: 1000
+  far clip plane: 500
   field of view: 60
   orthographic: 1
   orthographic size: 5
@@ -17561,6 +17561,25 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: -0.0000076293945}
   m_SizeDelta: {x: 0, y: 200}
   m_Pivot: {x: 0, y: 1}
+--- !u!1 &1071161632 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -927199367670048503, guid: a318da0dbbd934d4d8b7646a21e36f63,
+    type: 3}
+  m_PrefabInstance: {fileID: 7800403184605137478}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1071161633
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1071161632}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 129877f60eb75d04c9394c38ebf5b899, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rotateSpeed: {x: 0.2, y: 6, z: 1}
 --- !u!1 &1111588977
 GameObject:
   m_ObjectHideFlags: 0
@@ -19267,21 +19286,17 @@ MonoBehaviour:
   meshRenderer: {fileID: 8877276553663467295}
   lightLayerRender: {fileID: 0}
   currentLightStage: 0
+  lightStageAnimator: {fileID: 0}
   lightStages:
   - moons: 0
-    material: {fileID: 2100000, guid: ac2f792b6774bc94eb92a29dff6c2f9e, type: 2}
     lightLayer: {fileID: 0}
   - moons: 0
-    material: {fileID: 2100000, guid: 1a31b792e128c4344a277b32f9121afe, type: 2}
     lightLayer: {fileID: 2100000, guid: 9b1b0fce7350fc540b546ae516677466, type: 2}
   - moons: 1
-    material: {fileID: 2100000, guid: c0cb74b9f5fcc8446b0b3b2144317380, type: 2}
     lightLayer: {fileID: 2100000, guid: a5bd8d5d7b311a74582e8fdcf7732d73, type: 2}
   - moons: 2
-    material: {fileID: 2100000, guid: a45bfb0c23e05124d819a48ad2985964, type: 2}
     lightLayer: {fileID: 2100000, guid: 4c61f2105b32eba46b22879b2eb2120c, type: 2}
   - moons: 3
-    material: {fileID: 2100000, guid: 985e12ab127ae444c88653f43b1c6f27, type: 2}
     lightLayer: {fileID: 2100000, guid: 661820170531c614e9b816c8c4b4791c, type: 2}
 --- !u!198 &193410574377860366
 ParticleSystem:
@@ -23958,7 +23973,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 19ef151071816b4499083f6a06711143, type: 2}
+  - {fileID: 2100000, guid: dacf46353a0a2d34bb791787542b0e3d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -24014,21 +24029,17 @@ MonoBehaviour:
   meshRenderer: {fileID: 8696703779242439674}
   lightLayerRender: {fileID: 4347014931412579940}
   currentLightStage: 0
+  lightStageAnimator: {fileID: 0}
   lightStages:
   - moons: 0
-    material: {fileID: 2100000, guid: 79bc63e8908e39c45a59efde220ed91c, type: 2}
     lightLayer: {fileID: 0}
   - moons: 0
-    material: {fileID: 2100000, guid: 2c3c14a350ace224ea9560608851994a, type: 2}
     lightLayer: {fileID: 2100000, guid: 3e57e04856e05eb4aabaed9e0a833f97, type: 2}
   - moons: 1
-    material: {fileID: 2100000, guid: 759c5a1db6f6a584bb49b221ccc119e9, type: 2}
     lightLayer: {fileID: 2100000, guid: 8a79adce7fdc1a849a8062188ec888b8, type: 2}
   - moons: 2
-    material: {fileID: 2100000, guid: fdf48b9de5e371849876fd591fde406e, type: 2}
     lightLayer: {fileID: 2100000, guid: 052cf9cc2dac9f14394e43c2041bf526, type: 2}
   - moons: 3
-    material: {fileID: 2100000, guid: 94e69cafade990a42a21d7ecabc37a2b, type: 2}
     lightLayer: {fileID: 2100000, guid: fad8b8084371b4940972d7b3b75c174e, type: 2}
 --- !u!33 &590598553873893493
 MeshFilter:
@@ -24055,21 +24066,17 @@ MonoBehaviour:
   meshRenderer: {fileID: 8373236337804870250}
   lightLayerRender: {fileID: 6561378701106787468}
   currentLightStage: 0
+  lightStageAnimator: {fileID: 0}
   lightStages:
   - moons: 0
-    material: {fileID: 2100000, guid: 305c6a57955e6f949b03d2ce00486f82, type: 2}
     lightLayer: {fileID: 0}
   - moons: 0
-    material: {fileID: 2100000, guid: 55591673b924f3d47839a0620753b54e, type: 2}
     lightLayer: {fileID: 2100000, guid: e86d35ac0c4bb424ba8f610e69b5036d, type: 2}
   - moons: 1
-    material: {fileID: 2100000, guid: f5ef8e9231775034194bbb19c1f5319c, type: 2}
     lightLayer: {fileID: 2100000, guid: c431d57cf213aa545aa5a5b58699448c, type: 2}
   - moons: 2
-    material: {fileID: 2100000, guid: 8b561803b444cf1408fa4bd3accbbe52, type: 2}
     lightLayer: {fileID: 2100000, guid: 230c92ee88ca6914e88c675fe9c98696, type: 2}
   - moons: 3
-    material: {fileID: 2100000, guid: b7dd0cb51ac83364ea21d2fe87c72dfc, type: 2}
     lightLayer: {fileID: 2100000, guid: c27ccd7856edf594baeebb811c179cce, type: 2}
 --- !u!1 &857394334759849230
 GameObject:
@@ -24301,7 +24308,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1994030241821043433
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -24498,8 +24505,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1994030241821043432}
   m_LocalRotation: {x: -0.015818767, y: 0.00013543293, z: 0.0086923065, w: -0.99983716}
-  m_LocalPosition: {x: 0.7511598, y: 157.94118, z: -21.195713}
-  m_LocalScale: {x: 1, y: 1, z: -1}
+  m_LocalPosition: {x: 0.7511598, y: 123.81, z: -21.195713}
+  m_LocalScale: {x: 1.25, y: 0.7, z: -1}
   m_Children: []
   m_Father: {fileID: 1570412407}
   m_RootOrder: 1
@@ -24809,12 +24816,6 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 17
       objectReference: {fileID: 0}
-    - target: {fileID: -5178661895559278292, guid: a318da0dbbd934d4d8b7646a21e36f63,
-        type: 3}
-      propertyPath: m_Mesh
-      value: 
-      objectReference: {fileID: 1865056248366311061, guid: 6490e167569253f40ba005b74bc06d7d,
-        type: 3}
     - target: {fileID: -4216859302048453862, guid: a318da0dbbd934d4d8b7646a21e36f63,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -24875,6 +24876,12 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: e83025f22e85bf4458e0d6662f238e6d, type: 2}
+    - target: {fileID: -5178661895559278292, guid: a318da0dbbd934d4d8b7646a21e36f63,
+        type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 1865056248366311061, guid: 6490e167569253f40ba005b74bc06d7d,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a318da0dbbd934d4d8b7646a21e36f63, type: 3}
 --- !u!199 &3994169591934830972
@@ -25163,21 +25170,17 @@ MonoBehaviour:
   meshRenderer: {fileID: 4665679631563436155}
   lightLayerRender: {fileID: 9188550952139894630}
   currentLightStage: 0
+  lightStageAnimator: {fileID: 0}
   lightStages:
   - moons: 0
-    material: {fileID: 2100000, guid: aa93b781cf6dc074d8b1c01fffcbca29, type: 2}
     lightLayer: {fileID: 0}
   - moons: 0
-    material: {fileID: 2100000, guid: 5f59955635115be4f8b8793b18f2f918, type: 2}
     lightLayer: {fileID: 2100000, guid: 37aa2d95b840c0343a6fb0b7f3123285, type: 2}
   - moons: 1
-    material: {fileID: 2100000, guid: ddeeaf4edfe322045bcc58cdc3735fa5, type: 2}
     lightLayer: {fileID: 2100000, guid: 99a536d63d83e024c8d3fc9f1fd395ae, type: 2}
   - moons: 2
-    material: {fileID: 2100000, guid: bac609eaf0e2222458d6a58a086da757, type: 2}
     lightLayer: {fileID: 2100000, guid: 0bc2270e042113744859e16bed0a83cc, type: 2}
   - moons: 3
-    material: {fileID: 2100000, guid: 38f0f2100cf1a024589e9f25a46543ad, type: 2}
     lightLayer: {fileID: 2100000, guid: 33266205f50bcaf49ab1ea42be10b82f, type: 2}
 --- !u!23 &4665679631563436155
 MeshRenderer:
@@ -25264,12 +25267,6 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 17
       objectReference: {fileID: 0}
-    - target: {fileID: -5178661895559278292, guid: a318da0dbbd934d4d8b7646a21e36f63,
-        type: 3}
-      propertyPath: m_Mesh
-      value: 
-      objectReference: {fileID: 1865056248366311061, guid: 6490e167569253f40ba005b74bc06d7d,
-        type: 3}
     - target: {fileID: -4216859302048453862, guid: a318da0dbbd934d4d8b7646a21e36f63,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -25330,6 +25327,12 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: e83025f22e85bf4458e0d6662f238e6d, type: 2}
+    - target: {fileID: -5178661895559278292, guid: a318da0dbbd934d4d8b7646a21e36f63,
+        type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 1865056248366311061, guid: 6490e167569253f40ba005b74bc06d7d,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a318da0dbbd934d4d8b7646a21e36f63, type: 3}
 --- !u!95 &5497521215205747570
@@ -25680,19 +25683,13 @@ PrefabInstance:
     - target: {fileID: -927199367670048503, guid: a318da0dbbd934d4d8b7646a21e36f63,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -927199367670048503, guid: a318da0dbbd934d4d8b7646a21e36f63,
         type: 3}
       propertyPath: m_Layer
       value: 19
       objectReference: {fileID: 0}
-    - target: {fileID: -5178661895559278292, guid: a318da0dbbd934d4d8b7646a21e36f63,
-        type: 3}
-      propertyPath: m_Mesh
-      value: 
-      objectReference: {fileID: 1865056248366311061, guid: 6490e167569253f40ba005b74bc06d7d,
-        type: 3}
     - target: {fileID: -4216859302048453862, guid: a318da0dbbd934d4d8b7646a21e36f63,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -25701,7 +25698,7 @@ PrefabInstance:
     - target: {fileID: -4216859302048453862, guid: a318da0dbbd934d4d8b7646a21e36f63,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 158.02156
+      value: 123.21
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: a318da0dbbd934d4d8b7646a21e36f63,
         type: 3}
@@ -25768,6 +25765,12 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: e83025f22e85bf4458e0d6662f238e6d, type: 2}
+    - target: {fileID: -5178661895559278292, guid: a318da0dbbd934d4d8b7646a21e36f63,
+        type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 1865056248366311061, guid: 6490e167569253f40ba005b74bc06d7d,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a318da0dbbd934d4d8b7646a21e36f63, type: 3}
 --- !u!4 &7987236416677082804

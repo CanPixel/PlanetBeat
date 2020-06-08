@@ -68,5 +68,6 @@ MonoBehaviour:
   - SetRessource
   - ReadyPlayer
   - Set
+  - SynchAnim
   DisableAutoOpenWizard: 1
   ShowSettings: 1

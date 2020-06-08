@@ -21,10 +21,12 @@ public class AsteroidSpawner : MonoBehaviourPun {
 
     private BlackHoleEffect blackHoleEffect;
     private float baseRadius;
-    private bool openBlackHole = false, shake = false, enableRemoteroid = false, enableInfectroid = false;
+    private bool openBlackHole = false, shake = false, enableInfectroid = false;
 
     private ScreenShake mainCamScreenShake;
     private int sample = 0;
+
+    private int blackHoleInt = 0;
 
     [FMODUnity.ParamRef]
     private float cutoff = 0;
@@ -53,12 +55,14 @@ public class AsteroidSpawner : MonoBehaviourPun {
 
         FMODUnity.RuntimeManager.StudioSystem.setParameterByName("BlackHole", cutoff);
 
-        if(!GameManager.GAME_STARTED) return;
         if(PhotonNetwork.IsMasterClient) {
             if(openBlackHole) blackHoleEffect.radius = Mathf.Lerp(blackHoleEffect.radius, baseRadius * 1.5f + Mathf.Sin(Time.time * 15f) * 1f, Time.deltaTime * 2f);
             else blackHoleEffect.radius = Mathf.Lerp(blackHoleEffect.radius, 0, Time.deltaTime * 1f);
             photonView.RPC("SynchRadius", RpcTarget.All, blackHoleEffect.radius, asteroidSpawnTimer, powerupSpawnTimer);
         }
+
+        if(!GameManager.GAME_STARTED) return;
+
         if(asteroidSpawnTimer > asteroidSpawnDelay + (spawnAnimationDelay / 2f) && !shake) {
             mainCamScreenShake.Shake(0.6f);
             photonView.RPC("ShakeScreenNetwork", RpcTarget.All);
@@ -72,18 +76,17 @@ public class AsteroidSpawner : MonoBehaviourPun {
                     powerupSpawnTimer += Time.deltaTime;
                     if(powerupSpawnTimer > powerupSpawnDelay) {
                         openBlackHole = true;
-                        //animator.SetBool("Opening", true);
                         cutoff = Mathf.Lerp(cutoff, 1, Time.deltaTime * cutoffSpeed);
                         animator.SetInteger("blackHoleAnimation", 1);
+                        blackHoleInt = 1;
                     }
                     if(powerupSpawnTimer > powerupSpawnDelay + spawnAnimationDelay) {
                         SpawnPowerup();
                         powerupSpawnDelay = Random.Range(powerupSpawnDelays.x, powerupSpawnDelays.y);
                         powerupSpawnTimer = 0;
                         openBlackHole = shake = false;
-                        //animator.SetBool("Closing", true);
-                        //animator.SetBool("Opening", false);
                         animator.SetInteger("blackHoleAnimation", 2);
+                        blackHoleInt = 2;
                         cutoff = 0;
                     }
                 }
@@ -93,23 +96,30 @@ public class AsteroidSpawner : MonoBehaviourPun {
                     asteroidSpawnTimer += Time.deltaTime;
                     if(asteroidSpawnTimer > asteroidSpawnDelay) {
                         openBlackHole = true;
-                        //animator.SetBool("Opening", true);
                         cutoff = Mathf.Lerp(cutoff, 1, Time.deltaTime * cutoffSpeed);
                         animator.SetInteger("blackHoleAnimation", 1);
+                        blackHoleInt = 1;
                     }
                     if(asteroidSpawnTimer > asteroidSpawnDelay + spawnAnimationDelay) {
                         SpawnResource();
                         asteroidSpawnDelay = Random.Range(objectSpawnDelay.x, objectSpawnDelay.y);
                         asteroidSpawnTimer = 0;
                         openBlackHole = shake = false;
-                        //animator.SetBool("Closing", true);
-                        //animator.SetBool("Opening", false);
                         animator.SetInteger("blackHoleAnimation", 2);
+                        blackHoleInt = 2;
                         cutoff = 0;
                     }
                 }
             }
+            photonView.RPC("SynchAnim", RpcTarget.All, blackHoleInt);
         }
+    }
+
+    [PunRPC]
+    protected void SynchAnim(int bh) {
+        if(PhotonNetwork.IsMasterClient) return;
+        blackHoleInt = bh;
+        animator.SetInteger("blackHoleAnimation", blackHoleInt);
     }
 
     [PunRPC]

@@ -79,7 +79,7 @@ public class PlayerTutorial : MonoBehaviour {
             }
         }
         if(Launcher.GetSkipCountDown()) {
-            host.planet.FinishTutorial();
+            if(host != null && host.planet != null) host.planet.FinishTutorial();
             line.enabled = false;
         }
     }
@@ -248,14 +248,12 @@ public class PlayerTutorial : MonoBehaviour {
         if(tutorialInfectroid != null && tutorialInfectroid.gameObject != null) Destroy(tutorialInfectroid.gameObject);
 
         host.planet.photonView.RPC("SetResource", RpcTarget.AllBuffered, 0f);
-
         host.photonView.RPC("ReadyPlayer", RpcTarget.MasterClient, host.photonView.ViewID);
         
         var obj = PhotonNetwork.Instantiate("PLAYERREADY", transform.position, Quaternion.identity) as GameObject;
-        obj.GetPhotonView().RPC("Set", RpcTarget.All, PlayerShip.PLAYERNAME, host.transform.localPosition, host.playerColor.r, host.playerColor.g, host.playerColor.b);
+        obj.GetPhotonView().RPC("Set", RpcTarget.AllBuffered, PlayerShip.PLAYERNAME, host.transform.localPosition, host.playerColor.r, host.playerColor.g, host.playerColor.b);
 
         host.planet.FinishTutorial();
-
         gameObject.SetActive(false);
     }
 

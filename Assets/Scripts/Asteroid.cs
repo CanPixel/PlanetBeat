@@ -381,7 +381,7 @@ public class Asteroid : PickupableObject {
     public new void ReleaseAsteroid(bool released, int viewID) {
         if(photonView.ViewID == viewID) {
             if(released) {
-                playerTagsManager.runTagTimer = true;
+                if(playerTagsManager != null) playerTagsManager.runTagTimer = true;
                 held = false;
                 transform.localScale = baseScale;
                 canScore = true;
@@ -389,7 +389,7 @@ public class Asteroid : PickupableObject {
                 ForceRelease();
             } else {
                 held = true;
-                playerTagsManager.runTagTimer = false;
+                if(playerTagsManager != null) playerTagsManager.runTagTimer = false;
             }
         }
     }

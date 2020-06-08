@@ -214,7 +214,9 @@ public class GameManager : MonoBehaviourPunCallbacks {
    }
 
    public static void WinState(int viewID) {
-      var player = PhotonNetwork.GetPhotonView(viewID).GetComponent<PlayerShip>();
+      var playerU = PhotonNetwork.GetPhotonView(viewID);
+      var player = playerU.GetComponent<PlayerShip>();
+      if(player == null) return;
       instance.winText.text = "Player <color='#"+ColorUtility.ToHtmlStringRGB(player.playerColor).ToString()+"'> " + player.playerName.GetName() + "</color> wins!";
       instance.winText.gameObject.SetActive(true);
    }
