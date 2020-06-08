@@ -25,7 +25,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1805532490}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 4097.584, y: 1335.4988, z: -50637.508}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 273.64697, y: 273.64697, z: 273.6469}
   m_Children:
   - {fileID: 5838372369465606118}
@@ -760,7 +760,7 @@ MonoBehaviour:
   meshRenderer: {fileID: 95744570482962424}
   lightLayerRender: {fileID: 4499025255896068325}
   currentLightStage: 0
-  lightStageAnimator: {fileID: 0}
+  lightStageAnimator: {fileID: 8726133449984311943}
   lightStages:
   - moons: 0
     lightLayer: {fileID: 0}
@@ -1234,7 +1234,7 @@ Light:
   m_Cookie: {fileID: 0}
   m_DrawHalo: 0
   m_Flare: {fileID: 0}
-  m_RenderMode: 0
+  m_RenderMode: 1
   m_CullingMask:
     serializedVersion: 2
     m_Bits: 65536
@@ -1322,7 +1322,7 @@ GameObject:
   - component: {fileID: 8685433961012669403}
   - component: {fileID: 463258209570106832}
   m_Layer: 0
-  m_Name: PLANETPINK_SPOTLIGHT
+  m_Name: PLANETPINK_POINTLIGHT
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1336,8 +1336,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8952755542236374339}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -94.2}
-  m_LocalScale: {x: 0.0036543459, y: 0.0036543459, z: 0.0036543454}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_Children: []
   m_Father: {fileID: 1805532491}
   m_RootOrder: 1
@@ -1351,10 +1351,10 @@ Light:
   m_GameObject: {fileID: 8952755542236374339}
   m_Enabled: 1
   serializedVersion: 9
-  m_Type: 0
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 150
-  m_Range: 1000
+  m_Type: 2
+  m_Color: {r: 1, g: 0.08018869, b: 0.904847, a: 1}
+  m_Intensity: 0
+  m_Range: 15
   m_SpotAngle: 49
   m_InnerSpotAngle: 12.5
   m_CookieSize: 10
@@ -1387,10 +1387,10 @@ Light:
   m_Cookie: {fileID: 0}
   m_DrawHalo: 0
   m_Flare: {fileID: 0}
-  m_RenderMode: 0
+  m_RenderMode: 1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 65536
+    m_Bits: 451840
   m_RenderingLayerMask: 1
   m_Lightmapping: 4
   m_LightShadowCasterMode: 0
@@ -1453,17 +1453,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Atmos-Sphere
       objectReference: {fileID: 0}
-    - target: {fileID: -927199367670048503, guid: a318da0dbbd934d4d8b7646a21e36f63,
-        type: 3}
-      propertyPath: m_Layer
-      value: 16
-      objectReference: {fileID: 0}
-    - target: {fileID: -5178661895559278292, guid: a318da0dbbd934d4d8b7646a21e36f63,
-        type: 3}
-      propertyPath: m_Mesh
-      value: 
-      objectReference: {fileID: 4785775068503242349, guid: cc7581bde0d6a3049b2532692a501f4c,
-        type: 3}
     - target: {fileID: -4216859302048453862, guid: a318da0dbbd934d4d8b7646a21e36f63,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1534,11 +1523,17 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 2.6
       objectReference: {fileID: 0}
+    - target: {fileID: -5178661895559278292, guid: a318da0dbbd934d4d8b7646a21e36f63,
+        type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 4785775068503242349, guid: cc7581bde0d6a3049b2532692a501f4c,
+        type: 3}
     - target: {fileID: -1504981713932161579, guid: a318da0dbbd934d4d8b7646a21e36f63,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 37aa2d95b840c0343a6fb0b7f3123285, type: 2}
+      objectReference: {fileID: 2100000, guid: 99a536d63d83e024c8d3fc9f1fd395ae, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a318da0dbbd934d4d8b7646a21e36f63, type: 3}
 --- !u!4 &1155226589919114794 stripped
@@ -1566,6 +1561,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5336174367327457932}
     m_Modifications:
+    - target: {fileID: 6061447726742359388, guid: f3469c6a1e99fd544b899569b8f579c8,
+        type: 3}
+      propertyPath: m_Name
+      value: EliminationBar
+      objectReference: {fileID: 0}
     - target: {fileID: 6061447726742359363, guid: f3469c6a1e99fd544b899569b8f579c8,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1681,16 +1681,6 @@ PrefabInstance:
       propertyPath: m_LocalScale.y
       value: 0.8
       objectReference: {fileID: 0}
-    - target: {fileID: 6061447726742359388, guid: f3469c6a1e99fd544b899569b8f579c8,
-        type: 3}
-      propertyPath: m_Name
-      value: EliminationBar
-      objectReference: {fileID: 0}
-    - target: {fileID: 6061447726823252456, guid: f3469c6a1e99fd544b899569b8f579c8,
-        type: 3}
-      propertyPath: m_Color.a
-      value: 0.6156863
-      objectReference: {fileID: 0}
     - target: {fileID: 6061447726823252457, guid: f3469c6a1e99fd544b899569b8f579c8,
         type: 3}
       propertyPath: m_SizeDelta.x
@@ -1705,6 +1695,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Color.a
       value: 0.5921569
+      objectReference: {fileID: 0}
+    - target: {fileID: 6061447726823252456, guid: f3469c6a1e99fd544b899569b8f579c8,
+        type: 3}
+      propertyPath: m_Color.a
+      value: 0.6156863
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f3469c6a1e99fd544b899569b8f579c8, type: 3}
@@ -1749,12 +1744,6 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 16
       objectReference: {fileID: 0}
-    - target: {fileID: -5178661895559278292, guid: a318da0dbbd934d4d8b7646a21e36f63,
-        type: 3}
-      propertyPath: m_Mesh
-      value: 
-      objectReference: {fileID: 4785775068503242349, guid: cc7581bde0d6a3049b2532692a501f4c,
-        type: 3}
     - target: {fileID: -4216859302048453862, guid: a318da0dbbd934d4d8b7646a21e36f63,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1825,6 +1814,12 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 2.5
       objectReference: {fileID: 0}
+    - target: {fileID: -5178661895559278292, guid: a318da0dbbd934d4d8b7646a21e36f63,
+        type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 4785775068503242349, guid: cc7581bde0d6a3049b2532692a501f4c,
+        type: 3}
     - target: {fileID: -1504981713932161579, guid: a318da0dbbd934d4d8b7646a21e36f63,
         type: 3}
       propertyPath: m_Materials.Array.data[0]

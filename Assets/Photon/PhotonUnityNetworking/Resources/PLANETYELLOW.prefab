@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 571318926}
+  - component: {fileID: 8922735244544716089}
   m_Layer: 12
   m_Name: YELLOW PLANET LIGHTS
   m_TagString: Untagged
@@ -32,6 +33,25 @@ Transform:
   m_Father: {fileID: 5336174367327457932}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!95 &8922735244544716089
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 571318925}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 9047f75faae99d644bf1eef38ea6216b, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &1870786805
 GameObject:
   m_ObjectHideFlags: 0
@@ -520,7 +540,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1922452885328624687}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -29.94796, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_Children: []
   m_Father: {fileID: 571318926}
@@ -536,7 +556,7 @@ Light:
   m_Enabled: 1
   serializedVersion: 9
   m_Type: 2
-  m_Color: {r: 1, g: 0.08018869, b: 0.904847, a: 1}
+  m_Color: {r: 1, g: 0.8794562, b: 0.07843137, a: 1}
   m_Intensity: 0
   m_Range: 15
   m_SpotAngle: 49
@@ -574,7 +594,7 @@ Light:
   m_RenderMode: 1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 451840
+    m_Bits: 500992
   m_RenderingLayerMask: 1
   m_Lightmapping: 4
   m_LightShadowCasterMode: 0
@@ -831,7 +851,7 @@ MonoBehaviour:
   meshRenderer: {fileID: 95744570482962424}
   lightLayerRender: {fileID: 8090696024830443604}
   currentLightStage: 0
-  lightStageAnimator: {fileID: 0}
+  lightStageAnimator: {fileID: 8922735244544716089}
   lightStages:
   - moons: 0
     lightLayer: {fileID: 0}
@@ -1509,17 +1529,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Atmos-Sphere
       objectReference: {fileID: 0}
-    - target: {fileID: -927199367670048503, guid: a318da0dbbd934d4d8b7646a21e36f63,
-        type: 3}
-      propertyPath: m_Layer
-      value: 14
-      objectReference: {fileID: 0}
-    - target: {fileID: -5178661895559278292, guid: a318da0dbbd934d4d8b7646a21e36f63,
-        type: 3}
-      propertyPath: m_Mesh
-      value: 
-      objectReference: {fileID: -6976191071164304731, guid: ed43f7ce223801d4f94ce97b976824c3,
-        type: 3}
     - target: {fileID: -4216859302048453862, guid: a318da0dbbd934d4d8b7646a21e36f63,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1590,6 +1599,12 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 2.6
       objectReference: {fileID: 0}
+    - target: {fileID: -5178661895559278292, guid: a318da0dbbd934d4d8b7646a21e36f63,
+        type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: -6976191071164304731, guid: ed43f7ce223801d4f94ce97b976824c3,
+        type: 3}
     - target: {fileID: -1504981713932161579, guid: a318da0dbbd934d4d8b7646a21e36f63,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -1622,6 +1637,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5336174367327457932}
     m_Modifications:
+    - target: {fileID: 6061447726742359388, guid: f3469c6a1e99fd544b899569b8f579c8,
+        type: 3}
+      propertyPath: m_Name
+      value: EliminationBar
+      objectReference: {fileID: 0}
     - target: {fileID: 6061447726742359363, guid: f3469c6a1e99fd544b899569b8f579c8,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1737,16 +1757,6 @@ PrefabInstance:
       propertyPath: m_LocalScale.y
       value: 0.8
       objectReference: {fileID: 0}
-    - target: {fileID: 6061447726742359388, guid: f3469c6a1e99fd544b899569b8f579c8,
-        type: 3}
-      propertyPath: m_Name
-      value: EliminationBar
-      objectReference: {fileID: 0}
-    - target: {fileID: 6061447726823252456, guid: f3469c6a1e99fd544b899569b8f579c8,
-        type: 3}
-      propertyPath: m_Color.a
-      value: 0.6156863
-      objectReference: {fileID: 0}
     - target: {fileID: 6061447726823252457, guid: f3469c6a1e99fd544b899569b8f579c8,
         type: 3}
       propertyPath: m_SizeDelta.x
@@ -1762,8 +1772,19 @@ PrefabInstance:
       propertyPath: m_Color.a
       value: 0.5921569
       objectReference: {fileID: 0}
+    - target: {fileID: 6061447726823252456, guid: f3469c6a1e99fd544b899569b8f579c8,
+        type: 3}
+      propertyPath: m_Color.a
+      value: 0.6156863
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f3469c6a1e99fd544b899569b8f579c8, type: 3}
+--- !u!1 &270711317900668954 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6061447726742359388, guid: f3469c6a1e99fd544b899569b8f579c8,
+    type: 3}
+  m_PrefabInstance: {fileID: 6331872053854371142}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &270711317900668934 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6061447726742359360, guid: f3469c6a1e99fd544b899569b8f579c8,
@@ -1779,12 +1800,6 @@ MonoBehaviour:
 --- !u!224 &270711317900668933 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6061447726742359363, guid: f3469c6a1e99fd544b899569b8f579c8,
-    type: 3}
-  m_PrefabInstance: {fileID: 6331872053854371142}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &270711317900668954 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6061447726742359388, guid: f3469c6a1e99fd544b899569b8f579c8,
     type: 3}
   m_PrefabInstance: {fileID: 6331872053854371142}
   m_PrefabAsset: {fileID: 0}
@@ -1805,12 +1820,6 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 14
       objectReference: {fileID: 0}
-    - target: {fileID: -5178661895559278292, guid: a318da0dbbd934d4d8b7646a21e36f63,
-        type: 3}
-      propertyPath: m_Mesh
-      value: 
-      objectReference: {fileID: -6976191071164304731, guid: ed43f7ce223801d4f94ce97b976824c3,
-        type: 3}
     - target: {fileID: -4216859302048453862, guid: a318da0dbbd934d4d8b7646a21e36f63,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1881,6 +1890,12 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 2.5
       objectReference: {fileID: 0}
+    - target: {fileID: -5178661895559278292, guid: a318da0dbbd934d4d8b7646a21e36f63,
+        type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: -6976191071164304731, guid: ed43f7ce223801d4f94ce97b976824c3,
+        type: 3}
     - target: {fileID: -1504981713932161579, guid: a318da0dbbd934d4d8b7646a21e36f63,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
