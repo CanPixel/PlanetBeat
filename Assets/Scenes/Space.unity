@@ -616,6 +616,175 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 308654111}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &422044739
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 422044742}
+  - component: {fileID: 422044741}
+  - component: {fileID: 422044740}
+  m_Layer: 0
+  m_Name: AudioManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 4294967295
+  m_IsActive: 1
+--- !u!114 &422044740
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 422044739}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe47d45d2359a7749b7acf85a250684e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  kickEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1392890734}
+        m_MethodName: Scale
+        m_Mode: 4
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 29
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1174389661}
+        m_MethodName: Scale
+        m_Mode: 4
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 38
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  audioEvents:
+  - fmodString: Kick 1
+    Event:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1151881530}
+          m_MethodName: SetSpawnOnBeat
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+      m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+  - fmodString: Kick 2
+    Event:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+  - fmodString: Kick 3
+    Event:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1151881530}
+          m_MethodName: AnticipateSpawn
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+      m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+  - fmodString: Kick 4
+    Event:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+--- !u!114 &422044741
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 422044739}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35680631adbee0645b28aca2d3d783f8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  soundEvents:
+  - labelName: BlackHoleOpen
+    fmodPath: event:/SFX/BlackHoleOpen
+  - labelName: HotPotato
+    fmodPath: event:/SFX/HotPatatoExplosion
+  - labelName: InfectroidExplosion
+    fmodPath: event:/SFX/InfectroidExplosion
+  - labelName: InfectroidSpawn
+    fmodPath: event:/SFX/InfectroidSpawn
+  - labelName: ResourceSpawn
+    fmodPath: event:/SFX/ResourceSpawn
+  - labelName: ScoreDecrease
+    fmodPath: event:/SFX/ScoreDecrease
+  - labelName: ScoreIncrease
+    fmodPath: event:/SFX/ScoreIncrease
+  - labelName: ReelOut
+    fmodPath: event:/Space_ships/ReelOut
+  - labelName: Exhaust
+    fmodPath: event:/Space_ships/Exaust
+  - labelName: Countdown
+    fmodPath: event:/UI/CountDown
+  - labelName: StartGame
+    fmodPath: event:/UI/StartGame
+  - labelName: UIClick
+    fmodPath: event:/UI/UIClick
+  - labelName: HotPotatoTicking
+    fmodPath: event:/SFX/HotPatatoTicking
+  - labelName: CatchObject
+    fmodPath: event:/SFX/CatchObject
+  - labelName: ReelIn
+    fmodPath: event:/Space_ships/ReelIn
+  - labelName: HotPotatoSizzle
+    fmodPath: event:/SFX/HotPatatoSissing
+  - labelName: HotPotatoExplosion
+    fmodPath: event:/SFX/HotPatatoExplosion
+  - labelName: Boost
+    fmodPath: event:/Space_ships/Boost
+  - labelName: ThrowObject
+    fmodPath: event:/UI/UIClick
+--- !u!4 &422044742
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 422044739}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &429610710
 GameObject:
   m_ObjectHideFlags: 0
@@ -662,7 +831,6 @@ GameObject:
   - component: {fileID: 519420032}
   - component: {fileID: 519420031}
   - component: {fileID: 519420029}
-  - component: {fileID: 519420030}
   - component: {fileID: 519420033}
   - component: {fileID: 519420034}
   - component: {fileID: 519420035}
@@ -682,21 +850,6 @@ AudioListener:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   m_Enabled: 1
---- !u!114 &519420030
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 519420028}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5424246cb157d384daed6d4f6805d85f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  shader: {fileID: 4800000, guid: e98642ad19b633a4ba3bdfa3a2e92cf3, type: 3}
-  blackHole: {fileID: 58724070}
-  radius: 1
 --- !u!20 &519420031
 Camera:
   m_ObjectHideFlags: 0
@@ -2291,6 +2444,7 @@ GameObject:
   - component: {fileID: 1174389660}
   - component: {fileID: 1174389659}
   - component: {fileID: 1174389658}
+  - component: {fileID: 1174389661}
   m_Layer: 0
   m_Name: BACKGROUND-PARALLAX (1)
   m_TagString: Untagged
@@ -2370,6 +2524,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1174389656}
   m_CullTransparentMesh: 0
+--- !u!114 &1174389661
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1174389656}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e100d61f4233f584186c36d6eea8e0d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  recover: 4
 --- !u!1001 &1177378517
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2685,6 +2852,7 @@ GameObject:
   - component: {fileID: 1392890733}
   - component: {fileID: 1392890732}
   - component: {fileID: 1392890731}
+  - component: {fileID: 1392890734}
   m_Layer: 0
   m_Name: BACKGROUND-PARALLAX
   m_TagString: Untagged
@@ -2724,7 +2892,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parallax: 1
-  parallaxSpeed: 8
+  parallaxSpeed: -8
   wiggleSpeed: 0
   wiggleRange: 0
 --- !u!114 &1392890732
@@ -2764,6 +2932,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1392890729}
   m_CullTransparentMesh: 0
+--- !u!114 &1392890734
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1392890729}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e100d61f4233f584186c36d6eea8e0d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  recover: 4
 --- !u!1 &1516893948
 GameObject:
   m_ObjectHideFlags: 0
@@ -3483,6 +3664,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2126952665}
   - component: {fileID: 2126952667}
+  - component: {fileID: 2126952666}
   m_Layer: 8
   m_Name: PLANETS
   m_TagString: PLANETS
@@ -3515,6 +3697,19 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &2126952666
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2126952664}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e100d61f4233f584186c36d6eea8e0d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  recover: 2
 --- !u!114 &2126952667
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4428,7 +4623,7 @@ MonoBehaviour:
           m_CallState: 2
       m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
-  - phaseName: Visual Phase
+  - phaseName: Orbit Phase
     minScore: 50
     ratioOfPlayersWithScore: 0.5
     phaseUpdate:
@@ -4445,14 +4640,6 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
-      m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null
-  - phaseName: Orbit Phase
-    minScore: 80
-    ratioOfPlayersWithScore: 0.5
-    phaseUpdate:
-      m_PersistentCalls:
-        m_Calls:
         - m_Target: {fileID: 7556721353495335922}
           m_MethodName: StartRotate
           m_Mode: 1
@@ -4464,6 +4651,14 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+      m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+  - phaseName: Visual Phase
+    minScore: 80
+    ratioOfPlayersWithScore: 0.5
+    phaseUpdate:
+      m_PersistentCalls:
+        m_Calls:
         - m_Target: {fileID: 7556721353495335925}
           m_MethodName: MusicGameState
           m_Mode: 4

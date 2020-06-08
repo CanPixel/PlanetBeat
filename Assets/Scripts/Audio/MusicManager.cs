@@ -7,6 +7,8 @@ using System.Text;
 using UnityEngine.Events;
 
 public class MusicManager : MonoBehaviour {
+    public UnityEvent kickEvent;
+
     // Variables that are modified in the callback need to be part of a seperate class.
     // This class needs to be 'blittable' otherwise it can't be pinned in memory.
     [StructLayout(LayoutKind.Sequential)]
@@ -59,7 +61,7 @@ public class MusicManager : MonoBehaviour {
     }
 
     void OnGUI() {
-        //GUILayout.Box(String.Format("Current Bar = {0}, Last Marker = {1}", timelineInfo.currentMusicBar, (string)timelineInfo.lastMarker));
+        GUILayout.Box(String.Format("Current Bar = {0}, Last Marker = {1}", timelineInfo.currentMusicBar, (string)timelineInfo.lastMarker));
     }
 
     [AOT.MonoPInvokeCallback(typeof(FMOD.Studio.EVENT_CALLBACK))]
@@ -101,13 +103,13 @@ public class MusicManager : MonoBehaviour {
 
     // Onderstaande heb ik in eerste instantie geprobeerd, maar het lijkt me niet zo effecient en ik heb het idee dat hiermee de trigger naar de animatie ook niet nauwkeurig wordt gegeven
     void Update () {
-        string markerAnim = timelineInfo.lastMarker;
-        //if (AnimDelay > 0) AnimDelay -= Time.deltaTime;
+        if(timelineInfo.lastMarker != markerAnim) {
+            kickEvent.Invoke();
+            markerAnim = timelineInfo.lastMarker;
+        }
 
         foreach(var i in audioEvents) {
-            if(i.fmodString == markerAnim) {
-                i.Event.Invoke();
-            }
+            if(i.fmodString == markerAnim) i.Event.Invoke();
         }
     }
 }

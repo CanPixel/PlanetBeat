@@ -303,6 +303,7 @@ public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
         if(boostCooldownTimer < (boostCooldownDuration - 2)) {
             animationRotateSpeed = Mathf.LerpAngle(animationRotateSpeed, (boostShipRotate * ((boostCooldownDuration - 1) - boostCooldownTimer)), Time.deltaTime * 6f); 
             model.transform.Rotate(-animationRotateSpeed, 0, 0);
+            photonView.RPC("RotateBoost", RpcTarget.All, photonView.ViewID, animationRotateSpeed);
         } 
         else model.transform.localRotation = Quaternion.Lerp(model.transform.localRotation, Quaternion.Euler(0, 180, -90), Time.deltaTime * 2.5f);
 
@@ -333,6 +334,11 @@ public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
             else asteroid.ReleaseAsteroid(true, asteroid.photonView.ViewID);
             dropAsteroid = false;
         }
+    }
+
+    [PunRPC]
+    protected void RotateBoost(int viewID, float rotate) {
+        if(photonView.ViewID == viewID) model.transform.Rotate(-rotate, 0, 0);
     }
 
     void Update() {
@@ -423,7 +429,8 @@ public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
             playerTutorial.CompleteSubTask("boost");
             SoundManager.PLAY_SOUND("Boost");
 
-            boostAnimator.SetInteger("boostAnimatie", 3);                                       // BOOSTING ANIMATIE
+            boostAnimator.SetInteger("boostAnimatie", 3); 
+            photonView.RPC("BoostNetwork", RpcTarget.Others, photonView.ViewID, 3);
 
             if (rb != null) rb.AddForce(transform.up * boostForce);
 
@@ -435,7 +442,8 @@ public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
         }
         else {
             isBoosting = false;
-            boostAnimator.SetInteger("boostAnimatie", 1);                                       // EMPTY BOOST ANIMATIE (Niet zichtbaar)
+            boostAnimator.SetInteger("boostAnimatie", 1);                                       // EMPTY ANIMATIE (Niet zichtbaar)
+            photonView.RPC("BoostNetwork", RpcTarget.Others, photonView.ViewID, 1);
         }
     }
     private void BoostCooldown() {
@@ -445,18 +453,21 @@ public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
         
         if (boostCooldownTimer >= 0.9f && boostCooldownTimer < boostCooldownDuration)
         {
-            settings.startColor = new ParticleSystem.MinMaxGradient(switchcol);                 // COLOR FIRE
+            settings.startColor = new ParticleSystem.MinMaxGradient(switchcol);
         }
 
         if (boostCooldownTimer >= boostCooldownDuration) {
             canBoost = true;
 
-            //gameObject.GetComponent<Renderer>().material.SetColor("_EMISSION", playerColor);
-            settings.startColor = new ParticleSystem.MinMaxGradient(playerColor);               // COLOR FIRE
-            boostAnimator.SetInteger("boostAnimatie", 2);                                       // FULL BOOST ANIMATIE
-        } else {
-            model.transform.localScale = Vector3.Lerp(model.transform.localScale, baseScale, Time.deltaTime * 2f);
-        }
+            settings.startColor = new ParticleSystem.MinMaxGradient(playerColor); 
+            boostAnimator.SetInteger("boostAnimatie", 2);
+            photonView.RPC("BoostNetwork", RpcTarget.Others, photonView.ViewID, 2);                              
+        } else model.transform.localScale = Vector3.Lerp(model.transform.localScale, baseScale, Time.deltaTime * 2f); //////////// BOOST SCALE
+    }
+
+    [PunRPC]
+    public void BoostNetwork(int viewID, int boostAnim) {
+        if(photonView.ViewID == viewID) boostAnimator.SetInteger("boostAnimatie", boostAnim); 
     }
 
     public bool ReleaseAsteroidKey() {

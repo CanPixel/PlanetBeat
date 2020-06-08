@@ -145,8 +145,8 @@ public class Infectroid : PickupableObject {
         if(collectTimer > 0) collectTimer -= Time.deltaTime;
 
         increasePopupTxt.transform.rotation = Quaternion.Euler(0, 0, Mathf.Sin(Time.time * 3f) * 10f);
-        increasePopupTxt.transform.position = transform.position + new Vector3(0.05f, 0.35f, 0);
-        if(increasePopupHideTimer > 1f) increasePopupTxt.transform.localScale = Vector3.Lerp(increasePopupTxt.transform.localScale, Vector3.zero, Time.deltaTime * 2f);
+        increasePopupTxt.transform.position = transform.position + new Vector3(0, -0.35f, 0);
+        if(increasePopupHideTimer > 1f) increasePopupTxt.transform.localScale = Vector3.Lerp(increasePopupTxt.transform.localScale, Vector3.zero, Time.deltaTime);
         
         if(spawnTimerChange > destroyAfter && gameObject.tag != "InfectroidTutorial") {
             DestroyDefinite();
@@ -157,6 +157,7 @@ public class Infectroid : PickupableObject {
             spawnTimer += Time.deltaTime;
 
             if(infectTime > infectDelay && playerPlanets != null && playerPlanets.currentScore > 0) {
+                photonView.RPC("IncreasePopupText", RpcTarget.All);
                 playerPlanets.Explode(penalty);
                 infectTime = 0;
             }
@@ -175,6 +176,11 @@ public class Infectroid : PickupableObject {
 
         float maxScale = 0.8f;
         transform.localScale = new Vector3(Mathf.Clamp(transform.localScale.x, 0, maxScale), Mathf.Clamp(transform.localScale.y, 0, maxScale), Mathf.Clamp(transform.localScale.z, 0, maxScale));
+    }
+
+    [PunRPC]
+    protected void IncreasePopupText() {
+        increasePopupTxt.transform.localScale = Vector3.one * increasePopupBaseSize;
     }
 
     public override void Capture(HookShot hookShot) {

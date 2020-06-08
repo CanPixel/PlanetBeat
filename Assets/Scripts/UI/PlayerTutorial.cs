@@ -133,6 +133,7 @@ public class PlayerTutorial : MonoBehaviour {
 
     protected void SpawnReadyText() {
         var pos = host.planet.transform.position * 80f;
+        pos.z = 100;
         var obj = PhotonNetwork.Instantiate("PLAYERREADY", pos, Quaternion.identity) as GameObject;
         obj.GetPhotonView().RPC("Set", RpcTarget.AllBuffered, PlayerShip.PLAYERNAME, pos, host.playerTextColor);
     }

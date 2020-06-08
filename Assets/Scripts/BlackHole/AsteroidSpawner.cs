@@ -18,10 +18,7 @@ public class AsteroidSpawner : MonoBehaviourPun {
     
     //Delay after black hole opens, for when asteroid actually spawns
     private float spawnAnimationDelay = 1.5f;
-
-    private BlackHoleEffect blackHoleEffect;
-    private float baseRadius;
-    private bool openBlackHole = false, shake = false, enableInfectroid = false;
+    private bool shake = false, enableInfectroid = false;
 
     private ScreenShake mainCamScreenShake;
     private int sample = 0;
@@ -30,6 +27,7 @@ public class AsteroidSpawner : MonoBehaviourPun {
 
     [FMODUnity.ParamRef]
     private float cutoff = 0;
+    private float targetCutoff = 0;
     private float cutoffSpeed = 2f;
 
     void Start() {
@@ -37,96 +35,59 @@ public class AsteroidSpawner : MonoBehaviourPun {
         mainCamScreenShake = Camera.main.GetComponent<ScreenShake>();
         asteroidSpawnDelay = Random.Range(objectSpawnDelay.x, objectSpawnDelay.y);
         powerupSpawnDelay = Random.Range(powerupSpawnDelays.x, powerupSpawnDelays.y);
-        blackHoleEffect = Camera.main.GetComponent<BlackHoleEffect>();
-        baseRadius = blackHoleEffect.radius;
-        blackHoleEffect.radius = 0;
     }
 
     [PunRPC]
-    public void SynchRadius(float radius, float asteroidSpawnTimer, float powerupSpawnTimer) {
-        if(PhotonNetwork.IsMasterClient) return;
-        blackHoleEffect.radius = radius;
-        this.asteroidSpawnTimer = asteroidSpawnTimer;
-        this.powerupSpawnTimer = powerupSpawnTimer;
+    public void SynchBlackHole(int blackHoleAnim, float cutoff) {
+        animator.SetInteger("blackHoleAnimation", blackHoleAnim);
+        this.cutoff = cutoff;
     }
 
     void Update() {
         Random.InitState(System.DateTime.Now.Millisecond);
-
         FMODUnity.RuntimeManager.StudioSystem.setParameterByName("BlackHole", cutoff);
 
-        if(PhotonNetwork.IsMasterClient) {
-            if(openBlackHole) blackHoleEffect.radius = Mathf.Lerp(blackHoleEffect.radius, baseRadius * 1.5f + Mathf.Sin(Time.time * 15f) * 1f, Time.deltaTime * 2f);
-            else blackHoleEffect.radius = Mathf.Lerp(blackHoleEffect.radius, 0, Time.deltaTime * 1f);
-            photonView.RPC("SynchRadius", RpcTarget.All, blackHoleEffect.radius, asteroidSpawnTimer, powerupSpawnTimer);
-        }
-
+        cutoff = Mathf.Lerp(cutoff, targetCutoff, Time.deltaTime * cutoffSpeed);
         if(!GameManager.GAME_STARTED) return;
 
-        if(asteroidSpawnTimer > asteroidSpawnDelay + (spawnAnimationDelay / 2f) && !shake) {
-            mainCamScreenShake.Shake(0.6f);
+        if(shake) {
             photonView.RPC("ShakeScreenNetwork", RpcTarget.All);
-            shake = true;
+            shake = false;
         }
 
         if(PhotonNetwork.IsMasterClient) {
-            if(!animator.GetBool("Closing")) {
-                PowerupsList = GameObject.FindGameObjectsWithTag("Powerup");
-                if(PowerupsList.Length < powerupAmount && enableInfectroid) {
-                    powerupSpawnTimer += Time.deltaTime;
-                    if(powerupSpawnTimer > powerupSpawnDelay) {
-                        openBlackHole = true;
-                        cutoff = Mathf.Lerp(cutoff, 1, Time.deltaTime * cutoffSpeed);
-                        animator.SetInteger("blackHoleAnimation", 1);
-                        blackHoleInt = 1;
-                    }
-                    if(powerupSpawnTimer > powerupSpawnDelay + spawnAnimationDelay) {
-                        SpawnPowerup();
-                        powerupSpawnDelay = Random.Range(powerupSpawnDelays.x, powerupSpawnDelays.y);
-                        powerupSpawnTimer = 0;
-                        openBlackHole = shake = false;
-                        animator.SetInteger("blackHoleAnimation", 2);
-                        blackHoleInt = 2;
-                        cutoff = 0;
-                    }
-                }
+            PowerupsList = GameObject.FindGameObjectsWithTag("Powerup");
+            if(PowerupsList.Length < powerupAmount && enableInfectroid) powerupSpawnTimer += Time.deltaTime;
 
-                AsteroidsList = GameObject.FindGameObjectsWithTag("Resource");
-                if(AsteroidsList.Length < asteroidAmount) {
-                    asteroidSpawnTimer += Time.deltaTime;
-                    if(asteroidSpawnTimer > asteroidSpawnDelay) {
-                        openBlackHole = true;
-                        cutoff = Mathf.Lerp(cutoff, 1, Time.deltaTime * cutoffSpeed);
-                        animator.SetInteger("blackHoleAnimation", 1);
-                        blackHoleInt = 1;
-                    }
-                    if(asteroidSpawnTimer > asteroidSpawnDelay + spawnAnimationDelay) {
-                        SpawnResource();
-                        asteroidSpawnDelay = Random.Range(objectSpawnDelay.x, objectSpawnDelay.y);
-                        asteroidSpawnTimer = 0;
-                        openBlackHole = shake = false;
-                        animator.SetInteger("blackHoleAnimation", 2);
-                        blackHoleInt = 2;
-                        cutoff = 0;
-                    }
-                }
-            }
-            photonView.RPC("SynchAnim", RpcTarget.All, blackHoleInt);
+            AsteroidsList = GameObject.FindGameObjectsWithTag("Resource");
+            if(AsteroidsList.Length < asteroidAmount) asteroidSpawnTimer += Time.deltaTime;
+            photonView.RPC("SynchBlackHole", RpcTarget.Others, blackHoleInt, cutoff);
         }
     }
 
-    [PunRPC]
-    protected void SynchAnim(int bh) {
-        if(PhotonNetwork.IsMasterClient) return;
-        blackHoleInt = bh;
-        animator.SetInteger("blackHoleAnimation", blackHoleInt);
+    public void AnticipateSpawn() {
+        if(asteroidSpawnTimer > asteroidSpawnDelay) {
+            targetCutoff = 1;
+            animator.SetInteger("blackHoleAnimation", 1);
+            blackHoleInt = 1;
+        }
+
+        if(powerupSpawnTimer > powerupSpawnDelay) {
+            targetCutoff = 1;
+            animator.SetInteger("blackHoleAnimation", 1);
+            blackHoleInt = 1;
+        }
+    }
+
+    public void SetSpawnOnBeat() {
+        if(asteroidSpawnTimer > asteroidSpawnDelay + spawnAnimationDelay) SpawnResource();
+        if(powerupSpawnTimer > powerupSpawnDelay + spawnAnimationDelay) SpawnPowerup();
     }
 
     [PunRPC]
     protected void ShakeScreenNetwork() {
-        if(PhotonNetwork.IsMasterClient) return;
         mainCamScreenShake.Shake(0.6f);
-        shake = true;
+        mainCamScreenShake.Turn(0.75f);
     }
 
     public void EnableInfectroidPowerup() {
@@ -137,18 +98,31 @@ public class AsteroidSpawner : MonoBehaviourPun {
         Vector3 center = transform.position;
         Vector3 pos = RandomCircle(center, Random.Range(8f, 9f), Random.Range(0, 360));
         Quaternion rot = Quaternion.FromToRotation(Vector2.up, center + pos);
-
-        GameObject InstancedPrefab = GameManager.SPAWN_SERVER_OBJECT(powerup, new Vector3(blackHole.transform.position.x, blackHole.transform.position.y, -1.1f), rot);
-
+        GameManager.SPAWN_SERVER_OBJECT(powerup, new Vector3(blackHole.transform.position.x, blackHole.transform.position.y, -1.1f), rot);
         SoundManager.PLAY_SOUND("InfectroidSpawn");
+    
+        cutoff = targetCutoff = 0;
+        blackHoleInt = 2;
+        shake = true;
+        animator.SetInteger("blackHoleAnimation", 2);
+
+        powerupSpawnDelay = Random.Range(powerupSpawnDelays.x, powerupSpawnDelays.y);
+        powerupSpawnTimer = 0;
     }
     protected void SpawnResource() {
         Vector3 center = transform.position;
         Vector3 pos = RandomCircle(center, Random.Range(8f, 9f), Random.Range(0, 360));
         Quaternion rot = Quaternion.FromToRotation(Vector2.up, center + pos);
-        GameObject InstancedPrefab = GameManager.SPAWN_SERVER_OBJECT(asteroid, new Vector3(blackHole.transform.position.x, blackHole.transform.position.y, -1.1f), rot);
-
+        GameManager.SPAWN_SERVER_OBJECT(asteroid, new Vector3(blackHole.transform.position.x, blackHole.transform.position.y, -1.1f), rot);
         SoundManager.PLAY_SOUND("ResourceSpawn");
+
+        cutoff = targetCutoff = 0;
+        blackHoleInt = 2;
+        shake = true;
+        animator.SetInteger("blackHoleAnimation", 2);
+
+        asteroidSpawnDelay = Random.Range(objectSpawnDelay.x, objectSpawnDelay.y);
+        asteroidSpawnTimer = 0;
     }
 
     private Vector3 RandomCircle(Vector3 center, float radius, int ang) {

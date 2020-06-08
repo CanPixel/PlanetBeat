@@ -268,7 +268,8 @@ public class PlayerPlanets : MonoBehaviourPun {
         
         if(currentScore - penalty >= 0) currentScore -= penalty;
         else currentScore = 0;
-        if(GameManager.GAME_STARTED || (!GameManager.GAME_STARTED && player.photonView.IsMine)) SoundManager.PLAY_SOUND("ScoreDecrease");
+        
+        if(player.photonView.IsMine) SoundManager.PLAY_SOUND("ScoreDecrease");
 
         increasePopupTxt.enabled = true;    
         increasePopupTxt.color = redDecrease;
@@ -281,9 +282,9 @@ public class PlayerPlanets : MonoBehaviourPun {
     }
 
     public void AddingResource(float amount) {
-        if(playerNumber <= 0) return;
+        if(playerNumber <= 0 || GameManager.GAME_WON) return;
         
-        if(GameManager.GAME_STARTED || (!GameManager.GAME_STARTED && player.photonView.IsMine)) SoundManager.PLAY_SOUND("ScoreIncrease");
+        if(player.photonView.IsMine) SoundManager.PLAY_SOUND("ScoreIncrease");
 
         currentScore += amount;
         if(currentScore > maxScore) currentScore = maxScore;
@@ -298,6 +299,7 @@ public class PlayerPlanets : MonoBehaviourPun {
     }
 
     protected void WinGame() {
+        if(GameManager.GAME_WON) return;
         photonView.RPC("SynchWin", RpcTarget.AllViaServer, player.photonView.ViewID);
     }
 

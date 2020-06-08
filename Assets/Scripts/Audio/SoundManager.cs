@@ -25,7 +25,6 @@ public class SoundManager : MonoBehaviour {
 			return;
 		}
 		instance = this;
-		DontDestroyOnLoad(gameObject);
 		for(int i = 0; i < soundEvents.Length; i++) soundBank.Add(soundEvents[i].labelName.ToLower(), soundEvents[i].fmodPath);
 	}
 
