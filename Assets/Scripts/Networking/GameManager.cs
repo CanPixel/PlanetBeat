@@ -103,7 +103,7 @@ public class GameManager : MonoBehaviourPunCallbacks {
    private void ChoosePlanet(PlayerShip player) {
       PlayerPlanets playerPlanets = null;
       for(int i = 0; i < allPlanets.Count; i++) {
-         var planet = allPlanets[i]; // MOET "i" ZIJN!
+         var planet = allPlanets[5]; // MOET "i" ZIJN!
          if(planet.HasPlayer()) continue;
          player.SetHomePlanet(planet.gameObject);
          planet.AssignPlayer(player);
