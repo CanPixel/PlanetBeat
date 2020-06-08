@@ -149,7 +149,7 @@ public class Asteroid : PickupableObject {
     void Update() {
         unstablePhaseTime = animator.GetCurrentAnimatorClipInfo(0)[0].clip.length;
 
-        if(gameObject.tag == "ResourceTutorial" && held && ownerPlayer != null) ownerPlayer.playerTutorial.CompleteSubTask("GrabResource");
+        if(gameObject.tag == "ResourceTutorial" && held && ownerPlayer != null) ownerPlayer.playerTutorial.CompleteSubTask("grabresource");
 
         if(consumeTimer > 0) consumeTimer -= Time.deltaTime;
 
@@ -312,8 +312,8 @@ public class Asteroid : PickupableObject {
                 if((canConsume || canScoreWithoutDropping) && gameObject.tag != "ResourceTutorial") ConsumeResource();
 
                 if(gameObject.tag == "ResourceTutorial" && throwed) {
-                    if(ownerPlayer != null) ownerPlayer.playerTutorial.CompleteSubTask("throwresource");
                     ConsumeResource();
+                    if(ownerPlayer != null) ownerPlayer.playerTutorial.CompleteSubTask("throwresource");
                 }
             }
         }
