@@ -177,6 +177,9 @@ public class PlayerPlanets : MonoBehaviourPun {
             tutorialColliders.transform.rotation = Quaternion.identity;
         }
 
+        if (currentScore >= maxScore)
+            PlanetStages.finalLightStage = 1;
+
         lerpScore = Mathf.Lerp(lerpScore, (currentScore + 1), borealisAnim.length * Time.deltaTime);
         if(currentScore == 0) lerpScore = 0;
 
