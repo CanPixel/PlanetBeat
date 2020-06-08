@@ -57,7 +57,7 @@ public abstract class PickupableObject : MonoBehaviourPun {
 }
 
 public class Infectroid : PickupableObject {
-    public Text increasePopupTxt;
+    public TextMeshProUGUI increasePopupTxt;
     public GameObject explodeParticles;
 
     [HideInInspector] public bool giveTag = false;

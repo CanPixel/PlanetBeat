@@ -10,15 +10,18 @@ public class PlanetStages : MonoBehaviour {
     public const int lightStageAmount = 5;
 
     [Space(5)]
+    public Animator lightStageAnimator;
     public LightStage[] lightStages;
 
     protected LightStage curStage;
     private Material targetMaterial;
 
+    public static int finalLightStage = 0;
+
     [System.Serializable]
     public class LightStage {
         public int moons = 0;
-        public Material material, lightLayer;
+        public Material lightLayer;
 
         public void ApplyStage(GameObject root, GameObject prefab, int moonAmount) {
             var moonList = root.GetComponentsInChildren<Moon>();
@@ -42,6 +45,46 @@ public class PlanetStages : MonoBehaviour {
 
     void FixedUpdate() {
         if(targetMaterial != null) meshRenderer.material.Lerp(meshRenderer.material, targetMaterial, Time.deltaTime * 1f);
+
+        // Bradley
+
+        Debug.Log(currentLightStage);
+        if (currentLightStage == 0)
+        {
+            lightStageAnimator.SetInteger("LightAnimation", 0);
+        }
+
+        if (currentLightStage == 1)
+        {
+            lightStageAnimator.SetInteger("LightAnimation", 1);
+        }
+
+        if (currentLightStage == 2)
+        {
+            lightStageAnimator.SetInteger("LightAnimation", 2);
+        }
+
+        if (currentLightStage == 3)
+        {
+            lightStageAnimator.SetInteger("LightAnimation", 3);
+        }
+
+        if (currentLightStage == 4)
+        {
+            lightStageAnimator.SetInteger("LightAnimation", 4);
+        }
+
+        if (currentLightStage == 5)
+        {
+            lightStageAnimator.SetInteger("LightAnimation", 5);
+        }
+
+        if (finalLightStage == 1)
+        {
+            lightStageAnimator.SetInteger("LightAnimation", 5);
+        }
+
+        // Bradley
     }
 
     public void SetLightStage(int i) {
@@ -49,7 +92,7 @@ public class PlanetStages : MonoBehaviour {
         currentLightStage = i;
         curStage = lightStages[i];
         
-        targetMaterial = curStage.material;
+        //targetMaterial = curStage.material;
 
         if(curStage.lightLayer != null) {
             lightLayerRender.material = curStage.lightLayer;
