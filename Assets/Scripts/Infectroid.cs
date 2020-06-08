@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 using UnityEngine.UI;
-
 using TMPro;
 
 public abstract class PickupableObject : MonoBehaviourPun {

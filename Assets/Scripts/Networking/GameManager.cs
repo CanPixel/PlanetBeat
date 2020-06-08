@@ -209,7 +209,6 @@ public class GameManager : MonoBehaviourPunCallbacks {
 
    public void LeaveRoom() {
       GAME_STARTED = false;
-  //    playerLabels.Clear();
       PhotonNetwork.LeaveRoom();
    }
 

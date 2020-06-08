@@ -7,7 +7,7 @@ using Photon.Pun;
 
 public class PlayerTutorial : MonoBehaviour {
     public GameObject resourcePrefab, infectroidPrefab;
-    public Text spaceToContinueText;
+    public Text spaceToContinueText, continueKey;
 
     private LineRenderer line;
 
@@ -17,6 +17,7 @@ public class PlayerTutorial : MonoBehaviour {
 
     [Header("Tutorial Vars")]
     public float resourceOrbitSpeed = 0.5f;
+    public KeyCode keyToAdvance;
 
     public PlayerShip host;
 
@@ -59,6 +60,7 @@ public class PlayerTutorial : MonoBehaviour {
     public Dictionary<string, TutorialPiece.SubTask> tutorialTasks = new Dictionary<string, TutorialPiece.SubTask>();
 
     void Start() {
+        continueKey.text = keyToAdvance.ToString().ToUpper();
         line = GetComponent<LineRenderer>();
         line.positionCount = segments + 1;
         foreach(var i in tutorialSteps) i.step.gameObject.SetActive(false);
@@ -109,7 +111,10 @@ public class PlayerTutorial : MonoBehaviour {
     }
 
     void Update() {
-        if(Launcher.GetSkipCountDown()) return;
+        if(Launcher.GetSkipCountDown() || GameManager.GAME_STARTED) {
+            Destroy(gameObject);
+            return;
+        }
 
         TutorialTick();
 
@@ -126,6 +131,12 @@ public class PlayerTutorial : MonoBehaviour {
         }
     }
 
+    protected void SpawnReadyText() {
+        var pos = host.planet.transform.position * 80f;
+        var obj = PhotonNetwork.Instantiate("PLAYERREADY", pos, Quaternion.identity) as GameObject;
+        obj.GetPhotonView().RPC("Set", RpcTarget.AllBuffered, PlayerShip.PLAYERNAME, pos, host.playerTextColor);
+    }
+
     private void IncrementTutorial() {
         if(tutorialSteps[tutorialProgress].step != null && tutorialSteps[tutorialProgress].step.PressSpaceToContinue) {
             spaceToContinueText.gameObject.SetActive(true);
@@ -133,7 +144,7 @@ public class PlayerTutorial : MonoBehaviour {
             spaceToContinueText.transform.position = (tutorialSteps[tutorialProgress].step.pressSpacePos.focalPoint.transform.position + tutorialSteps[tutorialProgress].step.pressSpacePos.offset) + new Vector3(0, Mathf.Sin(Time.time * 8f) / 100f, 0);
         }
 
-        if(Input.GetKey(KeyCode.Space) || !tutorialSteps[tutorialProgress].step.PressSpaceToContinue) {
+        if(Input.GetKey(keyToAdvance) || !tutorialSteps[tutorialProgress].step.PressSpaceToContinue) {
             spaceToContinueText.gameObject.SetActive(false);
 
             tutorialSteps[tutorialProgress].step.ReleaseAchievements();
@@ -250,8 +261,7 @@ public class PlayerTutorial : MonoBehaviour {
         host.planet.photonView.RPC("SetResource", RpcTarget.AllBuffered, 0f);
         host.photonView.RPC("ReadyPlayer", RpcTarget.MasterClient, host.photonView.ViewID);
         
-        var obj = PhotonNetwork.Instantiate("PLAYERREADY", transform.position, Quaternion.identity) as GameObject;
-        obj.GetPhotonView().RPC("Set", RpcTarget.AllBuffered, PlayerShip.PLAYERNAME, host.transform.localPosition, host.playerColor.r, host.playerColor.g, host.playerColor.b);
+        SpawnReadyText();
 
         host.planet.FinishTutorial();
         gameObject.SetActive(false);

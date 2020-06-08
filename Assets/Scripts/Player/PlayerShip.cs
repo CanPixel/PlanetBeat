@@ -16,6 +16,7 @@ public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
     public Light exhaustLight;
     public GameObject model;
 
+    [HideInInspector] public PlayerReady.PlayerColor playerTextColor;
     [HideInInspector] public GameObject playerLabel;
     [HideInInspector] public Collider2D[] colliders;
 
@@ -239,6 +240,9 @@ public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
     public void ForceColor(float r, float g, float b) {
         var col = new Color(r, g, b);
         playerColor = col;
+
+        playerTextColor = PlanetSwitcher.GetPlayerTextColor(col);
+
         SetTextureByPlanet(playerColor);
         var settings = exhaust.main;
         var settingsTwo = exhaustDefault.main;
@@ -333,7 +337,7 @@ public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
 
     void Update() {
         //RuntimeManager.StudioSystem.setParameterByName("Exhaust", Exaust);
-        
+
         if(planet != null) {
             if (planet.gameObject == GameObject.Find("PLANETRED")) imageSwitcherScript.SetHandRed();
             else if (planet.gameObject == GameObject.Find("PLANETPINK")) imageSwitcherScript.SetHandPink();

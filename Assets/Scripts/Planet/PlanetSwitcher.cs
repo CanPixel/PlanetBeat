@@ -10,6 +10,19 @@ public class PlanetSwitcher : MonoBehaviour {
 
    private Dictionary<Color32, PlayerElement> colorPlayerTexture = new Dictionary<Color32, PlayerElement>();
 
+    public static PlayerReady.PlayerColor GetPlayerTextColor(Color32 color) {
+        if(instance == null) return PlayerReady.PlayerColor.PINK;
+        var name = instance.colorPlayerTexture[color].name.ToUpper();
+        var col = PlayerReady.PlayerColor.PINK;
+        if(name == "RED") col = PlayerReady.PlayerColor.RED;
+        else if(name == "BLUE") col = PlayerReady.PlayerColor.BLUE;
+        else if(name == "YELLOW") col = PlayerReady.PlayerColor.YELLOW;
+        else if(name == "CYAN") col = PlayerReady.PlayerColor.CYAN;
+        else if(name == "PINK") col = PlayerReady.PlayerColor.PINK;
+        else if(name == "GREEN") col = PlayerReady.PlayerColor.GREEN;
+        return col;
+    } 
+
    public static PlayerElement GetPlayerTexture(Color col) {
        if(instance == null) return null;
        return instance.colorPlayerTexture[col];
@@ -47,6 +60,7 @@ public class PlanetSwitcher : MonoBehaviour {
 
     [System.Serializable]
     public class PlayerElement {
+        public string name;
         public GameObject model;
         public Material ship, tail;
         public Color tint = Color.white;
