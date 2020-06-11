@@ -627,7 +627,6 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   warningSign: {fileID: 0}
-  warningArrow: {fileID: 0}
   redWarning: {fileID: 21300000, guid: 342624424aa8d504883fc98e1afb30eb, type: 3}
   pinkWarning: {fileID: 21300000, guid: a43ea7d1f705b1245b9208ece6d1b9d3, type: 3}
   blueWarning: {fileID: 21300000, guid: 0d9999d75c6130a46b784baa6f567884, type: 3}
@@ -649,7 +648,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   aurora: {fileID: 8643269259289502831}
-  auroraAnim: {fileID: 0}
+  auroraAnim: {fileID: 8373792744642751139}
   render: {fileID: 95744570482962424}
   planetColor: {r: 0.6431373, g: 0.21568628, b: 0.21568628, a: 1}
   partScale: 1
@@ -1369,7 +1368,7 @@ MonoBehaviour:
   auroraVolumetric: 1
   auroraCircular: 0
   auroraVolumetricRange: {x: 426, y: -500}
-  auroraLights: 1
+  auroraLights: 0
   auroraLightsCount: 25
   auroraLightsRange: 5000
   auroraLightsIntesity: 1
@@ -1676,6 +1675,11 @@ PrefabInstance:
       propertyPath: m_LocalScale.y
       value: 0.8
       objectReference: {fileID: 0}
+    - target: {fileID: 6061447726823252456, guid: f3469c6a1e99fd544b899569b8f579c8,
+        type: 3}
+      propertyPath: m_Color.a
+      value: 0.6156863
+      objectReference: {fileID: 0}
     - target: {fileID: 6061447726823252457, guid: f3469c6a1e99fd544b899569b8f579c8,
         type: 3}
       propertyPath: m_SizeDelta.x
@@ -1690,11 +1694,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Color.a
       value: 0.5921569
-      objectReference: {fileID: 0}
-    - target: {fileID: 6061447726823252456, guid: f3469c6a1e99fd544b899569b8f579c8,
-        type: 3}
-      propertyPath: m_Color.a
-      value: 0.6156863
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f3469c6a1e99fd544b899569b8f579c8, type: 3}

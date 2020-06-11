@@ -7,30 +7,30 @@ using Photon.Pun;
 public class PlanetGlow : MonoBehaviourPun {
     private ProceduralAurora.AuroraMain auroraSRC;
     public GameObject aurora;
-    [HideInInspector] public Animator auroraAnim;
+    public Animator auroraAnim;
     private float glowOffset;
     private PlayerPlanets playerPlanets;
     public MeshRenderer render;
     public Color planetColor;
     private float baseRange; 
-    private List<GameObject> borealis = new List<GameObject>();
+    private ParticleSystem borealis;
 
     [HideInInspector] public float partScale = 1f;
 
     private float flicker = 0, subFlicker = 0;
 
     void Start() {
-        if(aurora != null) auroraSRC = aurora.GetComponent<ProceduralAurora.AuroraMain>();
-        auroraAnim = GetComponent<Animator>();
+        auroraSRC = aurora.GetComponent<ProceduralAurora.AuroraMain>();
         playerPlanets = GetComponent<PlayerPlanets>();
         glowOffset = 1f + Random.Range(0f, 1f);
-        if(aurora != null) foreach(Transform t in aurora.transform) borealis.Add(t.gameObject);
+        borealis = aurora.GetComponentInChildren<ParticleSystem>();
 
         if(auroraSRC != null) {
             var keys = auroraSRC.auroraColorMain.colorKeys;
             for(int i = 0; i < auroraSRC.auroraColorMain.colorKeys.Length; i++) keys[i].color = playerPlanets.GetColor() * 2f;
             auroraSRC.auroraColorMain.SetKeys(keys, auroraSRC.auroraColorMain.alphaKeys);
         }
+        if(photonView.IsMine) auroraAnim.SetTrigger("Scorealis");
     }
 
     void Update() {
@@ -48,20 +48,13 @@ public class PlanetGlow : MonoBehaviourPun {
         if(aurora != null) {
             aurora.transform.position = transform.position;
             aurora.transform.rotation = Quaternion.Euler(90, 180, 0);
-
-            foreach(var i in borealis) i.transform.localScale = Vector3.one * partScale;
-        }
-    }
-
-    [PunRPC]
-    private void Anim(int viewID) {
-        if(playerPlanets.photonView.ViewID == viewID) {
-            if(auroraAnim != null) auroraAnim.SetTrigger("Scorealis");
+            
+            if(borealis == null) borealis = aurora.GetComponentInChildren<ParticleSystem>();
+            borealis.transform.localScale = Vector3.one * partScale;
         }
     }
 
     public void Animate() {
-        // if(auroraAnim != null) auroraAnim.SetTrigger("Scorealis");
-        photonView.RPC("Anim", RpcTarget.All, playerPlanets.photonView.ViewID);
+        auroraAnim.SetTrigger("Scorealis");
     }
 }

@@ -74,5 +74,6 @@ MonoBehaviour:
   - RotateBoost
   - SynchBlackHole
   - Anim
+  - AnimateGlow
   DisableAutoOpenWizard: 1
   ShowSettings: 1

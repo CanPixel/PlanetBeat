@@ -120,7 +120,7 @@ public class PlayerTutorial : MonoBehaviour {
 
         //Highlighter circle animation
         radius = Mathf.Lerp(radius, 0.05f, Time.deltaTime * 2f);
-        if(!GameManager.GAME_STARTED && host.photonView.IsMine) {
+        if(!GameManager.GAME_STARTED && host != null && host.photonView.IsMine) {
             var sine = Mathf.Sin(Time.time * 7f);
             radius = Mathf.Lerp(radius, 6500 + sine * 1000f, Time.deltaTime * 3f);
             CreatePoints(radius);
@@ -170,7 +170,7 @@ public class PlayerTutorial : MonoBehaviour {
                 if(curTutorial.step.highlighterCircleFocalPoint.Length > 0) {
                     switch(focalString.ToLower()) {
                         case "planet":
-                            vocalPoint = host.planet.transform.position;
+                            if(host != null && host.planet != null) vocalPoint = host.planet.transform.position;
                             break;
                         case "player":
                             vocalPoint = host.transform.position;
@@ -196,7 +196,7 @@ public class PlayerTutorial : MonoBehaviour {
             }
         }
 
-        if(!host.photonView.IsMine) foreach(var i in tutorialSteps) i.step.gameObject.SetActive(false);
+        if(host != null && !host.photonView.IsMine) foreach(var i in tutorialSteps) i.step.gameObject.SetActive(false);
 
         //Tuturial Resource
         if(tutorialResource != null && !tutorialResource.held) {

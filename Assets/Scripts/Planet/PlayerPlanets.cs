@@ -275,6 +275,11 @@ public class PlayerPlanets : MonoBehaviourPun {
         stages.SetLightStage((int)curStage);
     }
 
+    [PunRPC]
+    public void AnimateGlow(int viewID) {
+        if(photonView.ViewID == viewID) planetGlow.Animate();
+    }
+
     public void AddingResource(float amount) {
         if(playerNumber <= 0 || GameManager.GAME_WON) return;
         
@@ -282,7 +287,7 @@ public class PlayerPlanets : MonoBehaviourPun {
 
         currentScore += amount;
         if(currentScore > maxScore) currentScore = maxScore;
-        planetGlow.Animate();
+        photonView.RPC("AnimateGlow", RpcTarget.All, photonView.ViewID);
         photonView.RPC("SetResource", RpcTarget.AllBufferedViaServer, currentScore);
 
         increasePopupTxt.enabled = true;    
