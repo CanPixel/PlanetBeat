@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Photon.Pun;
 
-public class PlanetGlow : MonoBehaviour {
+public class PlanetGlow : MonoBehaviourPun {
     private ProceduralAurora.AuroraMain auroraSRC;
     public GameObject aurora;
     [HideInInspector] public Animator auroraAnim;
@@ -53,14 +53,15 @@ public class PlanetGlow : MonoBehaviour {
         }
     }
 
-    public void Flicker() {
-        return;
-        //
-        flicker = 1;
-        subFlicker = 0;
+    [PunRPC]
+    private void Anim(int viewID) {
+        if(playerPlanets.photonView.ViewID == viewID) {
+            if(auroraAnim != null) auroraAnim.SetTrigger("Scorealis");
+        }
     }
 
     public void Animate() {
-        if(auroraAnim != null) auroraAnim.SetTrigger("Scorealis");
+        // if(auroraAnim != null) auroraAnim.SetTrigger("Scorealis");
+        photonView.RPC("Anim", RpcTarget.All, playerPlanets.photonView.ViewID);
     }
 }

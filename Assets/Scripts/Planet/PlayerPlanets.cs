@@ -38,8 +38,8 @@ public class PlayerPlanets : MonoBehaviourPun {
 
     private float baseWarningScale;
 
-    public Image warningSign, warningArrow;
-
+    public Image warningSign;
+    
     public Sprite redWarning;
     public Sprite pinkWarning;
     public Sprite blueWarning;
@@ -187,13 +187,8 @@ public class PlayerPlanets : MonoBehaviourPun {
             if(infected) {
                 warningSign.transform.position = Vector3.Lerp(warningSign.transform.position, player.transform.position + Vector3.up / 2.0f, Time.deltaTime * 10f); //was 1.5 en 4
                 warningSign.transform.localScale = Vector3.Lerp(warningSign.transform.localScale, Vector3.one * baseWarningScale + (new Vector3(1.2f, 1.2f, 1.2f) * Mathf.Sin(Time.time * 10f) * 0.02f), Time.deltaTime * 4f);
-                warningArrow.transform.position = Vector3.Lerp(warningArrow.transform.position, transform.position + (new Vector3(1, 0, 0) * Mathf.Sin(Time.time * 10f) * 0.2f) + Vector3.right * 1.5f, Time.deltaTime * 4f);
-            
                 WarningSignSwitcher();
-            } else {
-                warningSign.transform.position = Vector3.Lerp(warningSign.transform.position, new Vector3(0, 10, 0), Time.deltaTime * 18f);
-                warningArrow.transform.position = Vector3.Lerp(warningArrow.transform.position, new Vector3(0, 10, 0), Time.deltaTime * 8f);
-            }
+            } else warningSign.transform.position = Vector3.Lerp(warningSign.transform.position, new Vector3(0, 10, 0), Time.deltaTime * 18f);
         }
 
         rechargeBar.LerpAlpha(0, 4f);
@@ -264,7 +259,6 @@ public class PlayerPlanets : MonoBehaviourPun {
     [PunRPC]
     protected void ExplodeReduce(float penalty) {
         if(playerNumber <= 0 || GameManager.GAME_WON) return;
-        planetGlow.Flicker();
         
         if(currentScore - penalty >= 0) currentScore -= penalty;
         else currentScore = 0;
