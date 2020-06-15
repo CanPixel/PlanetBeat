@@ -45,7 +45,7 @@ public class AsteroidSpawner : MonoBehaviourPun {
 
     void Update() {
         Random.InitState(System.DateTime.Now.Millisecond);
-        FMODUnity.RuntimeManager.StudioSystem.setParameterByName("BlackHole", cutoff);
+        //FMODUnity.RuntimeManager.StudioSystem.setParameterByName("BlackHole", cutoff);
 
         cutoff = Mathf.Lerp(cutoff, targetCutoff, Time.deltaTime * cutoffSpeed);
         if(!GameManager.GAME_STARTED) return;
@@ -67,12 +67,14 @@ public class AsteroidSpawner : MonoBehaviourPun {
 
     public void AnticipateSpawn() {
         if(asteroidSpawnTimer > asteroidSpawnDelay) {
+            SoundManager.PLAY_SOUND("BlackHoleOpen");
             targetCutoff = 1;
             animator.SetInteger("blackHoleAnimation", 1);
             blackHoleInt = 1;
         }
 
         if(powerupSpawnTimer > powerupSpawnDelay) {
+            SoundManager.PLAY_SOUND("BlackHoleOpen");
             targetCutoff = 1;
             animator.SetInteger("blackHoleAnimation", 1);
             blackHoleInt = 1;

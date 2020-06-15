@@ -13,8 +13,14 @@ public class HookTip : MonoBehaviour {
     }
 
     void OnTriggerEnter2D(Collider2D col) {
-        if((col.gameObject.tag == "ResourceTutorial" || col.gameObject.tag == "Resource") && hookShot.IsShooting()) col.gameObject.GetComponent<Asteroid>().Capture(hookShot);
+        if((col.gameObject.tag == "ResourceTutorial" || col.gameObject.tag == "Resource") && hookShot.IsShooting()) {
+            col.gameObject.GetComponent<Asteroid>().Capture(hookShot);
+            SoundManager.PLAY_SOUND("CatchResource");
+        }
 
-        if((col.gameObject.tag == "InfectroidTutorial" || col.gameObject.tag == "Powerup") && hookShot.IsShooting()) col.gameObject.GetComponent<PickupableObject>().Capture(hookShot);
+        if((col.gameObject.tag == "InfectroidTutorial" || col.gameObject.tag == "Powerup") && hookShot.IsShooting()) {
+            col.gameObject.GetComponent<PickupableObject>().Capture(hookShot);
+            SoundManager.PLAY_SOUND("CatchInfectroid");
+        }
     }
 }

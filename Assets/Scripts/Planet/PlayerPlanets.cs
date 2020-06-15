@@ -12,8 +12,8 @@ public class PlayerPlanets : MonoBehaviourPun {
     private PlanetStages stages;
     private PlayerShip player;
     [HideInInspector] public int playerNumber = 0;
-    [HideInInspector] public float currentScore;
-    private float lerpScore;
+    [HideInInspector] [FMODUnity.ParamRef] public float currentScore;
+    [FMODUnity.ParamRef] private float lerpScore;
     public float minScore = 0;
     public float maxScore = 100f;
     public TextMeshProUGUI scoreText, increasePopupTxt;
@@ -22,6 +22,10 @@ public class PlayerPlanets : MonoBehaviourPun {
     public Orbit orbit;
     public EliminationBar rechargeBar;
     public TrailRenderer trails;
+
+    [FMODUnity.ParamRef] 
+    private FMOD.Studio.EventInstance increaseEvent, decreaseEvent;
+    private const string decreasePath = "event:/SFX/ScoreDecrease", increasePath = "event:/SFX/ScoreIncrease";
 
     public Color greenIncrease, redDecrease;
 
@@ -48,7 +52,6 @@ public class PlayerPlanets : MonoBehaviourPun {
     public Sprite cyanWarning;
 
     [HideInInspector] public bool infected = false;
-
     [HideInInspector] public float eliminationTimer;
     private bool destructionInit = false;
     public void SetElimination(float prog) {
@@ -94,6 +97,13 @@ public class PlayerPlanets : MonoBehaviourPun {
     }
 
     void Start() {
+        increaseEvent = FMODUnity.RuntimeManager.CreateInstance(increasePath);
+        decreaseEvent = FMODUnity.RuntimeManager.CreateInstance(decreasePath);
+        increaseEvent.start();
+        decreaseEvent.start();
+/*         increaseEvent.release();
+        decreaseEvent.release(); */
+
         lerpScore = minScore;
         scoreBaseScale = scoreText.transform.localScale;
 
@@ -170,6 +180,14 @@ public class PlayerPlanets : MonoBehaviourPun {
     }
 
     void Update() {
+//        if(player != null && player.photonView.IsMine) {
+            //increaseEvent.setParameterByName("Score", currentScore);
+            //decreaseEvent.setParameterByName("Score", currentScore);
+  //      }
+        FMODUnity.RuntimeManager.StudioSystem.setParameterByName("Score", currentScore);
+        increaseEvent.setParameterByName("Score", currentScore);
+        decreaseEvent.setParameterByName("Score", currentScore);
+
         if(tutorialColliders != null) {
             if(GameManager.GAME_STARTED) Destroy(tutorialColliders);
 
@@ -263,7 +281,9 @@ public class PlayerPlanets : MonoBehaviourPun {
         if(currentScore - penalty >= 0) currentScore -= penalty;
         else currentScore = 0;
         
+        decreaseEvent.setParameterByName("Score", currentScore);
         if(player.photonView.IsMine) SoundManager.PLAY_SOUND("ScoreDecrease");
+        decreaseEvent.setParameterByName("Score", currentScore);
 
         increasePopupTxt.enabled = true;    
         increasePopupTxt.color = redDecrease;
@@ -283,7 +303,9 @@ public class PlayerPlanets : MonoBehaviourPun {
     public void AddingResource(float amount) {
         if(playerNumber <= 0 || GameManager.GAME_WON) return;
         
+        increaseEvent.setParameterByName("Score", currentScore);
         if(player.photonView.IsMine) SoundManager.PLAY_SOUND("ScoreIncrease");
+        increaseEvent.setParameterByName("Score", currentScore);
 
         currentScore += amount;
         if(currentScore > maxScore) currentScore = maxScore;

@@ -2,12 +2,9 @@
 <objects serializationModel="Studio.02.01.00">
 	<object class="Event" id="{44a1cab4-b4bf-4b76-a4be-64758ebdde6f}">
 		<property name="note">
-			<value>Wordt wel gebruikt
+			<value>
 
 </value>
-		</property>
-		<property name="color">
-			<value>Red</value>
 		</property>
 		<property name="name">
 			<value>HotPatatoTicking</value>
@@ -68,7 +65,7 @@
 	<object class="MarkerTrack" id="{766ae8ce-bf4d-4f4e-9b62-2b3044f488f7}" />
 	<object class="GroupTrack" id="{18fb125e-66d5-458c-be89-09321e26312e}">
 		<relationship name="modules">
-			<destination>{b2d19c7f-90d7-4801-9d72-b2bb4641f03a}</destination>
+			<destination>{6db52253-f66f-4c18-91af-bfba8f278602}</destination>
 		</relationship>
 		<relationship name="mixerGroup">
 			<destination>{1fa66903-5a1b-4f58-98a9-d8cb59e9795d}</destination>
@@ -76,13 +73,10 @@
 	</object>
 	<object class="Timeline" id="{d4cfca11-93c1-41f4-881f-98c4183fa6e3}">
 		<relationship name="modules">
-			<destination>{b2d19c7f-90d7-4801-9d72-b2bb4641f03a}</destination>
+			<destination>{6db52253-f66f-4c18-91af-bfba8f278602}</destination>
 		</relationship>
 	</object>
 	<object class="EventMixerMaster" id="{3d36a85c-7c9b-4d67-8669-636adf954357}">
-		<property name="volume">
-			<value>-9</value>
-		</property>
 		<relationship name="effectChain">
 			<destination>{4a79f385-88b8-47ae-9ea5-1ca64e4bc7fa}</destination>
 		</relationship>
@@ -99,12 +93,12 @@
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{628cdbbd-bd43-4cfa-b1c8-3b2f765b23fa}" />
-	<object class="SingleSound" id="{b2d19c7f-90d7-4801-9d72-b2bb4641f03a}">
+	<object class="SingleSound" id="{6db52253-f66f-4c18-91af-bfba8f278602}">
 		<property name="length">
-			<value>5</value>
+			<value>5.2685416666666667</value>
 		</property>
 		<relationship name="audioFile">
-			<destination>{87b73256-6cd5-46f5-b3cb-cfcda3f99458}</destination>
+			<destination>{5a10408b-ee0f-47e2-bf55-0654141bb2e8}</destination>
 		</relationship>
 	</object>
 	<object class="EventMixerGroup" id="{1fa66903-5a1b-4f58-98a9-d8cb59e9795d}">

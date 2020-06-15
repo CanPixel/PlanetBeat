@@ -771,6 +771,10 @@ MonoBehaviour:
     fmodPath: event:/Space_ships/Boost
   - labelName: ThrowObject
     fmodPath: event:/UI/UIClick
+  - labelName: CatchInfectroid
+    fmodPath: event:/SFX/CatchInfectroid
+  - labelName: CatchResource
+    fmodPath: event:/SFX/CatchResource
 --- !u!4 &422044742
 Transform:
   m_ObjectHideFlags: 0

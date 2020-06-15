@@ -1,13 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <objects serializationModel="Studio.02.01.00">
 	<object class="Event" id="{b3187079-caba-42e1-b0c1-3d8906d683a9}">
-		<property name="note">
-			<value>Wordt niet gebruikt, tikken zit nu in de hot patato
-</value>
-		</property>
-		<property name="color">
-			<value>Red</value>
-		</property>
+		<property name="note" />
 		<property name="name">
 			<value>HotPatatoSissing</value>
 		</property>

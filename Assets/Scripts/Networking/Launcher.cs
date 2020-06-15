@@ -170,6 +170,8 @@ public class Launcher : MonoBehaviourPunCallbacks, ILobbyCallbacks, IInRoomCallb
         playersOnline.gameObject.SetActive(false);
         countOfRooms.gameObject.SetActive(false);
         title.gameObject.SetActive(false);
+        
+        SoundManager.PLAY_SOUND("StartGame");
 
         connectNow = true;
         EnterRoom(PlayerPrefs.GetInt("DEFAULT_ROOM"));
