@@ -180,10 +180,6 @@ public class PlayerPlanets : MonoBehaviourPun {
     }
 
     void Update() {
-//        if(player != null && player.photonView.IsMine) {
-            //increaseEvent.setParameterByName("Score", currentScore);
-            //decreaseEvent.setParameterByName("Score", currentScore);
-  //      }
         FMODUnity.RuntimeManager.StudioSystem.setParameterByName("Score", currentScore);
         increaseEvent.setParameterByName("Score", currentScore);
         decreaseEvent.setParameterByName("Score", currentScore);
@@ -195,8 +191,7 @@ public class PlayerPlanets : MonoBehaviourPun {
             tutorialColliders.transform.rotation = Quaternion.identity;
         }
 
-        if (currentScore >= maxScore)
-            PlanetStages.finalLightStage = 1;
+        if (currentScore >= maxScore) PlanetStages.finalLightStage = 1;
 
         lerpScore = Mathf.Lerp(lerpScore, (currentScore + 1), borealisAnim.length * Time.deltaTime);
         if(currentScore == 0) lerpScore = 0;
@@ -228,15 +223,12 @@ public class PlayerPlanets : MonoBehaviourPun {
             var basePos = transform.position - new Vector3(-0.025f, 0.55f, 1);
             scoreText.transform.rotation = Quaternion.Euler(0, 0, 0);
             
-            //if(!GameManager.GAME_STARTED) scoreText.transform.position = Vector3.Lerp(scoreText.transform.position, (!tutorial) ? basePos : basePos - new Vector3(0, 0.5f, 0), Time.deltaTime * (tutorial ? 2f : 6f));
             scoreText.transform.position = basePos;
-
             scoreText.transform.localScale = Vector2.Lerp(scoreText.transform.localScale, scoreBaseScale, Time.deltaTime * 1f);
 
             scoreText.text = ((int)lerpScore).ToString();
             if(player != null) {
                 orbitColor = player.playerColor;
-                //scoreText.color = orbitColor;
                 orbitTrail.material.color = orbitColor * 1.5f; 
             }
         }
@@ -282,7 +274,7 @@ public class PlayerPlanets : MonoBehaviourPun {
         else currentScore = 0;
         
         decreaseEvent.setParameterByName("Score", currentScore);
-        if(player.photonView.IsMine) SoundManager.PLAY_SOUND("ScoreDecrease");
+        SoundManager.PLAY_SOUND("ScoreDecrease");
         decreaseEvent.setParameterByName("Score", currentScore);
 
         increasePopupTxt.enabled = true;    
@@ -297,15 +289,20 @@ public class PlayerPlanets : MonoBehaviourPun {
 
     [PunRPC]
     public void AnimateGlow(int viewID) {
-        if(photonView.ViewID == viewID) planetGlow.Animate();
+        planetGlow.Animate();
+    }
+
+    [PunRPC]
+    public void IncreaseSound() {
+        increaseEvent.setParameterByName("Score", currentScore);
+        SoundManager.PLAY_SOUND("ScoreIncrease");
+        increaseEvent.setParameterByName("Score", currentScore);
     }
 
     public void AddingResource(float amount) {
         if(playerNumber <= 0 || GameManager.GAME_WON) return;
         
-        increaseEvent.setParameterByName("Score", currentScore);
-        if(player.photonView.IsMine) SoundManager.PLAY_SOUND("ScoreIncrease");
-        increaseEvent.setParameterByName("Score", currentScore);
+        photonView.RPC("IncreaseSound", RpcTarget.All);
 
         currentScore += amount;
         if(currentScore > maxScore) currentScore = maxScore;

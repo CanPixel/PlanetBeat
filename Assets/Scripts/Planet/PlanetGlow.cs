@@ -30,7 +30,7 @@ public class PlanetGlow : MonoBehaviourPun {
             for(int i = 0; i < auroraSRC.auroraColorMain.colorKeys.Length; i++) keys[i].color = playerPlanets.GetColor() * 2f;
             auroraSRC.auroraColorMain.SetKeys(keys, auroraSRC.auroraColorMain.alphaKeys);
         }
-        if(photonView.IsMine) auroraAnim.SetTrigger("Scorealis");
+        if(photonView.IsMine) Animate();
     }
 
     void Update() {
@@ -55,6 +55,16 @@ public class PlanetGlow : MonoBehaviourPun {
     }
 
     public void Animate() {
+        photonView.RPC("NetworkAnimate", RpcTarget.All);
+    }
+
+    [PunRPC]
+    public void NetworkAnimate() {
+        if(auroraSRC != null) {
+            var keys = auroraSRC.auroraColorMain.colorKeys;
+            for(int i = 0; i < auroraSRC.auroraColorMain.colorKeys.Length; i++) keys[i].color = playerPlanets.GetColor() * 2f;
+            auroraSRC.auroraColorMain.SetKeys(keys, auroraSRC.auroraColorMain.alphaKeys);
+        }
         auroraAnim.SetTrigger("Scorealis");
     }
 }

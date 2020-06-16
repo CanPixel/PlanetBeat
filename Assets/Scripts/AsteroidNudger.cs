@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class AsteroidNudger : MonoBehaviour {
     public PickupableObject asteroid;
-    public float nudgeForce = 2;
+    public float nudgeForce = 2, enterVelocityReduction = 3.25f;
 
     public bool isInfectroid = false;
 
@@ -32,7 +32,7 @@ public class AsteroidNudger : MonoBehaviour {
 
     void OnTriggerEnter2D(Collider2D col) {
         if(col.tag == "ORBIT") {
-            if(isInfectroid) rb.velocity /= nudgeForce;
+            if(isInfectroid) rb.velocity /= enterVelocityReduction;
         }
     }
 

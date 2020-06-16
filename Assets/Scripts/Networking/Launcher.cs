@@ -24,6 +24,8 @@ public class Launcher : MonoBehaviourPunCallbacks, ILobbyCallbacks, IInRoomCallb
 
     private static Launcher self;
 
+    public GameObject roomListOBJ, LOGIN;
+
     [Range(1, 20)]
     [SerializeField] private byte maxPlayers = 5;
 
@@ -86,6 +88,12 @@ public class Launcher : MonoBehaviourPunCallbacks, ILobbyCallbacks, IInRoomCallb
 
         #if UNITY_WEBGL || UNITY_EDITOR
             exitButton.gameObject.SetActive(false);
+        #endif
+
+        #if !UNITY_EDITOR
+            roomListOBJ.SetActive(false);
+            LOGIN.transform.localPosition = new Vector3(0, LOGIN.transform.localPosition.y, 0);
+            SetRoomSelection(0);
         #endif
 
         SetPlayerCount(PlayerPrefs.GetInt("PlayerCount").ToString());

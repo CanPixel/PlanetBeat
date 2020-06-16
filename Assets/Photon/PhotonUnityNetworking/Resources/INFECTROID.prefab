@@ -558,6 +558,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   asteroid: {fileID: 145464310536149297}
   nudgeForce: 3
+  enterVelocityReduction: 3.25
   isInfectroid: 1
   isInOrbit: 0
 --- !u!1 &8079584669907376752

@@ -409,10 +409,7 @@ public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
     }
 
     protected void BoostManager() {
-        if (Input.GetKeyDown(KeyCode.LeftShift) && boostable) {
-            if(photonView.IsMine) BoostPlayer();
-            SoundManager.PLAY_SOUND("Boost");
-        }
+        if (Input.GetKeyDown(KeyCode.LeftShift) && photonView.IsMine && boostable) BoostPlayer();
 
         if (isBoosting) {
             boostTimer += Time.deltaTime;
@@ -430,6 +427,7 @@ public class PlayerShip : MonoBehaviourPunCallbacks, IPunObservable {
     private void BoostPlayer() {
         if (canBoost) {
             playerTutorial.CompleteSubTask("boost");
+            SoundManager.PLAY_SOUND("Boost");
 
             boostAnimator.SetInteger("boostAnimatie", 3); 
             photonView.RPC("BoostNetwork", RpcTarget.Others, photonView.ViewID, 3);

@@ -3582,7 +3582,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1389183298
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6284,7 +6284,9 @@ MonoBehaviour:
   roomLabelSize: {x: 225, y: 45}
   playerCount: {fileID: 1506210244}
   levelSceneName: Space
-  maxPlayers: 10
+  roomListOBJ: {fileID: 1017228719}
+  LOGIN: {fileID: 1000833174}
+  maxPlayers: 14
   controlPanel: {fileID: 1544172659}
   looker: {fileID: 21300000, guid: 4a033719047f03c4b8cf9ea013979407, type: 3}
   player: {fileID: 21300000, guid: 7a55722a414ec884f8072b034e7da0ad, type: 3}

@@ -24,6 +24,7 @@ public class AsteroidSpawner : MonoBehaviourPun {
     private int sample = 0;
 
     private int blackHoleInt = 0;
+    private bool openSound = false;
 
     [FMODUnity.ParamRef]
     private float cutoff = 0;
@@ -67,12 +68,16 @@ public class AsteroidSpawner : MonoBehaviourPun {
 
     [PunRPC]
     public void OpenBlackHoleSound() {
-        SoundManager.PLAY_SOUND("BlackHoleOpen");
+        if(!openSound) {
+            SoundManager.PLAY_SOUND("BlackHoleOpen");
+            openSound = true;
+        }
     }
 
     [PunRPC]
     public void SpawnSound(string obj) {
         SoundManager.PLAY_SOUND(obj + "Spawn");
+        openSound = false;
     }
 
     public void AnticipateSpawn() {
