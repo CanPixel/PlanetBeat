@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <objects serializationModel="Studio.02.01.00">
 	<object class="Event" id="{44a1cab4-b4bf-4b76-a4be-64758ebdde6f}">
-		<property name="note">
-			<value>
-
-</value>
-		</property>
+		<property name="note" />
 		<property name="name">
 			<value>HotPatatoTicking</value>
 		</property>
@@ -58,7 +54,7 @@
 			<destination>{628cdbbd-bd43-4cfa-b1c8-3b2f765b23fa}</destination>
 		</relationship>
 		<relationship name="output">
-			<destination>{4177d60e-7406-4bff-b8e0-8338d9cb0372}</destination>
+			<destination>{72e4783f-9676-4776-8325-2253ff7dd47c}</destination>
 		</relationship>
 	</object>
 	<object class="EventAutomatableProperties" id="{c73e2892-03e3-406a-a0ad-9459c4331de4}" />

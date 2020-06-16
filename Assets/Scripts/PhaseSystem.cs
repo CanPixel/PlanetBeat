@@ -29,6 +29,8 @@ public class PhaseSystem : MonoBehaviour {
 
     void Update() {
         if(GameManager.GAME_STARTED) {
+            MusicManager.TRIGGERKICKS = phaseIndex >= 1;
+
             text.enabled = true;
             MusicStateManager.MusicGameState(phaseIndex + 2);
         }

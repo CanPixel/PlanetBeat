@@ -17,6 +17,8 @@ public class MusicManager : MonoBehaviour {
         public FMOD.StringWrapper lastMarker = new FMOD.StringWrapper();
     }
 
+    public static bool TRIGGERKICKS = false;
+
     TimelineInfo timelineInfo;
     GCHandle timelineHandle;
 
@@ -104,7 +106,7 @@ public class MusicManager : MonoBehaviour {
     // Onderstaande heb ik in eerste instantie geprobeerd, maar het lijkt me niet zo effecient en ik heb het idee dat hiermee de trigger naar de animatie ook niet nauwkeurig wordt gegeven
     void Update () {
         if(timelineInfo.lastMarker != markerAnim) {
-            kickEvent.Invoke();
+            if(TRIGGERKICKS) kickEvent.Invoke();
             markerAnim = timelineInfo.lastMarker;
         }
 
