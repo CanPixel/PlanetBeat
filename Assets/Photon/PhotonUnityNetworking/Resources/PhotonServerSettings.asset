@@ -75,5 +75,7 @@ MonoBehaviour:
   - SynchBlackHole
   - Anim
   - AnimateGlow
+  - OpenBlackHoleSound
+  - SpawnSound
   DisableAutoOpenWizard: 1
   ShowSettings: 1

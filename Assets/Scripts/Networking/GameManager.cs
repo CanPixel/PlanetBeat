@@ -32,6 +32,7 @@ public class GameManager : MonoBehaviourPunCallbacks {
    private bool startCountdown = false;
    private float countdownTimer, startupDelayTimer;
    public int count = 6;
+   private int countPrev = 0;
 
    public static GameManager instance;
    [Space(10)]
@@ -71,6 +72,9 @@ public class GameManager : MonoBehaviourPunCallbacks {
       skipCountdown = Launcher.GetSkipCountDown();
       
       SoundManager.PLAY_SOUND("StartGame");
+
+      if(skipCountdown) MusicStateManager.MusicGameState(2);
+      else MusicStateManager.MusicGameState(1);
    }
 
    public static bool SkipCountdown() {
@@ -152,10 +156,7 @@ public class GameManager : MonoBehaviourPunCallbacks {
       if(startCountdown && PhotonNetwork.IsMasterClient) {
          countdownTimer += Time.deltaTime;
          if(countdownTimer > 1) {
-            if(count > 0) {
-               count--;
-               SoundManager.PLAY_SOUND("Countdown");
-            }
+            if(count > 0) count--;
             else GAME_STARTED = true;
             photonView.RPC("EnableCountdown", RpcTarget.All, count);
             countdownTimer = 0;
@@ -170,6 +171,12 @@ public class GameManager : MonoBehaviourPunCallbacks {
    public void EnableCountdown(int count) {
       startCountdown = true;
       countdown.gameObject.SetActive(count > 0);
+
+      if(countPrev != count) {
+         SoundManager.PLAY_SOUND("Countdown");
+         countPrev = this.count;
+      }
+
       this.count = count;
       countdown.text = count.ToString();
       if(count <= 0) {
@@ -208,6 +215,8 @@ public class GameManager : MonoBehaviourPunCallbacks {
    }
 
    public void LeaveRoom() {
+      MusicStateManager.MusicGameState(8); ///////////////
+      
       GAME_STARTED = false;
       PhotonNetwork.LeaveRoom();
    }

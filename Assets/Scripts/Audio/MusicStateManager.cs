@@ -4,14 +4,21 @@ using UnityEngine;
 using FMODUnity;
 
 public class MusicStateManager : MonoBehaviour {
-    //[FMODUnity.EventRef]
     [FMODUnity.ParamRef]
     float musicstate;
 
-    public void MusicGameState(float gamestate) {
-        musicstate = gamestate;
+    private static MusicStateManager self;
 
-        RuntimeManager.StudioSystem.setParameterByName("par", musicstate);
-        //Debug.Log(musicstate);
+    void Start() {
+        if(self != null) Destroy(gameObject);
+
+        self = this;
+        DontDestroyOnLoad(gameObject);
+    }
+
+    public static void MusicGameState(float gamestate) {
+        if(self == null) return;
+        self.musicstate = gamestate;
+        RuntimeManager.StudioSystem.setParameterByName("par", self.musicstate);
     }
 }

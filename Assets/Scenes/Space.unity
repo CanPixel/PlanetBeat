@@ -4402,7 +4402,6 @@ GameObject:
   - component: {fileID: 7556721353495335922}
   - component: {fileID: 7556721353495335923}
   - component: {fileID: 7556721353495335924}
-  - component: {fileID: 7556721353495335925}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: GAMEMANAGER
@@ -4492,18 +4491,7 @@ MonoBehaviour:
     ratioOfPlayersWithScore: 0
     phaseUpdate:
       m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 7556721353495335925}
-          m_MethodName: MusicGameState
-          m_Mode: 4
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 1
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
+        m_Calls: []
       m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
   - phaseName: Infectroid Phase
@@ -4523,17 +4511,6 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
-        - m_Target: {fileID: 7556721353495335925}
-          m_MethodName: MusicGameState
-          m_Mode: 4
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 2
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
       m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
   - phaseName: Orbit Phase
@@ -4542,17 +4519,6 @@ MonoBehaviour:
     phaseUpdate:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 7556721353495335925}
-          m_MethodName: MusicGameState
-          m_Mode: 4
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 3
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
         - m_Target: {fileID: 7556721353495335922}
           m_MethodName: StartRotate
           m_Mode: 1
@@ -4572,32 +4538,20 @@ MonoBehaviour:
     phaseUpdate:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 7556721353495335925}
+        - m_Target: {fileID: 0}
           m_MethodName: MusicGameState
           m_Mode: 4
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
             m_IntArgument: 0
-            m_FloatArgument: 4
+            m_FloatArgument: 5
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
       m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
   phaseIndex: 0
---- !u!114 &7556721353495335925
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7556721353495335920}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 01a0a6c0887d7fa4283415d160be50f9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &7556721353495335926
 MonoBehaviour:
   m_ObjectHideFlags: 0

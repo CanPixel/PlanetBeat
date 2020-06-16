@@ -92,7 +92,7 @@ public class PlayerTutorial : MonoBehaviour {
         if(tutorialTasks.ContainsKey(name.ToLower()) && tutorialTimer > tutorialSteps[tutorialProgress].duration) {
             if(tutorialTasks[name.ToLower()].reference.tutorialName.ToLower() == tutorialSteps[tutorialProgress].tutorialName.ToLower()) {
                 tutorialTasks[name.ToLower()].onSubComplete.Invoke();
-                if(!tutorialTasks[name.ToLower()].completed && host.photonView.IsMine) SoundManager.PLAY_SOUND("ScoreIncrease");
+                if(!tutorialTasks[name.ToLower()].completed && host.photonView.IsMine) SoundManager.PLAY_SOUND("UIClick");
                 tutorialTasks[name.ToLower()].completed = true;
 
                 bool fullComplete = true;
@@ -147,6 +147,8 @@ public class PlayerTutorial : MonoBehaviour {
 
         if(Input.GetKey(keyToAdvance) || !tutorialSteps[tutorialProgress].step.PressSpaceToContinue) {
             spaceToContinueText.gameObject.SetActive(false);
+
+            if(host.photonView.IsMine) SoundManager.PLAY_SOUND("ScoreIncrease");
 
             tutorialSteps[tutorialProgress].step.ReleaseAchievements();
 

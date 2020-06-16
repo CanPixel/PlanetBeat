@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.01.00">
+	<object class="EncodableAsset" id="{f90a64cf-9534-4bbd-ab07-0302515cd834}">
+		<property name="assetPath">
+			<value>Exports Dillan Music FMOD/Synths pads/</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{2aa189aa-2b15-4400-8911-0bc3e274fc7a}</destination>
+		</relationship>
+	</object>
+</objects>

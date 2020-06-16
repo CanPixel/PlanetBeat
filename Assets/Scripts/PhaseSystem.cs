@@ -28,7 +28,10 @@ public class PhaseSystem : MonoBehaviour {
     }
 
     void Update() {
-        if(GameManager.GAME_STARTED) text.enabled = true;
+        if(GameManager.GAME_STARTED) {
+            text.enabled = true;
+            MusicStateManager.MusicGameState(phaseIndex + 2);
+        }
 
         //Phase Logic
         float currentRatio = 0;

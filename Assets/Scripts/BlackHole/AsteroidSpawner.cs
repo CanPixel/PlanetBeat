@@ -65,16 +65,26 @@ public class AsteroidSpawner : MonoBehaviourPun {
         }
     }
 
+    [PunRPC]
+    public void OpenBlackHoleSound() {
+        SoundManager.PLAY_SOUND("BlackHoleOpen");
+    }
+
+    [PunRPC]
+    public void SpawnSound(string obj) {
+        SoundManager.PLAY_SOUND(obj + "Spawn");
+    }
+
     public void AnticipateSpawn() {
         if(asteroidSpawnTimer > asteroidSpawnDelay) {
-            SoundManager.PLAY_SOUND("BlackHoleOpen");
+            photonView.RPC("OpenBlackHoleSound", RpcTarget.All);
             targetCutoff = 1;
             animator.SetInteger("blackHoleAnimation", 1);
             blackHoleInt = 1;
         }
 
         if(powerupSpawnTimer > powerupSpawnDelay) {
-            SoundManager.PLAY_SOUND("BlackHoleOpen");
+            photonView.RPC("OpenBlackHoleSound", RpcTarget.All);
             targetCutoff = 1;
             animator.SetInteger("blackHoleAnimation", 1);
             blackHoleInt = 1;
@@ -101,8 +111,9 @@ public class AsteroidSpawner : MonoBehaviourPun {
         Vector3 pos = RandomCircle(center, Random.Range(8f, 9f), Random.Range(0, 360));
         Quaternion rot = Quaternion.FromToRotation(Vector2.up, center + pos);
         GameManager.SPAWN_SERVER_OBJECT(powerup, new Vector3(blackHole.transform.position.x, blackHole.transform.position.y, -1.1f), rot);
-        SoundManager.PLAY_SOUND("InfectroidSpawn");
-    
+        //SoundManager.PLAY_SOUND("InfectroidSpawn");
+        photonView.RPC("SpawnSound", RpcTarget.All, "Infectroid");
+
         cutoff = targetCutoff = 0;
         blackHoleInt = 2;
         shake = true;
@@ -116,7 +127,8 @@ public class AsteroidSpawner : MonoBehaviourPun {
         Vector3 pos = RandomCircle(center, Random.Range(8f, 9f), Random.Range(0, 360));
         Quaternion rot = Quaternion.FromToRotation(Vector2.up, center + pos);
         GameManager.SPAWN_SERVER_OBJECT(asteroid, new Vector3(blackHole.transform.position.x, blackHole.transform.position.y, -1.1f), rot);
-        SoundManager.PLAY_SOUND("ResourceSpawn");
+        //SoundManager.PLAY_SOUND("ResourceSpawn");
+        photonView.RPC("SpawnSound", RpcTarget.All, "Resource");
 
         cutoff = targetCutoff = 0;
         blackHoleInt = 2;

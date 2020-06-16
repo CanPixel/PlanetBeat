@@ -11,7 +11,6 @@ public class TutorialStep : MonoBehaviour {
     public TutorialPositioner pressSpacePos;
 
     public string highlighterCircleFocalPoint;
-
     public bool PressSpaceToContinue = true;
 
     public Image[] arrows;
